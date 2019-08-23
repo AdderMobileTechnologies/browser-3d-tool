@@ -1,0 +1,9 @@
+/etc/apache2/httpd.conf.
+/etc/apache2/apache2.conf.
+/etc/httpd/httpd.conf.
+/etc/httpd/conf/httpd.conf.
+
+https://enable-cors.org/server_apache.html
+
+:/etc/apache2/sites-available
+

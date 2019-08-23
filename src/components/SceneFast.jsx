@@ -1,6 +1,8 @@
 import React from "react";
 import BABYLON from 'babylonjs'
-
+//models
+import AdderModel from '../models/model'
+import MeshWrapper from '../models/meshWrapper'
   class SceneFast extends React.Component {
 
 			constructor(props){
@@ -25,16 +27,49 @@ import BABYLON from 'babylonjs'
 					camera.attachControl(canvas, true);
 					var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 					light.intensity = 0.7;
-					var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
-					sphere.position.y = 1;
-					var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+					 
+					var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 12, height: 12}, scene);
 				
 					return scene;
 				
 				};
+								
+				
+
 				var  scene = createScene();
 				scene.autoClear = true;
 				
+
+				function asyncLoadAScene(){
+						
+					let inASYNC = true;
+					if(inASYNC){
+							async function loadModelAsync(adderModel) {
+								let meshNames = "";
+								let rootUrl= "http://dbdev.adder.io/assets/"+adderModel.getModelFile() ;
+								let result =  await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl ,"",scene );
+								await handleModelAsyncResolve(adderModel,result);
+							}
+							let porscheModelObject = new AdderModel("porsche2.2.babylon")
+							loadModelAsync(porscheModelObject);
+							var myMeshes = porscheModelObject.getMeshWrappers();
+							function handleModelAsyncResolve(adderModel,result){
+								//TODO: 
+								//For each mesh I should create a 'mesh class instance' and set it's parent 'model'
+								const arrayOfMeshWrappers = []
+								result.meshes.forEach(function (mesh) {
+									let newMeshWrapper = new MeshWrapper(mesh, null, null)
+									arrayOfMeshWrappers.push(newMeshWrapper)
+								});
+							adderModel.setMeshWrappers(arrayOfMeshWrappers)
+								//create an array of mewshWrapper instances and them and then use <class>.setMeshWrappers(<Array of MeshWrappers>)
+								console.log("adder model:");
+								console.log(adderModel.getMeshWrappers());
+							};
+					};
+				};
+				asyncLoadAScene();
+
 				engine.runRenderLoop(function () {
 					if(typeof scene === 'undefined'){
 						return;
