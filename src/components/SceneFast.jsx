@@ -22,14 +22,25 @@ import MeshWrapper from '../models/meshWrapper'
 				var createScene = function () {
 
 					var scene = new BABYLON.Scene(engine);
-					var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-					camera.setTarget(BABYLON.Vector3.Zero());
+					//var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+					//camera.setTarget(BABYLON.Vector3.Zero());
+					//camera.attachControl(canvas, true);
+
+
+					var camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, Math.PI / 2
+					, 10, BABYLON.Vector3.Zero(), scene);
 					camera.attachControl(canvas, true);
+					camera.lowerRadiusLimit = 6;
+					camera.upperRadiusLimit = 20;
+					camera.useAutoRotationBehavior = true;
+
+
+
 					var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 					light.intensity = 0.7;
 					 
 					var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 12, height: 12}, scene);
-				
+					ground.position.y = -1;
 					return scene;
 				
 				};
