@@ -1,6 +1,4 @@
-import { Vector3 } from "babylonjs";
-
-/*Camera Purpose:
+ /*Camera Purpose:
 To create a class to use for instantiating BabylonJS cameras. There are different 'types' of cameras for example
 the 'ArcRotateCamera' , and the 'Free' camera. 
 The cameras may expect sliightly different sets of data, I've started with the 'ArcRotateCamera' because that is the one we currently use.
@@ -12,24 +10,24 @@ The scene is the babylonjs scene where the camera will be utilized or inserted i
 
 */
 
-import { Vector3, Scene } from 'babylonjs' 
+import { Vector3, Scene , ArcRotateCamera} from 'babylonjs' 
 
 class AdderCamera {
     constructor(_newType = null,_newName = null, _newAlpha = null, _newBeta = null, _newRadius = null, _newTarget = new Vector3(0,0,0),  _newScene = null, _newSetActiveOnSceneIfNoneActive = null){
         //verify 
-        if(_newType === null || !(_newType instanceof String) ){
+        if(_newType === null   ){
             throw new Error(`Camera:Constructor() The constructor expects a String value for the _newType parameter. ie. ArcRotateCamera, FreeCamera, `)
         } 
-        if( _newName === null ||  !(_newName instanceof String)){
+        if( _newName === null  ){
             throw new Error(`Camera:Constructor() The constructor expects a String value for the _newName parameter.`)
         }
-        if( _newAlpha === null ||  !(_newAlpha instanceof Number)){
+        if( _newAlpha === null  ){
             throw new Error(`Camera:Constructor() The constructor expects a Number value for the _newAlpha parameter.(https://doc.babylonjs.com/babylon101/cameras)`)
         }
-        if( _newBeta === null ||  !(_newBeta instanceof Number)){
+        if( _newBeta === null  ){
             throw new Error(`Camera:Constructor() The constructor expects a Number value for the _newBeta parameter.(https://doc.babylonjs.com/babylon101/cameras)`)
         }
-        if( _newRadius === null ||  !(_newRadius instanceof Number)){
+        if( _newRadius === null  ){
             throw new Error(`Camera:Constructor() The constructor expects a Number value for the _newRadius parameter. `)
         }
         if( _newTarget === null ||  !(_newTarget instanceof Vector3)){
@@ -67,9 +65,10 @@ class AdderCamera {
     getCamera(){
         switch (this.getType ) {
             case "ArcRotateCamera":
-                let  camera = new BABYLON.ArcRotateCamera(this.getName,  this.getAlpha, this.getBeta
+                let  camera = new ArcRotateCamera(this.getName,  this.getAlpha, this.getBeta
                 , this.getRadius, this.getTarget, this.getScene );
                
+
                 return camera;
                 break;
         
@@ -86,20 +85,20 @@ class AdderCamera {
     setAttachControl(canvas,trueFalse){
         // check if canvas is an HTML5 canvas object 
         // check if trueFalse is a boolean value.
-        self.attachControl(canvas,trueFalse);
+        this.attachControl(canvas,trueFalse);
     }
     setLowerRadiusLimit(number){
         if(!(number instanceof Number)){ 
             throw new Error(`Camera:setLowerRadiusLimit() The camera radius value has to be a Number.`)
         }else{
-            self.lowerRadiusLimit(number)
+            this.lowerRadiusLimit(number)
         }
     }
     setUpperRadiusLimit(number){
         if(!(number instanceof Number)){ 
             throw new Error(`Camera:setUpperRadiusLimit() The camera radius value has to be a Number.`)
         }else{
-            self.upperRadiusLimit(number)
+            this.upperRadiusLimit(number)
         }
     }
     setUseAutoRotationBehavior(trueFalse){

@@ -3,6 +3,8 @@ import BABYLON from 'babylonjs'
 //models
 import AdderModel from '../models/model'
 import MeshWrapper from '../models/meshWrapper'
+import AdderCamera  from '../models/camera'
+
   class SceneFast extends React.Component {
 
 			constructor(props){
@@ -22,17 +24,28 @@ import MeshWrapper from '../models/meshWrapper'
 				var createScene = function () {
 
 					var scene = new BABYLON.Scene(engine);
-					//var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-					//camera.setTarget(BABYLON.Vector3.Zero());
-					//camera.attachControl(canvas, true);
+ 					 
+					
 
-
-					var camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, Math.PI / 2
-					, 10, BABYLON.Vector3.Zero(), scene);
-					camera.attachControl(canvas, true);
+				
+					let camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, Math.PI / 2 , 10, BABYLON.Vector3.Zero(), scene);
+					 
+					camera.attachControl(canvas,true)
 					camera.lowerRadiusLimit = 6;
-					camera.upperRadiusLimit = 20;
-					camera.useAutoRotationBehavior = true;
+					camera.upperRadiusLimit = 10;
+					//camera.useAutoRotationBehavior(true);
+					/*
+					//TODO: Use the new Camera Object .
+					//may have to apply these additional properties to the constructor? Is there a better way
+					//to handle this being that there could be tons of different properties for the more than 30 types of cameras.?
+					//let camera = new AdderCamera( "ArcRotateCamera","Camera2", Math.PI / 2, Math.PI / 2 , 10, BABYLON.Vector3.Zero(), scene)	
+					camera.attachControl(canvas, true);
+					camera.setAttachControl(canvas,true)
+					camera.setLowerRadiusLimit(6);
+					camera.setUpperRadiusLimit(10);
+					camera.setUseAutoRotationBehavior(true);
+
+					*/
 
 
 
@@ -53,31 +66,29 @@ import MeshWrapper from '../models/meshWrapper'
 
 				function asyncLoadAScene(){
 						
-					let inASYNC = true;
-					if(inASYNC){
-							async function loadModelAsync(adderModel) {
-								let meshNames = "";
-								let rootUrl= "http://dbdev.adder.io/assets/"+adderModel.getModelFile() ;
-								let result =  await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl ,"",scene );
-								await handleModelAsyncResolve(adderModel,result);
-							}
-							let porscheModelObject = new AdderModel("porsche2.2.babylon")
-							loadModelAsync(porscheModelObject);
-							var myMeshes = porscheModelObject.getMeshWrappers();
-							function handleModelAsyncResolve(adderModel,result){
-								//TODO: 
-								//For each mesh I should create a 'mesh class instance' and set it's parent 'model'
-								const arrayOfMeshWrappers = []
-								result.meshes.forEach(function (mesh) {
-									let newMeshWrapper = new MeshWrapper(mesh, null, null)
-									arrayOfMeshWrappers.push(newMeshWrapper)
-								});
-							adderModel.setMeshWrappers(arrayOfMeshWrappers)
-								//create an array of mewshWrapper instances and them and then use <class>.setMeshWrappers(<Array of MeshWrappers>)
-								console.log("adder model:");
-								console.log(adderModel.getMeshWrappers());
-							};
+					async function loadModelAsync(adderModel) {
+						let meshNames = "";
+						let rootUrl= "http://dbdev.adder.io/assets/"+adderModel.getModelFile() ;
+						let result =  await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl ,"",scene );
+						await handleModelAsyncResolve(adderModel,result);
+					}
+					let porscheModelObject = new AdderModel("porsche2.2.babylon")
+					loadModelAsync(porscheModelObject);
+					var myMeshes = porscheModelObject.getMeshWrappers();
+					function handleModelAsyncResolve(adderModel,result){
+						//For each mesh I should create a 'mesh class instance' and set it's parent 'model'
+						const arrayOfMeshWrappers = []
+						result.meshes.forEach(function (mesh) {
+							let newMeshWrapper = new MeshWrapper(mesh, null, null)
+							arrayOfMeshWrappers.push(newMeshWrapper)
+						});
+						adderModel.setMeshWrappers(arrayOfMeshWrappers);
+
+						//create an array of mewshWrapper instances and them and then use <class>.setMeshWrappers(<Array of MeshWrappers>)
+						//console.log("adder model:");
+						//console.log(adderModel.getMeshWrappers());
 					};
+					 
 				};
 				asyncLoadAScene();
 
