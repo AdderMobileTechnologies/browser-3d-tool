@@ -9,11 +9,12 @@ import BABYLON from 'babylonjs'
 
 				}
 
-				let canvas = document.getElementById("gui_canvas_container");
-				 
-				let  engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
+			}
+		
+			componentDidMount(){ 
 
-			
+				let canvas = document.getElementById("gui_canvas_container");
+				let  engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
 				//let scene =  new BABYLON.Scene(engine);
 				//scene.autoClear = true;
 				var createScene = function () {
@@ -51,12 +52,9 @@ import BABYLON from 'babylonjs'
 				window.addEventListener("resize", function () {
 					engine.resize();
 				});
-				
-
 			}
-		
- 
 
+			
 
 			render() {
 					return (
@@ -74,4 +72,11 @@ import BABYLON from 'babylonjs'
  
 export default SceneFast
 
- 
+ /* LIFECYCLE METHODS:
+	componentWillReceiveProps(){ }
+	componentWillMount(){ }
+	componentDidMount(){ }
+	componentWillUpdate(){ }
+	componentDidUpdate(){ }
+	componentWillUnmount(){ }
+*/
