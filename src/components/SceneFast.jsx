@@ -15,8 +15,8 @@ import BABYLON from 'babylonjs'
 
 				let canvas = document.getElementById("gui_canvas_container");
 				let  engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
-				//let scene =  new BABYLON.Scene(engine);
-				//scene.autoClear = true;
+				 
+				
 				var createScene = function () {
 
 					var scene = new BABYLON.Scene(engine);
@@ -33,7 +33,8 @@ import BABYLON from 'babylonjs'
 				
 				};
 				var  scene = createScene();
-				 
+				scene.autoClear = true;
+				
 				engine.runRenderLoop(function () {
 					if(typeof scene === 'undefined'){
 						return;
@@ -76,6 +77,7 @@ export default SceneFast
 	componentWillUnmount(){ }
 */
 /**
+ * https://www.babylonjs-playground.com/
 var createScene = function () {
 
 	// This creates a basic Babylon Scene object (non-mesh)
