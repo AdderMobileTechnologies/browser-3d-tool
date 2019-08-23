@@ -18,27 +18,22 @@ import BABYLON from 'babylonjs'
 				//let scene =  new BABYLON.Scene(engine);
 				//scene.autoClear = true;
 				var createScene = function () {
+
 					var scene = new BABYLON.Scene(engine);
-					var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 2, 5, BABYLON.Vector3.Zero(), scene);
+					var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+					camera.setTarget(BABYLON.Vector3.Zero());
 					camera.attachControl(canvas, true);
-					
-					var light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(-1, 1, 0), scene);
-					light.diffuse = new BABYLON.Color3(1, 0, 0);
-					
-					// Skybox
-					var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:1000.0}, scene);
-					var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-					skyboxMaterial.backFaceCulling = false;
-					skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
-					skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-					skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-					skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-					skybox.material = skyboxMaterial;			
-						
+					var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+					light.intensity = 0.7;
+					var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
+					sphere.position.y = 1;
+					var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+				
 					return scene;
 				
 				};
-				let scene = createScene;
+				var  scene = createScene();
+				 
 				engine.runRenderLoop(function () {
 					if(typeof scene === 'undefined'){
 						return;
@@ -80,3 +75,37 @@ export default SceneFast
 	componentDidUpdate(){ }
 	componentWillUnmount(){ }
 */
+/**
+var createScene = function () {
+
+	// This creates a basic Babylon Scene object (non-mesh)
+	var scene = new BABYLON.Scene(engine);
+
+	// This creates and positions a free camera (non-mesh)
+	var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+
+	// This targets the camera to scene origin
+	camera.setTarget(BABYLON.Vector3.Zero());
+
+	// This attaches the camera to the canvas
+	camera.attachControl(canvas, true);
+
+	// This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+	var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+	// Default intensity is 1. Let's dim the light a small amount
+	light.intensity = 0.7;
+
+	// Our built-in 'sphere' shape.
+	var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
+
+	// Move the sphere upward 1/2 its height
+	sphere.position.y = 1;
+
+	// Our built-in 'ground' shape.
+	var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+
+	return scene;
+
+};
+ */
