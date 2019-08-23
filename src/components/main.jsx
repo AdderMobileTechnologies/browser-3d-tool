@@ -1,5 +1,5 @@
 import React from "react";
- 
+ import SceneFast from './SceneFast';
  
   class Main extends React.Component {
 
@@ -10,12 +10,14 @@ import React from "react";
 				}
 			}
 		
+		
 
 			render() {
 					return (
 						
 						<div>
 							<div>Main</div>
+							<SceneFast/>
                             
 						</div>
 															
