@@ -16,9 +16,9 @@ The options is a catch-all in this case for adding additional properties that ma
 import { Vector3, Scene, ArcRotateCamera } from 'babylonjs'
 
 class AdderCamera {
-     constructor(_newCanvas = null,_newType = null, _newName = null, _newAlpha = null, _newBeta = null, _newRadius = null, _newTarget = new Vector3(0, 0, 0), _newScene = null, _newSetActiveOnSceneIfNoneActive = null, _newOptions = null) {
+    constructor(_newCanvas = null, _newType = null, _newName = null, _newAlpha = null, _newBeta = null, _newRadius = null, _newTarget = new Vector3(0, 0, 0), _newScene = null, _newSetActiveOnSceneIfNoneActive = null, _newOptions = null) {
         //verify 
-        if (_newCanvas === null || _newCanvas.tagName !== "CANVAS" ){
+        if (_newCanvas === null || _newCanvas.tagName !== "CANVAS") {
             throw new Error(`Camera:Constructor() The constructor expects a canvas type element as the parameter. `)
         }
         if (_newType === null) {
@@ -47,15 +47,16 @@ class AdderCamera {
             //It Defines whether the camera should be marked as active if not other active cameras have been defined 
         }
 
-        
+
         if (typeof _newOptions !== "object") {
             throw new Error(`Camera:Constructor() The constructor expects an Array for the _newOptions parameter.`)
         } else {
             console.log("_newOptions are: ", _newOptions)
+            
         }
+
         //private properties
-        let camera = new ArcRotateCamera(   this.getName, this.getAlpha, this.getBeta
-            , this.getRadius, this.getTarget, this.getScene, this.getSetActiveOnSceneIfNoneActive  ); 
+
         let _canvas = _newCanvas;
         let _type = _newType;
         let _name = _newName;
@@ -79,73 +80,39 @@ class AdderCamera {
         this.getOptions = () => { return _options }
 
 
-         /**camera.attachControl(canvas, true);
-			camera.setAttachControl(canvas,true)
-			camera.setLowerRadiusLimit(6);
-			camera.setUpperRadiusLimit(10);
-            camera.setUseAutoRotationBehavior(true); */
-            
-            
-    }
-    getCamera() {
-       
-          
+        /**camera.attachControl(canvas, true);
+           camera.setAttachControl(canvas,true)
+           camera.setLowerRadiusLimit(6);
+           camera.setUpperRadiusLimit(10);
+           camera.setUseAutoRotationBehavior(true); */
 
-            return this._camera;
-              
-        
+
     }
+
     getCanvas() {
         return this._canvas
     }
-    setCanvas(_newCanvas = null ) {
-        if (_newCanvas === null || _newCanvas.tagName !== "CANVAS" ){
+    setCanvas(_newCanvas = null) {
+        if (_newCanvas === null || _newCanvas.tagName !== "CANVAS") {
             throw new Error(`Camera:Constructor() The constructor expects a canvas type element as the parameter. `)
         } else {
             this._canvas = _newCanvas;
         }
-        
+
     }
     /* Qualities 
      
     
     camera.useAutoRotationBehavior = true;
     */
-   setAttachControl( trueFalse) {
-       console.log("setAttachControl trueFalse:",trueFalse)
-    // check if canvas is an HTML5 canvas object 
-    // check if trueFalse is a boolean value.\
-    //const camera = this.getCamera()
-    this.getCamera().attachControl(this.getCanvas(), trueFalse);
-}
-/*
-    setAttachControl(canvas, trueFalse) {
+    setAttachControl(trueFalse) {
+        console.log("setAttachControl trueFalse:", trueFalse)
         // check if canvas is an HTML5 canvas object 
-        // check if trueFalse is a boolean value.
-        this.attachControl(canvas, trueFalse);
+        // check if trueFalse is a boolean value.\
+        //const camera = this.getCamera()
+        //=====>  this.getCamera().attachControl(this.getCanvas(), trueFalse);
     }
-    setLowerRadiusLimit(number) {
-        if (!(number instanceof Number)) {
-            throw new Error(`Camera:setLowerRadiusLimit() The camera radius value has to be a Number.`)
-        } else {
-            this.lowerRadiusLimit(number)
-        }
-    }
-    setUpperRadiusLimit(number) {
-        if (!(number instanceof Number)) {
-            throw new Error(`Camera:setUpperRadiusLimit() The camera radius value has to be a Number.`)
-        } else {
-            this.upperRadiusLimit(number)
-        }
-    }
-    setUseAutoRotationBehavior(trueFalse) {
-        if (!(trueFalse instanceof Boolean)) {
-            throw new Error(`Camera:setUseAutoRotationBehavior() Expects either true or false boolean value.`);
-        } else {
 
-        }
-    }
-    */
     setOptions(json) {
         let objectConstructor = ({}).constructor;
         if (json.constructor !== objectConstructor) {
@@ -154,39 +121,51 @@ class AdderCamera {
             this.setAttachControl(this.getCanvas, true)
         }
     }
+    getOptions(){
+        let options = this._options ;
+        return options;
+    }
+
+
+    getCamera(scene) {
+        var camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, Vector3.Zero(), scene);
+        //camera.attachControl(this.getCanvas(), true);
+        //camera.setAttachControl(this.getCanvas(),true)
+        let options = this.getOptions();
+        console.log("options:",options);
+        console.log("this:",options.lowerRadiusLimit);
+       
+        let upperRadiusLimit = options.upperRadiusLimit;
+        camera.upperRadiusLimit = upperRadiusLimit
+
+        if(typeof options.lowerRadiusLimit !== "undefined"){
+            let lowerRadiusLimit = options.lowerRadiusLimit;
+            camera.lowerRadiusLimit = lowerRadiusLimit;
+        }
+
+        if(typeof options.useAutoRotationBehavior !== "undefined"){
+            let useAutoRotationBehavior = options.useAutoRotationBehavior;
+            camera.useAutoRotationBehavior = useAutoRotationBehavior;
+        }
+       
+
+
+
+        
+
+        //camera.setUpperRadiusLimit(10);
+        //camera.setUseAutoRotationBehavior(true);
+
+        //camera.setAttachControl(true);
+        return camera;
+
+    }
 
 
 }
 
 export default AdderCamera
 
-/*
-ArcRotateCamera
-    Parameters
-        name: string
-            Defines the name of the camera
-
-        alpha: number
-            Defines the camera rotation along the logitudinal axis
-
-        beta: number
-            Defines the camera rotation along the latitudinal axis
-
-        radius: number
-            Defines the camera distance from its target
-
-        target: Vector3
-            Defines the camera target
-
-        scene: Scene
-            Defines the scene the camera belongs to
-
-        Optional setActiveOnSceneIfNoneActive: boolean
-            Defines wheter the camera should be marked as active if not other active cameras have been defined
-
-    *For information on 'alpha' and 'beta' parameters see illustration at https://doc.babylonjs.com/babylon101/cameras
-
-*/
 
 /*
 References:

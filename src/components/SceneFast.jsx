@@ -24,35 +24,14 @@ class SceneFast extends React.Component {
 		var createScene = function () {
 
 			var scene = new BABYLON.Scene(engine);
-			let camera_Original = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene);
-
-			//camera_Original.attachControl(canvas, true)
-			//camera_Original.lowerRadiusLimit = 6;
-			//camera_Original.upperRadiusLimit = 10;
-
-			const options = {lowerRadiusLimit:6,upperRadiusLimit:10}
-			//camera.useAutoRotationBehavior(true);
-			/*
-			//TODO: Use the new Camera Object .
-			//may have to apply these additional properties to the constructor? Is there a better way
-			//to handle this being that there could be tons of different properties for the more than 30 types of cameras.?
-			// ! _options right? 
-			let camera = new AdderCamera( "ArcRotateCamera","Camera2", Math.PI / 2, Math.PI / 2 , 10, BABYLON.Vector3.Zero(), scene)	
+			//use addercamera class
+			const options = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:true, attachControl:true}
+			let adderCamera = new AdderCamera(canvas, "ArcRotateCamera", "Camera2", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene, true, options)
+			//console.log("adderCamera.getOptions():",adderCamera.getOptions())
+			let camera = adderCamera.getCamera(scene);
 			camera.attachControl(canvas, true);
-			camera.setAttachControl(canvas,true)
-			camera.setLowerRadiusLimit(6);
-			camera.setUpperRadiusLimit(10);
-			camera.setUseAutoRotationBehavior(true);
-
-			*/
-			let camera = new AdderCamera( canvas, "ArcRotateCamera","Camera2", Math.PI / 2, Math.PI / 2 , 10, BABYLON.Vector3.Zero(), scene, true, options)	
-			/*camera.attachControl(canvas, true);
-			camera.setAttachControl(canvas,true)
-			camera.setLowerRadiusLimit(6);
-			camera.setUpperRadiusLimit(10);
-			camera.setUseAutoRotationBehavior(true);
-			*/
-			camera.setAttachControl(true);
+			 
+			
 
 
 			var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
