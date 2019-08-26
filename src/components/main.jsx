@@ -1,35 +1,35 @@
 import React from "react";
- import SceneFast from './SceneFast';
- 
-  class Main extends React.Component {
+import SceneFast from './SceneFast';
 
-			constructor(props){
-				super(props);
-				this.state = {
+class Main extends React.Component {
 
-				}
-			}
-		
-		
+	constructor(props) {
+		super(props);
+		this.state = {
 
-			render() {
-					return (
-						
-						<div>
-							<div>Main</div>
-							<SceneFast/>
-                            
-						</div>
-															
-					);
-			}
+		}
+	}
+
+
+
+	render() {
+		return (
+
+			<div>
+				<div>Main</div>
+				<SceneFast />
+
+			</div>
+
+		);
+	}
 }
- 
+
 export default Main
 /*
-TODO: 
-BUGS: 
-   
+TODO:
+BUGS:
+
 
 */
 

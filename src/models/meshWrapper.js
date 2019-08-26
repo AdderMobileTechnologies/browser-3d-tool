@@ -12,9 +12,9 @@
 import { Mesh, Vector3, Quaternion } from 'babylonjs';
 
 class MeshWrapper {
-    constructor(_newMesh = null, _newPosition = null, _newRotation = null  ){
+    constructor(_newMesh = null, _newPosition = null, _newRotation = null) {
         //NOT SURE if Mesh Class is getting used correctly.
-        if(!(_newMesh instanceof Mesh)){
+        if (!(_newMesh instanceof Mesh)) {
             throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified _newMesh (Requires: BABYLON.Mesh )")
         }
         /* 
@@ -27,35 +27,35 @@ class MeshWrapper {
         }
         */
 
-        let _arrayOfListeners = [] 
-        let _mesh       = _newMesh 
-        let _position   = _newPosition 
-        let _rotation   = _newRotation 
+        let _arrayOfListeners = []
+        let _mesh = _newMesh
+        let _position = _newPosition
+        let _rotation = _newRotation
 
-        this.getMesh        = () => { return _mesh }
-        this.getPosition    = () => { return _position }
-        this.getRotation    = () => { return _rotation }
+        this.getMesh = () => { return _mesh }
+        this.getPosition = () => { return _position }
+        this.getRotation = () => { return _rotation }
 
         this.addListener = (e) => {
             _arrayOfListeners.push(e)
         }
-       
+
         this.onEvent = (e) => {
-            for(let listener of _arrayOfListeners) {
+            for (let listener of _arrayOfListeners) {
                 listener(e);
             }
         }
         this.removeListener = (e) => {
-            for (let i=0; i < _arrayOfListeners.length; ++i) {
-                if (_arrayOfListeners[i]  === e) {
-                    _arrayOfListeners.splice(i, 1);  
+            for (let i = 0; i < _arrayOfListeners.length; ++i) {
+                if (_arrayOfListeners[i] === e) {
+                    _arrayOfListeners.splice(i, 1);
                 }
             }
         }
     }
-    
-}
-export default MeshWrapper 
 
-      
+}
+export default MeshWrapper
+
+
 

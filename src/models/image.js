@@ -5,13 +5,13 @@ import { Texture } from BABYLON;
 
 class Image {
     constructor(_newImageData = null, _type = null, _options = {}) {
-        if(_newImageData === null) {
+        if (_newImageData === null) {
             throw new Error("Image.constructor(): Constructor called with unspecified _newImageData");
         }
 
-        if(_type === null) {
+        if (_type === null) {
             throw new Error("Image.constructor(): Constructor called with unspecified _type");
-        } else if(_type !== "Base64" && _type !== "Data") {
+        } else if (_type !== "Base64" && _type !== "Data") {
             throw new Error(`Image.constructor(): Provided type ${_type} is not allowed. Allowed values: "Base64", "Data"`);
         }
 
@@ -19,18 +19,18 @@ class Image {
         let _dataType = _type;
 
         this.getBase64 = () => {
-            if(_dataType !== "Base64") {
+            if (_dataType !== "Base64") {
                 throw new Error("Image.getBase64(): Image initialized with different type than Base64");
             }
-    
-            return _imageData;                
+
+            return _imageData;
         }
         this.getData = () => {
-            if(_dataType !== "Data") {
+            if (_dataType !== "Data") {
                 throw new Error("Image.getData(): Image initialized with different type than Data");
             }
-    
-            return _imageData;    
+
+            return _imageData;
         }
 
         this.getImageDataType = () => { return _dataType }
@@ -39,16 +39,16 @@ class Image {
     }
 
     getBabylonTexture(id = null, scene = null) {
-        if(scene === null) {
+        if (scene === null) {
             throw new Error("Image.getBabylonTexture(): Argument scene was not specified");
         }
 
-        if(id === null) {
+        if (id === null) {
             id = String(new Date().getTime());
         }
 
         let texture = null;
-        switch(this.getImageDataType) {
+        switch (this.getImageDataType) {
             case "Base64":
                 texture = Texture.CreateFromBase64String(this.getBase64(), id, scene);
                 break;
