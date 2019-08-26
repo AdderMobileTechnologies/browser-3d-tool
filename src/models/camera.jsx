@@ -79,14 +79,7 @@ class AdderCamera {
         this.getSetActiveOnSceneIfNoneActive = () => { return _setActiveOnSceneIfNoneActive }
         this.getOptions = () => { return _options }
 
-
-        /**camera.attachControl(canvas, true);
-           camera.setAttachControl(canvas,true)
-           camera.setLowerRadiusLimit(6);
-           camera.setUpperRadiusLimit(10);
-           camera.setUseAutoRotationBehavior(true); */
-
-
+ 
     }
 
     getCanvas() {
@@ -100,19 +93,12 @@ class AdderCamera {
         }
 
     }
-    /* Qualities 
-     
+   
     
-    camera.useAutoRotationBehavior = true;
-    */
-    setAttachControl(trueFalse) {
-        console.log("setAttachControl trueFalse:", trueFalse)
-        // check if canvas is an HTML5 canvas object 
-        // check if trueFalse is a boolean value.\
-        //const camera = this.getCamera()
-        //=====>  this.getCamera().attachControl(this.getCanvas(), trueFalse);
+    getOptions(){
+        let options = this._options ;
+        return options;
     }
-
     setOptions(json) {
         let objectConstructor = ({}).constructor;
         if (json.constructor !== objectConstructor) {
@@ -121,10 +107,7 @@ class AdderCamera {
             this.setAttachControl(this.getCanvas, true)
         }
     }
-    getOptions(){
-        let options = this._options ;
-        return options;
-    }
+   
 
 
     getCamera(scene) {
