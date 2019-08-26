@@ -24,15 +24,16 @@ class SceneFast extends React.Component {
 		var createScene = function () {
 
 			var scene = new BABYLON.Scene(engine);
-			//use addercamera class
-			const options = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:true, attachControl:true}
-			let adderCamera = new AdderCamera(canvas, "ArcRotateCamera", "Camera2", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene, true, options)
-			//console.log("adderCamera.getOptions():",adderCamera.getOptions())
-			let camera = adderCamera.getCamera(scene);
-			camera.attachControl(canvas, true);
-			 
 			
+			//use adderCamera class
+			const options = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:true, attachControl:true}
+			let adderCam_arcRotate = new AdderCamera(canvas, "ArcRotateCamera", "AdderCam_One", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene, true, options)
+			let camera = adderCam_arcRotate.getCamera(scene);
+			camera.attachControl(canvas, true);
 
+			 //TODO: look in into get/set for all parameters 
+			const options2 = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:false, attachControl:true}
+			//adderCam_arcRotate.setOptions(options2)
 
 			var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 			light.intensity = 0.7;
