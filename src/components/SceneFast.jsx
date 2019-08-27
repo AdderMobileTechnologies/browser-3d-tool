@@ -64,21 +64,45 @@ class SceneFast extends React.Component {
 				await handleModelAsyncResolve(adderModel, result);
 			}
 			///////////////////////////////////////////////////////////////////////////////
-		
+			let cityVectorAdjustment = new BABYLON.Vector3(70,-1,20);
 			//CREATE ADDER MODEL 
 			let minimal_cube_mesh_parent =  generateMeshParent("minimal_cube_model");
 			let minimal_cube = new AdderModel("minimal_cube.babylon",minimal_cube_mesh_parent);
 			minimal_cube.setParentMesh(minimal_cube_mesh_parent);
-			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(-5,0,0))
+			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(0,-1,0))
 			loadModelAsync(minimal_cube);
 
 
 			//create a second model with a different parent for location 
-			let minimal_cube_mesh_parent2 =  generateMeshParent("minimal_cube_model2");
-			let minimal_cube2 = new AdderModel("minimal_cube.babylon",minimal_cube_mesh_parent2);
-			minimal_cube2.setParentMesh(minimal_cube_mesh_parent2);
-			minimal_cube2.setParentMeshPosition(new BABYLON.Vector3(5,0,0))
-			loadModelAsync(minimal_cube2);
+			let buildingParentMesh =  generateMeshParent("bikeParentMesh");
+			let building = new AdderModel("CITY/kcpbg06.babylon",buildingParentMesh);
+			building.setParentMesh(buildingParentMesh);
+			building.setParentMeshPosition(cityVectorAdjustment)
+			loadModelAsync(building);
+
+
+			//blocks_all_4.babylon
+			let blocksAll4ParentMesh =  generateMeshParent("blocksAll4ParentMesh");
+			let blocksAll4 = new AdderModel("CITY/blocks_all_4.babylon",blocksAll4ParentMesh);
+			blocksAll4.setParentMesh(blocksAll4ParentMesh);
+			blocksAll4.setParentMeshPosition(cityVectorAdjustment)
+			loadModelAsync(blocksAll4);
+			
+			/*
+			let MODEL_X_ParentMesh =  generateMeshParent("MODEL_X_ParentMesh");
+			let MODEL_X_ = new AdderModel("CITY/MODEL_X_FILENAME.babylon",MODEL_X_ParentMesh);
+			MODEL_X_.setParentMesh(MODEL_X_ParentMesh);
+			MODEL_X_.setParentMeshPosition(cityVectorAdjustment)
+			loadModelAsync(MODEL_X_);
+			*/
+
+			let poboxParentMesh =  generateMeshParent("poboxParentMesh");
+			let pobox = new AdderModel("CITY/pobox.babylon",poboxParentMesh);
+			pobox.setParentMesh(poboxParentMesh);
+			pobox.setParentMeshPosition(cityVectorAdjustment)
+			loadModelAsync(pobox);
+
+
 
 			/////////////////////////////////////////////////////////////////////////////////////////
 			 
