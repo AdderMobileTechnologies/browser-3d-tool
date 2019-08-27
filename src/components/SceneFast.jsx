@@ -66,6 +66,7 @@ class SceneFast extends React.Component {
 			///////////////////////////////////////////////////////////////////////////////
 			let cityVectorAdjustment = new BABYLON.Vector3(70, -1, 20);
 			let alternativeVector = new BABYLON.Vector3(70, 5, 20);
+			let VectorZero = new BABYLON.Vector3(0,0,0);
 			let defaultLocalRotationAxis = new BABYLON.Vector3(1,1,1);
 			let defaultLocalRotationAngle = 0;
 			//CREATE ADDER MODEL 
@@ -73,7 +74,7 @@ class SceneFast extends React.Component {
 			let minimal_cube_mesh_position = new BABYLON.Vector3(0, -1, 0);
 			let minimal_cube = new AdderModel("minimal_cube.babylon", minimal_cube_mesh_parent, minimal_cube_mesh_position, defaultLocalRotationAxis, defaultLocalRotationAngle);
 			minimal_cube.setParentMesh(minimal_cube_mesh_parent);
-			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(0, -1, 0))
+			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(-3, -1, 0))
 			loadModelAsync(minimal_cube);
 			let axis = new BABYLON.Vector3(0, 0, 1);
 			let angle = 45;
@@ -99,6 +100,41 @@ class SceneFast extends React.Component {
 			pobox.setParentMesh(poboxParentMesh);
 			pobox.setParentMeshPosition(alternativeVector)
 			loadModelAsync(pobox);
+
+
+			let streetLightParentMesh = generateMeshParent("streetLightParentMesh");
+			let streetLight = new AdderModel("CITY/streetLight.babylon", streetLightParentMesh, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			streetLight.setParentMesh(streetLightParentMesh);
+			streetLight.setParentMeshPosition(new BABYLON.Vector3(0,-1,0))
+			loadModelAsync(streetLight);
+
+			let firehydrantParentMesh = generateMeshParent("firehydrantParentMesh");
+			let firehydrant = new AdderModel("CITY/firehydrant.babylon", firehydrantParentMesh, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			firehydrant.setParentMesh(firehydrantParentMesh);
+			firehydrant.setParentMeshPosition(new BABYLON.Vector3(1,-1,0))
+			loadModelAsync(firehydrant);
+
+
+			let bicycleParentMesh = generateMeshParent("bicycleParentMesh");
+			let bicycle = new AdderModel("CITY/bicycle.babylon", bicycleParentMesh, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			bicycle.setParentMesh(bicycleParentMesh);
+			bicycle.setParentMeshPosition(new BABYLON.Vector3(3,-1,0))
+			loadModelAsync(bicycle);
+
+			let craneParentMesh = generateMeshParent("craneParentMesh");
+			let crane = new AdderModel("CITY/crane.babylon", craneParentMesh, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			crane.setParentMesh(craneParentMesh);
+			crane.setParentMeshPosition(new BABYLON.Vector3(-8,-1,0))
+			loadModelAsync(crane);
+
+			let mailboxes_3ParentMesh = generateMeshParent("mailboxes_3ParentMesh");
+			let mailboxes_3 = new AdderModel("CITY/mailboxes_3.babylon", mailboxes_3ParentMesh, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			mailboxes_3.setParentMesh(mailboxes_3ParentMesh);
+			mailboxes_3.setParentMeshPosition(new BABYLON.Vector3(-2,-1,1))
+			loadModelAsync(mailboxes_3);
+
+
+
 
 
 			function handleModelAsyncResolve(adderModel, result) {
