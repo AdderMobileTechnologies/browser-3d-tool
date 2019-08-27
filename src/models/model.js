@@ -1,71 +1,82 @@
 //purpose: to create a class for  models or collections of meshes 
-import { Mesh, Vector3, Quaternion } from 'babylonjs';
+import BABYLON from 'babylonjs'; // Mesh, Vector3, Quaternion
 
 class AdderModel {
-    constructor(_newModelFile = null, _newArrayOfMeshWrappers = null, _newPosition = null, _newRotation = null) {
+    constructor(modelFile = null, parentMesh = null, arrayOfMeshWrappers = null, position = null, rotation = null) {
 
-        if (_newModelFile === "" || typeof _newModelFile !== "string") {
-            throw new Error("AdderModel.getModelFile():  Constructor was sent an unspecified _newModelFile (Requires a string for file name.");
+
+
+        if (modelFile === "" || typeof modelFile !== "string") {
+            throw new Error("AdderModel.getModelFile():  Constructor was sent an unspecified modelFile (Requires a string for file name.");
         }
-        /*
-        if(!(_newPosition instanceof Vector3)) {
-            throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newPosition (Requires: BABYLON.Vector3 )")
+
+        if (position === null || !(position instanceof BABYLON.Vector3)) {
+            // throw new Error("AdderModel.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )")
+            position = new BABYLON.Vector3(0, 0, 0);
+        } else {
+            position = position;// = new BABYLON.Vector3(0, 0, 0);
         }
-        if( !(_newRotation instanceof Quaternion) ){
-            throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newRotation (Requires: BABYLON.Quaternion ")
+        if (!(rotation instanceof BABYLON.Quaternion)) {
+            //  throw new Error("AdderModel.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
+            rotation = new BABYLON.Quaternion(0, 0, 0);
+        } else {
+
         }
-        */
+
+        if (parentMesh === null || !(parentMesh instanceof BABYLON.Mesh)) {
+            throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newMeshParent (Requires: BABYLON.Mesh ")
+        }
+
+        let _modelFile = modelFile;
+        let _parentMesh = parentMesh;
+        let _arrayOfMeshWrappers = arrayOfMeshWrappers;
+        let _position = position;
+        let _rotation = rotation;
+       
 
         this.getModelFile = () => {
             return _modelFile;
         }
-        this.getPosition = () => {
-
-        }
-        this.getRotation = () => {
-
-        }
-
-        this.setPosition = (_newPosition) => {
-            if(!(_newPosition instanceof Vector3)) {
-                throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newPosition (Requires: BABYLON.Vector3 )")
+        this.setModelFile = (modelFile) => {
+            if (modelFile === "" || typeof modelFile !== "string") {
+                throw new Error("AdderModel.getModelFile():  Constructor was sent an unspecified modelFile (Requires a string for file name.");
             }
-            console.log("SETTING position for : ",this.getModelFile())
-            console.log(_newPosition);
-            this._position = _newPosition;
-
+            _modelFile = modelFile;
         }
-        this.setRotation = (_newRotation) => {
-            if( !(_newRotation instanceof Quaternion) ){
-                throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newRotation (Requires: BABYLON.Quaternion ")
+        
+        this.setParentMesh = (parentMesh) => {
+            _parentMesh = parentMesh;
+        }
+        this.getParentMesh = () => {
+            return _parentMesh;
+        }
+        this.setParentMeshPosition = (positionVector3) => {
+            
+            if (!(positionVector3 instanceof BABYLON.Vector3)) {
+                throw new Error(`AdderModel:setParentMeshPosition  Expects a Vector3 as a parameter.`)
             }
-            _rotation = _newRotation;
+            _parentMesh.setPositionWithLocalVector(positionVector3)
         }
-
-
-
+      
         // adderModel.setMeshWrappers(arrayOfMeshWrappers)
         this.setMeshWrappers = (newArrayOfMeshWrappers) => {
             //check to make sure correct object HERE ? 
             console.log("check the type of the array getting sent in to AdderModel as Array of Mesh Wrappers.....")
+            console.log("SETTING meshWrappers for : ", this.getModelFile())
             console.log(typeof newArrayOfMeshWrappers);
             _arrayOfMeshWrappers = newArrayOfMeshWrappers
         }
         this.getMeshWrappers = () => {
             return _arrayOfMeshWrappers;
         }
-        let _modelFile = _newModelFile;
-        let _arrayOfMeshWrappers = _newArrayOfMeshWrappers;
-        let _position = _newPosition
-        let _rotation = _newRotation
-
-        this.getPosition = () => { return _position }
-        this.getRotation = () => { return _rotation }
-        
 
 
 
-    }
+
+
+
+
+    }// end constructor 
 
 
 

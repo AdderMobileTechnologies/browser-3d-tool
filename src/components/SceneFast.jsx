@@ -4,108 +4,114 @@ import BABYLON from 'babylonjs'
 import AdderModel from '../models/model'
 import MeshWrapper from '../models/meshWrapper'
 import AdderCamera from '../models/camera'
+/*
+DEV NOTES: 
+despite the fact that I changed the path to the city images to this... "http://dbdev.adder.io/assets/CITY/KC9_images/Roadtilecross.jpg" 
+the code tries to look for it under the 'CITY' directory, so I just moved it their for now to get the images working.  not sure where the disconnnect is.
+*/
 
 class SceneFast extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		}
-
+		this.state = {}
 	}
-
 	componentDidMount() {
 
 		let canvas = document.getElementById("gui_canvas_container");
 		let engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
 
-
 		var createScene = function () {
-
 			var scene = new BABYLON.Scene(engine);
-			
 			//use adderCamera class
-			const options = { lowerRadiusLimit: 0, upperRadiusLimit: 200 , useAutoRotationBehavior:true, attachControl:true}
+			const options = { lowerRadiusLimit: 0, upperRadiusLimit: 200, useAutoRotationBehavior: true, attachControl: true }
 			let adderCam_arcRotate = new AdderCamera(canvas, "ArcRotateCamera", "AdderCam_One", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene, true, options)
 			let camera = adderCam_arcRotate.getCamera(scene);
 			camera.attachControl(canvas, true);
-
-			 //TODO: look in into get/set for all parameters 
-			const options2 = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:false, attachControl:true}
-			//adderCam_arcRotate.setOptions(options2)
-
+			const options2 = { lowerRadiusLimit: 6, upperRadiusLimit: 10, useAutoRotationBehavior: false, attachControl: true }
 			var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 			light.intensity = 0.7;
-
 			var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 12, height: 12 }, scene);
 			ground.position.y = -1;
 			return scene;
-
 		};
-
-
 
 		var scene = createScene();
 		scene.autoClear = true;
-
 
 		function asyncLoadAScene() {
 
 			async function loadModelAsync(adderModel) {
 				let meshNames = "";
-				let rootUrl = "http://dbdev.adder.io/assets/" + adderModel.getModelFile();
-				let result = await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl, "", scene);
+				let rootUrl = "http://dbdev.adder.io/assets/"  ;
+				let sceneFileName = adderModel.getModelFile();
+				//'scene' already defined.
+				let onProgress = null;
+				let pluginExtension = null;
+				/*  constructor()
+					SceneLoader.ImportMeshAsync(
+						meshNames: any, 
+						rootUrl: string, 
+						sceneFilename?: string | File,
+						scene?: Nullable<Scene>, 
+						onProgress?: Nullable<function>, 
+						pluginExtension?: Nullable<string>
+					)
+					: Promise<object>
+					https://doc.babylonjs.com/api/classes/babylon.sceneloader
+				*/
+				let result = await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl, sceneFileName, scene);
 				await handleModelAsyncResolve(adderModel, result);
 			}
-			let porscheModelObject = new AdderModel("porsche2.2.babylon");  
-			console.log("porscheModelObject:",porscheModelObject);
-			porscheModelObject.setPosition( new BABYLON.Vector3(0, +10, 0));
-			loadModelAsync(porscheModelObject);
-console.log(porscheModelObject.getModelFile());
-console.log(porscheModelObject.getMeshWrappers()); 
-
-
-			let importedModelObject = new AdderModel("kc9BG06.babylon");  
-			loadModelAsync(importedModelObject);
-			importedModelObject.setPosition( new BABYLON.Vector3(0, -10, 0));
-
-			//let pobox = new AdderModel("CITY/street_items/misc/pobox.babylon");  
-			//loadModelAsync(pobox);
-
-			let bike = new AdderModel("bike.babylon");  
-			bike.setPosition( new BABYLON.Vector3(0, 0, 0));
-			loadModelAsync(bike);
-
-			let blocks_all_4 = new AdderModel("blocks_all_4.babylon");
-			console.log("blocks_all_4:",blocks_all_4)
-			blocks_all_4.setPosition( new BABYLON.Vector3(0, 0, 0));
-			loadModelAsync(blocks_all_4);
+			///////////////////////////////////////////////////////////////////////////////
 		
+			//CREATE ADDER MODEL 
+			let minimal_cube_mesh_parent =  generateMeshParent("minimal_cube_model");
+			let minimal_cube = new AdderModel("minimal_cube.babylon",minimal_cube_mesh_parent);
+			minimal_cube.setParentMesh(minimal_cube_mesh_parent);
+			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(-5,0,0))
+			loadModelAsync(minimal_cube);
 
 
+			//create a second model with a different parent for location 
+			let minimal_cube_mesh_parent2 =  generateMeshParent("minimal_cube_model2");
+			let minimal_cube2 = new AdderModel("minimal_cube.babylon",minimal_cube_mesh_parent2);
+			minimal_cube2.setParentMesh(minimal_cube_mesh_parent2);
+			minimal_cube2.setParentMeshPosition(new BABYLON.Vector3(5,0,0))
+			loadModelAsync(minimal_cube2);
 
+			/////////////////////////////////////////////////////////////////////////////////////////
+			 
+ 
 
-
-
-			var myMeshes = importedModelObject.getMeshWrappers();
 			function handleModelAsyncResolve(adderModel, result) {
-				//For each mesh I should create a 'mesh class instance' and set it's parent 'model'
+				console.log("handleModelAsyncResolve");
+				console.log("adderModel:",adderModel);
+				console.log("result:",result);
+				
 				const arrayOfMeshWrappers = []
 				result.meshes.forEach(function (mesh) {
+					mesh.parent = adderModel.getParentMesh()
 					let newMeshWrapper = new MeshWrapper(mesh, null, null)
 					arrayOfMeshWrappers.push(newMeshWrapper)
 				});
 				adderModel.setMeshWrappers(arrayOfMeshWrappers);
-				// LEFT OFF HERE: wondering why setting the position of these new models seems to have no effect yet. 
-				// 8-26-2019 
-				
-				//create an array of mewshWrapper instances and them and then use <class>.setMeshWrappers(<Array of MeshWrappers>)
-				//console.log("adder model:");
-				//console.log(adderModel.getMeshWrappers());
 			};
 
 		};
+
+		function generateMeshParent(name){
+			let unitVec = new BABYLON.Vector3(1, 1, 1);
+			let mesh_parentOptions = {width: 0, height: 0, depth: 0}
+			let mesh_parent = BABYLON.MeshBuilder.CreateBox(name, mesh_parentOptions, scene);
+			mesh_parent.isVisible = false;
+			mesh_parent.scaling = unitVec.scale(1);
+			mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
+			return mesh_parent;
+		}
+
+	 
+
 		asyncLoadAScene();
 
 		engine.runRenderLoop(function () {
@@ -122,9 +128,6 @@ console.log(porscheModelObject.getMeshWrappers());
 			engine.resize();
 		});
 	}
-
-
-
 	render() {
 		return (
 
@@ -140,47 +143,3 @@ console.log(porscheModelObject.getMeshWrappers());
 }
 
 export default SceneFast
-
-/* LIFECYCLE METHODS:
-   componentWillReceiveProps(){ }
-   componentWillMount(){ }
-   componentDidMount(){ }
-   componentWillUpdate(){ }
-   componentDidUpdate(){ }
-   componentWillUnmount(){ }
-*/
-/**
- * https://www.babylonjs-playground.com/
-var createScene = function () {
-
-	// This creates a basic Babylon Scene object (non-mesh)
-	var scene = new BABYLON.Scene(engine);
-
-	// This creates and positions a free camera (non-mesh)
-	var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-
-	// This targets the camera to scene origin
-	camera.setTarget(BABYLON.Vector3.Zero());
-
-	// This attaches the camera to the canvas
-	camera.attachControl(canvas, true);
-
-	// This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-	var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-
-	// Default intensity is 1. Let's dim the light a small amount
-	light.intensity = 0.7;
-
-	// Our built-in 'sphere' shape.
-	var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
-
-	// Move the sphere upward 1/2 its height
-	sphere.position.y = 1;
-
-	// Our built-in 'ground' shape.
-	var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
-
-	return scene;
-
-};
- */
