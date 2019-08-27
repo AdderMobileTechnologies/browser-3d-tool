@@ -1,33 +1,48 @@
 //purpose: to create a class for  models or collections of meshes 
+/*
+An AdderModel has these arguments in its constructor:
+The modelFile is the filepath to the .babylon file  that corresponds to the model.
+The parentMesh is an invisible mesh that is there to provide a single point of control over the model and all it's meshes, or 'mesh wrappers.'
+The postion is the vector3 space that the model is to occupy in the scene.
+The rotationAxis is the Vector3 axis upon which any rotationAngle, or 'number' will be applied.
+The rotaionAngle is a number that represents the angle or degress of rotation. 
+The 'arrayOfMeshWrappers' is an array of a wrapper class that encompasses each individual mesh that makes up a model. ie. If 
+the model is a car. Then the 'left door' , 'the front bumper', etc . are individual meshes. 
+*/
+
+
 import BABYLON from 'babylonjs'; // Mesh, Vector3, Quaternion
 
 class AdderModel {
-    constructor(modelFile = null, parentMesh = null, arrayOfMeshWrappers = null, position = null, rotation = null) {
+    constructor(modelFile = null, parentMesh = null, position = null, rotationAxis = null, rotationAngle = null, arrayOfMeshWrappers = null) {
 
         if (modelFile === "" || typeof modelFile !== "string") {
-            throw new Error("AdderModel.getModelFile():  Constructor was sent an unspecified modelFile (Requires a string for file name.");
+            throw new Error("AdderModel.Constructor():  Constructor was sent an unspecified modelFile (Requires a string for file name.");
         }
         if (parentMesh === null || !(parentMesh instanceof BABYLON.Mesh)) {
-            throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newMeshParent (Requires: BABYLON.Mesh ")
+            throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newMeshParent (Requires: BABYLON.Mesh ");
+        }
+        if (position === null || !(position instanceof BABYLON.Vector3)) {
+            throw new Error("AdderModel.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )");
+        }
+        
+        if (rotationAxis === null || !(rotationAxis instanceof BABYLON.Vector3)) {
+            throw new Error(`AdderModel:Constructor() The rotationAxis expects a Vector3 parameter.`);
+        }
+        
+        if (rotationAngle === null || (typeof rotationAngle !== "number") ) {
+            throw new Error(`AdderModel:Constructor() The rotationAngle expects a number as a parameter.`);
         }
 
-        if (position === null || !(position instanceof BABYLON.Vector3)) {
-            // throw new Error("AdderModel.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )")
-            position = new BABYLON.Vector3(0, 0, 0);
-        }  
-        if (!(rotation instanceof BABYLON.Quaternion)) {
-            //  throw new Error("AdderModel.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
-            rotation = new BABYLON.Quaternion(0, 0, 0);
-        } 
-
-       
 
         let _modelFile = modelFile;
         let _parentMesh = parentMesh;
-        let _arrayOfMeshWrappers = arrayOfMeshWrappers;
+
         let _position = position;
-        let _rotation = rotation;
-       
+        let _arrayOfMeshWrappers = arrayOfMeshWrappers;
+        let _rotationAxis = rotationAxis;
+        let _rotationAngle = rotationAngle;
+
 
         this.getModelFile = () => {
             return _modelFile;
@@ -44,27 +59,21 @@ class AdderModel {
         this.setParentMesh = (parentMesh) => {
             _parentMesh = parentMesh;
         }
-       
+
         this.setParentMeshPosition = (positionVector3) => {
-            
+
             if (!(positionVector3 instanceof BABYLON.Vector3)) {
                 throw new Error(`AdderModel:setParentMeshPosition  Expects a Vector3 as a parameter.`)
             }
             _parentMesh.setPositionWithLocalVector(positionVector3)
         }
 
-        this.setParentMeshRotation = (axis , angle) => {
-            
-          /*  if (!(rotationQuaternion instanceof BABYLON.Quaternion)) {
-                throw new Error(`AdderModel:setParentMeshRotation  Expects a Quaternion as a parameter.`)
-            }*/
-            if(!(axis instanceof BABYLON.Vector3) || typeof angle !== "number" ){
+        this.setParentMeshRotation = (axis, angle) => {
+            if (!(axis instanceof BABYLON.Vector3) || typeof angle !== "number") {
                 throw new Error(`AddeModel:setParentMeshRotation() expected both a Vector3 for axis and a number for rotation. `)
             }
-           
             var quaternion = new BABYLON.Quaternion.RotationAxis(axis, angle);
             _parentMesh.rotationQuaternion = quaternion;
-           // _parentMesh.setRotationWithLocalVector(positionVector3)
         }
 
         this.getMeshWrappers = () => {
@@ -73,7 +82,7 @@ class AdderModel {
         this.setMeshWrappers = (newArrayOfMeshWrappers) => {
             _arrayOfMeshWrappers = newArrayOfMeshWrappers
         }
-       
+
 
     }// end constructor 
 }
