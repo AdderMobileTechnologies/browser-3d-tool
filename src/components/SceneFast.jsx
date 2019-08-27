@@ -26,7 +26,7 @@ class SceneFast extends React.Component {
 			var scene = new BABYLON.Scene(engine);
 			
 			//use adderCamera class
-			const options = { lowerRadiusLimit: 6, upperRadiusLimit: 10 , useAutoRotationBehavior:true, attachControl:true}
+			const options = { lowerRadiusLimit: 0, upperRadiusLimit: 200 , useAutoRotationBehavior:true, attachControl:true}
 			let adderCam_arcRotate = new AdderCamera(canvas, "ArcRotateCamera", "AdderCam_One", Math.PI / 2, Math.PI / 2, 10, BABYLON.Vector3.Zero(), scene, true, options)
 			let camera = adderCam_arcRotate.getCamera(scene);
 			camera.attachControl(canvas, true);
@@ -58,9 +58,37 @@ class SceneFast extends React.Component {
 				let result = await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl, "", scene);
 				await handleModelAsyncResolve(adderModel, result);
 			}
-			let porscheModelObject = new AdderModel("porsche2.2.babylon")
+			let porscheModelObject = new AdderModel("porsche2.2.babylon");  
+			console.log("porscheModelObject:",porscheModelObject);
+			porscheModelObject.setPosition( new BABYLON.Vector3(0, +10, 0));
 			loadModelAsync(porscheModelObject);
-			var myMeshes = porscheModelObject.getMeshWrappers();
+console.log(porscheModelObject.getModelFile());
+console.log(porscheModelObject.getMeshWrappers()); 
+
+
+			let importedModelObject = new AdderModel("kc9BG06.babylon");  
+			loadModelAsync(importedModelObject);
+			importedModelObject.setPosition( new BABYLON.Vector3(0, -10, 0));
+
+			//let pobox = new AdderModel("CITY/street_items/misc/pobox.babylon");  
+			//loadModelAsync(pobox);
+
+			let bike = new AdderModel("bike.babylon");  
+			bike.setPosition( new BABYLON.Vector3(0, 0, 0));
+			loadModelAsync(bike);
+
+			let blocks_all_4 = new AdderModel("blocks_all_4.babylon");
+			console.log("blocks_all_4:",blocks_all_4)
+			blocks_all_4.setPosition( new BABYLON.Vector3(0, 0, 0));
+			loadModelAsync(blocks_all_4);
+		
+
+
+
+
+
+
+			var myMeshes = importedModelObject.getMeshWrappers();
 			function handleModelAsyncResolve(adderModel, result) {
 				//For each mesh I should create a 'mesh class instance' and set it's parent 'model'
 				const arrayOfMeshWrappers = []
@@ -69,7 +97,9 @@ class SceneFast extends React.Component {
 					arrayOfMeshWrappers.push(newMeshWrapper)
 				});
 				adderModel.setMeshWrappers(arrayOfMeshWrappers);
-
+				// LEFT OFF HERE: wondering why setting the position of these new models seems to have no effect yet. 
+				// 8-26-2019 
+				
 				//create an array of mewshWrapper instances and them and then use <class>.setMeshWrappers(<Array of MeshWrappers>)
 				//console.log("adder model:");
 				//console.log(adderModel.getMeshWrappers());

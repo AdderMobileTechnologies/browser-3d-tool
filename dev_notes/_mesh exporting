@@ -1,0 +1,20 @@
+There are two ways that work for me right now. 
+1) export as babylon.js file 
+2) export as .obj 
+
+The pros and cons:
+exporting as babylon.js we can see the parameters we need clearly.
+exporting as .obj we can not see the parameters we need , in fact they might not be there upon first glance at the file.
+
+So, since a straight export as babylon.js included cameras, and lights, that I did not need. I'll try to delete those and then export as babylon.js (*bjs)
+
+
+
+Process: 
+1) Picked out an item, for instance the 'house' llike building on the corner.
+2) exported it as an .obj file.
+3) imported it into a blank new blender file and removed any lights or cameras 
+    a) it appeared to maintain it's previous position and rotation .
+4) export it as a .babylon   file 
+5) now I should be able to import it as a model into the 3D tool.
+

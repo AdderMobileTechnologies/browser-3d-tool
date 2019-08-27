@@ -1,3 +1,10 @@
 .App {
     text-align: center;
 }
+.babylonjsCanvasContainer{
+    position:relative;
+}
+.babylonjsCanvas{
+    width:100%;
+    height:auto;
+}
