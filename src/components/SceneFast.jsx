@@ -71,6 +71,10 @@ class SceneFast extends React.Component {
 			minimal_cube.setParentMesh(minimal_cube_mesh_parent);
 			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(0,-1,0))
 			loadModelAsync(minimal_cube);
+			var axis = new BABYLON.Vector3(0, 0, 1);
+			var angle = Math.PI/8;
+			angle = 45;
+			minimal_cube.setParentMeshRotation(axis, angle)
 
 
 			//create a second model with a different parent for location 
