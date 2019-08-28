@@ -51,7 +51,7 @@ class AdderCamera {
         if (typeof _newOptions !== "object") {
             throw new Error(`Camera:Constructor() The constructor expects an Array for the _newOptions parameter.`)
         } else {
-            console.log("_newOptions are: ", _newOptions)
+            //console.log("_newOptions are: ", _newOptions)
             
         }
 
@@ -105,32 +105,50 @@ class AdderCamera {
             throw new Error(`Constructor:setOptions() The setOptions method expects a JSON object for options.`);
         } else {
             this.setAttachControl(this.getCanvas, true)
+            this.lowerBetaLimit = 0
+            this.upperBetaLimit = 10
+            
         }
     }
    
 
 
     getCamera(scene) {
-        var camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, Vector3.Zero(), scene);
+        var camera = new ArcRotateCamera(this.getName(), this.getBeta(), this.getAlpha(), this.getRadius(), this.getTarget(), scene);
         //camera.attachControl(this.getCanvas(), true);
         //camera.setAttachControl(this.getCanvas(),true)
         let options = this.getOptions();
-        console.log("options:",options);
-        console.log("this:",options.lowerRadiusLimit);
-       
-        let upperRadiusLimit = options.upperRadiusLimit;
-        camera.upperRadiusLimit = upperRadiusLimit
 
-        if(typeof options.lowerRadiusLimit !== "undefined"){
-            let lowerRadiusLimit = options.lowerRadiusLimit;
-            camera.lowerRadiusLimit = lowerRadiusLimit;
-        }
+        if(options != null && typeof options != "" && typeof options != "undefined" && typeof options != null ){
 
-        if(typeof options.useAutoRotationBehavior !== "undefined"){
-            let useAutoRotationBehavior = options.useAutoRotationBehavior;
-            camera.useAutoRotationBehavior = useAutoRotationBehavior;
-        }
+            //console.log("options:",options);
+            //console.log("this:",options.lowerRadiusLimit);
+            //console.log("check fake options: ");
+            //console.log(options.monkey);
+            //console.log(typeof console.monkey);
+
+            camera.upperRadiusLimit = options.upperRadiusLimit;
+            camera.lowerBetaLimit = options.lowerBetaLimit;
+            camera.upperBetaLimit = options.upperBetaLimit;
+            camera.lowerAlphaLimit = options.lowerAlphaLimit;
+            camera.upperAlphaLimit = options.upperAlphaLimit;
+
+            
+            if(typeof options.lowerRadiusLimit !== "undefined"){
+                let lowerRadiusLimit = options.lowerRadiusLimit;
+                camera.lowerRadiusLimit = lowerRadiusLimit;
+            }
+
+            if(typeof options.useAutoRotationBehavior !== "undefined"){
+                let useAutoRotationBehavior = options.useAutoRotationBehavior;
+                camera.useAutoRotationBehavior = useAutoRotationBehavior;
+            }
        
+
+       }
+        
+      
+
 
 
 

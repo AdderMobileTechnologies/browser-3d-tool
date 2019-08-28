@@ -1,0 +1,19 @@
+{ "meta_data":
+ [
+   
+    
+    {
+        "vehicle_2door_sportscar":{
+            "filepath":"porsche/porsche2.2.babylon",
+            "uid":"123abc"
+        }
+    },
+     {
+        "vehicle_4door_stationwagon":{
+            "filepath":"vw_toureg/vw_toureg-1.5.babylon",
+            "uid":"222abc"
+        }
+    }
+ ]
+
+}
