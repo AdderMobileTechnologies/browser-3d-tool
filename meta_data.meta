@@ -4,6 +4,8 @@
     
     {
         "vehicle_2door_sportscar":{
+            "dir":"porsche",
+            "filename":"porsche2.2",
             "filepath":"porsche/porsche2.2.babylon",
             "uid":"123abc"
         }

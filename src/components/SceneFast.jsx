@@ -20,11 +20,9 @@ class SceneFast extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {}
-
-
-
-
+		this.state = {
+			meta_data: {}
+		}
 	}
 
 
@@ -52,30 +50,39 @@ class SceneFast extends React.Component {
 		let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
 		let defaultLocalRotationAngle = 0;
 
+		//let that = this;
 
-		
-			 var promise1 = new Promise(function (resolve, reject) {
-				const url = `${API_URL}/meta`;
-				 axios.get(url).then(response => response.data)
-					.then((data) => {
-					 	resolve(data);
-					})
-	
-			});
-			promise1.then(function (value) {
-				console.log("THE META DATA DATA:")
-				console.log(value);
-				//this.afterComponentMounted(value);
+		var promise1 = new Promise(function (resolve, reject) {
+			const url = `${API_URL}/meta`;
+			axios.get(url).then(response => response.data)
+				.then((data) => {
+					resolve(data);
+				})
+
+		});
+		promise1.then(function (value) {
+			console.log("THE META DATA DATA:")
+			console.log(value);
+			//console.log(value.meta_data[0]['vehicle_2door_sportscar']['filepath']);
+			/* that.setState({
+				 meta_data: value,
+			 })*/
+			// let dir = `porsche/`;
+			// let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
+			// addArrayOfMiscellaneousModels(dir, array);
+			let dir = value.meta_data[0]['vehicle_2door_sportscar']['dir'];
+			let filename = value.meta_data[0]['vehicle_2door_sportscar']['filename'];
+			let array = [filename]//FAILED MODELS: `kcpbg06`, `pobox`,
+			addArrayOfMiscellaneousModels(dir, array);
+
+		});
 
 
-			});
-		
 
 
-		
 
-		 
-	
+
+
 		console.log("DIRECTLTY AFTER AXIOS ")
 
 		let canvas = document.getElementById("gui_canvas_container");
@@ -83,12 +90,16 @@ class SceneFast extends React.Component {
 
 		let createScene = function () {
 			let scene = new BABYLON.Scene(engine);
-			//use adderCamera class
-			//const options = { lowerRadiusLimit: 5, upperRadiusLimit: 200, useAutoRotationBehavior: true, attachControl: true }
-			//====>
-			//===> 
-			//NOTE: upper and lower are number values not 
-			const options = { lowerAlphaLimit: -Math.PI, upperAlphaLimit: Math.PI, lowerBetaLimit: 0, upperBetaLimit: Math.PI / 2.2, lowerRadiusLimit: 5, upperRadiusLimit: 200, useAutoRotationBehavior: false, attachControl: true }
+			const options = {
+				lowerAlphaLimit: -Math.PI,
+				upperAlphaLimit: Math.PI,
+				lowerBetaLimit: 0,
+				upperBetaLimit: Math.PI / 2.2,
+				lowerRadiusLimit: 5,
+				upperRadiusLimit: 200,
+				useAutoRotationBehavior: false,
+				attachControl: true
+			}
 
 			/**
 			 *     constructor(_newCanvas = null, _newType = null, _newName = null, _newAlpha = null, _newBeta = null,
@@ -132,35 +143,22 @@ class SceneFast extends React.Component {
 			let result = await BABYLON.SceneLoader.ImportMeshAsync(meshNames, rootUrl, sceneFileName, scene);
 			await handleModelAsyncResolve(adderModel, result);
 		}
-		 
 
 
-		function minimalCubeExample() {
-			//CREATE ADDER MODEL 
-			let minimal_cube_mesh_parent = generateMeshParent("minimal_cube_model");
-			let minimal_cube_mesh_position = new BABYLON.Vector3(0, -1, 0);
-			let minimal_cube = new AdderModel("minimal_cube.babylon", minimal_cube_mesh_parent, minimal_cube_mesh_position, defaultLocalRotationAxis, defaultLocalRotationAngle);
-			minimal_cube.setParentMesh(minimal_cube_mesh_parent);
-			minimal_cube.setParentMeshPosition(new BABYLON.Vector3(-3, -1, 0))
-			loadModelAsync(minimal_cube);
-			let axis = new BABYLON.Vector3(0, 0, 1);
-			let angle = 45;
-			minimal_cube.setParentMeshRotation(axis, angle)
-		}
 
-		 
+	 
+
+
 		function addArrayOfMiscellaneousModels(dir, array) {
 			//console.log("addArrayOfMiscellaneousModels(array):")
 			for (let arr of array) {
-				let generic = createParentMeshForAdderModel(dir + arr, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+				let generic = createParentMeshForAdderModel(dir + "/" + arr, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
 				loadModelAsync(generic);
 				generic.setParentMeshPosition(VectorZero)
 			}
 		}
-		let dir = `CITY/`;
-		let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
-		addArrayOfMiscellaneousModels(dir, array);
-		 
+
+
 		/*
 			let block1v2 = createParentMeshForAdderModel("block1v2",cityVectorAdjustment,defaultLocalRotationAxis,defaultLocalRotationAngle);
 			block1v2.setParentMeshPosition(cityVectorAdjustment)
@@ -188,9 +186,7 @@ class SceneFast extends React.Component {
 			return mesh_parent;
 		}
 		function handleModelAsyncResolve(adderModel, result) {
-			//console.log("handleModelAsyncResolve");
-			//console.log("adderModel:", adderModel);
-			//console.log("result:", result);
+
 			const arrayOfMeshWrappers = []
 			result.meshes.forEach(function (mesh) {
 				mesh.parent = adderModel.getParentMesh()
@@ -200,7 +196,9 @@ class SceneFast extends React.Component {
 			adderModel.setMeshWrappers(arrayOfMeshWrappers);
 		};
 
-
+		let dir = `CITY`;
+		let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
+		addArrayOfMiscellaneousModels(dir, array);
 
 		engine.runRenderLoop(function () {
 			if (typeof scene === 'undefined') {
