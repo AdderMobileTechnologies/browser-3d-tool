@@ -72,8 +72,8 @@ class SceneFast extends React.Component {
 			// addArrayOfMiscellaneousModels(dir, array);
 			let dir = value.meta_data[0]['vehicle_2door_sportscar']['dir'];
 			let filename = value.meta_data[0]['vehicle_2door_sportscar']['filename'];
-			let array = [filename]//FAILED MODELS: `kcpbg06`, `pobox`,
-			addArrayOfMiscellaneousModels(dir, array);
+			//let array = [filename]//FAILED MODELS: `kcpbg06`, `pobox`,
+			addSingleModel(dir, filename);
 
 		});
 
@@ -144,8 +144,40 @@ class SceneFast extends React.Component {
 			await handleModelAsyncResolve(adderModel, result);
 		}
 
+		function addSingleModel(dir, filename) {
+			console.log("addSingleModel(dir, filename)",dir,filename);
+			console.log("scene:",scene);
+			let adderModel = new AdderModel(scene,dir +"/"+ filename + `.babylon`, null, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+			loadModelAsync(adderModel);
+			// TODO : LEFT OFF HERE:
+			// UNCOMMENT THESE TWO LINES AND START TROUBLE SHOOTING.
+			//let newPosition = new BABYLON.Vector3(7,1,0)
+			//adderModel.setParentMeshPosition(newPosition)
+			
+			// ERROR: ×   Unhandled Rejection (TypeError): Cannot read property 'setPositionWithLocalVector' of null  !!!!!!!!!!!!!!!!!
+			
+		}
+		function addSingleModelv1(dir, filename) {
+			console.log("addSingleModel(dir, filename)",dir,filename);
+				//TODO: figure out how to create the mesh parent during the original construction of the AdderModel object.
+				let generic = createParentMeshForAdderModel(dir + "/" + filename, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+				
+				//let adderModelParentMesh = generateMeshParent(dir + filename + `ParentMesh`);
+				//let adderModel = new AdderModel(scene,dir + filename + `.babylon`, adderModelParentMesh, position, rotation, angle);
+				//let generic = new AdderModel(scene, dir + filename + `.babylon`, null, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
+				
+				loadModelAsync(generic);
+				generic.setParentMeshPosition(new BABYLON.Vector3(7,1,0))
+			
+		}
+		function createParentMeshForAdderModel(filename, position, rotation, angle) {
+			let adderModelParentMesh = generateMeshParent(filename + `ParentMesh`);
+			let adderModel = new AdderModel(scene,filename + `.babylon`, adderModelParentMesh, position, rotation, angle);
+			//adderModel.setParentMesh(adderModelParentMesh);
+			loadModelAsync(adderModel);
 
-
+			return adderModel;
+		}
 	 
 
 
@@ -168,14 +200,7 @@ class SceneFast extends React.Component {
 			loadModelAsync(crane);
 			crane.setParentMeshPosition(new BABYLON.Vector3(-8,-1,0))
 		*/
-		function createParentMeshForAdderModel(filename, position, rotation, angle) {
-			let adderModelParentMesh = generateMeshParent(filename + `ParentMesh`);
-			let adderModel = new AdderModel(filename + `.babylon`, adderModelParentMesh, position, rotation, angle);
-			adderModel.setParentMesh(adderModelParentMesh);
-			loadModelAsync(adderModel);
-
-			return adderModel;
-		}
+		
 		function generateMeshParent(name) {
 			let unitVec = new BABYLON.Vector3(1, 1, 1);
 			let mesh_parentOptions = { width: 0, height: 0, depth: 0 }
