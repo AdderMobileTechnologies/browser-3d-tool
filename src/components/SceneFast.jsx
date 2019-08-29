@@ -38,69 +38,39 @@ class SceneFast extends React.Component {
 		}
 	}
 
-
 	componentDidMount() {
-
-
 		let cityVectorAdjustment = new BABYLON.Vector3(70, -1, 20);
 		let alternativeVector = new BABYLON.Vector3(70, 5, 20);
 		let vectorZero = new BABYLON.Vector3(0, 0, 0);
 		let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
 		let defaultLocalRotationAngle = 0;
-
 		var promise1 = new Promise(function (resolve, reject) {
 			const url = `${API_URL}/meta`;
 			axios.get(url).then(response => response.data)
 				.then((data) => {
 					resolve(data);
 				})
-
 		});
-
 		promise1.then(function (value) {
-
-				console.log(value.meta_data[0]);
-				console.log(value.meta_data[1]);
-
-			let dir = value.meta_data[0]['vehicle_2door_sportscar']['dir'];
-			let filename = value.meta_data[0]['vehicle_2door_sportscar']['filename'];
-			let position = value.meta_data[0]['vehicle_2door_sportscar']['position'];
-			let rotation = value.meta_data[0]['vehicle_2door_sportscar']['rotation'];
-			let scaling = value.meta_data[0]['vehicle_2door_sportscar']['scaling'];
-			console.log("-----porsche:scaling:", scaling);
-			addSingleModel(dir, filename, position, rotation, scaling);
-
-			let dir_vw = value.meta_data[1]['vehicle_4door_stationwagon']['dir'];
-			let filename_vw = value.meta_data[1]['vehicle_4door_stationwagon']['filename'];
-			let position_vw = value.meta_data[1]['vehicle_4door_stationwagon']['position'];
-			let rotation_vw = value.meta_data[1]['vehicle_4door_stationwagon']['rotation'];
-			let scaling_vw = value.meta_data[1]['vehicle_4door_stationwagon']['scaling'];
-			console.log("-----vw:scaling:", scaling_vw);
-			 
-			addSingleModel(dir_vw, filename_vw, position_vw, rotation_vw, scaling_vw);
-
-			let dir_streetLight = value.meta_data[2]['streetLight']['dir'];
-			let filename_streetLight = value.meta_data[2]['streetLight']['filename'];
-			let position_streetLight = value.meta_data[2]['streetLight']['position'];
-			let rotation_streetLight = value.meta_data[2]['streetLight']['rotation'];
-			let scaling_streetLight = value.meta_data[2]['streetLight']['scaling'];
-				
-			addSingleModel(dir_streetLight, filename_streetLight, position_streetLight, rotation_streetLight, scaling_streetLight);
-
-
+			//TODO: Think about whether this should loop through all meshes in the meta data 
+			// or if this should be a one at a time kind of deal ? 
+			/* [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`] */
+			for (let k = 0; k < value.meta_data.length; k++){
+				console.log("k:",value.meta_data[k])
+				let dir = value.meta_data[k]['dir'];
+				let filename = value.meta_data[k]['filename'];
+				let position = value.meta_data[k]['position'];
+				let rotation = value.meta_data[k]['rotation'];
+				let scaling = value.meta_data[k]['scaling'];
+				addSingleModel(dir, filename, position, rotation, scaling);
+			}
 		});
 		 
 		function addSingleModel(dir, filename, position, rotation, scaling) {
 
 			let positionVect = new BABYLON.Vector3(position.x, position.y, position.z);
 			let rotationAxisVect = new BABYLON.Vector3(rotation.axis.x, rotation.axis.y, rotation.axis.z);
-			var rotationAngle = parseInt(rotation.angle);
-			console.log("THE ROTATION OBJECT:");
-			console.log(rotation);
-			console.log("ROTATION ANGLE : ");
-			console.log(rotationAngle);
-			//converting Degrees to Radians:
-			//let rotationRadian = rotationAngle * (Math.PI/180);
+			var rotationAngle = parseFloat(rotation.angle);
 			let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
 			let modelFile =  dir + "/" + filename + `.babylon`;
 			let adderModel = new AdderModel(scene, modelFile, null, positionVect, rotationAxisVect, rotationAngle, [] , scalingVect);
@@ -123,15 +93,7 @@ class SceneFast extends React.Component {
 			//Scaling:
 			let scalingFactorX = adderModel.getScaling();
 			adderModelParent.scaling = scalingFactorX;
-
-
-
-
 		}
-
-
-
-
 
 		let canvas = document.getElementById("adder_3dTool_canvas");
 		let engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
@@ -195,6 +157,9 @@ class SceneFast extends React.Component {
 			//make adderModel parent mesh, the parent of all individual meshes.
 			//wrap each mesh in the meshWrapper class and build the array.
 			//add the array to the model.
+			//TODO: If we added 'isPickable' to the model meta data, and used it in the constructor, then we could use it here,
+			// to add mesh specific qualities.
+			
 			result.meshes.forEach(function (mesh) {
 				mesh.parent = adderModel.getParentMesh()
 				let newMeshWrapper = new MeshWrapper(mesh, null, null)
@@ -202,56 +167,8 @@ class SceneFast extends React.Component {
 			});
 			adderModel.setMeshWrappers(meshWrappers);
 		};
-
-
-		function addSingleModelv1(dir, filename) {
-			console.log("addSingleModel(dir, filename)", dir, filename);
-			//TODO: figure out how to create the mesh parent during the original construction of the AdderModel object.
-			let generic = createParentMeshForAdderModel(dir + "/" + filename, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
-
-			//let adderModelParentMesh = generateMeshParent(dir + filename + `ParentMesh`);
-			//let adderModel = new AdderModel(scene,dir + filename + `.babylon`, adderModelParentMesh, position, rotation, angle);
-			//let generic = new AdderModel(scene, dir + filename + `.babylon`, null, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
-
-			loadModelAsync(generic);
-			generic.setParentMeshPosition(new BABYLON.Vector3(7, 1, 0))
-
-		}
-		function createParentMeshForAdderModel(filename, position, rotation, angle) {
-			let adderModelParentMesh = generateMeshParent(filename + `ParentMesh`);
-			let adderModel = new AdderModel(scene, filename + `.babylon`, adderModelParentMesh, position, rotation, angle);
-			//adderModel.setParentMesh(adderModelParentMesh);
-			loadModelAsync(adderModel);
-
-			return adderModel;
-		}
-		function addArrayOfMiscellaneousModels(dir, array) {
-			// let dir = `porsche/`;
-			// let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
-			// addArrayOfMiscellaneousModels(dir, array);
-			//console.log("addArrayOfMiscellaneousModels(array):")
-			for (let arr of array) {
-				let generic = createParentMeshForAdderModel(dir + "/" + arr, cityVectorAdjustment, defaultLocalRotationAxis, defaultLocalRotationAngle);
-				loadModelAsync(generic);
-				generic.setParentMeshPosition(vectorZero)
-			}
-		}
-		function generateMeshParent(name) {
-			let unitVec = new BABYLON.Vector3(1, 1, 1);
-			let mesh_parentOptions = { width: 0, height: 0, depth: 0 }
-			let mesh_parent = BABYLON.MeshBuilder.CreateBox(name, mesh_parentOptions, scene);
-			mesh_parent.isVisible = false;
-			mesh_parent.scaling = unitVec.scale(1);
-			mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
-			return mesh_parent;
-		}
-
-		let dir = `CITY`;
-		let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
-		//addArrayOfMiscellaneousModels(dir, array);
-		let arrayX = [ `block1v2`]
-		addArrayOfMiscellaneousModels(dir, arrayX);
-
+ 
+		 
 		engine.runRenderLoop(function () {
 			if (typeof scene === 'undefined') {
 				return;
