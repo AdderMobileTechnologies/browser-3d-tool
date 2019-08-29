@@ -66,7 +66,7 @@ class SceneFast extends React.Component {
 				addSingleModel(dir, filename, position, rotation, scaling);
 			}
 			let adderSkybox = new AdderSkyBox(scene,"countrybox",1000.0)
-			adderSkybox.getSkybox();
+			//adderSkybox.getSkybox();
 		});
 		 
 		function addSingleModel(dir, filename, position, rotation, scaling) {
@@ -119,9 +119,13 @@ class SceneFast extends React.Component {
 			let camera = adderCam_arcRotate.getCamera(scene);
 			camera.attachControl(canvas, true);//add camera to the scene/canvas
 			//create a light
-			let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-			light.intensity = 0.7;
-
+			//let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+			//var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 2, 5), scene);
+			//var light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 10, -10), new BABYLON.Vector3(4, -1, 5), Math.PI/2, 2, scene);
+			//light.intensity = 2;
+			let light_main = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+			light_main.intensity = .1;
+			var light_point = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(5, 5, -.1), scene);
 			return scene;
 		};
 
