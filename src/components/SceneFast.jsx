@@ -1,14 +1,15 @@
 import React from "react";
-import BABYLON from 'babylonjs'
+import BABYLON from 'babylonjs';
 import axios from 'axios';
 import util from 'util';
 
 
 //models
-import AdderModel from '../models/model'
-import MeshWrapper from '../models/meshWrapper'
-import AdderCamera from '../models/camera'
+import AdderModel from '../models/model';
+import MeshWrapper from '../models/meshWrapper';
+import AdderCamera from '../models/camera';
 import { domainToASCII } from "url";
+import AdderSkyBox from '../models/skybox';
 /*
 DEV NOTES: 08-29-2019
 //grab meta files first:
@@ -64,6 +65,8 @@ class SceneFast extends React.Component {
 				let scaling = value.meta_data[k]['scaling'];
 				addSingleModel(dir, filename, position, rotation, scaling);
 			}
+			let adderSkybox = new AdderSkyBox(scene,"countrybox",1000.0)
+			adderSkybox.getSkybox();
 		});
 		 
 		function addSingleModel(dir, filename, position, rotation, scaling) {
@@ -125,7 +128,6 @@ class SceneFast extends React.Component {
 		let scene = createScene();
 		scene.autoClear = true;
 
-
 		async function loadModelAsync(adderModel) {
 			/* 
 			 SceneLoader constructor()
@@ -159,7 +161,7 @@ class SceneFast extends React.Component {
 			//add the array to the model.
 			//TODO: If we added 'isPickable' to the model meta data, and used it in the constructor, then we could use it here,
 			// to add mesh specific qualities.
-			
+
 			result.meshes.forEach(function (mesh) {
 				mesh.parent = adderModel.getParentMesh()
 				let newMeshWrapper = new MeshWrapper(mesh, null, null)
