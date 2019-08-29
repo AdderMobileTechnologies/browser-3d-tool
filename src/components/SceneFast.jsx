@@ -59,14 +59,62 @@ class SceneFast extends React.Component {
 
 		promise1.then(function (value) {
 
+				console.log(value.meta_data[0]);
+				console.log(value.meta_data[1]);
+
 			let dir = value.meta_data[0]['vehicle_2door_sportscar']['dir'];
 			let filename = value.meta_data[0]['vehicle_2door_sportscar']['filename'];
 			let position = value.meta_data[0]['vehicle_2door_sportscar']['position'];
 			let rotation = value.meta_data[0]['vehicle_2door_sportscar']['rotation'];
+			let scaling = value.meta_data[0]['vehicle_2door_sportscar']['scaling'];
+			console.log("-----porsche:scaling:", scaling);
+			addSingleModel(dir, filename, position, rotation, scaling);
 
-			addSingleModel(dir, filename, position, rotation);
+			let dir_vw = value.meta_data[1]['vehicle_4door_stationwagon']['dir'];
+			let filename_vw = value.meta_data[1]['vehicle_4door_stationwagon']['filename'];
+			let position_vw = value.meta_data[1]['vehicle_4door_stationwagon']['position'];
+			let rotation_vw = value.meta_data[1]['vehicle_4door_stationwagon']['rotation'];
+			let scaling_vw = value.meta_data[1]['vehicle_4door_stationwagon']['scaling'];
+			console.log("-----vw:scaling:", scaling_vw);
+			addSingleModel(dir_vw, filename_vw, position_vw, rotation_vw, scaling_vw);
+
 
 		});
+
+		function addSingleModel(dir, filename, position, rotation, scaling) {
+
+			let positionVect = new BABYLON.Vector3(position.x, position.y, position.z);
+			let rotationAxisVect = new BABYLON.Vector3(rotation.axis.x, rotation.axis.y, rotation.axis.z);
+			let rotationAngle = parseInt(rotation.angle);
+			let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
+			let modelFile =  dir + "/" + filename + `.babylon`;
+			let adderModel = new AdderModel(scene, modelFile, null, positionVect, rotationAxisVect, rotationAngle, [] , scalingVect);
+			loadModelAsync(adderModel);
+
+			// Changing The Position of a PARENT MESH of an AdderModel currently requires 'getting the parent mesh and applying the babylon method to it.ie.setPositionWithLocalVector(Vector3)
+			// This is not desireable becasue we'd like to be able to do it from the model itself, I would imagine.
+			/* How to change Parent Mesh Position.*/
+			//Position and Rotation: applied to parent mesh.
+			let adderModelParent = adderModel.getParentMesh();
+			//Position:
+			let adderModelPosition = adderModel.getPosition();
+			adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
+			//Rotation:
+			let adderModelRotationAngle = adderModel.getRotationAngle();
+			let adderModelRotationAxis = adderModel.getRotationAxis();
+			var quaternion = new BABYLON.Quaternion.RotationAxis(adderModelRotationAxis, adderModelRotationAngle);
+			adderModelParent.rotationQuaternion = quaternion;
+			//Scaling:
+			let scalingFactorX = adderModel.getScaling();
+			var scalingFactor = new BABYLON.Vector3(2, 2, 2);
+			adderModelParent.scaling = scalingFactorX;
+
+
+
+
+		}
+
+
 
 
 
@@ -141,38 +189,6 @@ class SceneFast extends React.Component {
 		};
 
 
-		function addSingleModel(dir, filename, position, rotation) {
-			console.log("addSingleModel(dir, filename)", dir, filename);
-			console.log("scene:", scene);
-
-			console.log("get data from json into new vector.");
-			console.log(position.x);
-			let positionVect = new BABYLON.Vector3(position.x, position.y, position.z);
-			let rotationAxisVect = new BABYLON.Vector3(rotation.axis.x, rotation.axis.y, rotation.axis.z);
-			let rotationAngle = parseInt(rotation.angle);
-
-
-			let adderModel = new AdderModel(scene, dir + "/" + filename + `.babylon`, null, positionVect, rotationAxisVect, rotationAngle);
-			loadModelAsync(adderModel);
-
-			// Changing The Position of a PARENT MESH of an AdderModel currently requires 'getting the parent mesh and applying the babylon method to it.ie.setPositionWithLocalVector(Vector3)
-			// This is not desireable becasue we'd like to be able to do it from the model itself, I would imagine.
-			/* How to change Parent Mesh Position.*/
-			//Position and Rotation: applied to parent mesh.
-			let adderModelParent = adderModel.getParentMesh();
-			//Position:
-			let adderModelPosition = adderModel.getPosition();
-			adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
-			//Rotation:
-			let adderModelRotationAngle = adderModel.getRotationAngle();
-			let adderModelRotationAxis = adderModel.getRotationAxis();
-			var quaternion = new BABYLON.Quaternion.RotationAxis(adderModelRotationAxis, adderModelRotationAngle);
-			adderModelParent.rotationQuaternion = quaternion;
-
-
-
-
-		}
 		function addSingleModelv1(dir, filename) {
 			console.log("addSingleModel(dir, filename)", dir, filename);
 			//TODO: figure out how to create the mesh parent during the original construction of the AdderModel object.
