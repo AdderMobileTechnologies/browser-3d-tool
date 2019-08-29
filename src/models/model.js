@@ -15,29 +15,36 @@ import BABYLON from 'babylonjs'; // Mesh, Vector3, Quaternion
 
 class AdderModel {
     constructor(scene = null, modelFile = null, parentMesh = null, position = null, rotationAxis = null, rotationAngle = null, arrayOfMeshWrappers = null) {
-      
+
         if (modelFile === "" || typeof modelFile !== "string") {
             throw new Error("AdderModel.Constructor():  Constructor was sent an unspecified modelFile (Requires a string for file name.");
         }
         if (parentMesh === null || !(parentMesh instanceof BABYLON.Mesh)) {
-          //  throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newMeshParent (Requires: BABYLON.Mesh ");
-          //parentMesh = this.generateMeshParent();
+            //  throw new Error("AdderModel.Constructor(): Constructor called with unspecified _newMeshParent (Requires: BABYLON.Mesh ");
+            //parentMesh = this.generateMeshParent();
+            // parentMesh = this.setParentMeshForModel()  (?)ERROR: this.setParentMeshForModel is not a function
+            let unitVec = new BABYLON.Vector3(1, 1, 1);
+            let mesh_parentOptions = { width: 0, height: 0, depth: 0 }
+            let mesh_parent = BABYLON.MeshBuilder.CreateBox("name_of_self", mesh_parentOptions, scene);//this.getScene()
+            mesh_parent.isVisible = false;
+            mesh_parent.scaling = unitVec.scale(1);
+            mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
+
+            parentMesh = mesh_parent;
         }
         if (position === null || !(position instanceof BABYLON.Vector3)) {
             throw new Error("AdderModel.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )");
         }
-        
+
         if (rotationAxis === null || !(rotationAxis instanceof BABYLON.Vector3)) {
             throw new Error(`AdderModel:Constructor() The rotationAxis expects a Vector3 parameter.`);
         }
-        
-        if (rotationAngle === null || (typeof rotationAngle !== "number") ) {
+
+        if (rotationAngle === null || (typeof rotationAngle !== "number")) {
             throw new Error(`AdderModel:Constructor() The rotationAngle expects a number as a parameter.`);
         }
-        this.getScene = () => {
-            return _scene;
-        }
-        
+
+
         let _scene = scene;
         let _modelFile = modelFile;
         let _parentMesh = parentMesh;
@@ -46,8 +53,13 @@ class AdderModel {
         let _arrayOfMeshWrappers = arrayOfMeshWrappers;
         let _rotationAxis = rotationAxis;
         let _rotationAngle = rotationAngle;
+        /*
+        Note: The 'position' and 'rotation' parameters actually need to be applied to the 'parent mesh'.
 
-      
+        */
+        this.getScene = () => {
+            return _scene;
+        }
         this.getModelFile = () => {
             return _modelFile;
         }
@@ -58,30 +70,45 @@ class AdderModel {
             _modelFile = modelFile;
         }
         this.getParentMesh = () => {
+            console.log("adderModel: getParentMesh() executed.")
             return _parentMesh;
         }
         this.setParentMesh = (parentMesh) => {
-            
+
 
             _parentMesh = parentMesh;
         }
+        this.getPosition = () => {
+            return _position;
+        }
+        this.getRotationAxis = () => {
+            return _rotationAxis;
+        }
+        this.getRotationAngle = () => {
+            return _rotationAngle;
+        }
         this.setParentMeshForModel = () => {
             let unitVec = new BABYLON.Vector3(1, 1, 1);
-			let mesh_parentOptions = { width: 0, height: 0, depth: 0 }
-			let mesh_parent = BABYLON.MeshBuilder.CreateBox("name_of_self", mesh_parentOptions, this.getScene());//this.getScene()
-			mesh_parent.isVisible = false;
-			mesh_parent.scaling = unitVec.scale(1);
+            let mesh_parentOptions = { width: 0, height: 0, depth: 0 }
+            let mesh_parent = BABYLON.MeshBuilder.CreateBox("name_of_self", mesh_parentOptions, this.getScene());//this.getScene()
+            mesh_parent.isVisible = false;
+            mesh_parent.scaling = unitVec.scale(1);
             mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
-            
+
             _parentMesh = mesh_parent;
         }
-
+        //adderModel.setParentMeshPosition(newPosition) 
         this.setParentMeshPosition = (positionVector3) => {
 
             if (!(positionVector3 instanceof BABYLON.Vector3)) {
                 throw new Error(`AdderModel:setParentMeshPosition  Expects a Vector3 as a parameter.`)
             }
-            _parentMesh.setPositionWithLocalVector(positionVector3)
+            console.log(this.getModelFile());
+            console.log("adderModel:setParentMeshPosition() : Is the model built yet or in async land? ")
+            let parentMesh = this.getParentMesh();
+
+            // parentMesh.setPositionWithLocalVector(positionVector3);
+            // _parentMesh.setPositionWithLocalVector(positionVector3) //:Error: Cannot read property 'setPositionWithLocalVector' of null
 
         }
 
@@ -99,11 +126,11 @@ class AdderModel {
         this.setMeshWrappers = (newArrayOfMeshWrappers) => {
             _arrayOfMeshWrappers = newArrayOfMeshWrappers
         }
-      
-      
-        
+
+
+
     }// end constructor 
-   
-  
+
+
 }
 export default AdderModel;

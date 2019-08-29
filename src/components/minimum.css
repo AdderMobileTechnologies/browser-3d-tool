@@ -1,10 +1,10 @@
 .App {
     text-align: center;
 }
-.babylonjsCanvasContainer{
+.adder-3dTool-canvas-container{
     position:relative;
 }
-.babylonjsCanvas{
+.adder-3dTool-canvas{
     width:100%;
     height:auto;
 }

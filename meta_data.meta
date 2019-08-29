@@ -7,6 +7,19 @@
             "dir":"porsche",
             "filename":"porsche2.2",
             "filepath":"porsche/porsche2.2.babylon",
+            "position":{
+                "x":"-7",
+                "y":"1.8",
+                "z":"0"
+            },
+            "rotation":{
+                "axis":{
+                    "x":"0",
+                    "y":"0",
+                    "z":"1"
+                },
+                "angle":"45"
+            },
             "uid":"123abc"
         }
     },
