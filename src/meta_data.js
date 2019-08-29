@@ -1,10 +1,7 @@
 {
     "meta_data":
     [
-
-
         {
-
             "name": "vehicle_2door_sportscar",
             "dir": "porsche",
             "filename": "porsche2.2",
@@ -12,7 +9,7 @@
             "position": {
                 "x": "-7",
                 "y": "1",
-                "z": "2"
+                "z": "3"
             },
             "rotation": {
                 "axis": {
@@ -28,16 +25,14 @@
                 "z": ".75"
             },
             "uid": "123abc"
-
         },
         {
-
             "name": "vehicle_4door_stationwagon",
             "filepath": "vw_toureg/vw_toureg-1.5.babylon",
             "dir": "vw_toureg",
             "filename": "vw_toureg-1.5",
             "position": {
-                "x": "0",
+                "x": "-1",
                 "y": "1.1",
                 "z": "9"
             },
@@ -82,31 +77,6 @@
             },
             "uid": "streetLight_001"
 
-        }, {
-
-            "name": "block1v2",
-            "filepath": "CITY/block1v2.babylon",
-            "dir": "CITY",
-            "filename": "block1v2",
-            "position": {
-                "x": "1",
-                "y": "0",
-                "z": "5"
-            },
-            "rotation": {
-                "axis": {
-                    "x": "0",
-                    "y": "0",
-                    "z": "0"
-                },
-                "angle": "0"
-            },
-            "scaling": {
-                "x": "1",
-                "y": "1",
-                "z": "1"
-            },
-            "uid": "block1v2_001"
         },
         {
             "name": "crane",
@@ -114,9 +84,9 @@
             "dir": "CITY",
             "filename": "crane",
             "position": {
-                "x": "20",
+                "x": "25",
                 "y": "0",
-                "z": "-30"
+                "z": "-5"
             },
             "rotation": {
                 "axis": {
@@ -193,7 +163,7 @@
             "position": {
                 "x": "1",
                 "y": "0",
-                "z": "5"
+                "z": "-20"
             },
             "rotation": {
                 "axis": {
@@ -210,6 +180,86 @@
             },
             "uid": "construction_site_001"
         }
+        , {
+
+            "name": "tree",
+            "filepath": "CITY/tree.babylon",
+            "dir": "CITY",
+            "filename": "tree",
+            "position": {
+                "x": "-6",
+                "y": "0",
+                "z": "-3"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "tree_001"
+        }
+        , {
+
+            "name": "block4",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "1",
+                "y": "0",
+                "z": "5"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001"
+        }
+        , {
+
+            "name": "fire_hydrant_2",
+            "filepath": "CITY/fire_hydrant_2.babylon",
+            "dir": "CITY",
+            "filename": "fire_hydrant_2",
+            "position": {
+                "x": "1",
+                "y": "0",
+                "z": "5"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "fire_hydrant_2_001"
+        }
+
+
 
     ]
 
