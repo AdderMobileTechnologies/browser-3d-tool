@@ -54,6 +54,7 @@ class AdderModel {
         let _position = position;
         let _rotationAxis = rotationAxis;
         let _rotationAngle = rotationAngle;
+        let _rotationRadian = rotationAngle * (Math.PI/180);
         let _meshWrappers = meshWrappers;
         let _scaling = scaling; 
 
@@ -95,6 +96,9 @@ class AdderModel {
         }
         this.getRotationAngle = () => {
             return _rotationAngle;
+        }
+        this.getRotationRadian = () => {
+            return _rotationRadian;
         }
         this.getMeshWrappers = () => {
             return _meshWrappers;

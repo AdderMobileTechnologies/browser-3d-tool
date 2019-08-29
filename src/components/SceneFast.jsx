@@ -76,16 +76,31 @@ class SceneFast extends React.Component {
 			let rotation_vw = value.meta_data[1]['vehicle_4door_stationwagon']['rotation'];
 			let scaling_vw = value.meta_data[1]['vehicle_4door_stationwagon']['scaling'];
 			console.log("-----vw:scaling:", scaling_vw);
+			 
 			addSingleModel(dir_vw, filename_vw, position_vw, rotation_vw, scaling_vw);
+
+			let dir_streetLight = value.meta_data[2]['streetLight']['dir'];
+			let filename_streetLight = value.meta_data[2]['streetLight']['filename'];
+			let position_streetLight = value.meta_data[2]['streetLight']['position'];
+			let rotation_streetLight = value.meta_data[2]['streetLight']['rotation'];
+			let scaling_streetLight = value.meta_data[2]['streetLight']['scaling'];
+				
+			addSingleModel(dir_streetLight, filename_streetLight, position_streetLight, rotation_streetLight, scaling_streetLight);
 
 
 		});
-
+		 
 		function addSingleModel(dir, filename, position, rotation, scaling) {
 
 			let positionVect = new BABYLON.Vector3(position.x, position.y, position.z);
 			let rotationAxisVect = new BABYLON.Vector3(rotation.axis.x, rotation.axis.y, rotation.axis.z);
-			let rotationAngle = parseInt(rotation.angle);
+			var rotationAngle = parseInt(rotation.angle);
+			console.log("THE ROTATION OBJECT:");
+			console.log(rotation);
+			console.log("ROTATION ANGLE : ");
+			console.log(rotationAngle);
+			//converting Degrees to Radians:
+			//let rotationRadian = rotationAngle * (Math.PI/180);
 			let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
 			let modelFile =  dir + "/" + filename + `.babylon`;
 			let adderModel = new AdderModel(scene, modelFile, null, positionVect, rotationAxisVect, rotationAngle, [] , scalingVect);
@@ -101,12 +116,12 @@ class SceneFast extends React.Component {
 			adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
 			//Rotation:
 			let adderModelRotationAngle = adderModel.getRotationAngle();
+			let adderModelRotationRadian = adderModel.getRotationRadian();
 			let adderModelRotationAxis = adderModel.getRotationAxis();
-			var quaternion = new BABYLON.Quaternion.RotationAxis(adderModelRotationAxis, adderModelRotationAngle);
+			var quaternion = new BABYLON.Quaternion.RotationAxis(adderModelRotationAxis, adderModelRotationRadian);
 			adderModelParent.rotationQuaternion = quaternion;
 			//Scaling:
 			let scalingFactorX = adderModel.getScaling();
-			var scalingFactor = new BABYLON.Vector3(2, 2, 2);
 			adderModelParent.scaling = scalingFactorX;
 
 
@@ -233,7 +248,9 @@ class SceneFast extends React.Component {
 
 		let dir = `CITY`;
 		let array = [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`]//FAILED MODELS: `kcpbg06`, `pobox`,
-		addArrayOfMiscellaneousModels(dir, array);
+		//addArrayOfMiscellaneousModels(dir, array);
+		let arrayX = [ `block1v2`]
+		addArrayOfMiscellaneousModels(dir, arrayX);
 
 		engine.runRenderLoop(function () {
 			if (typeof scene === 'undefined') {
