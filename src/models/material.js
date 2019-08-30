@@ -1,6 +1,6 @@
 
 import { Texture, Color3 } from BABYLON
-
+//format on save
 class Material {
 
     constructor(_newId = new Date().getTime(), _newSpecularTexture = null, _newDiffuseColor = null, _newEmissiveTexture = null, _options = {}) {

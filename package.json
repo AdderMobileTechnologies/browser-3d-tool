@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.0",
+    "@material-ui/icons": "^4.2.1",
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
     "babylonjs": "^3.3.0",
@@ -39,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "1.18.2"
   }
 }

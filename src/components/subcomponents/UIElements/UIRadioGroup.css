@@ -1,0 +1,45 @@
+
+.rg-col{
+    background:#f1f1f1;
+    
+   
+    height:150px;
+    max-height:150px;
+    margin:15px;
+    padding:15px;
+    border:solid 1px #f1f1f1;
+    border-radius:10px;
+}
+.rg-form-group {
+     
+    text-align:left;
+    padding:5px;
+}
+.rg-label{
+    color:#333;
+    margin-left:10px;
+    margin-right:10px;
+    font-size: 1.1em;
+}
+.rg-input-radio{
+   /* border: solid 1px orange;*/
+    margin-right:5px;
+   
+    
+}
+.rg-button{
+    height:30px;
+    padding:5px;
+    border-radius:0px;
+
+}
+.rg-title{
+    color:#aaa;
+    text-align:left;
+    margin-bottom:10px;
+   
+}
+h3{
+    padding:0 !important;
+    /*margin:0 !important;*/
+}
