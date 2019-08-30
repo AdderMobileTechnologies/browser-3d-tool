@@ -3,25 +3,30 @@ import { Texture, Color3 } from BABYLON
 //format on save
 class Material {
 
-    constructor(_newId = new Date().getTime(), _newSpecularTexture = null, _newDiffuseColor = null, _newEmissiveTexture = null, _options = {}) {
-        if (_newSpecularTexture !== null && !(_newSpecularTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with _newSpecularTexture of wrong type (requires BABYLON.Texture)")
+    constructor(id = new Date().getTime(), specularTexture = null, diffuseTexture = null, emissiveTexture = null, ambientTexture = null, options = {}) {
+        if (specularTexture !== null && !(specularTexture instanceof Texture)) {
+            throw new Error("Material.constructor(): Constructor called with specularTexture of wrong type (requires BABYLON.Texture)");
         }
-        if (_newEmissiveTexture !== null && !(_newEmissiveTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with  _newEmissiveTexture of wrong type (requires BABYLON.Texture)")
+        if (emissiveTexture !== null && !(emissiveTexture instanceof Texture)) {
+            throw new Error("Material.constructor(): Constructor called with  emissiveTexture of wrong type (requires BABYLON.Texture)");
         }
-        if (_newAmbientTexture !== null && !(_newAmbientTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with _newAmbientTexture of wrong type (requires BABYLON.Texture)")
+        if (ambientTexture !== null && !(ambientTexture instanceof Texture)) {
+            throw new Error("Material.constructor(): Constructor called with ambientTexture of wrong type (requires BABYLON.Texture)");
         }
-        if (_newDiffuseColor !== null && !(_newDiffuseColor instanceof Color3)) {
-            throw new Error("Material.constructor(): Constructor called with _newDiffuseColor of wrong type (requires BABYLON.Color3)")
+        if (diffuseTexture !== null && !(diffuseTexture instanceof Color3)) {
+            throw new Error("Material.constructor(): Constructor called with diffuseTexture of wrong type (requires BABYLON.Color3)");
         }
-
-        let _id = _newId;
-        let _diffuseColor = _newDiffuseColor;
-        let _specularTexture = _newSpecularTexture;
-        let _emissiveTexture = _newEmissiveTexture;
-        let _ambientTexture = _newAmbientTexture;
+        let objConstructor = {}.constuctor;
+        if(options.constructor !== objConstructor){
+            throw new Error(`Material:Constructor(): Constructor called with incorrect parameter. ( requires JSON object )`)
+        }
+      
+        let _id = id;
+        let _diffuseColor = diffuseTexture;
+        let _specularTexture = specularTexture;
+        let _emissiveTexture = emissiveTexture;
+        let _ambientTexture = ambientTexture;
+        let _options = options;
 
 
         this.getId = () => { return _id }
@@ -29,7 +34,9 @@ class Material {
         this.getSpecularTexture = () => { return _specularTexture }
         this.getEmissiveTexture = () => { return _emissiveTexture }
         this.getAmbientTexture = () => { return _ambientTexture }
-
+        this.getOptions = () => {
+            return _options;
+        }
     }
 
     getBabylonMaterial(scene) {
@@ -42,6 +49,39 @@ class Material {
         return mesh_material;
 
     }
-    // getter and setter for : diffuseColor, specularTexture, emiisiveTexture, ambientTexture,...
+    setSpecularTexture(specularTexture){
+        if (specularTexture === null || !(specularTexture instanceof Texture)) {
+            throw new Error("Material.setSpecularTexture():  called with specularTexture of wrong type (requires BABYLON.Texture)");
+        }else{
+            _specularTexture = specularTexture;
+        }
+    }
+    setDiffuseColor(diffuseColor){
+        if(diffuseColor === null || !(specularTexture instanceof Texture) ){
+            throw new Error(`Material.setDiffuseColor() called with wrong type ( requires BABYLON.Texture )`);
+        }
+        _diffuseColor = diffuseColor;
+    }
+    setEmissiveTexture(emissiveTexture) {
+        if(emissiveTexture === null || !(emissiveTexture instanceof Texture) ){
+            throw new Error(`Material.setEmissiveColor() called with incorrect type. ( requires BABYLON.Texture )`);
+        }
+        _emissiveTexture = emissiveTexture;
+    }
+    setAmbientTexture(ambientTexture){
+        if(ambientTexture === null || !(ambientTexture instanceof Texture) ){
+            throw new Error(`Material.setAmbientTexture() called with incorrect arg. ( requires BABYLON.Texture )`);
+        }
+        _ambientTexture = ambientTexture;
+    }
+    setOptions(options){
+        //TODO: check that options is a json object:
+        let objConstructor = {}.constuctor;
+        if(options.constructor !== objConstructor){
+            throw new Error(`Material:setOptions(): called with incorrect parameter. ( requires JSON object )`)
+        }
+        _options = options;
+    }
+    // getter and setter for :  ,  ,  , ambientTexture,...
 }
 export default Material

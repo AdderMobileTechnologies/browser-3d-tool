@@ -9,30 +9,37 @@
 // - position Vector3       https://doc.babylonjs.com/api/classes/babylon.vector3
 // - rotation Quaternion    https://doc.babylonjs.com/api/classes/babylon.quaternion
 //import * as BABYLON from 'babylonjs';
+
+/* TODO:
+The rotation property should be handled the same way it is handled in the AdderModel class.
+ie. 
+ rotationAxis = null,
+rotationAngle = null,
+*/
 import { Mesh, Vector3, Quaternion } from "babylonjs";
 
 class MeshWrapper {
-  constructor(_newMesh = null, _newPosition = null, _newRotation = null) {
+  constructor(mesh = null, position = null, rotation = null) {
     //NOT SURE if Mesh Class is getting used correctly.
-    if (!(_newMesh instanceof Mesh)) {
+    if (!(mesh instanceof Mesh)) {
       throw new Error(
-        "MeshWrapper.Constructor(): Constructor called with unspecified _newMesh (Requires: BABYLON.Mesh )"
+        "MeshWrapper.Constructor(): Constructor called with unspecified mesh (Requires: BABYLON.Mesh )"
       );
     }
     /* 
         I'm not sure we  really need to reject these if they are null.
-        if(!(_newPosition instanceof Vector3)) {
-            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified _newPosition (Requires: BABYLON.Vector3 )")
+        if(!(position instanceof Vector3)) {
+            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )")
         }
-        if( !(_newRotation instanceof Quaternion) ){
-            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified _newRotation (Requires: BABYLON.Quaternion ")
+        if( !(rotation instanceof Quaternion) ){
+            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
         }
         */
 
     let _arrayOfListeners = [];
-    let _mesh = _newMesh;
-    let _position = _newPosition;
-    let _rotation = _newRotation;
+    let _mesh = mesh;
+    let _position = position;
+    let _rotation = rotation;
 
     this.getMesh = () => {
       return _mesh;
@@ -44,6 +51,7 @@ class MeshWrapper {
       return _rotation;
     };
 
+    //TODO: not sure about these event listener snippets.
     this.addListener = e => {
       _arrayOfListeners.push(e);
     };
@@ -60,6 +68,22 @@ class MeshWrapper {
         }
       }
     };
+  }
+  setMesh(mesh) {
+    if (!(mesh instanceof Mesh)) {
+      throw new Error(
+        "MeshWrapper.setMesh():  called with unspecified mesh (Requires: BABYLON.Mesh )"
+      );
+    }
+    this._mesh = mesh;
+  }
+  setPosition(position) {
+    if (position === null || !(position instanceof Vector3)) {
+      throw new Error(
+        `MeshWrapper.setPosition() called with incorrect argument ( requires BABYLON.Vector3 )`
+      );
+    }
+    this._position = position;
   }
 }
 export default MeshWrapper;

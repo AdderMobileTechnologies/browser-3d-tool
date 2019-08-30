@@ -17,83 +17,83 @@ import { Vector3, Scene, ArcRotateCamera } from "babylonjs";
 
 class AdderCamera {
   constructor(
-    _newCanvas = null,
-    _newType = null,
-    _newName = null,
-    _newAlpha = null,
-    _newBeta = null,
-    _newRadius = null,
-    _newTarget = new Vector3(0, 0, 0),
-    _newScene = null,
-    _newSetActiveOnSceneIfNoneActive = null,
-    _newOptions = null
+    canvas = null,
+    type = null,
+    name = null,
+    alpha = null,
+    beta = null,
+    radius = null,
+    target = new Vector3(0, 0, 0),
+    scene = null,
+    setActiveOnSceneNoneActive = null,
+    options = null
   ) {
     //verify
-    if (_newCanvas === null || _newCanvas.tagName !== "CANVAS") {
+    if (canvas === null || canvas.tagName !== "CANVAS") {
       throw new Error(
         `Camera:Constructor() The constructor expects a canvas type element as the parameter. `
       );
     }
-    if (_newType === null) {
+    if (type === null) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a String value for the _newType parameter. ie. ArcRotateCamera, FreeCamera, `
+        `Camera:Constructor() The constructor expects a String value for the type parameter. ie. ArcRotateCamera, FreeCamera, `
       );
     }
-    if (_newName === null) {
+    if (name === null) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a String value for the _newName parameter.`
+        `Camera:Constructor() The constructor expects a String value for the name parameter.`
       );
     }
-    if (_newAlpha === null) {
+    if (alpha === null) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a Number value for the _newAlpha parameter.(https://doc.babylonjs.com/babylon101/cameras)`
+        `Camera:Constructor() The constructor expects a Number value for the alpha parameter.(https://doc.babylonjs.com/babylon101/cameras)`
       );
     }
-    if (_newBeta === null) {
+    if (beta === null) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a Number value for the _newBeta parameter.(https://doc.babylonjs.com/babylon101/cameras)`
+        `Camera:Constructor() The constructor expects a Number value for the beta parameter.(https://doc.babylonjs.com/babylon101/cameras)`
       );
     }
-    if (_newRadius === null) {
+    if (radius === null) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a Number value for the _newRadius parameter. `
+        `Camera:Constructor() The constructor expects a Number value for the radius parameter. `
       );
     }
-    if (_newTarget === null || !(_newTarget instanceof Vector3)) {
+    if (target === null || !(target instanceof Vector3)) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a Number value for the _newTarget parameter. `
+        `Camera:Constructor() The constructor expects a Number value for the target parameter. `
       );
     }
-    if (_newScene === null || !(_newScene instanceof Scene)) {
+    if (scene === null || !(scene instanceof Scene)) {
       throw new Error(
-        `Camera:Constructor() The constructor expects a Number value for the _newScene parameter. `
+        `Camera:Constructor() The constructor expects a Number value for the scene parameter. `
       );
     }
-    if (_newSetActiveOnSceneIfNoneActive === null) {
+    if (setActiveOnSceneNoneActive === null) {
       //This parameter is an optional boolean
       //It Defines whether the camera should be marked as active if not other active cameras have been defined
     }
 
-    if (typeof _newOptions !== "object") {
+    if (typeof options !== "object") {
       throw new Error(
-        `Camera:Constructor() The constructor expects an Array for the _newOptions parameter.`
+        `Camera:Constructor() The constructor expects an Array for the options parameter.`
       );
     } else {
-      //console.log("_newOptions are: ", _newOptions)
+      //TODO: handle options during the constructor.
+      //console.log("options are: ", options)
     }
 
     //private properties
-
-    let _canvas = _newCanvas;
-    let _type = _newType;
-    let _name = _newName;
-    let _alpha = _newAlpha;
-    let _beta = _newBeta;
-    let _radius = _newRadius;
-    let _target = _newTarget;
-    let _scene = _newScene;
-    let _setActiveOnSceneIfNoneActive = _newSetActiveOnSceneIfNoneActive;
-    let _options = _newOptions;
+    let _canvas = canvas;
+    let _type = type;
+    let _name = name;
+    let _alpha = alpha;
+    let _beta = beta;
+    let _radius = radius;
+    let _target = target;
+    let _scene = scene;
+    let _setActiveOnSceneIfNoneActive = setActiveOnSceneNoneActive;
+    let _options = options;
 
     this.getCanvas = () => {
       return _canvas;
@@ -130,13 +130,13 @@ class AdderCamera {
   getCanvas() {
     return this._canvas;
   }
-  setCanvas(_newCanvas = null) {
-    if (_newCanvas === null || _newCanvas.tagName !== "CANVAS") {
+  setCanvas(canvas = null) {
+    if (canvas === null || canvas.tagName !== "CANVAS") {
       throw new Error(
         `Camera:Constructor() The constructor expects a canvas type element as the parameter. `
       );
     } else {
-      this._canvas = _newCanvas;
+      this._canvas = canvas;
     }
   }
 
@@ -151,6 +151,7 @@ class AdderCamera {
         `Constructor:setOptions() The setOptions method expects a JSON object for options.`
       );
     } else {
+      //TODO: change this default code to function as it should, using the inputted json.
       this.setAttachControl(this.getCanvas, true);
       this.lowerBetaLimit = 0;
       this.upperBetaLimit = 10;
@@ -176,12 +177,6 @@ class AdderCamera {
       typeof options != "undefined" &&
       typeof options != null
     ) {
-      //console.log("options:",options);
-      //console.log("this:",options.lowerRadiusLimit);
-      //console.log("check fake options: ");
-      //console.log(options.monkey);
-      //console.log(typeof console.monkey);
-
       camera.upperRadiusLimit = options.upperRadiusLimit;
       camera.lowerBetaLimit = options.lowerBetaLimit;
       camera.upperBetaLimit = options.upperBetaLimit;
@@ -198,11 +193,6 @@ class AdderCamera {
         camera.useAutoRotationBehavior = useAutoRotationBehavior;
       }
     }
-
-    //camera.setUpperRadiusLimit(10);
-    //camera.setUseAutoRotationBehavior(true);
-
-    //camera.setAttachControl(true);
     return camera;
   }
 }
