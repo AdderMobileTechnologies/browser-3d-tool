@@ -12,21 +12,13 @@ import { domainToASCII } from "url";
 import AdderSkyBox from '../models/skybox';
 /*
 DEV NOTES: 08-29-2019
-//grab meta files first:
-//index on top for all meta files...
+!(Meta Data Formatting is extremely strict, look out for commas on the last item in an object!)	 
+-add the behavior section of meta data.
+-TODO: how to implement the behavior.
+In previous work, based on mesh id, I either did or did not apply the 'isPickable' boolean.
+Then, under a general 'onPointerDown' event, I looped conditions based on mesh_id. 
 
-	#create meta files 
-	#download the meta files 
-	parse meta files 
-	IN: json file 
-	(axios) 
-
-	#create a meta file for the porsche 
-	hard code the location of the file 
-	#download the porsche 
-	#create model with meshwrappers  for the porsche 
-*(Meta Data Formatting is extremely strict, look out for commas on the last item in an object!)	 
-	  
+  
 */
 const API_URL = 'http://localhost:8001';
 
@@ -168,10 +160,19 @@ class SceneFast extends React.Component {
 
 			result.meshes.forEach(function (mesh) {
 				mesh.parent = adderModel.getParentMesh()
+				console.log(mesh.id);
+				if(mesh.id === "leftside_small" || mesh.id === "leftside_medium" || mesh.id === "leftside_large"){
+					mesh.isPickable = true;
+				}else{
+					mesh.isPickable = false;
+				}
+					 
 				let newMeshWrapper = new MeshWrapper(mesh, null, null)
 				meshWrappers.push(newMeshWrapper)
 			});
 			adderModel.setMeshWrappers(meshWrappers);
+
+		
 		};
  
 		 
@@ -187,6 +188,19 @@ class SceneFast extends React.Component {
 
 		window.addEventListener("resize", function () {
 			engine.resize();
+		});
+		window.addEventListener("click", function () {
+			//should only detect meshes where  isPickable = true;
+			var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+			if(pickResult.pickedMesh === null){
+				return false;
+			}else{
+				console.log("click() pickResult:",pickResult.pickedMesh.name);
+				//TODO: how to handle the clicked mesh ie. leftside_large 
+				//TODO: how to set meshes to 'pickable' properly.ie. currently in callback_ImportMeshAsync()
+			}
+
+			 
 		});
 	}
 	render() {
