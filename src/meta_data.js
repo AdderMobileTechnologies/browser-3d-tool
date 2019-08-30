@@ -58,9 +58,9 @@
             "dir": "CITY",
             "filename": "streetLight",
             "position": {
-                "x": "2",
+                "x": "8",
                 "y": "0",
-                "z": "-2"
+                "z": "-.5"
             },
             "rotation": {
                 "axis": {
@@ -109,9 +109,9 @@
             "dir": "CITY",
             "filename": "bicycle",
             "position": {
-                "x": "1",
+                "x": "4",
                 "y": "0",
-                "z": "-2"
+                "z": "-.7"
             },
             "rotation": {
                 "axis": {
@@ -233,15 +233,15 @@
             "uid": "block4_001"
         }
         , {
-
-            "name": "fire_hydrant_2",
-            "filepath": "CITY/fire_hydrant_2.babylon",
+            "uid": "mailboxes_3_inarow_001",
+            "name": "mailboxes_3_inarow",
+            "filepath": "CITY/mailboxes_3_inarow.babylon",
             "dir": "CITY",
-            "filename": "fire_hydrant_2",
+            "filename": "mailboxes_3_inarow",
             "position": {
-                "x": "1",
+                "x": "6",
                 "y": "0",
-                "z": "5"
+                "z": "-.1"
             },
             "rotation": {
                 "axis": {
@@ -256,8 +256,29 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "fire_hydrant_2_001"
+
+            "behavior": [
+                {
+                    "strategy": "scale",
+                    "parameters": {
+                        "x": "0",
+                        "y": "0",
+                        "z": "0"
+                    }
+                },
+                {
+                    "strategy": "select",
+                    "parameters": {
+                        "x": "0",
+                        "y": "0",
+                        "z": "0"
+                    }
+                }
+            ]
+
         }
+
+
 
 
 
