@@ -6,6 +6,8 @@ import GridList from "@material-ui/core/GridList";
 export const CONSTANT_NUMBER_1 = "hello I am a constant";
 
 export const DefaultUserImage = UserImage;
+
+export const API_URL = "http://localhost:8001";
 export const tileData = [
   {
     img: UserImage,

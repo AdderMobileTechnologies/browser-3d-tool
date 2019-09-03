@@ -1,0 +1,37 @@
+{
+    "children": [
+        {
+            "ad_type":"Vehicle",
+            "children":[ 
+                {
+                   "sub_type":"2Door"
+               } ,
+                {
+                   "sub_type":"4Door"
+               }
+               
+               ]
+        },
+        {
+            "ad_type":"Billboard",
+            "children":[
+               {
+                   "sub_type":"One-Sided"
+               } ,
+               {
+                   "sub_type":"Two-Sided",
+                   "children":[
+                       {
+                           "detail":"Parallel",
+                           "children":[]
+                       },
+                       {
+                           "detail":"Angled",
+                            "metafile":"path/to/angled/billboard.babylon"
+                       }
+                   ]
+               }
+            ]
+        }
+    ]
+}

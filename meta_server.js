@@ -29,6 +29,13 @@ app.get("/meta/environment/", function(req, res) {
   });
 });
 
+app.get("/meta/design/", function(req, res) {
+  fs.readFile("meta_data/design.meta", "utf8", function(err, data) {
+    if (err) throw err;
+    res.send(JSON.parse(data));
+  });
+});
+
 app.listen(8001, function() {
   console.log("App running on port 8001");
 });
