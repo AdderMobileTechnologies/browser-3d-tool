@@ -28,6 +28,7 @@ class SceneFast extends React.Component {
       selected_mesh_id: "",
       meta_data: {}
     };
+    this.setScene = props.setScene;
   }
 
   componentDidMount() {
@@ -37,7 +38,7 @@ class SceneFast extends React.Component {
     let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
     let defaultLocalRotationAngle = 0;
     var promise1 = new Promise(function(resolve, reject) {
-      const url = `${API_URL}/meta`;
+      const url = `${API_URL}/meta/environment`;
       axios
         .get(url)
         .then(response => response.data)
@@ -52,7 +53,7 @@ class SceneFast extends React.Component {
       // TODO: save meta_data to state(?)
 
       for (let k = 0; k < value.meta_data.length; k++) {
-        console.log("k:", value.meta_data[k]);
+        // console.log("k:", value.meta_data[k]);
         let dir = value.meta_data[k]["dir"];
         let filename = value.meta_data[k]["filename"];
         let position = value.meta_data[k]["position"];
@@ -62,6 +63,27 @@ class SceneFast extends React.Component {
       }
       let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
       adderSkybox.getSkybox();
+    });
+
+    var promise2 = new Promise(function(resolve, reject) {
+      const url = `${API_URL}/meta/ad_types`;
+      axios
+        .get(url)
+        .then(response => response.data)
+        .then(data => {
+          resolve(data);
+        });
+    });
+    promise2.then(function(value) {
+      for (let m = 0; m < value.meta_data.length; m++) {
+        // console.log("k:", value.meta_data[k]);
+        let dir = value.meta_data[m]["dir"];
+        let filename = value.meta_data[m]["filename"];
+        let position = value.meta_data[m]["position"];
+        let rotation = value.meta_data[m]["rotation"];
+        let scaling = value.meta_data[m]["scaling"];
+        addSingleModel(dir, filename, position, rotation, scaling);
+      }
     });
 
     function addSingleModel(dir, filename, position, rotation, scaling) {
@@ -121,6 +143,7 @@ class SceneFast extends React.Component {
     let createScene = function() {
       //create the scene.
       let scene = new BABYLON.Scene(engine);
+
       //build the camera.
       const cameraOptions = {
         lowerAlphaLimit: -Math.PI,
@@ -166,6 +189,13 @@ class SceneFast extends React.Component {
     };
 
     let scene = createScene();
+    console.log("The scene has been created.");
+    console.log("the type of scene is:", typeof scene);
+    console.log("the scene is:", scene);
+    console.log("this:", this);
+    this.props.setScene(scene);
+
+    this.props.setScene(scene);
     scene.autoClear = true;
 
     async function loadModelAsync(adderModel) {
@@ -210,7 +240,7 @@ class SceneFast extends React.Component {
 
       result.meshes.forEach(function(mesh) {
         mesh.parent = adderModel.getParentMesh();
-        console.log(mesh.id);
+        // console.log(mesh.id);
         //should this pickable quality be defined in the MeshWrapper class instead?
         if (
           mesh.id === "leftside_small" ||

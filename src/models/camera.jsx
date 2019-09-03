@@ -4,14 +4,16 @@ the 'ArcRotateCamera' , and the 'Free' camera.
 The cameras may expect slightly different sets of data, I've started with the 'ArcRotateCamera' because that is the one we currently use.
 The ArcRotateCamera has a name, alpha & beta( which define the camera angle), radius(which defines distance from target), target(the object of focus).
 The 'type' parameter is a string that should represent exactly the name used in the babylonjs docs for the specific camera to use.
-The alpha,beta,and distance parameters are all numbers that define the angle and distance of the camera in relation to the subject being filmed.
+The alpha,beta,and radius parameters are all numbers that define the angle and distance of the camera in relation to the subject being filmed.
 The target, is a Vector3 which defines the x,y,and z parameters in the scene where the camera will focus.
 The scene is the babylonjs scene where the camera will be utilized or inserted into.
+The setActiveOnSceneNoneActive parameter is optional, adn it defines whether the camera should be marked as active if not other active cameras have been defined
 The options is a catch-all in this case for adding additional properties that may only be specific to certain types of cameras, or at least are currently unknown. 
 */
 /**
  * Camera TODO:
- * - add _options to constructor to handle unknow properties that might get applied later.
+ *  - handle options during the constructor.
+ * - setOptions function
  */
 import { Vector3, Scene, ArcRotateCamera } from "babylonjs";
 
@@ -71,7 +73,6 @@ class AdderCamera {
     }
     if (setActiveOnSceneNoneActive === null) {
       //This parameter is an optional boolean
-      //It Defines whether the camera should be marked as active if not other active cameras have been defined
     }
 
     if (typeof options !== "object") {

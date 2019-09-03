@@ -5,9 +5,9 @@ The modelFile is the filepath to the .babylon file  that corresponds to the mode
 The parentMesh is an invisible mesh that is there to provide a single point of control over the model and all it's meshes, or 'mesh wrappers.'
 The postion is the vector3 space that the model is to occupy in the scene.
 The rotationAxis is the Vector3 axis upon which any rotationAngle, or 'number' will be applied.
-The rotaionAngle is a number that represents the angle or degress of rotation. 
-The 'meshWrappers' is an array of a wrapper class that encompasses each individual mesh that makes up a model. ie. If 
-the model is a car. Then the 'left door' , 'the front bumper', etc . are individual meshes. 
+The rotaionAngle is a number that represents the angle or degress of rotation. (*which will get converted to 'radians')
+The 'meshWrappers' is an array of a wrapper class that encompasses each individual mesh that makes up a model. 
+   ie. If the model is a car. Then the 'left door' , 'the front bumper', etc . are individual meshes. 
 */
 
 import BABYLON from "babylonjs"; // Mesh, Vector3, Quaternion
@@ -79,8 +79,7 @@ class AdderModel {
 
     /*
         Note: The 'position' and 'rotation' parameters actually need to be applied to the 'parent mesh'.
-
-        */
+    */
     this.getScene = () => {
       return _scene;
     };
@@ -96,7 +95,7 @@ class AdderModel {
       _modelFile = modelFile;
     };
     this.getParentMesh = () => {
-      console.log("adderModel: getParentMesh() executed.");
+      // //console.log("adderModel: getParentMesh() executed.");
       return _parentMesh;
     };
     this.setParentMesh = parentMesh => {
@@ -136,10 +135,11 @@ class AdderModel {
           `AdderModel:setParentMeshPosition  Expects a Vector3 as a parameter.`
         );
       }
-      console.log(this.getModelFile());
-      console.log(
-        "adderModel:setParentMeshPosition() : Is the model built yet or in async land? "
-      );
+      //console.log(
+      // "AdderModel:setParentMeshPosition getModelFile():",
+      // this.getModelFile()
+      // );
+
       let parentMesh = this.getParentMesh();
     };
 

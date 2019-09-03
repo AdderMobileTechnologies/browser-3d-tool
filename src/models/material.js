@@ -75,7 +75,6 @@ class Material {
         _ambientTexture = ambientTexture;
     }
     setOptions(options){
-        //TODO: check that options is a json object:
         let objConstructor = {}.constuctor;
         if(options.constructor !== objConstructor){
             throw new Error(`Material:setOptions(): called with incorrect parameter. ( requires JSON object )`)

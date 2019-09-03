@@ -13,7 +13,7 @@
 /* TODO:
 The rotation property should be handled the same way it is handled in the AdderModel class.
 ie. 
- rotationAxis = null,
+rotationAxis = null,
 rotationAngle = null,
 */
 import { Mesh, Vector3, Quaternion } from "babylonjs";
@@ -34,7 +34,7 @@ class MeshWrapper {
         if( !(rotation instanceof Quaternion) ){
             throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
         }
-        */
+    */
 
     let _arrayOfListeners = [];
     let _mesh = mesh;

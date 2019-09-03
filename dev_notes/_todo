@@ -1,13 +1,5 @@
 
+TODO: 
+move meta data files to dbdev.adder.io from localhost.
 
-meta files 
-
-Meta File Format
-{
-    "<AD_TYPE>_<SUB_TYPE>_<DETAIL>": {
-        filetpath: <RELATIVE_PATH_FROM_ASSETS_FOLDER>,
-        uid: x,
-      
-
-    }
-}
+set up meta data index. 

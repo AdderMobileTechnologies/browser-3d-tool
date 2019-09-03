@@ -2,17 +2,17 @@ import React from "react";
 import SceneFast from "./SceneFast";
 
 //region: MaterialUI Components
-import Grid from "@material-ui/core/Grid";
-import GridList from "@material-ui/core/GridList";
+import Grid from "@material-ui/core/Grid"; //
+import GridList from "@material-ui/core/GridList"; // The 'GridList' is the MUI(Material UI), premade component used to display sliding row of snapshots.
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 //import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
-import UIButton from "./subcomponents/UIElements/UIButton";
-import MUIPopover from "./subcomponents/UIElements/MUIPopover";
-import UISideBar from "./subcomponents/UISideBar";
+import UIButton from "./subcomponents/UIElements/UIButton"; // A custom class created in version 1 for handling button actions.
+import MUIPopover from "./subcomponents/UIElements/MUIPopover"; // The MUIPopover is a button overlaying the babylon canvas that houses the functionality for selecting environment .
+import UISideBar from "./subcomponents/UISideBar"; // The UISidebar is a component that houses all the functionailty for design name, type of model to use, etc....
 import { IntersectionInfo } from "babylonjs";
 
 import * as K from "./constants";
@@ -22,26 +22,82 @@ const UIGridList = K.UIGridList;
 const tileData = K.tileData;
 
 class Main extends React.Component {
+  //TODO-9-3: ad_type
   constructor(props) {
     super(props);
     this.state = {
       userSession: {
+        userInfo: [],
+        userModel: {
+          user_id: "",
+          username: ""
+        },
+        designs: [],
+        designActions: [],
         designModel: {
-          designName: "foo"
+          designName: "Design One A",
+          adTypeFilepath: "",
+          environment: "",
+          environment_type: "",
+          environmentFilepath: "",
+          meshes: [],
+          screenShots: [],
+          ui_selections: {},
+          ui_status: {},
+          action: ""
         }
       },
       Ad_Scene: {
-        name: "foo"
+        name: "Advertisement Scene A"
       },
       appState: {
+        scene_number: 99999,
         ad_type: "default",
-        ui_status: {
-          ad_type_active: "",
-          ad_type_selected: ""
-        },
+        editState: "standby",
+        editStateOptions: [
+          "standby",
+          "willEdit",
+          "editing",
+          "didEdit",
+          "changingScene"
+        ],
+        editByRatio: false,
+        editByMeshPick: false,
+
+        currentRatio: "medium",
+        ratioSettings: ["small", "medium", "large"],
+
+        mesh_parent: {},
+        designState: "standby",
+        designStateOptions: [
+          "standby",
+          "designStarted",
+          "designSaved",
+          "designCanceled"
+        ],
         ui_selections: {
           ad_type: "",
-          ad_subtype: "foo"
+          ad_subtype: "",
+          ad_detail: "",
+          ad_asset: {
+            name: "",
+            babylonfile: ""
+          },
+          env_type: "",
+          env_subtype: "",
+          env_asset: {
+            name: "",
+            babylonfile: ""
+          }
+        },
+        ui_status: {
+          ad_type_active: true,
+          ad_type_selected: false,
+          ad_subtype_selected: false,
+          ad_detail_selected: false,
+          ad_asset_selected: false,
+          env_type_active: true,
+          env_type_selected: false
         }
       }
     };
@@ -51,8 +107,175 @@ class Main extends React.Component {
     this.manageCascadingSelects_AdType = this.manageCascadingSelects_AdType.bind(
       this
     );
+    this.iconDelete = this.iconDelete.bind(this);
+    this.changeAdType = this.changeAdType.bind(this);
+    this.saveDesignModelUI = this.saveDesignModelUI.bind(this);
+    this.actionSave = this.actionSave.bind(this);
+    this.setStateScene = this.setStateScene.bind(this);
   }
+  setStateScene(scene) {
+    console.log(typeof scene);
+    console.log(scene);
+    if (scene != null) {
+      console.log("scene is NOT null");
+      //  this.setState({
+      //   scene: scene
+      // });
+    } else {
+      console.log("scene is null...");
+    }
+  }
+  iconDelete() {
+    //TODO: when deleting a scene, lights out over landscape but mountains stilll there.
 
+    //hide screenshots
+    var gridlist_root = window.document.querySelector(".MuiGridList-root");
+    gridlist_root.innerHTML = "";
+
+    // reset name
+    var design_name_element = window.document.querySelector("#filled-name");
+    design_name_element.value = "";
+    design_name_element.innerHTML = "";
+
+    var data = {};
+    this.changeAdType(data);
+  }
+  async changeAdType(data) {
+    console.log("- - - - - - - - - - - ASYNC changedAdType(data):");
+
+    var doHardReset = false;
+    if (doHardReset) {
+      await this.hardResetState();
+    } else {
+      console.log("no hard reset");
+    }
+
+    if (typeof this.state.scene !== "undefined") {
+      this.state.scene.dispose();
+      //this.state.scene = null;
+    } else {
+      console.log("changeAdType return because scene undefined");
+      return;
+    }
+
+    await this.setState(prevState => ({
+      ...prevState,
+      appState: {
+        ...prevState.appState,
+        editState: "changingState"
+      }
+    }));
+
+    let sceneNumber;
+    let adType;
+    let filepath;
+    let name;
+    let suffix;
+    let make;
+    let model;
+    let uvMapping = this.state.appState.currentRatio;
+    //TODO:9-3
+    console.log("data.selectedOption:", data.selectedOption);
+    switch (data.selectedOption) {
+      case "porsche":
+        sceneNumber = 0;
+        adType = "vehicle";
+        filepath = "http://dbdev.adder.io/assets/porsche/porsche4.0.babylon";
+        name = "porsche";
+        make = "porsche";
+        model = "911";
+        suffix = "";
+        break;
+      case "billboard1":
+        sceneNumber = 1;
+        adType = "billboard";
+        filepath =
+          "http://dbdev.adder.io/assets/Billboard/Billboard.v1.1.babylon";
+        name = "billboard";
+        make = "generic";
+        model = "generic";
+        suffix = "";
+        break;
+      case "vw_toureg":
+        sceneNumber = 2;
+        adType = "vehicle";
+        filepath =
+          "http://dbdev.adder.io/assets/vw_toureg/vw_toureg-1.5.babylon";
+        name = "vw";
+        suffix = "_vw";
+        make = "vw";
+        model = "toureg";
+        break;
+      default:
+        //DEFAULT
+        sceneNumber = 0;
+        adType = "vehicle";
+        filepath = "http://dbdev.adder.io/assets/porsche/porsche4.0.babylon";
+        name = "porsche";
+        suffix = "";
+        make = "porsche";
+        model = "911";
+
+        return;
+    }
+
+    this.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designModel: {
+            ...prevState.userSession.designModel,
+            adTypeSceneNumber: sceneNumber,
+            AdType: adType,
+            adTypeFilepath: filepath,
+            adTypeName: name,
+            adTypeSuffix: suffix,
+            action: "changeAdType"
+          }
+        }
+      }),
+      () => {
+        console.log("async changeAdType:step 1");
+        this.setState(
+          prevState => ({
+            ...prevState,
+            appState: {
+              ...prevState.appState,
+              scene_number: sceneNumber,
+              ad_type: adType
+            }
+          }),
+          () => {
+            console.log("async changeAdType:step 2");
+            this.setState(
+              prevState => ({
+                ...prevState,
+                Ad_Scene: {
+                  ...prevState.Ad_Scene,
+                  adType: adType,
+                  scene_number: sceneNumber,
+                  filepath: filepath,
+                  name: name,
+                  suffix: suffix,
+                  make: make,
+                  model: model,
+                  uvMapping: uvMapping
+                }
+              }),
+              () => {
+                console.log("async changeAdType:step 3");
+                console.log(
+                  "TODO-9-3 should call makeBabylonTool.... per version 1 anyway."
+                );
+                this.makeBabylonTool(sceneNumber);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
   editingDesignName() {}
 
   changeDesignName() {}
@@ -75,6 +298,7 @@ class Main extends React.Component {
         }
       }),
       () => {
+        console.log("async step 1");
         this.setState(
           prevState => ({
             ...prevState,
@@ -90,6 +314,7 @@ class Main extends React.Component {
             }
           }),
           () => {
+            console.log("async step 2");
             var ui_selections = this.state.appState.ui_selections;
             var ui_status = this.state.appState.ui_status;
             this.saveDesignModelUI(ui_selections, ui_status);
@@ -97,7 +322,7 @@ class Main extends React.Component {
             //SAVE CHANGE ACTION
             this.actionSave();
 
-            /* CHange scene at DETAIL LEVEL instaed of asset level.*/
+            /* Change scene at DETAIL LEVEL instead of asset level.*/
             if (
               this.state.appState.ui_status.ad_asset_selected &&
               this.state.appState.ui_selections.ad_asset !== ""
@@ -107,12 +332,71 @@ class Main extends React.Component {
               let data = {};
               data.selectedOption = this.state.appState.ui_selections.ad_asset;
               this.changeAdType(data);
+            } else {
+              console.log("NOT CHANGING AD BECAUSE:");
+              console.log(
+                "this.state.appState.ui_status.ad_asset_selected=",
+                this.state.appState.ui_status.ad_asset_selected
+              );
+              console.log(
+                "this.state.appState.ui_selections.ad_asset=",
+                this.state.appState.ui_selections.ad_asset
+              );
             }
           }
         );
       }
     );
   }
+  saveDesignModelUI(ui_selections, ui_status) {
+    this.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designModel: {
+            ...prevState.userSession.designModel,
+            ui_selections: ui_selections,
+            ui_status: ui_status,
+            action: "saveDesignModelUI"
+          }
+        }
+      }),
+      () => {
+        console.log("async saveDesignModelUI");
+      }
+    );
+
+    //-------------------------------------------
+  }
+
+  actionSave() {
+    //The purpose to save a history of
+
+    var design_obj = this.state.userSession.designModel;
+    //const obj = {'design': design_obj};
+    const newDesignsArray = this.state.userSession.designs.slice();
+    newDesignsArray.push(design_obj); // Push the object
+    this.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designs: newDesignsArray
+        }
+      }),
+      () => {
+        //note: saves the entire 'userSession'
+        let oldDesigns = JSON.parse(localStorage.getItem("designsArray")) || [];
+        let newDesign = this.state.userSession.designModel;
+        //push to local storage:
+        oldDesigns.push(newDesign);
+        localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+      }
+    );
+  }
+  //TODO:9-3 LEFT OFF HERE: constantly having to go get missing functions and values from version one code.
+
   componentDidMount() {}
   render() {
     return (
@@ -191,22 +475,19 @@ class Main extends React.Component {
           <Grid item xs={12}>
             <div className="xxxbabylonjsCanvasContainer">
               {/** .UI- the 3D Canvas Grid*/}
+              <SceneFast setStateScene={this.setStateScene} />
 
-              {/**<canvas id="gui_canvas_container"
-								   className="babylonjsCanvas"
-						   style={{boxShadow: "5px 5px 8px #2f2f2f"}}/> */}
-              <SceneFast />
-              {/**
-			   Here I ran into issues with the inner react components all being desiged to call the same onClick event.
-			   It felt like a brick wall. May need to re-think the UIButton class(?). re-think trying to reduce this? 
-			   
-              <UIGuiOverlay
-                screenshotButtonPress={this.screenshotButtonPress}
-                iconCrop={this.iconCrop}
-                iconFormatColorFill={this.iconFormatColorFill}
-                iconTextFields={this.iconTextFields}
-			  />
-			  */}
+              {/** TODO:
+              Here I ran into issues with the inner react components all being desiged to call the same onClick event.
+              It felt like a brick wall. May need to re-think the UIButton class(?). re-think trying to reduce this? 
+              
+                    <UIGuiOverlay
+                      screenshotButtonPress={this.screenshotButtonPress}
+                      iconCrop={this.iconCrop}
+                      iconFormatColorFill={this.iconFormatColorFill}
+                      iconTextFields={this.iconTextFields}
+              />
+              */}
               {/** .UI- Overlaying Icons on top of 3D Canvas */}
 
               <div className="gui-overlay">
@@ -327,7 +608,7 @@ class Main extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        {/** .UI- Sidebar  */}
+        {/** .UI- Sidebar TODO-9-3: */}
         <Grid
           item
           xs={3}

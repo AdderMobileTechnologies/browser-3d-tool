@@ -2,12 +2,13 @@
     "meta_data":
     [
         {
+             "uid": "123abc",
             "name": "vehicle_2door_sportscar",
             "dir": "porsche",
             "filename": "porsche2.2",
             "filepath": "porsche/porsche2.2.babylon",
             "position": {
-                "x": "7",
+                "x": "4",
                 "y": "1",
                 "z": "3"
             },
@@ -24,7 +25,24 @@
                 "y": ".75",
                 "z": ".75"
             },
-            "uid": "123abc"
+            "behavior": [
+                {
+                    "strategy": "scale",
+                    "parameters": {
+                        "x": "0",
+                        "y": "0",
+                        "z": "0"
+                    }
+                },
+                {
+                    "strategy": "select",
+                    "parameters": {
+                        "x": "0",
+                        "y": "0",
+                        "z": "0"
+                    }
+                }
+            ]
         },
         {
             "name": "vehicle_4door_stationwagon",
@@ -277,10 +295,6 @@
             ]
 
         }
-
-
-
-
 
     ]
 
