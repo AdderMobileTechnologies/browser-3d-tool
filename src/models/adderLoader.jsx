@@ -105,6 +105,7 @@ class AdderLoader {
       var rotationAngle = parseFloat(rotation.angle);
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
       let modelFile = dir + "/" + filename + `.babylon`;
+      console.log("modelFile just before instantiate AdderModel:", modelFile);
       let adderModel = new AdderModel(
         scene,
         modelFile,

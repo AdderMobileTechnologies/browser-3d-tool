@@ -39,6 +39,7 @@ class AdderMeta {
         thisClass.looper(value);
       });
     };
+
     this.getAdTypes = () => {
       let scene = this.getScene();
       let thisClass = this;
@@ -58,6 +59,27 @@ class AdderMeta {
       });
       /////////////////
     };
+
+    this.getDesignOptions = () => {
+      let scene = this.getScene();
+      let thisClass = this;
+      ///////////////////
+      this.promise_designOptions = new Promise(function(resolve, reject) {
+        const url = `${K.API_URL}/meta/design`;
+        axios
+          .get(url)
+          .then(response => response.data)
+          .then(data => {
+            resolve(data);
+          });
+      });
+      //->
+      this.promise_designOptions.then(function(value) {
+        thisClass.looper(value);
+      });
+      /////////////////
+    };
+
     this.looper = value => {
       let adderLoader = new AdderLoader(scene);
 
