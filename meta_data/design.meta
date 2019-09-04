@@ -27,7 +27,7 @@
                        },
                        {
                            "detail":"Angled",
-                            "metafile":"path/to/angled/billboard.babylon"
+                            "metafile":"http://dbdev.adder.io/assets/Billboard.v1.1.babylon"
                        }
                    ]
                }

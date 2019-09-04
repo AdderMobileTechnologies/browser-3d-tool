@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid"; //
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
 import UISelect from "./subcomponents/elements/UISelect";
 
-import Test from "../models/test";
+import AdderLoader from "../models/adderLoader";
 
 class MainMinimal extends React.Component {
   constructor(props) {
@@ -91,8 +91,8 @@ class MainMinimal extends React.Component {
     ///////////////////////////////////////////////////////////////////////////////////////
     // Now Load:  assetData.metafile
     ///////////////////////////////////////////////////////////////////////////////////////
-    let test = new Test(this.state.scene);
-    let fooey = test.returnArg("foo");
+    let adderLoader = new AdderLoader(this.state.scene);
+    let fooey = adderLoader.returnArg(assetData);
     console.log(fooey);
   };
 
@@ -159,7 +159,10 @@ class MainMinimal extends React.Component {
           </Grid>{" "}
           <Grid item xs={8}>
             <div className="babylonjsCanvasContainer">
-              <SceneFast setScene={this.setScene}></SceneFast>
+              <SceneFast
+                setScene={this.setScene}
+                scene={this.state.scene}
+              ></SceneFast>
             </div>
           </Grid>
           <Grid item xs={4}>

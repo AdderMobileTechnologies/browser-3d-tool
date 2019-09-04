@@ -9,6 +9,9 @@ import MeshWrapper from "../models/meshWrapper";
 import AdderCamera from "../models/camera";
 import { domainToASCII } from "url";
 import AdderSkyBox from "../models/skybox";
+
+import AdderLoader from "../models/adderLoader";
+import AdderMeta from "../models/adderMeta";
 /*
 DEV NOTES: 08-29-2019
 !(Meta Data Formatting is extremely strict, look out for commas on the last item in an object!)	 
@@ -26,120 +29,27 @@ class SceneFast extends React.Component {
     super(props);
     this.state = {
       selected_mesh_id: "",
-      meta_data: {}
+      meta_data: {},
+      scene: props.scene
     };
     this.setScene = props.setScene;
+    //this.scene = props.scene;
   }
+  ///////////////// constructor().
 
   componentDidMount() {
-    let cityVectorAdjustment = new BABYLON.Vector3(70, -1, 20);
-    let alternativeVector = new BABYLON.Vector3(70, 5, 20);
-    let vectorZero = new BABYLON.Vector3(0, 0, 0);
-    let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
-    let defaultLocalRotationAngle = 0;
-    var promise1 = new Promise(function(resolve, reject) {
-      const url = `${API_URL}/meta/environment`;
-      axios
-        .get(url)
-        .then(response => response.data)
-        .then(data => {
-          resolve(data);
-        });
-    });
-    promise1.then(function(value) {
-      // TODO: Think about whether this should loop through all meshes in the meta data
-      // or if this should be a one at a time kind of deal ?
-      /* [`streetLight`, `firehydrant`, `bicycle`, `block1v2`, `crane`] */
-      // TODO: save meta_data to state(?)
-
-      for (let k = 0; k < value.meta_data.length; k++) {
-        // console.log("k:", value.meta_data[k]);
-        let dir = value.meta_data[k]["dir"];
-        let filename = value.meta_data[k]["filename"];
-        let position = value.meta_data[k]["position"];
-        let rotation = value.meta_data[k]["rotation"];
-        let scaling = value.meta_data[k]["scaling"];
-        addSingleModel(dir, filename, position, rotation, scaling);
-      }
-      let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
-      adderSkybox.getSkybox();
-    });
-
-    var promise2 = new Promise(function(resolve, reject) {
-      const url = `${API_URL}/meta/ad_types`;
-      axios
-        .get(url)
-        .then(response => response.data)
-        .then(data => {
-          resolve(data);
-        });
-    });
-    promise2.then(function(value) {
-      for (let m = 0; m < value.meta_data.length; m++) {
-        // console.log("k:", value.meta_data[k]);
-        let dir = value.meta_data[m]["dir"];
-        let filename = value.meta_data[m]["filename"];
-        let position = value.meta_data[m]["position"];
-        let rotation = value.meta_data[m]["rotation"];
-        let scaling = value.meta_data[m]["scaling"];
-        addSingleModel(dir, filename, position, rotation, scaling);
-      }
-    });
-
-    function addSingleModel(dir, filename, position, rotation, scaling) {
-      let positionVect = new BABYLON.Vector3(
-        position.x,
-        position.y,
-        position.z
-      );
-      let rotationAxisVect = new BABYLON.Vector3(
-        rotation.axis.x,
-        rotation.axis.y,
-        rotation.axis.z
-      );
-      var rotationAngle = parseFloat(rotation.angle);
-      let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
-      let modelFile = dir + "/" + filename + `.babylon`;
-      let adderModel = new AdderModel(
-        scene,
-        modelFile,
-        null,
-        positionVect,
-        rotationAxisVect,
-        rotationAngle,
-        [],
-        scalingVect
-      );
-      loadModelAsync(adderModel);
-
-      // Changing The Position of a PARENT MESH of an AdderModel currently requires 'getting the parent mesh and applying the babylon method to it.ie.setPositionWithLocalVector(Vector3)
-      // This is not desireable becasue we'd like to be able to do it from the model itself, I would imagine.
-      /* How to change Parent Mesh Position.*/
-      //Position and Rotation: applied to parent mesh.
-      let adderModelParent = adderModel.getParentMesh();
-      //Position:
-      let adderModelPosition = adderModel.getPosition();
-      adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
-      //Rotation:
-      let adderModelRotationAngle = adderModel.getRotationAngle();
-      let adderModelRotationRadian = adderModel.getRotationRadian();
-      let adderModelRotationAxis = adderModel.getRotationAxis();
-      var quaternion = new BABYLON.Quaternion.RotationAxis(
-        adderModelRotationAxis,
-        adderModelRotationRadian
-      );
-      adderModelParent.rotationQuaternion = quaternion;
-      //Scaling:
-      let scalingFactorX = adderModel.getScaling();
-      adderModelParent.scaling = scalingFactorX;
-    }
+    // let cityVectorAdjustment = new BABYLON.Vector3(70, -1, 20);
+    // let alternativeVector = new BABYLON.Vector3(70, 5, 20);
+    // let vectorZero = new BABYLON.Vector3(0, 0, 0);
+    // let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
+    // let defaultLocalRotationAngle = 0;
 
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
       stencil: true
     });
-
+    ///////////////////////////////
     let createScene = function() {
       //create the scene.
       let scene = new BABYLON.Scene(engine);
@@ -187,76 +97,18 @@ class SceneFast extends React.Component {
       );
       return scene;
     };
+    //////////////// createScene().
 
     let scene = createScene();
-    console.log("The scene has been created.");
-    console.log("the type of scene is:", typeof scene);
-    console.log("the scene is:", scene);
-    console.log("this:", this);
-    this.props.setScene(scene);
-
     this.props.setScene(scene);
     scene.autoClear = true;
-
-    async function loadModelAsync(adderModel) {
-      /* 
-			 SceneLoader constructor()
-				SceneLoader.ImportMeshAsync(
-					meshNames: any, 
-					rootUrl: string, 
-					sceneFilename?: string | File,
-					scene?: Nullable<Scene>, 
-					onProgress?: Nullable<function>, 
-					pluginExtension?: Nullable<string>
-				)
-				: Promise<object>
-				https://doc.babylonjs.com/api/classes/babylon.sceneloader
-			*/
-      //define SceneLoader.ImportMeshAsync parameters:
-      let meshNames = "";
-      let rootUrl = "http://dbdev.adder.io/assets/";
-      let sceneFileName = adderModel.getModelFile();
-      let onProgress = null;
-      let pluginExtension = null;
-
-      let result = await BABYLON.SceneLoader.ImportMeshAsync(
-        meshNames,
-        rootUrl,
-        sceneFileName,
-        scene,
-        onProgress,
-        pluginExtension
-      );
-      await callback_ImportMeshAsync(adderModel, result);
-    }
-
-    function callback_ImportMeshAsync(adderModel, result) {
-      const meshWrappers = [];
-      //make adderModel parent mesh, the parent of all individual meshes.
-      //wrap each mesh in the meshWrapper class and build the array.
-      //add the array to the model.
-      //TODO: If we added 'isPickable' to the model meta data, and used it in the constructor, then we could use it here,
-      // to add mesh specific qualities.
-
-      result.meshes.forEach(function(mesh) {
-        mesh.parent = adderModel.getParentMesh();
-        // console.log(mesh.id);
-        //should this pickable quality be defined in the MeshWrapper class instead?
-        if (
-          mesh.id === "leftside_small" ||
-          mesh.id === "leftside_medium" ||
-          mesh.id === "leftside_large"
-        ) {
-          mesh.isPickable = true;
-        } else {
-          mesh.isPickable = false;
-        }
-
-        let newMeshWrapper = new MeshWrapper(mesh, null, null);
-        meshWrappers.push(newMeshWrapper);
-      });
-      adderModel.setMeshWrappers(meshWrappers);
-    }
+    //////////////////////////
+    console.log("scene:", scene);
+    let adderMeta = new AdderMeta(scene);
+    adderMeta.getEnvironment();
+    adderMeta.getAdTypes();
+    let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
+    adderSkybox.getSkybox();
 
     engine.runRenderLoop(function() {
       if (typeof scene === "undefined") {
@@ -267,11 +119,11 @@ class SceneFast extends React.Component {
         }
       }
     });
-
+    ///////////////////
     window.addEventListener("resize", function() {
       engine.resize();
     });
-
+    ////////////////////
     window.addEventListener("click", function() {
       //should only detect meshes where  isPickable = true;
       var pickResult = scene.pick(scene.pointerX, scene.pointerY);
@@ -284,6 +136,7 @@ class SceneFast extends React.Component {
       }
     });
   }
+  ///////// componentDidMount.
   render() {
     return (
       <div>

@@ -159,7 +159,8 @@ class AdderCamera {
     }
   }
 
-  getCamera(scene) {
+  getCamera() {
+    let scene = this.getScene();
     var camera = new ArcRotateCamera(
       this.getName(),
       this.getBeta(),
