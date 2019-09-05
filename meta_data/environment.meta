@@ -37,7 +37,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -81,7 +81,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -124,7 +124,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -168,7 +168,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -212,7 +212,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -256,7 +256,7 @@
                         }
                     },
                     {
-                        "strategy": "select",
+                        "strategy": "no-select",
                         "parameters": {
                             "x": "0",
                             "y": "0",
@@ -300,7 +300,7 @@
                             }
                         },
                         {
-                            "strategy": "select",
+                            "strategy": "no-select",
                             "parameters": {
                                 "x": "0",
                                 "y": "0",
@@ -344,7 +344,7 @@
                         }
                     },
                     {
-                        "strategy": "select",
+                        "strategy": "no-select",
                         "parameters": {
                             "x": "0",
                             "y": "0",

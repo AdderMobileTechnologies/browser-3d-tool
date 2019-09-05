@@ -66,19 +66,16 @@ class AdderLoader {
 
       result.meshes.forEach(function(mesh) {
         mesh.parent = adderModel.getParentMesh();
-
-        //should this pickable quality be defined in the MeshWrapper class instead?
-        if (
-          mesh.id === "leftside_small" ||
-          mesh.id === "leftside_medium" ||
-          mesh.id === "leftside_large" ||
-          mesh.id === "sign_1" ||
-          mesh.id === "sign_2"
-        ) {
+        //define mesh behaviors based on meta data.
+        let behavior = adderModel.getBehavior();
+        let isSelectable = false;
+        for (let x in behavior) {
+          if (behavior[x]["strategy"] === "select") {
+            isSelectable = true;
+          }
+        }
+        if (isSelectable) {
           mesh.isPickable = true;
-
-          console.log(mesh.id);
-          console.log(adderModel);
         } else {
           mesh.isPickable = false;
         }
@@ -105,6 +102,8 @@ class AdderLoader {
       var rotationAngle = parseFloat(rotation.angle);
       let scaling = adderAsset.getScaling();
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
+      let behavior = adderAsset.getBehavior();
+
       let dir = adderAsset.getDir();
       let filename = adderAsset.getFilename();
       let modelFile = dir + "/" + filename + `.babylon`;
@@ -116,7 +115,8 @@ class AdderLoader {
         rotationAxisVect,
         rotationAngle,
         [],
-        scalingVect
+        scalingVect,
+        behavior
       );
 
       this.modelLoader(adderModel);

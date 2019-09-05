@@ -21,7 +21,8 @@ class AdderModel {
     rotationAxis = null,
     rotationAngle = null,
     meshWrappers = null,
-    scaling = null
+    scaling = null,
+    behavior = null
   ) {
     if (modelFile === "" || typeof modelFile !== "string") {
       throw new Error(
@@ -67,6 +68,12 @@ class AdderModel {
       // throw new Error("AdderModel.Constructor(): Constructor called with unspecified scaling (Requires: BABYLON.Vector3 )");
     }
 
+    if (behavior === null) {
+      throw new Error(
+        "AdderModel:Constructor(): The model constructor expects a behavior parameter. "
+      );
+    }
+
     let _scene = scene;
     let _modelFile = modelFile;
     let _parentMesh = parentMesh;
@@ -76,6 +83,7 @@ class AdderModel {
     let _rotationRadian = rotationAngle * (Math.PI / 180);
     let _meshWrappers = meshWrappers;
     let _scaling = scaling;
+    let _behavior = behavior;
 
     /*
         Note: The 'position' and 'rotation' parameters actually need to be applied to the 'parent mesh'.
@@ -127,6 +135,10 @@ class AdderModel {
     };
     this.getScaling = () => {
       return _scaling;
+    };
+
+    this.getBehavior = () => {
+      return _behavior;
     };
 
     this.setParentMeshPosition = positionVector3 => {

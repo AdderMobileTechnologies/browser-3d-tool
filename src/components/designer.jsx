@@ -110,6 +110,7 @@ class Designer extends React.Component {
         assetData.position,
         assetData.rotation,
         assetData.scaling,
+        assetData.behavior,
         this.state.scene
       );
 
