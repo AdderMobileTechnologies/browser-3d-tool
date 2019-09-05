@@ -14,7 +14,7 @@ In previous work, based on mesh id, I either did or did not apply the 'isPickabl
 Then, under a general 'onPointerDown' event, I looped conditions based on mesh_id. 
 */
 
-class SceneFast extends React.Component {
+class SceneCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,6 +110,7 @@ class SceneFast extends React.Component {
         return false;
       } else {
         console.log("click() pickResult:", pickResult.pickedMesh.name);
+        //currently set in the adderLoader class.
         //TODO: how to handle the clicked mesh ie. leftside_large
         //TODO: how to set meshes to 'pickable' properly.ie. currently in callback_ImportMeshAsync()
       }
@@ -119,7 +120,7 @@ class SceneFast extends React.Component {
   render() {
     return (
       <div>
-        <div>Scene_Fast.jsx</div>
+        <div>SceneCanvas.jsx</div>
         <div>{this.state.selected_mesh_id}</div>
         <div className="adder-3dTool-canvas-container">
           <canvas
@@ -133,4 +134,4 @@ class SceneFast extends React.Component {
   }
 }
 
-export default SceneFast;
+export default SceneCanvas;

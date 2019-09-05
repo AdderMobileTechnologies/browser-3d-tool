@@ -5,6 +5,7 @@
  *
  */
 import BABYLON from "babylonjs";
+import * as K from "../constants";
 import { Scene } from "babylonjs";
 //models
 import AdderModel from "./model";
@@ -21,14 +22,14 @@ class AdderLoader {
     this.getScene = () => {
       return _scene;
     };
-    ////////////////////////////
+
     this.modelLoader = async function loadModelAsync(adderModel) {
       let scene = this.getScene();
       /* 
                SceneLoader constructor()
                   SceneLoader.ImportMeshAsync(
                       meshNames: any, 
-                      rootUrl: string, 
+                      assets_URL: string, 
                       sceneFilename?: string | File,
                       scene?: Nullable<Scene>, 
                       onProgress?: Nullable<function>, 
@@ -39,14 +40,14 @@ class AdderLoader {
               */
       //define SceneLoader.ImportMeshAsync parameters:
       let meshNames = "";
-      let rootUrl = "http://dbdev.adder.io/assets/";
+      let assets_URL = K.API_URL + "/assets/";
       let sceneFileName = adderModel.getModelFile();
       let onProgress = null;
       let pluginExtension = null;
 
       let result = await BABYLON.SceneLoader.ImportMeshAsync(
         meshNames,
-        rootUrl,
+        assets_URL,
         sceneFileName,
         scene,
         onProgress,
@@ -54,7 +55,7 @@ class AdderLoader {
       );
       await callback_ImportMeshAsync(adderModel, result);
     };
-    ////
+
     function callback_ImportMeshAsync(adderModel, result) {
       const meshWrappers = [];
       //make adderModel parent mesh, the parent of all individual meshes.
@@ -65,7 +66,7 @@ class AdderLoader {
 
       result.meshes.forEach(function(mesh) {
         mesh.parent = adderModel.getParentMesh();
-        // console.log(mesh.id);
+        console.log(mesh.id);
         //should this pickable quality be defined in the MeshWrapper class instead?
         if (
           mesh.id === "leftside_small" ||
@@ -82,11 +83,8 @@ class AdderLoader {
       });
       adderModel.setMeshWrappers(meshWrappers);
     }
-    //////////////////////////////////////
-    ////////////////////////////
+
     this.addSingleModel = function(adderAsset) {
-      console.log("adderLoader:addSingleModel:");
-      console.log("adderAsset:", adderAsset);
       let position = adderAsset.getPosition();
       let positionVect = new BABYLON.Vector3(
         position.x,
@@ -105,7 +103,6 @@ class AdderLoader {
       let dir = adderAsset.getDir();
       let filename = adderAsset.getFilename();
       let modelFile = dir + "/" + filename + `.babylon`;
-      console.log("modelFile just before instantiate AdderModel:", modelFile);
       let adderModel = new AdderModel(
         scene,
         modelFile,

@@ -38,7 +38,7 @@ class AdderModel {
         "name_of_self",
         mesh_parentOptions,
         scene
-      ); //this.getScene()
+      );
       mesh_parent.isVisible = false;
       mesh_parent.scaling = unitVec.scale(1);
       mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
@@ -135,10 +135,6 @@ class AdderModel {
           `AdderModel:setParentMeshPosition  Expects a Vector3 as a parameter.`
         );
       }
-      //console.log(
-      // "AdderModel:setParentMeshPosition getModelFile():",
-      // this.getModelFile()
-      // );
 
       let parentMesh = this.getParentMesh();
     };

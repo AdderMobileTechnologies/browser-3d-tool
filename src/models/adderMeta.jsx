@@ -4,7 +4,7 @@
  */
 
 import AdderLoader from "./adderLoader";
-import * as K from "../components/constants";
+import * as K from "../constants";
 import axios from "axios";
 import { Scene } from "babylonjs";
 import AdderAsset from "./asset";
@@ -22,11 +22,10 @@ class AdderMeta {
     };
 
     this.getEnvironment = () => {
-      //////////////////
       let scene = this.getScene();
       let thisClass = this;
       this.promise_environments = new Promise(function(resolve, reject) {
-        const url = `${K.API_URL}/meta/environment`;
+        const url = `${K.META_URL}/meta/environment`;
         axios
           .get(url)
           .then(response => response.data)
@@ -34,7 +33,6 @@ class AdderMeta {
             resolve(data);
           });
       });
-      //->
       this.promise_environments.then(function(value) {
         thisClass.looper(value);
       });
@@ -43,9 +41,8 @@ class AdderMeta {
     this.getAdTypes = () => {
       let scene = this.getScene();
       let thisClass = this;
-      ///////////////////
       this.promise_adTypes = new Promise(function(resolve, reject) {
-        const url = `${K.API_URL}/meta/ad_types`;
+        const url = `${K.META_URL}/meta/ad_types`;
         axios
           .get(url)
           .then(response => response.data)
@@ -53,19 +50,17 @@ class AdderMeta {
             resolve(data);
           });
       });
-      //->
       this.promise_adTypes.then(function(value) {
         thisClass.looper(value);
       });
-      /////////////////
     };
 
     this.getDesignOptions = () => {
       let scene = this.getScene();
       let thisClass = this;
-      ///////////////////
+
       this.promise_designOptions = new Promise(function(resolve, reject) {
-        const url = `${K.API_URL}/meta/design`;
+        const url = `${K.META_URL}/meta/design`;
         axios
           .get(url)
           .then(response => response.data)
@@ -73,11 +68,9 @@ class AdderMeta {
             resolve(data);
           });
       });
-      //->
       this.promise_designOptions.then(function(value) {
         thisClass.looper(value);
       });
-      /////////////////
     };
 
     this.looper = value => {
@@ -89,13 +82,7 @@ class AdderMeta {
         let position = value.meta_data[m]["position"];
         let rotation = value.meta_data[m]["rotation"];
         let scaling = value.meta_data[m]["scaling"];
-        console.log("AdderMeta:looper() value.meta_data:", value.meta_data);
-        console.log("dir:", dir);
-        console.log("filename:", filename);
-        console.log("position:", position);
-        console.log("rotation:", rotation);
-        console.log("scaling:", scaling);
-        console.log("scene:", scene);
+
         var adderAsset = new AdderAsset(
           dir,
           filename,

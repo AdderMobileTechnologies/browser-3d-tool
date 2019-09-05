@@ -1,13 +1,12 @@
 import React from "react";
-import UserImage from "../assets/Adder_3D_Tool2/contact_photo.png";
+import UserImage from "./assets/Adder_3D_Tool2/contact_photo.png";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 
-export const CONSTANT_NUMBER_1 = "hello I am a constant";
-
 export const DefaultUserImage = UserImage;
 
-export const API_URL = "http://localhost:8001";
+export const META_URL = "http://localhost:8001";
+export const API_URL = "http://dbdev.adder.io";
 export const tileData = [
   {
     img: UserImage,

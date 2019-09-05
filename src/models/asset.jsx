@@ -26,13 +26,6 @@ class AdderAsset {
         "AdderAsset:Constructor(): A BABYLON.Scene object is required to build an asset."
       );
     }
-    console.log("AdderAsset Constructor:");
-    console.log("dir:", dir);
-    console.log("filename:", filename);
-    console.log("position:", position);
-    console.log("rotation:", rotation);
-    console.log("scaling:", scaling);
-    console.log("scene:", scene);
 
     let _dir = dir;
     let _filename = filename;

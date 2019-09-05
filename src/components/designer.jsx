@@ -7,7 +7,7 @@
 import React from "react";
 import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
-import * as K from "./constants";
+import * as K from "../constants";
 import axios from "axios";
 import AdderAsset from "../models/asset";
 
@@ -126,7 +126,7 @@ class Designer extends React.Component {
     let scope = this;
     //perform call to meta server for 'ad type' data.
     var promise_designChoices = new Promise(function(resolve, reject) {
-      const url = `${K.API_URL}/meta/design`;
+      const url = `${K.META_URL}/meta/design`;
       axios
         .get(url)
         .then(response => response.data)
