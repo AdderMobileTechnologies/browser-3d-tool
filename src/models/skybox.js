@@ -4,7 +4,7 @@ import * as K from "../constants";
 Purpose: The AdderSkyBox class uses the given input to create a skybox from 6 images inside of a directory that are appli3ed to the insiode faces of a cube.
 The 'scene' is the current scene to insert the skybox into.
 The 'dir' is the directory name where the 6 images are stored.
-The 'size' is a number that represents 'units' in the babylon scene.
+The 'size' is a number that represents 'units' in the babylon scene. 
 
 */
 class AdderSkyBox {
