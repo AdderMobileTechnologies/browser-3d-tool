@@ -44,7 +44,6 @@ class Designer extends React.Component {
   };
   adType_callback = data => {
     console.log("adType_callback data:", data);
-    console.log(typeof data.selectedOption);
     if (data.selectedOption != "-1") {
       this.resetDesign();
 
@@ -59,7 +58,6 @@ class Designer extends React.Component {
         adTypeSelectedOption
       ].children;
       for (let i in subTypeData) {
-        console.log("subTypeData[i]:", subTypeData[i]);
         var sub_type = subTypeData[i].sub_type;
         element = { name: `${sub_type}`, id: i };
         array.push(element);
@@ -84,21 +82,16 @@ class Designer extends React.Component {
       var detailData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[subTypeSelectedOption].children;
-      console.log("detailData:", detailData);
       for (let i in detailData) {
-        // var detail = detailData[i].detail;
         var name = detailData[i].name;
         element = { name: `${name}`, id: i };
         array.push(element);
       }
-      console.log("array:", array);
       this.setState({
         isOnDetail: true,
         detail_options: array,
         subTypeSelectedOption: subTypeSelectedOption
       });
-
-      console.log("detailData:::::", detailData);
     }
   };
   detail_callback = data => {
@@ -120,20 +113,12 @@ class Designer extends React.Component {
         this.state.scene
       );
 
-      ///////////////////////////////////////////////////////////////////////////////////////
-      // Now Load:  assetData.metafile
-      ///////////////////////////////////////////////////////////////////////////////////////
       this.loadScene(adderAsset);
-      //I need a function I can pass the babylon file info to , inorder to load it.
     }
   };
 
   loadScene = adderAsset => {
-    console.log("this:", this);
-    // let scene = this.getScene;
-
     let adderLoader = new AdderLoader(this.props.scene);
-
     adderLoader.addSingleModel(adderAsset);
   };
 
@@ -207,12 +192,3 @@ class Designer extends React.Component {
 }
 
 export default Designer;
-
-/* LIFECYCLE METHODS:
-	componentWillReceiveProps(){ }
-	componentWillMount(){ }
-	componentDidMount(){ }
-	componentWillUpdate(){ }
-	componentDidUpdate(){ }
-	componentWillUnmount(){ }
-*/

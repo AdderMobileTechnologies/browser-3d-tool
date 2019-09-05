@@ -1,16 +1,9 @@
 import React from "react";
 import BABYLON from "babylonjs";
-import axios from "axios";
-import util from "util";
 
 //models
-import AdderModel from "../models/model";
-import MeshWrapper from "../models/meshWrapper";
 import AdderCamera from "../models/camera";
-import { domainToASCII } from "url";
 import AdderSkyBox from "../models/skybox";
-
-import AdderLoader from "../models/adderLoader";
 import AdderMeta from "../models/adderMeta";
 /*
 DEV NOTES: 08-29-2019
@@ -19,10 +12,7 @@ DEV NOTES: 08-29-2019
 -TODO: how to implement the behavior.
 In previous work, based on mesh id, I either did or did not apply the 'isPickable' boolean.
 Then, under a general 'onPointerDown' event, I looped conditions based on mesh_id. 
-
-  
 */
-const API_URL = "http://localhost:8001";
 
 class SceneFast extends React.Component {
   constructor(props) {
@@ -33,9 +23,7 @@ class SceneFast extends React.Component {
       scene: props.scene
     };
     this.setScene = props.setScene;
-    //this.scene = props.scene;
   }
-  ///////////////// constructor().
 
   componentDidMount() {
     let canvas = document.getElementById("adder_3dTool_canvas");
@@ -91,7 +79,6 @@ class SceneFast extends React.Component {
       );
       return scene;
     };
-    //////////////// createScene().
 
     let scene = createScene();
     this.props.setScene(scene);
@@ -99,7 +86,6 @@ class SceneFast extends React.Component {
 
     let adderMeta = new AdderMeta(scene);
     adderMeta.getEnvironment();
-    // adderMeta.getAdTypes();
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
 
@@ -112,11 +98,11 @@ class SceneFast extends React.Component {
         }
       }
     });
-    ///////////////////
+
     window.addEventListener("resize", function() {
       engine.resize();
     });
-    ////////////////////
+
     window.addEventListener("click", function() {
       //should only detect meshes where  isPickable = true;
       var pickResult = scene.pick(scene.pointerX, scene.pointerY);
@@ -129,7 +115,7 @@ class SceneFast extends React.Component {
       }
     });
   }
-  ///////// componentDidMount.
+
   render() {
     return (
       <div>
