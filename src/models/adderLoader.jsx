@@ -92,6 +92,7 @@ class AdderLoader {
       scaling,
       scene
     ) {
+      console.log("adderLoader:addSingleModel:");
       let positionVect = new BABYLON.Vector3(
         position.x,
         position.y,

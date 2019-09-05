@@ -1,29 +1,30 @@
 .App {
     text-align: center;
 }
-.adder-3dTool-canvas-container{
-    position:relative;
-    width:100%;
-}
-.adder-3dTool-canvas{
-    width:100%;
-    height:auto;
+
+.adder-3dTool-canvas-container {
+    position: relative;
+    width: 100%;
 }
 
-.adder-ui-sidebar-container{
-    position:relative;
-    width:25%;
-    height:500px;
-    border:solid 1px #ddd;
+.adder-3dTool-canvas {
+    width: 100%;
+    height: auto;
 }
 
-.AdderLogoAndName{
-    height:50px;
-    width:auto;
+.adder-ui-sidebar-container {
+    position: relative;
+    width: 25%;
+    height: 500px;
+    border: solid 1px #ddd;
+}
+
+.AdderLogoAndName {
+    height: 50px;
+    width: auto;
 }
 
 /* ORIGINAL MIN CSS BELOW HERE */
- 
 
 /*
 1) Main UI
@@ -38,123 +39,131 @@
 /* 1) Main UI           */
 
 /* 2) Header            */
-.AdderLogoAndName{
-    height:50px;
-    width:auto;
+
+.AdderLogoAndName {
+    height: 50px;
+    width: auto;
 }
 
 /* 3) Canvas            */
-.babylonjsCanvasContainer{
-    position:relative;
-}
-.babylonjsCanvas{
-    width:100%;
-    height:auto;
-}
-.gui-overlay{
-    position:absolute;
-    top:15%;
-    left:5px;
-    background-color:#eee;
-    width:45px;
-    border-radius:16px;
-    text-align:center;
+
+.babylonjsCanvasContainer {
+    position: relative;
 }
 
-.gui-overlay-right{
-    position:absolute;
-    top:90%;
-    right:50px;
-    background-color:#eee;
-    width:45px;
-    border-radius:16px;
-    text-align:center;
+.babylonjsCanvas {
+    width: 100%;
+    height: auto;
+}
+
+.gui-overlay {
+    position: absolute;
+    top: 15%;
+    left: 5px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.gui-overlay-right {
+    position: absolute;
+    top: 90%;
+    right: 50px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
 }
 
 /* 4) Sidebar           */
-.ui-select{
-    border:none;
-    outline:none;
-    background:none;
-    width: 100%; 
-    height: 30px; 
+
+.ui-select {
+    border: none;
+    outline: none;
+    background: none;
+    width: 100%;
+    height: 30px;
     color: #2f2f2f;
     font-size: 1.1em;
     text-transform: capitalize;
 }
- 
-.ui-select option.ui-select-option{
-    border:none;
-    outline:none;
-    background:none;
-    background-color:none;
+
+.ui-select option.ui-select-option {
+    border: none;
+    outline: none;
+    background: none;
+    background-color: none;
     font-size: 1.1em;
     text-transform: capitalize;
-   
 }
- 
-.buttonSidebar{
-    border-radius:4px;
-    border:solid .5px #ccc;
-    font-size:".2em";
+
+.buttonSidebar {
+    border-radius: 4px;
+    border: solid .5px #ccc;
+    font-size: ".2em";
+}
+
+.designer {
+    padding: 15px;
 }
 
 /* 5) Icon Overlays     */
-.icon_btn{
-    height:50px;
-    width:auto;
-    background-repeat:no-repeat;
-    background-size:cover;
-    border-radius:8px;
-    border:solid 1px #eee;
-    padding:2px;
-    background-color:#eee;
-    margin:1px;
+
+.icon_btn {
+    height: 50px;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 8px;
+    border: solid 1px #eee;
+    padding: 2px;
+    background-color: #eee;
+    margin: 1px;
     transform: scale(0.8);
- }
+}
 
 /* 6) Icon Grid         */
 
 /* 7) Layout Structure   */
-.relativeContainer{
-    position:relative;
-    width:80%;
-    height:200px;
-    margin-right:auto;
-    margin-left:auto;
-    margin-bottom:30px;
+
+.relativeContainer {
+    position: relative;
+    width: 80%;
+    height: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
     box-shadow: 10px 10px 10px #ccc;
 }
 
 /* Grid List        */
-ul.MuiGridList-root li li{
-    margin:2px !important;
-    border:solid 1px #ccc;
-    border-radius:10px;
-    
+
+ul.MuiGridList-root li li {
+    margin: 2px !important;
+    border: solid 1px #ccc;
+    border-radius: 10px;
 }
-ul.MuiGridList-root li li img{
-   height:150px;
-   max-height:150px;
-    
+
+ul.MuiGridList-root li li img {
+    height: 150px;
+    max-height: 150px;
 }
 
 /* Uncategorized            */
 
-
-.red{
-     background-color:red;
-     color:red;
- }
- .svg_icons{
-    transform: scale(0.8);
-  }
-
-.dev_warning{
-    border:solid 1px orange;
+.red {
+    background-color: red;
+    color: red;
 }
 
+.svg_icons {
+    transform: scale(0.8);
+}
 
+.dev_warning {
+    border: solid 1px orange;
+}
 
 /* background Images
 

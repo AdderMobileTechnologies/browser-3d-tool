@@ -37,63 +37,80 @@ class Designer extends React.Component {
   };
   adType_callback = data => {
     console.log("adType_callback data:", data);
-    this.resetDesign();
+    console.log(typeof data.selectedOption);
+    if (data.selectedOption != "-1") {
+      this.resetDesign();
 
-    var array = [];
-    var element = {};
-    var adTypeSelectedOption = data.selectedOption;
-    var subTypeData = this.state.designChoiceMeta.children[adTypeSelectedOption]
-      .children;
-    for (let i in subTypeData) {
-      console.log("subTypeData[i]:", subTypeData[i]);
-      var sub_type = subTypeData[i].sub_type;
-      element = { name: `${sub_type}`, id: i };
+      var array = [];
+      var element = {};
+
+      element = { name: `select`, id: -1 };
       array.push(element);
+
+      var adTypeSelectedOption = data.selectedOption;
+      var subTypeData = this.state.designChoiceMeta.children[
+        adTypeSelectedOption
+      ].children;
+      for (let i in subTypeData) {
+        console.log("subTypeData[i]:", subTypeData[i]);
+        var sub_type = subTypeData[i].sub_type;
+        element = { name: `${sub_type}`, id: i };
+        array.push(element);
+      }
+      this.setState({
+        isOnSubType: true,
+        subType_options: array,
+        adTypeSelectedOption: adTypeSelectedOption
+      });
     }
-    this.setState({
-      isOnSubType: true,
-      subType_options: array,
-      adTypeSelectedOption: adTypeSelectedOption
-    });
   };
   subType_callback = data => {
     console.log("subType_callback data:", data);
-    var array = [];
-    var element = {};
-    var subTypeSelectedOption = data.selectedOption;
-    var detailData = this.state.designChoiceMeta.children[
-      this.state.adTypeSelectedOption
-    ].children[subTypeSelectedOption].children;
-    console.log("detailData:", detailData);
-    for (let i in detailData) {
-      // var detail = detailData[i].detail;
-      var name = detailData[i].name;
-      element = { name: `${name}`, id: i };
-      array.push(element);
-    }
-    console.log("array:", array);
-    this.setState({
-      isOnDetail: true,
-      detail_options: array,
-      subTypeSelectedOption: subTypeSelectedOption
-    });
+    if (data.selectedOption != "-1") {
+      var array = [];
+      var element = {};
 
-    console.log("detailData:::::", detailData);
+      element = { name: `select`, id: -1 };
+      array.push(element);
+
+      var subTypeSelectedOption = data.selectedOption;
+      var detailData = this.state.designChoiceMeta.children[
+        this.state.adTypeSelectedOption
+      ].children[subTypeSelectedOption].children;
+      console.log("detailData:", detailData);
+      for (let i in detailData) {
+        // var detail = detailData[i].detail;
+        var name = detailData[i].name;
+        element = { name: `${name}`, id: i };
+        array.push(element);
+      }
+      console.log("array:", array);
+      this.setState({
+        isOnDetail: true,
+        detail_options: array,
+        subTypeSelectedOption: subTypeSelectedOption
+      });
+
+      console.log("detailData:::::", detailData);
+    }
   };
   detail_callback = data => {
     console.log("detail_callback data:", data);
-    var assetSelected = data.selectedOption;
-    var assetData = this.state.designChoiceMeta.children[
-      this.state.adTypeSelectedOption
-    ].children[this.state.subTypeSelectedOption].children[assetSelected];
+    if (data.selectedOption != "-1") {
+      var assetSelected = data.selectedOption;
+      var assetData = this.state.designChoiceMeta.children[
+        this.state.adTypeSelectedOption
+      ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
-    console.log("assetData:", assetData);
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Now Load:  assetData.metafile
-    ///////////////////////////////////////////////////////////////////////////////////////
-    this.loadScene(assetData);
-    //I need a function I can pass the babylon file info to , inorder to load it.
+      console.log("assetData:", assetData);
+      ///////////////////////////////////////////////////////////////////////////////////////
+      // Now Load:  assetData.metafile
+      ///////////////////////////////////////////////////////////////////////////////////////
+      this.loadScene(assetData);
+      //I need a function I can pass the babylon file info to , inorder to load it.
+    }
   };
+
   loadScene = assetData => {
     console.log("this:", this);
     // let scene = this.getScene;
@@ -146,6 +163,10 @@ class Designer extends React.Component {
     function promise_designChoices_callback(value) {
       var array = [];
       var element = {};
+
+      element = { name: `select`, id: -1 };
+      array.push(element);
+
       for (let i in value.children) {
         var ad_type = value.children[i].ad_type;
         element = { name: `${ad_type}`, id: i };
@@ -159,7 +180,8 @@ class Designer extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="designer">
+        <div>designer.jsx</div>
         {this.state.isOnAdType && (
           <UISelect
             id={"ad_type"}

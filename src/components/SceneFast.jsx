@@ -38,18 +38,12 @@ class SceneFast extends React.Component {
   ///////////////// constructor().
 
   componentDidMount() {
-    // let cityVectorAdjustment = new BABYLON.Vector3(70, -1, 20);
-    // let alternativeVector = new BABYLON.Vector3(70, 5, 20);
-    // let vectorZero = new BABYLON.Vector3(0, 0, 0);
-    // let defaultLocalRotationAxis = new BABYLON.Vector3(1, 1, 1);
-    // let defaultLocalRotationAngle = 0;
-
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
       stencil: true
     });
-    ///////////////////////////////
+
     let createScene = function() {
       //create the scene.
       let scene = new BABYLON.Scene(engine);
@@ -77,7 +71,7 @@ class SceneFast extends React.Component {
         true,
         cameraOptions
       );
-      let camera = adderCam_arcRotate.getCamera(scene);
+      let camera = adderCam_arcRotate.getCamera();
       camera.attachControl(canvas, true); //add camera to the scene/canvas
       //create a light
       //let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
@@ -102,11 +96,10 @@ class SceneFast extends React.Component {
     let scene = createScene();
     this.props.setScene(scene);
     scene.autoClear = true;
-    //////////////////////////
-    console.log("scene:", scene);
+
     let adderMeta = new AdderMeta(scene);
     adderMeta.getEnvironment();
-    adderMeta.getAdTypes();
+    // adderMeta.getAdTypes();
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
 
@@ -140,7 +133,7 @@ class SceneFast extends React.Component {
   render() {
     return (
       <div>
-        <div>SceneFast</div>
+        <div>Scene_Fast.jsx</div>
         <div>{this.state.selected_mesh_id}</div>
         <div className="adder-3dTool-canvas-container">
           <canvas

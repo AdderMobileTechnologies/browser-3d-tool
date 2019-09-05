@@ -19,7 +19,6 @@ class MainMinimal extends React.Component {
     this.setScene = this.setScene.bind(this);
   }
   setScene = scene => {
-    console.log("trying to set scene  :", scene);
     this.setState(
       {
         scene: scene
@@ -33,7 +32,7 @@ class MainMinimal extends React.Component {
   render() {
     return (
       <div>
-        <div>MainMinimal</div>
+        <div>main_minimal.jsx</div>
         <Grid
           container
           spacing={0}
@@ -67,7 +66,6 @@ class MainMinimal extends React.Component {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <div>sidebar</div>
             <Designer
               setScene={this.setScene}
               scene={this.state.scene}
@@ -80,12 +78,3 @@ class MainMinimal extends React.Component {
 }
 
 export default MainMinimal;
-
-/* LIFECYCLE METHODS:
-	componentWillReceiveProps(){ }
-	componentWillMount(){ }
-	componentDidMount(){ }
-	componentWillUpdate(){ }
-	componentDidUpdate(){ }
-	componentWillUnmount(){ }
-*/
