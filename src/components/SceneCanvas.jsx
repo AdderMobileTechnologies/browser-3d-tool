@@ -41,26 +41,18 @@ class SceneCanvas extends React.Component {
   }
   draggableDialogCallback = data => {
     console.log("callback for draggable dialog ......data:", data);
-    console.log(
-      "SceneCanvas.draggableDialogCallback() this.state.adderSceneWrapper...",
-      this.state.adderSceneWrapper
-    );
     let someModels = this.state.adderSceneWrapper.getModels();
-    console.log("someModels:", someModels);
-    console.log(typeof someModels);
     for (let g in someModels) {
-      console.log(someModels[g]);
-      console.log(someModels[g].getMeshWrappers());
       var meshWrappers = someModels[g].getMeshWrappers();
       for (let h in meshWrappers) {
-        console.log(meshWrappers[h]);
         let meshWrapper = meshWrappers[h];
-        console.log(meshWrapper.getMesh());
         let myMesh = meshWrapper.getMesh();
-        console.log(myMesh.id);
         if (myMesh.id === data.mesh_id) {
-          console.log("HALLELUJIA HALLELUJIA ! ! ! ! ! !  ! ! !  ! ! ! ");
           // NOW TO APPLY THE IMAGE TO THIS MESH .......
+          console.log("TODO : APPLY image data to the mesh....");
+
+          // SEE apply_Base64ToMesh   in MeshWrapper Class....
+          ///////////////////////////////////////////////
         }
       }
     }
