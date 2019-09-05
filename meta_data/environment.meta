@@ -26,7 +26,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "streetLight_001"
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
 
         },
         {
@@ -52,7 +70,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "crane_001"
+            "uid": "crane_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         },
         {
             "name": "bicycle",
@@ -77,7 +113,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "bicycle_001"
+            "uid": "bicycle_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         }
         , {
 
@@ -103,7 +157,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "building_rounded_corners_001"
+            "uid": "building_rounded_corners_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         }
         , {
 
@@ -129,7 +201,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "construction_site_001"
+            "uid": "construction_site_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         }
         , {
 
@@ -155,7 +245,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "tree_001"
+            "uid": "tree_001",
+             "behavior": [
+                    {
+                        "strategy": "scale",
+                        "parameters": {
+                            "x": "0",
+                            "y": "0",
+                            "z": "0"
+                        }
+                    },
+                    {
+                        "strategy": "select",
+                        "parameters": {
+                            "x": "0",
+                            "y": "0",
+                            "z": "0"
+                        }
+                    }
+                ]
         }
         , {
 
@@ -181,7 +289,25 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "block4_001"
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         }
         , {
             "uid": "mailboxes_3_inarow_001",
@@ -209,23 +335,23 @@
             },
 
             "behavior": [
-                {
-                    "strategy": "scale",
-                    "parameters": {
-                        "x": "0",
-                        "y": "0",
-                        "z": "0"
+                    {
+                        "strategy": "scale",
+                        "parameters": {
+                            "x": "0",
+                            "y": "0",
+                            "z": "0"
+                        }
+                    },
+                    {
+                        "strategy": "select",
+                        "parameters": {
+                            "x": "0",
+                            "y": "0",
+                            "z": "0"
+                        }
                     }
-                },
-                {
-                    "strategy": "select",
-                    "parameters": {
-                        "x": "0",
-                        "y": "0",
-                        "z": "0"
-                    }
-                }
-            ]
+                ]
 
         }
 

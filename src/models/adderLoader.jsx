@@ -66,14 +66,19 @@ class AdderLoader {
 
       result.meshes.forEach(function(mesh) {
         mesh.parent = adderModel.getParentMesh();
-        console.log(mesh.id);
+
         //should this pickable quality be defined in the MeshWrapper class instead?
         if (
           mesh.id === "leftside_small" ||
           mesh.id === "leftside_medium" ||
-          mesh.id === "leftside_large"
+          mesh.id === "leftside_large" ||
+          mesh.id === "sign_1" ||
+          mesh.id === "sign_2"
         ) {
           mesh.isPickable = true;
+
+          console.log(mesh.id);
+          console.log(adderModel);
         } else {
           mesh.isPickable = false;
         }

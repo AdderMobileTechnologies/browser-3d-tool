@@ -15,11 +15,37 @@ class AdderAsset {
     position = null,
     rotation = null,
     scaling = null,
+    behavior = null,
     scene = null
   ) {
     if (dir === null) {
       throw new Error(
         "AdderAsset:Constructor(): A parameter is expected for the directory that the asset is stored in."
+      );
+    }
+    if (filename === null) {
+      throw new Error(
+        "AdderAsset:Constructor() A filename parameter is required."
+      );
+    }
+    if (position === null) {
+      throw new Error(
+        "AdderAsset:Constructor() A position parameter is required."
+      );
+    }
+    if (rotation === null) {
+      throw new Error(
+        "AdderAsset:Constructor(): A rotation parameter is required."
+      );
+    }
+    if (scaling === null) {
+      throw new Error(
+        "AdderAsset:Constructor() A scaling parameter is required. "
+      );
+    }
+    if (behavior === null) {
+      throw new Error(
+        "AdderAsset:Constructor() A behavior parameter is required."
       );
     }
     if (scene === null || !(scene instanceof Scene)) {
@@ -33,6 +59,7 @@ class AdderAsset {
     let _position = position;
     let _rotation = rotation;
     let _scaling = scaling;
+    let _behavior = behavior;
     let _scene = scene;
 
     this.getDir = () => {
@@ -49,6 +76,9 @@ class AdderAsset {
     };
     this.getScaling = () => {
       return _scaling;
+    };
+    this.getBehavior = () => {
+      return _behavior;
     };
     this.getScene = () => {
       return _scene;

@@ -82,13 +82,15 @@ class AdderMeta {
         let position = value.meta_data[m]["position"];
         let rotation = value.meta_data[m]["rotation"];
         let scaling = value.meta_data[m]["scaling"];
-
+        let behavior = value.meta_data[m]["behavior"];
+        console.log("behavior:", behavior);
         var adderAsset = new AdderAsset(
           dir,
           filename,
           position,
           rotation,
           scaling,
+          behavior,
           scene
         );
 

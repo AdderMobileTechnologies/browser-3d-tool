@@ -78,7 +78,25 @@
                                 "y": ".5",
                                 "z": ".5"
                             },
-                            "uid": "222abc"
+                             "behavior": [
+                                {
+                                    "strategy": "scale",
+                                    "parameters": {
+                                        "x": "0",
+                                        "y": "0",
+                                        "z": "0"
+                                    }
+                                },
+                                {
+                                    "strategy": "select",
+                                    "parameters": {
+                                        "x": "0",
+                                        "y": "0",
+                                        "z": "0"
+                                    }
+                                }
+                            ]
+                           
 
                         } 
                    ]
