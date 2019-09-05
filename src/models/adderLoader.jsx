@@ -7,24 +7,28 @@
 import BABYLON from "babylonjs";
 import * as K from "../constants";
 import { Scene } from "babylonjs";
+import AdderSceneWrapper from "./adderSceneWrapper";
 //models
 import AdderModel from "./model";
 import MeshWrapper from "./meshWrapper";
 
 class AdderLoader {
-  constructor(scene = null) {
-    if (scene === null || !(scene instanceof Scene)) {
+  constructor(adderSceneWrapper = null) {
+    if (
+      adderSceneWrapper === null ||
+      !(adderSceneWrapper instanceof AdderSceneWrapper)
+    ) {
       throw new Error(
         `AdderLoader:Constructor() The argument for scene must be a Babylon.Scene. `
       );
     }
-    let _scene = scene;
-    this.getScene = () => {
-      return _scene;
+    let _adderSceneWrapper = adderSceneWrapper;
+    this.getAdderSceneWrapper = () => {
+      return _adderSceneWrapper;
     };
 
     this.modelLoader = async function loadModelAsync(adderModel) {
-      let scene = this.getScene();
+      let adderSceneWrapper = this.getAdderSceneWrapper();
       /* 
                SceneLoader constructor()
                   SceneLoader.ImportMeshAsync(
@@ -45,6 +49,7 @@ class AdderLoader {
       let onProgress = null;
       let pluginExtension = null;
 
+      let scene = adderSceneWrapper.getScene();
       let result = await BABYLON.SceneLoader.ImportMeshAsync(
         meshNames,
         assets_URL,
@@ -108,7 +113,7 @@ class AdderLoader {
       let filename = adderAsset.getFilename();
       let modelFile = dir + "/" + filename + `.babylon`;
       let adderModel = new AdderModel(
-        scene,
+        adderSceneWrapper,
         modelFile,
         null,
         positionVect,

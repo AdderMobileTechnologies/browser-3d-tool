@@ -4,25 +4,29 @@
  */
 
 import AdderLoader from "./adderLoader";
+import AdderSceneWrapper from "./adderSceneWrapper";
 import * as K from "../constants";
 import axios from "axios";
 import { Scene } from "babylonjs";
 import AdderAsset from "./asset";
 class AdderMeta {
-  constructor(scene = null) {
-    if (scene === null || !(scene instanceof Scene)) {
+  constructor(adderSceneWrapper = null) {
+    if (
+      adderSceneWrapper === null ||
+      !(adderSceneWrapper instanceof AdderSceneWrapper)
+    ) {
       throw new Error(
         `AdderLoader:Constructor() The argument for scene can not be null. `
       );
     }
-    let _scene = scene;
+    let _adderSceneWrapper = adderSceneWrapper;
 
-    this.getScene = () => {
-      return _scene;
+    this.getAdderSceneWrapper = () => {
+      return _adderSceneWrapper;
     };
 
     this.getEnvironment = () => {
-      let scene = this.getScene();
+      let adderSceneWrapper = this.getAdderSceneWrapper();
       let thisClass = this;
       this.promise_environments = new Promise(function(resolve, reject) {
         const url = `${K.META_URL}/meta/environment`;
@@ -74,7 +78,7 @@ class AdderMeta {
     };
 
     this.looper = value => {
-      let adderLoader = new AdderLoader(scene);
+      let adderLoader = new AdderLoader(adderSceneWrapper);
 
       for (let m = 0; m < value.meta_data.length; m++) {
         let dir = value.meta_data[m]["dir"];
@@ -91,7 +95,7 @@ class AdderMeta {
           rotation,
           scaling,
           behavior,
-          scene
+          adderSceneWrapper
         );
 
         adderLoader.addSingleModel(adderAsset);

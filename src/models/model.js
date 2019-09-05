@@ -21,7 +21,7 @@ import BABYLON from "babylonjs"; // Mesh, Vector3, Quaternion
 
 class AdderModel {
   constructor(
-    scene = null,
+    adderSceneWrapper = null,
     modelFile = null,
     parentMesh = null,
     position = null,
@@ -42,6 +42,7 @@ class AdderModel {
       //SET DEFAULT PARENT MESH:
       let unitVec = new BABYLON.Vector3(1, 1, 1);
       let mesh_parentOptions = { width: 0, height: 0, depth: 0 };
+      let scene = adderSceneWrapper.getScene();
       let mesh_parent = BABYLON.MeshBuilder.CreateBox(
         "name_of_self",
         mesh_parentOptions,
@@ -81,7 +82,7 @@ class AdderModel {
       );
     }
 
-    let _scene = scene;
+    let _adderSceneWrapper = adderSceneWrapper;
     let _modelFile = modelFile;
     let _parentMesh = parentMesh;
     let _position = position;
@@ -95,8 +96,8 @@ class AdderModel {
     /*
         Note: The 'position' and 'rotation' parameters actually need to be applied to the 'parent mesh'.
     */
-    this.getScene = () => {
-      return _scene;
+    this.getAdderSceneWrapper = () => {
+      return _adderSceneWrapper;
     };
     this.getModelFile = () => {
       return _modelFile;
@@ -167,6 +168,13 @@ class AdderModel {
       var quaternion = new BABYLON.Quaternion.RotationAxis(axis, angle);
       _parentMesh.rotationQuaternion = quaternion;
     };
+
+    this.appendToAdderSceneWrapper = adderModel => {
+      let adderSceneWrapper = this.getAdderSceneWrapper();
+      adderSceneWrapper.appendModel(adderModel);
+    };
+
+    this.appendToAdderSceneWrapper(this);
   } // end constructor
 }
 export default AdderModel;

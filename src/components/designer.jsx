@@ -15,7 +15,7 @@ class Designer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scene: props.scene,
+      adderSceneWrapper: props.adderSceneWrapper,
       isOnAdType: false,
       adType_options: [],
       isOnSubType: false,
@@ -25,8 +25,8 @@ class Designer extends React.Component {
       gotDesignMeta: false
     };
     this.setScene = props.setScene;
-    this.getScene = () => {
-      return this.state.scene;
+    this.getAdderSceneWrapper = () => {
+      return this.state.adderSceneWrapper;
     };
     console.log("props:", props);
     this.detail_callback = this.detail_callback.bind(this);
@@ -111,7 +111,7 @@ class Designer extends React.Component {
         assetData.rotation,
         assetData.scaling,
         assetData.behavior,
-        this.state.scene
+        this.state.adderSceneWrapper
       );
 
       this.loadScene(adderAsset);
@@ -119,7 +119,7 @@ class Designer extends React.Component {
   };
 
   loadScene = adderAsset => {
-    let adderLoader = new AdderLoader(this.props.scene);
+    let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
     adderLoader.addSingleModel(adderAsset);
   };
 

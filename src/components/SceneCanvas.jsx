@@ -3,8 +3,7 @@ import BABYLON from "babylonjs";
 import Grid from "@material-ui/core/Grid"; //
 //models
 import AdderCamera from "../models/camera";
-import AdderSkyBox from "../models/skybox";
-import AdderMeta from "../models/adderMeta";
+
 /*
 DEV NOTES: 08-29-2019
 !(Meta Data Formatting is extremely strict, look out for commas on the last item in an object!)	 
@@ -25,20 +24,54 @@ class SceneCanvas extends React.Component {
     this.state = {
       selected_mesh_id: "",
       meta_data: {},
-      scene: props.scene,
+      adderSceneWrapper: props.adderSceneWrapper,
       startEditing: false
     };
     this.setScene = props.setScene;
+    console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
   }
-  draggableDialogCallback = () => {
-    console.log("callback for draggable dialog ......");
+  componentWillReceiveProps(newProps) {
+    // console.log("SCENE CANVAS new props:", newProps);
+    // console.log(newProps.adderSceneWrapper);
+    let aScene = newProps.adderSceneWrapper.getScene();
+    // console.log("and is there a scene from new Props :", aScene);
+    this.setState({
+      adderSceneWrapper: newProps.adderSceneWrapper
+    });
+  }
+  draggableDialogCallback = data => {
+    console.log("callback for draggable dialog ......data:", data);
+    console.log(
+      "SceneCanvas.draggableDialogCallback() this.state.adderSceneWrapper...",
+      this.state.adderSceneWrapper
+    );
+    let someModels = this.state.adderSceneWrapper.getModels();
+    console.log("someModels:", someModels);
+    console.log(typeof someModels);
+    for (let g in someModels) {
+      console.log(someModels[g]);
+      console.log(someModels[g].getMeshWrappers());
+      var meshWrappers = someModels[g].getMeshWrappers();
+      for (let h in meshWrappers) {
+        console.log(meshWrappers[h]);
+        let meshWrapper = meshWrappers[h];
+        console.log(meshWrapper.getMesh());
+        let myMesh = meshWrapper.getMesh();
+        console.log(myMesh.id);
+        if (myMesh.id === data.mesh_id) {
+          console.log("HALLELUJIA HALLELUJIA ! ! ! ! ! !  ! ! !  ! ! ! ");
+          // NOW TO APPLY THE IMAGE TO THIS MESH .......
+        }
+      }
+    }
+    this.state.adderSceneWrapper.acceptData(data);
     this.setState({
       startEditing: false
     });
   };
   windowCallbackPickable(mesh_id) {
     // how can I get the meshes parent mesh or model at this point.
-    //
+    console.log("adderSceneWrapper is : ", this.state.adderSceneWrapper);
     this.setState({
       startEditing: true,
       editing_mesh_id: mesh_id
@@ -109,11 +142,6 @@ class SceneCanvas extends React.Component {
     let scene = createScene();
     this.props.setScene(scene);
     scene.autoClear = true;
-
-    let adderMeta = new AdderMeta(scene);
-    adderMeta.getEnvironment();
-    let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
-    adderSkybox.getSkybox();
 
     engine.runRenderLoop(function() {
       if (typeof scene === "undefined") {

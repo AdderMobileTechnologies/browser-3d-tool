@@ -76,6 +76,10 @@ export default function DraggableDialog(props) {
                 console.log("what params do we have after applying and edti.");
                 console.log("mesh_id:", props.mesh_id);
                 console.log("DataURL:", DataURL);
+                let data = {};
+                data.mesh_id = props.mesh_id;
+                data.dataURL = DataURL;
+                props.callback(data);
                 //What do we need in order to apply it to an image class and to a model.?
               }}
             />

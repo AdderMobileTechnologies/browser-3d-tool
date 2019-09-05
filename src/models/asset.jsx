@@ -7,7 +7,7 @@ then... look into handling behavior of clicks .
 */
 import { Scene } from "babylonjs";
 import * as K from "../constants";
-
+import AdderSceneWrapper from "./adderSceneWrapper";
 class AdderAsset {
   constructor(
     dir = null,
@@ -16,7 +16,7 @@ class AdderAsset {
     rotation = null,
     scaling = null,
     behavior = null,
-    scene = null
+    adderSceneWrapper = null
   ) {
     if (dir === null) {
       throw new Error(
@@ -48,7 +48,10 @@ class AdderAsset {
         "AdderAsset:Constructor() A behavior parameter is required."
       );
     }
-    if (scene === null || !(scene instanceof Scene)) {
+    if (
+      adderSceneWrapper === null ||
+      !(adderSceneWrapper instanceof AdderSceneWrapper)
+    ) {
       throw new Error(
         "AdderAsset:Constructor(): A BABYLON.Scene object is required to build an asset."
       );
@@ -60,7 +63,7 @@ class AdderAsset {
     let _rotation = rotation;
     let _scaling = scaling;
     let _behavior = behavior;
-    let _scene = scene;
+    let _adderSceneWrapper = adderSceneWrapper;
 
     this.getDir = () => {
       return _dir;
@@ -80,8 +83,8 @@ class AdderAsset {
     this.getBehavior = () => {
       return _behavior;
     };
-    this.getScene = () => {
-      return _scene;
+    this.getAdderSceneWrapper = () => {
+      return _adderSceneWrapper;
     };
   }
 }
