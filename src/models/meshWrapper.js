@@ -87,3 +87,21 @@ class MeshWrapper {
   }
 }
 export default MeshWrapper;
+
+/*
+OLD CODE FROM VERSION 1:
+//--- Apply Base64 Image  ---------------
+     static apply_Base64ToMesh(scene, mesh,  image_data){
+         
+         //ABSOLUTELY CRUCIAL TO HAVE UNIQUE ids FOR MATERIALS thus mesh.id 
+         var mesh_material = new BABYLON.StandardMaterial(mesh.id, scene);
+         mesh_material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+         mesh_material.specularTexture = BABYLON.Texture.CreateFromBase64String(image_data, mesh.id);  
+         mesh_material.emissiveTexture = BABYLON.Texture.CreateFromBase64String(image_data, mesh.id);
+         //mesh_material.ambientTexture = BABYLON.Texture.CreateFromBase64String(data, 'mymap');
+         mesh.material = mesh_material;
+         
+     }// end apply_Base64ToMesh
+
+
+*/
