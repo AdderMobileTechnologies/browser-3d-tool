@@ -1,8 +1,15 @@
+/**
+ * Designer
+ * Purpose:
+ * To manage the cascading select options available to the user during the design process.
+ */
+
 import React from "react";
 import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "./constants";
 import axios from "axios";
+import AdderAsset from "../models/asset";
 
 class Designer extends React.Component {
   constructor(props) {
@@ -21,7 +28,7 @@ class Designer extends React.Component {
     this.getScene = () => {
       return this.state.scene;
     };
-    console.log("this scene:", this.state.scene);
+    console.log("props:", props);
     this.detail_callback = this.detail_callback.bind(this);
   }
 
@@ -103,46 +110,36 @@ class Designer extends React.Component {
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
       console.log("assetData:", assetData);
+
+      let adderAsset = new AdderAsset(
+        assetData.dir,
+        assetData.filename,
+        assetData.position,
+        assetData.rotation,
+        assetData.scaling,
+        this.state.scene
+      );
+
       ///////////////////////////////////////////////////////////////////////////////////////
       // Now Load:  assetData.metafile
       ///////////////////////////////////////////////////////////////////////////////////////
-      this.loadScene(assetData);
+      this.loadScene(adderAsset);
       //I need a function I can pass the babylon file info to , inorder to load it.
     }
   };
 
-  loadScene = assetData => {
+  loadScene = adderAsset => {
     console.log("this:", this);
     // let scene = this.getScene;
-    /*
- dir,
-      filename,
-      position,
-      rotation,
-      scaling,
-      scene
-    */
-    let adderLoader = new AdderLoader(this.props.scene);
-    let dir = assetData.dir;
-    let filename = assetData.filename;
-    let position = assetData.position;
-    let rotation = assetData.rotation;
-    let scaling = assetData.scaling;
-    let scene = assetData.scene;
 
-    adderLoader.addSingleModel(
-      dir,
-      filename,
-      position,
-      rotation,
-      scaling,
-      scene
-    );
+    let adderLoader = new AdderLoader(this.props.scene);
+
+    adderLoader.addSingleModel(adderAsset);
   };
 
   componentDidMount() {
     let scope = this;
-
+    //perform call to meta server for 'ad type' data.
     var promise_designChoices = new Promise(function(resolve, reject) {
       const url = `${K.API_URL}/meta/design`;
       axios
@@ -152,15 +149,15 @@ class Designer extends React.Component {
           resolve(data);
         });
     });
-
     promise_designChoices.then(function(value) {
-      console.log("value from api call for design ", value);
       promise_designChoices_callback(value);
+      //save meta data for later referencing
       scope.setState({
         designChoiceMeta: value
       });
     });
     function promise_designChoices_callback(value) {
+      //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
       var array = [];
       var element = {};
 

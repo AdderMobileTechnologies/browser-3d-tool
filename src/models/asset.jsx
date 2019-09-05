@@ -1,6 +1,6 @@
 /*
 Purpose: 
-The AdderAsset class is for handling the meta data before passing it on to the rest of the application.
+The AdderAsset class is for handling individual pieces of the meta data before passing it on to the rest of the application.
 LEFT OFF HERE: 
 create an asset class to clean up the way I currently call AdderLoader.addSingleModel 
 then... look into handling behavior of clicks .
@@ -26,13 +26,20 @@ class AdderAsset {
         "AdderAsset:Constructor(): A BABYLON.Scene object is required to build an asset."
       );
     }
+    console.log("AdderAsset Constructor:");
+    console.log("dir:", dir);
+    console.log("filename:", filename);
+    console.log("position:", position);
+    console.log("rotation:", rotation);
+    console.log("scaling:", scaling);
+    console.log("scene:", scene);
 
-    _dir = dir;
-    _filename = filename;
-    _postion = position;
-    _rotation = rotation;
-    _scaling = scaling;
-    _scene = scene;
+    let _dir = dir;
+    let _filename = filename;
+    let _position = position;
+    let _rotation = rotation;
+    let _scaling = scaling;
+    let _scene = scene;
 
     this.getDir = () => {
       return _dir;
@@ -42,6 +49,9 @@ class AdderAsset {
     };
     this.getPosition = () => {
       return _position;
+    };
+    this.getRotation = () => {
+      return _rotation;
     };
     this.getScaling = () => {
       return _scaling;

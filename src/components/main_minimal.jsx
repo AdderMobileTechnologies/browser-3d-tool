@@ -8,12 +8,14 @@ import UISelect from "./subcomponents/elements/UISelect";
 import AdderLoader from "../models/adderLoader";
 import AdderMeta from "../models/adderMeta";
 import Designer from "./designer"; //handles the selects for choosing a design ad type.
+import { Scene } from "babylonjs";
 
 class MainMinimal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scene: {}
+      scene: {},
+      sceneIsSet: false
     };
 
     this.setScene = this.setScene.bind(this);
@@ -30,6 +32,12 @@ class MainMinimal extends React.Component {
   };
 
   render() {
+    // Note: the 'scene' is not set until the 'SceneFast' callsback with the setScene function.
+    var sceneIsSet = false;
+    if (this.state.scene instanceof Scene) {
+      sceneIsSet = true;
+      console.log("Setting this.state.scene to true...");
+    }
     return (
       <div>
         <div>main_minimal.jsx</div>
@@ -66,10 +74,7 @@ class MainMinimal extends React.Component {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <Designer
-              setScene={this.setScene}
-              scene={this.state.scene}
-            ></Designer>
+            {sceneIsSet && <Designer scene={this.state.scene}></Designer>}
           </Grid>
         </Grid>
       </div>

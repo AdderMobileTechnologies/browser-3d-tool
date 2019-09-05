@@ -84,27 +84,26 @@ class AdderLoader {
     }
     //////////////////////////////////////
     ////////////////////////////
-    this.addSingleModel = function(
-      dir,
-      filename,
-      position,
-      rotation,
-      scaling,
-      scene
-    ) {
+    this.addSingleModel = function(adderAsset) {
       console.log("adderLoader:addSingleModel:");
+      console.log("adderAsset:", adderAsset);
+      let position = adderAsset.getPosition();
       let positionVect = new BABYLON.Vector3(
         position.x,
         position.y,
         position.z
       );
+      let rotation = adderAsset.getRotation();
       let rotationAxisVect = new BABYLON.Vector3(
         rotation.axis.x,
         rotation.axis.y,
         rotation.axis.z
       );
       var rotationAngle = parseFloat(rotation.angle);
+      let scaling = adderAsset.getScaling();
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
+      let dir = adderAsset.getDir();
+      let filename = adderAsset.getFilename();
       let modelFile = dir + "/" + filename + `.babylon`;
       console.log("modelFile just before instantiate AdderModel:", modelFile);
       let adderModel = new AdderModel(

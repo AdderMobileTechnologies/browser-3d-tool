@@ -7,7 +7,7 @@ import AdderLoader from "./adderLoader";
 import * as K from "../components/constants";
 import axios from "axios";
 import { Scene } from "babylonjs";
-
+import AdderAsset from "./asset";
 class AdderMeta {
   constructor(scene = null) {
     if (scene === null || !(scene instanceof Scene)) {
@@ -89,7 +89,14 @@ class AdderMeta {
         let position = value.meta_data[m]["position"];
         let rotation = value.meta_data[m]["rotation"];
         let scaling = value.meta_data[m]["scaling"];
-        adderLoader.addSingleModel(
+        console.log("AdderMeta:looper() value.meta_data:", value.meta_data);
+        console.log("dir:", dir);
+        console.log("filename:", filename);
+        console.log("position:", position);
+        console.log("rotation:", rotation);
+        console.log("scaling:", scaling);
+        console.log("scene:", scene);
+        var adderAsset = new AdderAsset(
           dir,
           filename,
           position,
@@ -97,6 +104,8 @@ class AdderMeta {
           scaling,
           scene
         );
+
+        adderLoader.addSingleModel(adderAsset);
       }
     };
   }
