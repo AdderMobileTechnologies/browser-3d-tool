@@ -1,1 +1,19 @@
 we will include the image editor that Brandon has created on a separate branch of the version 1 adder creative tool.
+
+ (1):
+import 'tui-image-editor/dist/tui-image-editor.css'
+ 
+import AdderImageEditor from "./dev/AdderImageEditor"
+
+        <AdderImageEditor
+            height={1400}
+            width={1400}
+            onApplyCallback={
+                () => {
+                    console.log("ON APPLY")
+                }
+            }
+        />
+ 
+  
+

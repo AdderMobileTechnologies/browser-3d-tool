@@ -8,6 +8,13 @@ The rotationAxis is the Vector3 axis upon which any rotationAngle, or 'number' w
 The rotaionAngle is a number that represents the angle or degress of rotation. (*which will get converted to 'radians')
 The 'meshWrappers' is an array of a wrapper class that encompasses each individual mesh that makes up a model. 
    ie. If the model is a car. Then the 'left door' , 'the front bumper', etc . are individual meshes. 
+
+TODO: I think we need a method to apply an image to one of the models MeshWrapper meshes. 
+From the editor we have the mesh_id, and the DataURL that gets created. 
+we should probably get the model id or name at the time of the mesh click being picked. 
+
+
+
 */
 
 import BABYLON from "babylonjs"; // Mesh, Vector3, Quaternion

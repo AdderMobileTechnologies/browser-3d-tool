@@ -1,6 +1,6 @@
 import React from "react";
 import BABYLON from "babylonjs";
-
+import Grid from "@material-ui/core/Grid"; //
 //models
 import AdderCamera from "../models/camera";
 import AdderSkyBox from "../models/skybox";
@@ -13,6 +13,11 @@ DEV NOTES: 08-29-2019
 In previous work, based on mesh id, I either did or did not apply the 'isPickable' boolean.
 Then, under a general 'onPointerDown' event, I looped conditions based on mesh_id. 
 */
+/*
+import "tui-image-editor/dist/tui-image-editor.css";
+import AdderImageEditor from "./AdderImageEditor";
+*/
+import DraggableDialog from "./subcomponents/MUI_DraggableDialog";
 
 class SceneCanvas extends React.Component {
   constructor(props) {
@@ -20,12 +25,33 @@ class SceneCanvas extends React.Component {
     this.state = {
       selected_mesh_id: "",
       meta_data: {},
-      scene: props.scene
+      scene: props.scene,
+      startEditing: false
     };
     this.setScene = props.setScene;
   }
-
+  draggableDialogCallback = () => {
+    console.log("callback for draggable dialog ......");
+    this.setState({
+      startEditing: false
+    });
+  };
+  windowCallbackPickable(mesh_id) {
+    // how can I get the meshes parent mesh or model at this point.
+    //
+    this.setState({
+      startEditing: true,
+      editing_mesh_id: mesh_id
+    });
+  }
+  /* windowCallbackNotPickable() {
+    console.log("WINDOW CALLBACK ?");
+    this.setState({
+      startEditing: false
+    });
+  }*/
   componentDidMount() {
+    let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
@@ -110,9 +136,7 @@ class SceneCanvas extends React.Component {
         return false;
       } else {
         console.log("click() pickResult:", pickResult.pickedMesh.name);
-        //currently set in the adderLoader class.
-        //TODO: how to handle the clicked mesh ie. leftside_large
-        //TODO: how to set meshes to 'pickable' properly.ie. currently in callback_ImportMeshAsync()
+        scope.windowCallbackPickable(pickResult.pickedMesh.name);
       }
     });
   }
@@ -129,6 +153,16 @@ class SceneCanvas extends React.Component {
             style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
           />
         </div>
+        {this.state.startEditing && (
+          <div>
+            <Grid>
+              <DraggableDialog
+                callback={this.draggableDialogCallback}
+                mesh_id={this.state.editing_mesh_id}
+              ></DraggableDialog>
+            </Grid>
+          </div>
+        )}
       </div>
     );
   }
