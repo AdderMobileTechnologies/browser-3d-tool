@@ -31,9 +31,6 @@ class AdderSceneWrapper {
       _models.push(adderModel);
     };
 
-    this.acceptData = data => {
-      console.log("AdderSceneWrapper has accepted data:", data);
-    };
     this.appendModel = adderModel => {
       console.log(
         "ready to append model to the adderSceneWrapper ....adderModel:",
@@ -51,15 +48,15 @@ class AdderSceneWrapper {
         var meshWrappers = model.getMeshWrappers();
         for (let mwIndex in meshWrappers) {
           let meshWrapper = meshWrappers[mwIndex];
-          let myMesh = meshWrapper.getMesh();
+          let _mesh = meshWrapper.getMesh();
           let splitName = mesh_id.split("_");
-          let currentMeshName = myMesh.name;
+          let currentMeshName = _mesh.name;
           let splitCurrentMesh = currentMeshName.split("_");
-          if (myMesh.id !== mesh_id && splitName[0] === splitCurrentMesh[0]) {
-            console.log("setting mesh to invisible: myMesh.id", myMesh.id);
-            myMesh.isVisible = false;
+          if (_mesh.id !== mesh_id && splitName[0] === splitCurrentMesh[0]) {
+            console.log("setting mesh to invisible: _mesh.id", _mesh.id);
+            _mesh.isVisible = false;
           }
-          if (myMesh.id === mesh_id) {
+          if (_mesh.id === mesh_id) {
             console.log("Match mesh.id:", mesh_id);
             console.log("Match parent model:", model);
             console.log("Match meshWrapper:", meshWrapper);
@@ -68,19 +65,25 @@ class AdderSceneWrapper {
       }
     };
 
-    this.findByMeshId = mesh_id => {
+    this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("adderSceneWrapper:findByMeshId()");
       let ModelsArray = this.getModels();
       for (let mIndex in ModelsArray) {
-        var model = ModelsArray[mIndex];
-        var meshWrappers = model.getMeshWrappers();
-        for (let mwIndex in meshWrappers) {
-          let meshWrapper = meshWrappers[mwIndex];
-          let myMesh = meshWrapper.getMesh();
-          if (myMesh.id === mesh_id) {
-            console.log("Match mesh.id:", mesh_id);
-            console.log("Match parent model:", model);
-            console.log("Match meshWrapper:", meshWrapper);
+        var _model = ModelsArray[mIndex];
+        var _meshWrappers = _model.getMeshWrappers();
+        for (let mwIndex in _meshWrappers) {
+          let _meshWrapper = _meshWrappers[mwIndex];
+          let _mesh = _meshWrapper.getMesh();
+          if (_mesh.id === mesh_id) {
+            console.log("Match _mesh.id:", _mesh.id);
+            console.log("Match parent _model:", _model);
+            console.log("Match _meshWrapper:", _meshWrapper);
+            let scene = this.getScene();
+            _meshWrapper.applyTextureFromDataURL(
+              "whatever.png",
+              dataURL,
+              scene
+            );
           }
         }
       }

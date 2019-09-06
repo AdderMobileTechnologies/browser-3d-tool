@@ -18,6 +18,7 @@ import AdderImageEditor from "./AdderImageEditor";
 */
 import DraggableDialog from "./subcomponents/MUI_DraggableDialog";
 var scope;
+
 class SceneCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -31,64 +32,32 @@ class SceneCanvas extends React.Component {
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
     scope = this;
   }
+
   componentWillReceiveProps(newProps) {
-    // console.log("SCENE CANVAS new props:", newProps);
-    // console.log(newProps.adderSceneWrapper);
     let aScene = newProps.adderSceneWrapper.getScene();
-    // console.log("and is there a scene from new Props :", aScene);
     this.setState({
       adderSceneWrapper: newProps.adderSceneWrapper
     });
   }
+
   draggableDialogCallback = data => {
-    console.log("callback for draggable dialog ......data:", data);
-
-    let someModels = this.state.adderSceneWrapper.getModels();
-    for (let g in someModels) {
-      var meshWrappers = someModels[g].getMeshWrappers();
-      for (let h in meshWrappers) {
-        let meshWrapper = meshWrappers[h];
-        let myMesh = meshWrapper.getMesh();
-
-        if (myMesh.id === data.mesh_id) {
-          // NOW TO APPLY THE IMAGE TO THIS MESH .......
-          //MeshWrapper.applyTextureFromDataURL(name = null, dataURL = null, scene = null)
-          let scene = scope.props.adderSceneWrapper.getScene();
-          meshWrapper.applyTextureFromDataURL(
-            "whatever.png",
-            data.dataURL,
-            scene
-          );
-        }
-      }
-    }
-    this.state.adderSceneWrapper.acceptData(data);
+    console.log("SceneCanvas:draggableDialogCallback(data):", data);
+    this.state.adderSceneWrapper.applyTextureToMesh(data.mesh_id, data.dataURL);
     this.setState({
       startEditing: false
     });
   };
-  windowCallbackPickable(mesh_id) {
-    // Consequences: startEditing is a flag for showing/hiding the Image Editor Modal.
-    console.log("adderSceneWrapper is : ", this.state.adderSceneWrapper);
-    //TODO: at his point, in the case of meshes that share the same responsibility with other meshes, ie. (leftside_large, leftside_small,...),
-    //whichever other 'leftside_' meshes are NOT getting selected need to be set to hidden. ie. isVisible = false.
-    // - get the currently selected mesh
-    // - find it's sister meshes and set them to invisible.
-    // - via 'adderSceneWrapper' find parent 'model' of the mesh_id, then loop through all the meshWrappers of that model and scan for matches...
-    console.log("SELECTED MESH:", mesh_id);
-    this.state.adderSceneWrapper.hideSisterMeshesForMeshId(mesh_id);
 
+  windowCallbackPickable(mesh_id) {
+    // hide all sister meshes for the selected mesh id.
+    this.state.adderSceneWrapper.hideSisterMeshesForMeshId(mesh_id);
+    // Consequences: 'state.startEditing' is a flag for showing/hiding the Image Editor Modal.
     this.setState({
       startEditing: true,
       editing_mesh_id: mesh_id
     });
   }
-  /* windowCallbackNotPickable() {
-    console.log("WINDOW CALLBACK ?");
-    this.setState({
-      startEditing: false
-    });
-  }*/
+
   componentDidMount() {
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
