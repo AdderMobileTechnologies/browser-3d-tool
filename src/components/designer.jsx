@@ -9,7 +9,7 @@ import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "../constants";
 import axios from "axios";
-import AdderAsset from "../models/asset";
+import AdderAsset from "../models/adderAsset";
 
 class Designer extends React.Component {
   constructor(props) {

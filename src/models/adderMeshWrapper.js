@@ -25,21 +25,21 @@ import {
   Scene
 } from "babylonjs";
 
-class MeshWrapper {
+class AdderMeshWrapper {
   constructor(mesh = null, position = null, rotation = null) {
     //NOT SURE if Mesh Class is getting used correctly.
     if (!(mesh instanceof Mesh)) {
       throw new Error(
-        "MeshWrapper.Constructor(): Constructor called with unspecified mesh (Requires: BABYLON.Mesh )"
+        "AdderMeshWrapper.Constructor(): Constructor called with unspecified mesh (Requires: BABYLON.Mesh )"
       );
     }
     /* 
         I'm not sure we  really need to reject these if they are null.
         if(!(position instanceof Vector3)) {
-            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )")
+            throw new Error("AdderMeshWrapper.Constructor(): Constructor called with unspecified position (Requires: BABYLON.Vector3 )")
         }
         if( !(rotation instanceof Quaternion) ){
-            throw new Error("MeshWrapper.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
+            throw new Error("AdderMeshWrapper.Constructor(): Constructor called with unspecified rotation (Requires: BABYLON.Quaternion ")
         }
     */
 
@@ -79,7 +79,7 @@ class MeshWrapper {
   setMesh(mesh) {
     if (!(mesh instanceof Mesh)) {
       throw new Error(
-        "MeshWrapper.setMesh():  called with unspecified mesh (Requires: BABYLON.Mesh )"
+        "AdderMeshWrapper.setMesh():  called with unspecified mesh (Requires: BABYLON.Mesh )"
       );
     }
     this._mesh = mesh;
@@ -87,7 +87,7 @@ class MeshWrapper {
   setPosition(position) {
     if (position === null || !(position instanceof Vector3)) {
       throw new Error(
-        `MeshWrapper.setPosition() called with incorrect argument ( requires BABYLON.Vector3 )`
+        `AdderMeshWrapper.setPosition() called with incorrect argument ( requires BABYLON.Vector3 )`
       );
     }
     this._position = position;
@@ -95,7 +95,7 @@ class MeshWrapper {
   setRotation(rotation) {
     if (rotation === null || !(rotation instanceof Vector3)) {
       throw new Error(
-        `MeshWrapper:setRotation(): Requires a BABYLON.Vector3 parameter.`
+        `AdderMeshWrapper:setRotation(): Requires a BABYLON.Vector3 parameter.`
       );
     }
     this._rotation = rotation;
@@ -103,17 +103,17 @@ class MeshWrapper {
   applyTextureFromDataURL(imgFileName = null, dataURL = null, scene = null) {
     if (imgFileName === null) {
       throw new Error(
-        `MeshWrapper:applyTextureFromDataURL(): A file imgFileName parameter is expected .`
+        `AdderMeshWrapper:applyTextureFromDataURL(): A file imgFileName parameter is expected .`
       );
     }
     if (dataURL === null) {
       throw new Error(
-        `MeshWrapper:applyTextureFromDataURL(): A DataURL parameter is expected in the format of (data:image/png;base64,iVBORw0KGgoAAAA....)`
+        `AdderMeshWrapper:applyTextureFromDataURL(): A DataURL parameter is expected in the format of (data:image/png;base64,iVBORw0KGgoAAAA....)`
       );
     }
     if (scene == null || !(scene instanceof Scene)) {
       throw new Error(
-        `MeshWrapper:applyTextureFromDataUrl(): A BABYLON.Scene parameter is required .`
+        `AdderMeshWrapper:applyTextureFromDataUrl(): A BABYLON.Scene parameter is required .`
       );
     }
     let _imgFileName = imgFileName;
@@ -131,7 +131,7 @@ class MeshWrapper {
     mesh.material = mat;
   }
 }
-export default MeshWrapper;
+export default AdderMeshWrapper;
 
 /*
 

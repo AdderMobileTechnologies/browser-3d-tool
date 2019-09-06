@@ -4,7 +4,7 @@ import { Texture } from BABYLON;
 //  Data
 //* aside: for some reason the formatting extension doesn't work on a few files. This is one of them. 
 
-class Image {
+class AdderImage {
     constructor(
         imageData = null,
          type = null, 
@@ -12,13 +12,13 @@ class Image {
     ) 
     {
             if (imageData === null) {
-                throw new Error("Image.constructor(): Constructor called with unspecified imageData");
+                throw new Error("AdderImage.constructor(): Constructor called with unspecified imageData");
             }
 
             if (type === null) {
-                throw new Error("Image.constructor(): Constructor called with unspecified type");
+                throw new Error("AdderImage.constructor(): Constructor called with unspecified type");
             } else if (type !== "Base64" && type !== "Data") {
-                throw new Error(`Image.constructor(): Provided type ${type} is not allowed. Allowed values: "Base64", "Data"`);
+                throw new Error(`AdderImage.constructor(): Provided type ${type} is not allowed. Allowed values: "Base64", "Data"`);
             }
 
             let _imageData = imageData;
@@ -26,13 +26,13 @@ class Image {
 
             this.getBase64 = () => {
                 if (_dataType !== "Base64") {
-                    throw new Error("Image.getBase64(): Image initialized with different type than Base64");
+                    throw new Error("AdderImage.getBase64(): Image initialized with different type than Base64");
                 }
                 return _imageData;
             }
             this.getData = () => {
                 if (_dataType !== "Data") {
-                    throw new Error("Image.getData(): Image initialized with different type than Data");
+                    throw new Error("AdderImage.getData(): Image initialized with different type than Data");
                 }
                 return _imageData;
             }
@@ -44,7 +44,7 @@ class Image {
 
     getBabylonTexture(id = null, scene = null) {
         if (scene === null) {
-            throw new Error("Image.getBabylonTexture(): Argument scene was not specified");
+            throw new Error("AdderImage.getBabylonTexture(): Argument scene was not specified");
         }
         if (id === null) {
             id = String(new Date().getTime());
@@ -62,4 +62,4 @@ class Image {
     }
 }
 
-export default Image
+export default AdderImage

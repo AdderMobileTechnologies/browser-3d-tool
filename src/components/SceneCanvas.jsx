@@ -2,7 +2,7 @@ import React from "react";
 import BABYLON from "babylonjs";
 import Grid from "@material-ui/core/Grid"; //
 //models
-import AdderCamera from "../models/camera";
+import AdderCamera from "../models/adderCamera";
 
 /*
 DEV NOTES: 08-29-2019

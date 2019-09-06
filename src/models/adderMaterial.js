@@ -1,20 +1,20 @@
 
 import { Texture, Color3 } from BABYLON
 //format on save
-class Material {
+class AdderMaterial {
 
     constructor(id = new Date().getTime(), specularTexture = null, diffuseTexture = null, emissiveTexture = null, ambientTexture = null, options = {}) {
         if (specularTexture !== null && !(specularTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with specularTexture of wrong type (requires BABYLON.Texture)");
+            throw new Error("AdderMaterial.constructor(): Constructor called with specularTexture of wrong type (requires BABYLON.Texture)");
         }
         if (emissiveTexture !== null && !(emissiveTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with  emissiveTexture of wrong type (requires BABYLON.Texture)");
+            throw new Error("AdderMaterial.constructor(): Constructor called with  emissiveTexture of wrong type (requires BABYLON.Texture)");
         }
         if (ambientTexture !== null && !(ambientTexture instanceof Texture)) {
-            throw new Error("Material.constructor(): Constructor called with ambientTexture of wrong type (requires BABYLON.Texture)");
+            throw new Error("AdderMaterial.constructor(): Constructor called with ambientTexture of wrong type (requires BABYLON.Texture)");
         }
         if (diffuseTexture !== null && !(diffuseTexture instanceof Color3)) {
-            throw new Error("Material.constructor(): Constructor called with diffuseTexture of wrong type (requires BABYLON.Color3)");
+            throw new Error("AdderMaterial.constructor(): Constructor called with diffuseTexture of wrong type (requires BABYLON.Color3)");
         }
         let objConstructor = {}.constuctor;
         if(options.constructor !== objConstructor){
@@ -83,4 +83,4 @@ class Material {
     }
     // getter and setter for :  ,  ,  , ambientTexture,...
 }
-export default Material
+export default AdderMaterial

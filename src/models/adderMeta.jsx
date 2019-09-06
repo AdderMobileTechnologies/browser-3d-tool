@@ -8,7 +8,7 @@ import AdderSceneWrapper from "./adderSceneWrapper";
 import * as K from "../constants";
 import axios from "axios";
 import { Scene } from "babylonjs";
-import AdderAsset from "./asset";
+import AdderAsset from "./adderAsset";
 class AdderMeta {
   constructor(adderSceneWrapper = null) {
     if (

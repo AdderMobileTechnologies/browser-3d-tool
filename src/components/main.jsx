@@ -8,7 +8,7 @@ import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png"
 import Designer from "./designer"; //handles the selects for choosing a design ad type.
 import "tui-image-editor/dist/tui-image-editor.css";
 import AdderImageEditor from "./AdderImageEditor";
-import AdderSkyBox from "../models/skybox";
+import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 
 class Main extends React.Component {

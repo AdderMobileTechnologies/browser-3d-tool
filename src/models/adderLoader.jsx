@@ -9,8 +9,8 @@ import * as K from "../constants";
 import { Scene } from "babylonjs";
 import AdderSceneWrapper from "./adderSceneWrapper";
 //models
-import AdderModel from "./model";
-import MeshWrapper from "./meshWrapper";
+import AdderModel from "./adderModel";
+import AdderMeshWrapper from "./adderMeshWrapper";
 
 class AdderLoader {
   constructor(adderSceneWrapper = null) {
@@ -62,9 +62,9 @@ class AdderLoader {
     };
 
     function callback_ImportMeshAsync(adderModel, result) {
-      const meshWrappers = [];
+      const adderMeshWrappers = [];
       //make adderModel parent mesh, the parent of all individual meshes.
-      //wrap each mesh in the meshWrapper class and build the array.
+      //wrap each mesh in the adderMeshWrapper class and build the array.
       //add the array to the model.
 
       result.meshes.forEach(function(mesh) {
@@ -100,10 +100,10 @@ class AdderLoader {
         //set all to selectable for testing:
         // mesh.isPickable = true;
 
-        let newMeshWrapper = new MeshWrapper(mesh, null, null);
-        meshWrappers.push(newMeshWrapper);
+        let newAdderMeshWrapper = new AdderMeshWrapper(mesh, null, null);
+        adderMeshWrappers.push(newAdderMeshWrapper);
       });
-      adderModel.setMeshWrappers(meshWrappers);
+      adderModel.setMeshWrappers(adderMeshWrappers);
     }
 
     this.addSingleModel = function(adderAsset) {
