@@ -16,7 +16,7 @@ Then, under a general 'onPointerDown' event, I looped conditions based on mesh_i
 import "tui-image-editor/dist/tui-image-editor.css";
 import AdderImageEditor from "./AdderImageEditor";
 */
-import DraggableDialog from "./subcomponents/MUI_DraggableDialog";
+import DraggableDialog from "./MUI_DraggableDialog";
 var scope;
 
 class SceneCanvas extends React.Component {
@@ -26,7 +26,8 @@ class SceneCanvas extends React.Component {
       selected_mesh_id: "",
       meta_data: {},
       adderSceneWrapper: props.adderSceneWrapper,
-      startEditing: false
+      startEditing: false,
+      editing_mesh_id: ""
     };
     this.setScene = props.setScene;
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
@@ -40,11 +41,20 @@ class SceneCanvas extends React.Component {
     });
   }
 
-  draggableDialogCallback = data => {
-    console.log("SceneCanvas:draggableDialogCallback(data):", data);
-    this.state.adderSceneWrapper.applyTextureToMesh(data.mesh_id, data.dataURL);
+  sceneCanvasCallback = dataURL => {
+    console.log("=== DataURL ===", dataURL);
+    if (this.state.last_dataURL === dataURL) {
+      console.log("THE DATA URLS ARE THE SAME !");
+    } else {
+      console.log("THE DATA URLS ARE DIFFERENT.");
+    }
+    this.state.adderSceneWrapper.applyTextureToMesh(
+      this.state.editing_mesh_id,
+      dataURL
+    );
     this.setState({
-      startEditing: false
+      startEditing: false,
+      last_dataURL: dataURL
     });
   };
 
@@ -161,7 +171,7 @@ class SceneCanvas extends React.Component {
           <div>
             <Grid>
               <DraggableDialog
-                callback={this.draggableDialogCallback}
+                sceneCanvasCallback={this.sceneCanvasCallback}
                 mesh_id={this.state.editing_mesh_id}
               ></DraggableDialog>
             </Grid>

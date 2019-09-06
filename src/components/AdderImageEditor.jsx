@@ -135,7 +135,6 @@ class AdderImageEditor extends Component {
     };
     console.log("AdderImageEditor:props:", props);
     this.imageEditor = null;
-
     this.onApplyCallback = props.onApplyCallback.bind(this);
     this.onApplyClick = this.onApplyClick.bind(this);
   }

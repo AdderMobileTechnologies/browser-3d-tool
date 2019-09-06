@@ -5,13 +5,17 @@ move meta data files to dbdev.adder.io from localhost.
 set up meta data index. 
 
 
+ 
+ renamed classes and class files to have a consistent prefix of adder.
+ renamed mesh_ids in blender files and created new babylon files with the changed mesh names
+ created the directory tree on the server for the ad_type,sub_type,detail,asset hierarchy.
+ also renamed clickable meshes in same protocol. 
+changed meta data to match new files and naming conventions 
+changed meta files to house the 'pickable meshes' as a parameter array of mesh names. 
+created code to hide the sister meshes in the case of leftside_large, leftside_small,  where only one UVMapping structure is supposed to be visible.
 
-swap out files in new directory tree structure:
 
-/var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
-
-/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon
-
-
-/ad_type/vehicle/subtype/4door/detail/stationwagon/vw_toureg-2.5.babylon
+next bugs:
+need to be able to change the image after a previous one has been applied. 
+billboard sign2 becomes invisible when picked ?  need somekind of flag for when to hide sister meshes....
 

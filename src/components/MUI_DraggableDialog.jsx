@@ -9,15 +9,9 @@ import Paper from "@material-ui/core/Paper";
 import Draggable from "react-draggable";
 
 import "tui-image-editor/dist/tui-image-editor.css";
-import AdderImageEditor from "../AdderImageEditor";
+import AdderImageEditor from "./AdderImageEditor";
 import "./MUI_DraggableDialog.css";
-/*
-Styling Issues:
- 
 
-
-
-*/
 function PaperComponent(props) {
   return (
     <Draggable cancel={'[class*="MuiDialogContent-root"]'}>
@@ -72,15 +66,7 @@ export default function DraggableDialog(props) {
               width={1000}
               mesh_id={props.mesh_id}
               onApplyCallback={DataURL => {
-                console.log("ON APPLY");
-                console.log("what params do we have after applying and edti.");
-                console.log("mesh_id:", props.mesh_id);
-                console.log("DataURL:", DataURL);
-                let data = {};
-                data.mesh_id = props.mesh_id;
-                data.dataURL = DataURL;
-                props.callback(data);
-                //What do we need in order to apply it to an image class and to a model.?
+                props.sceneCanvasCallback(DataURL);
               }}
             />
           </DialogContentText>
