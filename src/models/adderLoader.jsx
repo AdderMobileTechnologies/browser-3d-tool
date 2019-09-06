@@ -130,6 +130,7 @@ class AdderLoader {
       //////////////////////////////////////////////////////////////
       //let modelFile = dir + "/" + filename + `.babylon`;
       let modelFile = filepath;
+      console.log("model path to file modelFile:", modelFile);
       ///////////////////////////////////////////////////////////////////
       let adderModel = new AdderModel(
         adderSceneWrapper,

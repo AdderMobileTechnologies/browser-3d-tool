@@ -122,7 +122,7 @@
                             "name": "Parallell",
                             "dir": "Billboard",
                             "filename": "Billboard.v1.1",
-                            "filepath": "Billboard.v1.1.babylon",
+                            "filepath": "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon",
                             "position": {
                                 "x": "14",
                                 "y": "1",
@@ -153,9 +153,10 @@
                                 {
                                     "strategy": "select",
                                     "parameters": {
-                                        "x": "0",
-                                        "y": "0",
-                                        "z": "0"
+                                        "pickableMeshes":[
+                                             "billboard_2sides_angled_sign_1",
+                                             "billboard_2sides_angled_sign_2"
+                                             ]
                                     }
                                 }
                             ]
@@ -165,7 +166,7 @@
                             "name": "Angled",
                             "dir": "Billboard",
                             "filename": "Billboard.v1.1",
-                            "filepath": "Billboard.v1.1.babylon",
+                            "filepath": "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon",
                             "position": {
                                 "x": "14",
                                 "y": "0",
@@ -196,7 +197,10 @@
                                 {
                                     "strategy": "select",
                                     "parameters": {
-                                        "pickableMeshes":["sign_1","sign_2"]
+                                        "pickableMeshes":[
+                                             "billboard_2sides_angled_sign_1",
+                                             "billboard_2sides_angled_sign_2"
+                                             ]
                                       
                                     }
                                 }
