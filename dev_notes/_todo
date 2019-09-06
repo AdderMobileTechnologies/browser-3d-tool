@@ -3,3 +3,11 @@ TODO:
 move meta data files to dbdev.adder.io from localhost.
 
 set up meta data index. 
+
+
+
+swap out files in new directory tree structure:
+
+/var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
+
+/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon

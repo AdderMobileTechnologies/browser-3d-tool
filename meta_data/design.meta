@@ -11,7 +11,7 @@
                             "name": "vehicle_2door_sportscar",
                             "dir": "porsche",
                             "filename": "porsche2.2",
-                            "filepath": "porsche/porsche2.2.babylon",
+                            "filepath": "/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
                             "position": {
                                 "x": "4",
                                 "y": "1",

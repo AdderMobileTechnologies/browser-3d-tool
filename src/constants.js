@@ -7,6 +7,7 @@ export const DefaultUserImage = UserImage;
 
 export const META_URL = "http://localhost:8001";
 export const API_URL = "http://dbdev.adder.io";
+//all calls to server are redirected directly to the html/assets/ folder, so that is where the 'filenames' of a models meta data picks up.
 export const tileData = [
   {
     img: UserImage,

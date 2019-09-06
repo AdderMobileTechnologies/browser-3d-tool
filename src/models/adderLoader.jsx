@@ -119,7 +119,10 @@ class AdderLoader {
 
       let dir = adderAsset.getDir();
       let filename = adderAsset.getFilename();
+      let filepath = adderAsset.getFilepath();
+      //////////////////////////////////////////////////////////////
       let modelFile = dir + "/" + filename + `.babylon`;
+      ///////////////////////////////////////////////////////////////////
       let adderModel = new AdderModel(
         adderSceneWrapper,
         modelFile,

@@ -12,6 +12,7 @@ class AdderAsset {
   constructor(
     dir = null,
     filename = null,
+    filepath = null,
     position = null,
     rotation = null,
     scaling = null,
@@ -28,6 +29,12 @@ class AdderAsset {
         "AdderAsset:Constructor() A filename parameter is required."
       );
     }
+    if (filepath === null) {
+      throw new Error(
+        `AdderAsset:Constructor() A filepath to the resource starting from the point of .../html/assets/ is required.`
+      );
+    }
+
     if (position === null) {
       throw new Error(
         "AdderAsset:Constructor() A position parameter is required."
@@ -59,6 +66,7 @@ class AdderAsset {
 
     let _dir = dir;
     let _filename = filename;
+    let _filepath = filepath;
     let _position = position;
     let _rotation = rotation;
     let _scaling = scaling;
@@ -70,6 +78,9 @@ class AdderAsset {
     };
     this.getFilename = () => {
       return _filename;
+    };
+    this.getFilepath = () => {
+      return _filepath;
     };
     this.getPosition = () => {
       return _position;

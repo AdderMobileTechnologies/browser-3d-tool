@@ -107,6 +107,7 @@ class Designer extends React.Component {
       let adderAsset = new AdderAsset(
         assetData.dir,
         assetData.filename,
+        assetData.filepath,
         assetData.position,
         assetData.rotation,
         assetData.scaling,
