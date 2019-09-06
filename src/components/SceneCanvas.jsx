@@ -17,7 +17,7 @@ import "tui-image-editor/dist/tui-image-editor.css";
 import AdderImageEditor from "./AdderImageEditor";
 */
 import DraggableDialog from "./subcomponents/MUI_DraggableDialog";
-
+var scope;
 class SceneCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +29,7 @@ class SceneCanvas extends React.Component {
     };
     this.setScene = props.setScene;
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
+    scope = this;
   }
   componentWillReceiveProps(newProps) {
     // console.log("SCENE CANVAS new props:", newProps);
@@ -41,18 +42,23 @@ class SceneCanvas extends React.Component {
   }
   draggableDialogCallback = data => {
     console.log("callback for draggable dialog ......data:", data);
+
     let someModels = this.state.adderSceneWrapper.getModels();
     for (let g in someModels) {
       var meshWrappers = someModels[g].getMeshWrappers();
       for (let h in meshWrappers) {
         let meshWrapper = meshWrappers[h];
         let myMesh = meshWrapper.getMesh();
+
         if (myMesh.id === data.mesh_id) {
           // NOW TO APPLY THE IMAGE TO THIS MESH .......
-          console.log("TODO : APPLY image data to the mesh....");
-
-          // SEE apply_Base64ToMesh   in MeshWrapper Class....
-          ///////////////////////////////////////////////
+          //MeshWrapper.applyTextureFromDataURL(name = null, dataURL = null, scene = null)
+          let scene = scope.props.adderSceneWrapper.getScene();
+          meshWrapper.applyTextureFromDataURL(
+            "whatever.png",
+            data.dataURL,
+            scene
+          );
         }
       }
     }
@@ -122,7 +128,7 @@ class SceneCanvas extends React.Component {
         new BABYLON.Vector3(0, 1, 0),
         scene
       );
-      light_main.intensity = 0.1;
+      light_main.intensity = 0.8;
       var light_point = new BABYLON.PointLight(
         "pointLight",
         new BABYLON.Vector3(5, 5, -0.1),
