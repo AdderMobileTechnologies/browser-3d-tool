@@ -42,9 +42,7 @@
                                 {
                                     "strategy": "select",
                                     "parameters": {
-                                        "leftside_small_key": "leftside_small",
-                                        "leftside_medium_key": "leftside_medium",
-                                        "leftside_large_key": "leftside_large"
+                                         "pickableMeshes":["leftside_large","leftside_medium","leftside_small"]
                                        
                                     }
                                 }
@@ -193,9 +191,8 @@
                                 {
                                     "strategy": "select",
                                     "parameters": {
-                                        "x": "sign_1",
-                                        "y": "sign_2",
-                                        "z": "0"
+                                        "pickableMeshes":["sign_1","sign_2"]
+                                      
                                     }
                                 }
                             ]

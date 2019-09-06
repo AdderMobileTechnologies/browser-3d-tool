@@ -43,6 +43,48 @@ class AdderSceneWrapper {
       previousModels.push(adderModel);
       this.setModels(previousModels);
     };
+    this.hideSisterMeshesForMeshId = mesh_id => {
+      console.log("adderSceneWrapper:hideSisterMeshesForMeshId()");
+      let ModelsArray = this.getModels();
+      for (let mIndex in ModelsArray) {
+        var model = ModelsArray[mIndex];
+        var meshWrappers = model.getMeshWrappers();
+        for (let mwIndex in meshWrappers) {
+          let meshWrapper = meshWrappers[mwIndex];
+          let myMesh = meshWrapper.getMesh();
+          let splitName = mesh_id.split("_");
+          let currentMeshName = myMesh.name;
+          let splitCurrentMesh = currentMeshName.split("_");
+          if (myMesh.id !== mesh_id && splitName[0] === splitCurrentMesh[0]) {
+            console.log("setting mesh to invisible: myMesh.id", myMesh.id);
+            myMesh.isVisible = false;
+          }
+          if (myMesh.id === mesh_id) {
+            console.log("Match mesh.id:", mesh_id);
+            console.log("Match parent model:", model);
+            console.log("Match meshWrapper:", meshWrapper);
+          }
+        }
+      }
+    };
+
+    this.findByMeshId = mesh_id => {
+      console.log("adderSceneWrapper:findByMeshId()");
+      let ModelsArray = this.getModels();
+      for (let mIndex in ModelsArray) {
+        var model = ModelsArray[mIndex];
+        var meshWrappers = model.getMeshWrappers();
+        for (let mwIndex in meshWrappers) {
+          let meshWrapper = meshWrappers[mwIndex];
+          let myMesh = meshWrapper.getMesh();
+          if (myMesh.id === mesh_id) {
+            console.log("Match mesh.id:", mesh_id);
+            console.log("Match parent model:", model);
+            console.log("Match meshWrapper:", meshWrapper);
+          }
+        }
+      }
+    };
   }
 }
 export default AdderSceneWrapper;

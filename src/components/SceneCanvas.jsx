@@ -68,8 +68,16 @@ class SceneCanvas extends React.Component {
     });
   };
   windowCallbackPickable(mesh_id) {
-    // how can I get the meshes parent mesh or model at this point.
+    // Consequences: startEditing is a flag for showing/hiding the Image Editor Modal.
     console.log("adderSceneWrapper is : ", this.state.adderSceneWrapper);
+    //TODO: at his point, in the case of meshes that share the same responsibility with other meshes, ie. (leftside_large, leftside_small,...),
+    //whichever other 'leftside_' meshes are NOT getting selected need to be set to hidden. ie. isVisible = false.
+    // - get the currently selected mesh
+    // - find it's sister meshes and set them to invisible.
+    // - via 'adderSceneWrapper' find parent 'model' of the mesh_id, then loop through all the meshWrappers of that model and scan for matches...
+    console.log("SELECTED MESH:", mesh_id);
+    this.state.adderSceneWrapper.hideSisterMeshesForMeshId(mesh_id);
+
     this.setState({
       startEditing: true,
       editing_mesh_id: mesh_id

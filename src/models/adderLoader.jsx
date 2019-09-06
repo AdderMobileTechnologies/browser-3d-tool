@@ -76,7 +76,15 @@ class AdderLoader {
         let isSelectable = false;
         for (let x in behavior) {
           if (behavior[x]["strategy"] === "select") {
-            isSelectable = true;
+            let pickableMeshes = behavior[x]["parameters"]["pickableMeshes"];
+            console.log(pickableMeshes);
+            for (let p of pickableMeshes) {
+              if (p === mesh.id) {
+                isSelectable = true;
+              } else {
+                isSelectable = false;
+              }
+            }
           }
         }
         if (isSelectable) {
