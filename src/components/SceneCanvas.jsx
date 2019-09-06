@@ -69,7 +69,8 @@ class SceneCanvas extends React.Component {
     let createScene = function() {
       //create the scene.
       let scene = new BABYLON.Scene(engine);
-
+      //manifest flag for babylon.manifest files.
+      BABYLON.Database.IDBStorageEnabled = true;
       //build the camera.
       const cameraOptions = {
         lowerAlphaLimit: -Math.PI,

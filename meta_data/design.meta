@@ -11,7 +11,7 @@
                             "name": "vehicle_2door_sportscar",
                             "dir": "porsche",
                             "filename": "porsche2.2",
-                            "filepath": "/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
                             "position": {
                                 "x": "4",
                                 "y": "1",
@@ -42,7 +42,10 @@
                                 {
                                     "strategy": "select",
                                     "parameters": {
-                                         "pickableMeshes":["leftside_large","leftside_medium","leftside_small"]
+                                         "pickableMeshes":[
+                                             "vehicle_2door_sportscar_leftside_large",
+                                             "vehicle_2door_sportscar_leftside_medium",
+                                             "vehicle_2door_sportscar_leftside_small"]
                                        
                                     }
                                 }
@@ -56,9 +59,9 @@
                        {
                             "uuid": "4door_001",
                             "name": "vehicle_4door_stationwagon",
-                            "filepath": "vw_toureg/vw_toureg-1.5.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.5.babylon",
                             "dir": "vw_toureg",
-                            "filename": "vw_toureg-1.5",
+                            "filename": "vw_toureg-2.5",
                             "position": {
                                 "x": "-1",
                                 "y": "1.1",
@@ -88,10 +91,12 @@
                                 },
                                 {
                                     "strategy": "select",
-                                    "parameters": {
-                                        "x": "0",
-                                        "y": "0",
-                                        "z": "0"
+                                     "parameters": {
+                                         "pickableMeshes":[
+                                             "vehicle_4door_stationwagon_leftside_large",
+                                             "vehicle_4door_stationwagon_leftside_medium",
+                                             "vehicle_4door_stationwagon_leftside_small"]
+                                       
                                     }
                                 }
                             ]

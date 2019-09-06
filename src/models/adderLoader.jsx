@@ -66,8 +66,6 @@ class AdderLoader {
       //make adderModel parent mesh, the parent of all individual meshes.
       //wrap each mesh in the meshWrapper class and build the array.
       //add the array to the model.
-      //TODO: If we added 'isPickable' to the model meta data, and used it in the constructor, then we could use it here,
-      // to add mesh specific qualities.
 
       result.meshes.forEach(function(mesh) {
         mesh.parent = adderModel.getParentMesh();
@@ -78,11 +76,18 @@ class AdderLoader {
           if (behavior[x]["strategy"] === "select") {
             let pickableMeshes = behavior[x]["parameters"]["pickableMeshes"];
             console.log(pickableMeshes);
-            for (let p of pickableMeshes) {
-              if (p === mesh.id) {
-                isSelectable = true;
-              } else {
-                isSelectable = false;
+            console.log(pickableMeshes.length);
+            console.log(typeof pickableMeshes);
+            if (pickableMeshes.length > 0) {
+              console.log("more than zero");
+              for (let p of pickableMeshes) {
+                console.log("p", p);
+                console.log("mesh.id", mesh.id);
+                if (p === mesh.id) {
+                  isSelectable = true;
+                } else {
+                  isSelectable = false;
+                }
               }
             }
           }
@@ -92,6 +97,8 @@ class AdderLoader {
         } else {
           mesh.isPickable = false;
         }
+        //set all to selectable for testing:
+        // mesh.isPickable = true;
 
         let newMeshWrapper = new MeshWrapper(mesh, null, null);
         meshWrappers.push(newMeshWrapper);
@@ -121,7 +128,8 @@ class AdderLoader {
       let filename = adderAsset.getFilename();
       let filepath = adderAsset.getFilepath();
       //////////////////////////////////////////////////////////////
-      let modelFile = dir + "/" + filename + `.babylon`;
+      //let modelFile = dir + "/" + filename + `.babylon`;
+      let modelFile = filepath;
       ///////////////////////////////////////////////////////////////////
       let adderModel = new AdderModel(
         adderSceneWrapper,

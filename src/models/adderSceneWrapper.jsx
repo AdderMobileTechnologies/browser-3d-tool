@@ -42,6 +42,13 @@ class AdderSceneWrapper {
     };
     this.hideSisterMeshesForMeshId = mesh_id => {
       console.log("adderSceneWrapper:hideSisterMeshesForMeshId()");
+      /*
+      example in new format:
+      vehicle_2door_sportscar_rightside_small
+      vs 
+      vehicle_2door_sportscar_rightside_large
+      thus splitName[3]  where 3 = reightside.
+      */
       let ModelsArray = this.getModels();
       for (let mIndex in ModelsArray) {
         var model = ModelsArray[mIndex];
@@ -52,7 +59,7 @@ class AdderSceneWrapper {
           let splitName = mesh_id.split("_");
           let currentMeshName = _mesh.name;
           let splitCurrentMesh = currentMeshName.split("_");
-          if (_mesh.id !== mesh_id && splitName[0] === splitCurrentMesh[0]) {
+          if (_mesh.id !== mesh_id && splitName[3] === splitCurrentMesh[3]) {
             console.log("setting mesh to invisible: _mesh.id", _mesh.id);
             _mesh.isVisible = false;
           }

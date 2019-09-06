@@ -11,3 +11,7 @@ swap out files in new directory tree structure:
 /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
 
 /ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon
+
+
+/ad_type/vehicle/subtype/4door/detail/stationwagon/vw_toureg-2.5.babylon
+
