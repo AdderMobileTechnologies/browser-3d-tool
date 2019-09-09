@@ -63,6 +63,7 @@ class NewMain extends React.Component {
 
   sceneCanvasCallback = dataURL => {
     console.log("=== DataURL ===", dataURL);
+    console.log("=== PREVIOUS DataURL: ", this.state.last_dataURL);
     if (this.state.last_dataURL === dataURL) {
       console.log("THE DATA URLS ARE THE SAME !");
     } else {
