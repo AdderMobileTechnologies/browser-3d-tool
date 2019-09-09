@@ -43,8 +43,16 @@
                                     "strategy": "select",
                                     "parameters": {
                                          "pickableMeshes":[
+                                             "vehicle_2door_sportscar_leftside_medium"
+                                            ]
+                                       
+                                    }
+                                },
+                                {
+                                    "strategy": "hidden",
+                                     "parameters": {
+                                         "hiddenMeshes":[
                                              "vehicle_2door_sportscar_leftside_large",
-                                             "vehicle_2door_sportscar_leftside_medium",
                                              "vehicle_2door_sportscar_leftside_small"]
                                        
                                     }
@@ -93,8 +101,16 @@
                                     "strategy": "select",
                                      "parameters": {
                                          "pickableMeshes":[
+                                             "vehicle_4door_stationwagon_leftside_medium"
+                                             ]
+                                       
+                                    }
+                                },
+                                {
+                                    "strategy": "hidden",
+                                     "parameters": {
+                                         "hiddenMeshes":[
                                              "vehicle_4door_stationwagon_leftside_large",
-                                             "vehicle_4door_stationwagon_leftside_medium",
                                              "vehicle_4door_stationwagon_leftside_small"]
                                        
                                     }
@@ -154,8 +170,8 @@
                                     "strategy": "select",
                                     "parameters": {
                                         "pickableMeshes":[
-                                             "billboard_2sides_angled_sign_1",
-                                             "billboard_2sides_angled_sign_2"
+                                             "billboard_1side_short_sign_1"
+                                             
                                              ]
                                     }
                                 }
@@ -202,6 +218,13 @@
                                              "billboard_2sides_angled_sign_2"
                                              ]
                                       
+                                    }
+                                },
+                                {
+                                    "strategy": "hidden",
+                                     "parameters": {
+                                         "hiddenMeshes":[]
+                                       
                                     }
                                 }
                             ]

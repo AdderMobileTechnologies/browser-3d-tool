@@ -23,20 +23,12 @@ class Main extends React.Component {
   }
   setScene = scene => {
     let adderSceneWrapper = new AdderSceneWrapper(scene);
-    console.log(
-      "setting the scene and the adderSceneWrapper is :",
-      adderSceneWrapper
-    );
-    let THISscene = adderSceneWrapper.getScene();
-    console.log("the THISscene from the adderSceneWrapper");
-    console.log(THISscene);
+
     this.setState(
       {
         adderSceneWrapper: adderSceneWrapper
       },
       () => {
-        console.log("async after scene wrapper created....");
-        // THIS might be the place to
         let adderMeta = new AdderMeta(this.state.adderSceneWrapper);
         adderMeta.getEnvironment();
         let scene = this.state.adderSceneWrapper.getScene();
@@ -44,7 +36,6 @@ class Main extends React.Component {
         adderSkybox.getSkybox();
       }
     );
-    console.log("A raw babylon scene object looks like this...", scene);
   };
 
   render() {
@@ -87,13 +78,17 @@ class Main extends React.Component {
               ></SceneCanvas>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          {/**
+
+          DEV: LEFT OFF HERE: 9-9-2019 12:08pm looking at the way that the adderSceneWrapper gets created initially and how it gets saved in state.
+            <Grid item xs={4}>
             {sceneIsSet && (
               <Designer
                 adderSceneWrapper={this.state.adderSceneWrapper}
               ></Designer>
             )}
           </Grid>
+          */}
         </Grid>
       </div>
     );

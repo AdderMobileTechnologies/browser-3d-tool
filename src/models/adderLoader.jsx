@@ -19,7 +19,7 @@ class AdderLoader {
       !(adderSceneWrapper instanceof AdderSceneWrapper)
     ) {
       throw new Error(
-        `AdderLoader:Constructor() The argument for scene must be a Babylon.Scene. `
+        `AdderLoader:Constructor() The argument for scene must be an AdderSceneWrapper NOT a Babylon.Scene. `
       );
     }
     let _adderSceneWrapper = adderSceneWrapper;
@@ -72,30 +72,48 @@ class AdderLoader {
         //define mesh behaviors based on meta data.
         let behavior = adderModel.getBehavior();
         let isSelectable = false;
+        let isHidden = false;
         for (let x in behavior) {
           if (behavior[x]["strategy"] === "select") {
             let pickableMeshes = behavior[x]["parameters"]["pickableMeshes"];
-            console.log(pickableMeshes);
-            console.log(pickableMeshes.length);
-            console.log(typeof pickableMeshes);
             if (pickableMeshes.length > 0) {
-              console.log("more than zero");
               for (let p of pickableMeshes) {
-                console.log("p", p);
-                console.log("mesh.id", mesh.id);
+                //console.log("p mesh.id", mesh.id);
                 if (p === mesh.id) {
+                  console.log("selectable mesh id:", mesh.id);
                   isSelectable = true;
                 } else {
+                  console.log("NOT selectable mesh id:", mesh.id);
                   isSelectable = false;
                 }
               }
             }
           }
+          if (isSelectable) {
+            mesh.isPickable = true;
+          } else {
+            mesh.isPickable = false;
+          }
+          if (behavior[x]["strategy"] === "hidden") {
+            let hiddenMeshes = behavior[x]["parameters"]["hiddenMeshes"];
+            if (hiddenMeshes.length > 0) {
+              for (let hm of hiddenMeshes) {
+                if (hm === mesh.id) {
+                  console.log("hidden mesh.id", mesh.id);
+                  isHidden = true;
+                } else {
+                  console.log("visible mesh.id", mesh.id);
+                  isHidden = false;
+                }
+              }
+            }
+          }
         }
-        if (isSelectable) {
-          mesh.isPickable = true;
+        //TODO: isHidden or isVisible ? isVisible would be opposite
+        if (isHidden) {
+          mesh.isHidden = true;
         } else {
-          mesh.isPickable = false;
+          mesh.isHidden = false;
         }
         //set all to selectable for testing:
         // mesh.isPickable = true;

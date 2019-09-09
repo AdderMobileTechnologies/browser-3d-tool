@@ -11,6 +11,7 @@ import { Scene } from "babylonjs";
 import AdderAsset from "./adderAsset";
 class AdderMeta {
   constructor(adderSceneWrapper = null) {
+    /*
     if (
       adderSceneWrapper === null ||
       !(adderSceneWrapper instanceof AdderSceneWrapper)
@@ -19,6 +20,8 @@ class AdderMeta {
         `AdderLoader:Constructor() The argument for scene can not be null. `
       );
     }
+    */
+
     let _adderSceneWrapper = adderSceneWrapper;
 
     this.getAdderSceneWrapper = () => {

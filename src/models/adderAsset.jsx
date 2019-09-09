@@ -60,7 +60,7 @@ class AdderAsset {
       !(adderSceneWrapper instanceof AdderSceneWrapper)
     ) {
       throw new Error(
-        "AdderAsset:Constructor(): A BABYLON.Scene object is required to build an asset."
+        "AdderAsset:Constructor(): A AdderSceneWrapper object is required to build an asset."
       );
     }
 

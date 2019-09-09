@@ -3,19 +3,23 @@
  * Purpose:
  * To manage the cascading select options available to the user during the design process.
  */
-
+import { Scene } from "babylonjs";
 import React from "react";
 import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "../constants";
 import axios from "axios";
 import AdderAsset from "../models/adderAsset";
+import AdderSceneWrapper from "../models/adderSceneWrapper";
 
+var scope;
 class Designer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      adderSceneWrapper: props.adderSceneWrapper,
+      // adderSceneWrapper: props.adderSceneWrapper,
+
+      adderSceneWrapper: {},
       isOnAdType: false,
       adType_options: [],
       isOnSubType: false,
@@ -24,10 +28,14 @@ class Designer extends React.Component {
       detail_options: [],
       gotDesignMeta: false
     };
-    this.setScene = props.setScene;
-    this.getAdderSceneWrapper = () => {
+    scope = this;
+    // this.setScene = props.setScene;
+    /* this.getAdderSceneWrapper = () => {
       return this.state.adderSceneWrapper;
     };
+    */
+    this.getAdderSceneWrapper = props.getAdderSceneWrapper;
+
     console.log("props:", props);
     this.detail_callback = this.detail_callback.bind(this);
   }
@@ -103,7 +111,25 @@ class Designer extends React.Component {
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
       console.log("assetData:", assetData);
+      // let adderWrap = this.state.adderSceneWrapper;
+      // let scene = adderWrap.getScene();
+      console.log("scope:", scope);
 
+      let scene = this.props.scene;
+      console.log("scene:", scene);
+      console.log("this.state", this.state);
+      console.log("this props.scene:", this.props.scene);
+
+      if (!(this.props.scene instanceof Scene)) {
+        console.log("NOT INSTANCEOF");
+      } else {
+        console.log("instance of !");
+      }
+
+      /* = = = = >>   */
+      // let adderSceneWrapper = new AdderSceneWrapper(this.props.scene);
+      let adderSceneWrapper = this.props.adderSceneWrapper;
+      adderSceneWrapper.getUUID();
       let adderAsset = new AdderAsset(
         assetData.dir,
         assetData.filename,
@@ -112,20 +138,29 @@ class Designer extends React.Component {
         assetData.rotation,
         assetData.scaling,
         assetData.behavior,
-        this.state.adderSceneWrapper
+        adderSceneWrapper
       );
 
+      // this.state.adderSceneWrapper
+
+      // = = = = = >>>>
       this.loadScene(adderAsset);
     }
   };
 
   loadScene = adderAsset => {
+    // let adderSceneWrapper = new AdderSceneWrapper(this.props.scene);
+    //let adderSceneWrapper = this.state.adderSceneWrapper;
+    this.props.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
     adderLoader.addSingleModel(adderAsset);
   };
 
   componentDidMount() {
     let scope = this;
+    this.setState({
+      adderSceneWrapper: this.getAdderSceneWrapper()
+    });
     //perform call to meta server for 'ad type' data.
     var promise_designChoices = new Promise(function(resolve, reject) {
       const url = `${K.META_URL}/meta/design`;

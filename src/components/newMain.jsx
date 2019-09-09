@@ -4,38 +4,61 @@ import Grid from "@material-ui/core/Grid"; //
 //models
 import AdderCamera from "../models/adderCamera";
 
-/*
-DEV NOTES: 08-29-2019
-!(Meta Data Formatting is extremely strict, look out for commas on the last item in an object!)	 
-*/
-/*
-import "tui-image-editor/dist/tui-image-editor.css";
-import AdderImageEditor from "./AdderImageEditor";
-*/
 import DraggableDialog from "./MUI_DraggableDialog";
 import Designer from "./designer";
+////////////////////////////////////////////
+//import { Scene } from "babylonjs";
+import AdderSceneWrapper from "../models/adderSceneWrapper";
+//import Grid from "@material-ui/core/Grid"; //
+import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
+import "tui-image-editor/dist/tui-image-editor.css";
+import AdderImageEditor from "./AdderImageEditor";
+import AdderSkyBox from "../models/adderSkybox";
+import AdderMeta from "../models/adderMeta";
+//////////////////////////////////////////
 var scope;
 
-class SceneCanvas extends React.Component {
+class NewMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      scene: {},
+      sceneIsSet: false,
+      adderSceneWrapper: {},
       selected_mesh_id: "",
       meta_data: {},
-      adderSceneWrapper: props.adderSceneWrapper,
       startEditing: false,
       editing_mesh_id: ""
     };
-    this.setScene = props.setScene;
+    this.setUp = this.setUp.bind(this);
+    this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
+    //this.setScene = props.setScene;
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
     scope = this;
   }
-
+  /*
   componentWillReceiveProps(newProps) {
     let aScene = newProps.adderSceneWrapper.getScene();
     this.setState({
       adderSceneWrapper: newProps.adderSceneWrapper
     });
+  }
+*/
+  getAdderSceneWrapper() {
+    return this.state.adderSceneWrapper;
+  }
+
+  setUp() {
+    console.log("this.state.adderSceneWrapper");
+    console.log(this.state.adderSceneWrapper);
+
+    let adderMeta = new AdderMeta(this.state.adderSceneWrapper);
+    adderMeta.getEnvironment();
+
+    // let scene = this.state.adderSceneWrapper.getScene();
+    let scene = this.state.scene;
+    let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
+    adderSkybox.getSkybox();
   }
 
   sceneCanvasCallback = dataURL => {
@@ -46,6 +69,12 @@ class SceneCanvas extends React.Component {
       console.log("THE DATA URLS ARE DIFFERENT.");
     }
     console.log("this state editing_mesh_id is...", this.state.editing_mesh_id);
+
+    //let adderSceneWrapper = new AdderSceneWrapper(this.state.scene);
+    // this.state.adderSceneWrapper.applyTextureToMesh(
+    //   this.state.editing_mesh_id,
+    //   dataURL
+    // );
     this.state.adderSceneWrapper.applyTextureToMesh(
       this.state.editing_mesh_id,
       dataURL
@@ -136,7 +165,18 @@ class SceneCanvas extends React.Component {
     };
 
     let scene = createScene();
-    this.props.setScene(scene);
+    // this.props.setScene(scene);
+    let adderSceneWrapper = new AdderSceneWrapper(scene);
+    adderSceneWrapper.getUUID();
+    this.setState(
+      {
+        scene: scene,
+        adderSceneWrapper: adderSceneWrapper
+      },
+      () => {
+        scope.setUp();
+      }
+    );
     scene.autoClear = true;
 
     engine.runRenderLoop(function() {
@@ -177,7 +217,7 @@ class SceneCanvas extends React.Component {
   render() {
     return (
       <div>
-        <div>SceneCanvas.jsx</div>
+        <div>NewMain.jsx</div>
         <div>{this.state.selected_mesh_id}</div>
         <div className="adder-3dTool-canvas-container">
           <canvas
@@ -187,7 +227,12 @@ class SceneCanvas extends React.Component {
           />
         </div>
         <Grid item xs={4}>
-          <Designer adderSceneWrapper={this.state.adderSceneWrapper}></Designer>
+          {/** REMOVE: param from Designer calladderSceneWrapper={this.state.adderSceneWrapper} */}
+          <Designer
+            scene={this.state.scene}
+            getAdderSceneWrapper={this.getAdderSceneWrapper}
+            adderSceneWrapper={this.state.adderSceneWrapper}
+          ></Designer>
         </Grid>
         {this.state.startEditing && (
           <div>
@@ -204,4 +249,4 @@ class SceneCanvas extends React.Component {
   }
 }
 
-export default SceneCanvas;
+export default NewMain;
