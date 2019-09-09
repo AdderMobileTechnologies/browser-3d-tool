@@ -1,5 +1,6 @@
 import React from "react";
 import BABYLON from "babylonjs";
+// import * as GUI from "babylonjs-gui";
 import Grid from "@material-ui/core/Grid"; //
 //models
 import AdderCamera from "../models/adderCamera";
@@ -70,6 +71,7 @@ class NewMain extends React.Component {
       console.log("THE DATA URLS ARE DIFFERENT.");
     }
     console.log("this state editing_mesh_id is...", this.state.editing_mesh_id);
+    // 100% SURE I have the new image info at this point.Bayon 9-9-2019 2:20pm
 
     //let adderSceneWrapper = new AdderSceneWrapper(this.state.scene);
     // this.state.adderSceneWrapper.applyTextureToMesh(
@@ -119,6 +121,7 @@ class NewMain extends React.Component {
     let createScene = function() {
       //create the scene.
       let scene = new BABYLON.Scene(engine);
+      // let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
       //build the camera.

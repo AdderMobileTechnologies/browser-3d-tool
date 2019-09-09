@@ -2,7 +2,7 @@ import React from "react";
 //import { Scene } from "babylonjs";
 import AdderSceneWrapper from "../models/adderSceneWrapper";
 
-import SceneCanvas from "./SceneCanvas";
+//import SceneCanvas from "./SceneCanvas";
 import Grid from "@material-ui/core/Grid"; //
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
 import Designer from "./designer"; //handles the selects for choosing a design ad type.
@@ -72,10 +72,12 @@ class Main extends React.Component {
           </Grid>{" "}
           <Grid item xs={8}>
             <div className="babylonjsCanvasContainer">
-              <SceneCanvas
+              {/**
+                <SceneCanvas
                 setScene={this.setScene}
                 adderSceneWrapper={this.state.adderSceneWrapper}
               ></SceneCanvas>
+              */}
             </div>
           </Grid>
           {/**

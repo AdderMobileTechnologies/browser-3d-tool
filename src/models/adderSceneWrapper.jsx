@@ -21,6 +21,7 @@ class AdderSceneWrapper {
 
     this.getUUID = () => {
       console.log("AdderModelWrapper UUID:::", _uuid);
+      return _uuid;
     };
 
     this.getScene = () => {
@@ -99,7 +100,8 @@ class AdderSceneWrapper {
             } else {
               console.log("IS !");
             }
-
+            // var filename = "file_".this.getUUID().".png";
+            // console.log("filename:",filename);
             _meshWrapper.applyTextureFromDataURL(
               "whatever.png",
               dataURL,

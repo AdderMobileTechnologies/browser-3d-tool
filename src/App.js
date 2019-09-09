@@ -1,7 +1,7 @@
 import React from "react";
 import "./components/minimum.css";
 
-import Main from "./components/main";
+//import Main from "./components/main";
 import NewMain from "./components/newMain";
 import Container from "@material-ui/core/Container";
 import "babylonjs-loaders";
