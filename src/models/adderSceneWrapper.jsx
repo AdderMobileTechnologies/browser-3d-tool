@@ -107,10 +107,9 @@ class AdderSceneWrapper {
 
     this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
-      console.log("mesh_id:", mesh_id);
-      console.log("dataURL:", dataURL);
+
       let ModelsArray = this.getModels();
-      console.log("ModelsArray.lenth", ModelsArray.length);
+
       for (let mIndex in ModelsArray) {
         var _model = ModelsArray[mIndex];
         var _meshWrappers = _model.getMeshWrappers();
@@ -118,17 +117,7 @@ class AdderSceneWrapper {
           let _meshWrapper = _meshWrappers[mwIndex];
           let _mesh = _meshWrapper.getMesh();
           if (_mesh.id === mesh_id) {
-            console.log("Match _mesh.id:", _mesh.id);
-            console.log("Match parent _model:", _model);
-            console.log("Match _meshWrapper:", _meshWrapper);
             let scene = this.getScene();
-            if (!(scene instanceof Scene)) {
-              console.log("NOT INSTANCEOF");
-            } else {
-              console.log("IS !");
-            }
-            // var filename = "file_".this.getUUID().".png";
-            // console.log("filename:",filename);
             _meshWrapper.applyTextureFromDataURL(
               new Date().toTimeString() + ".png",
               dataURL,
