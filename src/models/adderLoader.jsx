@@ -11,7 +11,6 @@ import AdderSceneWrapper from "./adderSceneWrapper";
 //models
 import AdderModel from "./adderModel";
 import AdderMeshWrapper from "./adderMeshWrapper";
-import Memory from "./memory";
 class AdderLoader {
   constructor(adderSceneWrapper = null) {
     if (
