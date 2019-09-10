@@ -34,7 +34,7 @@ export default function DraggableDialog(props) {
   };
 
   const handleClose = () => {
-    props.callback();
+    // props.callback();
     setOpen(false);
   };
 

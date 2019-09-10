@@ -78,6 +78,33 @@ class AdderSceneWrapper {
       }
     };
 
+    this.getModelForMeshId = mesh_id => {
+      console.log("adderSceneWrapper:getModelForMeshId()");
+      /*
+      example in new format:
+      vehicle_2door_sportscar_rightside_small
+      vs 
+      vehicle_2door_sportscar_rightside_large
+      thus splitName[3]  where 3 = reightside.
+      */
+      let ModelsArray = this.getModels();
+      for (let mIndex in ModelsArray) {
+        var model = ModelsArray[mIndex];
+        var meshWrappers = model.getMeshWrappers();
+        for (let mwIndex in meshWrappers) {
+          let meshWrapper = meshWrappers[mwIndex];
+          let _mesh = meshWrapper.getMesh();
+
+          if (_mesh.id === mesh_id) {
+            console.log("Match mesh.id:", mesh_id);
+            console.log("Match parent model:", model);
+            console.log("Match meshWrapper:", meshWrapper);
+            return model;
+          }
+        }
+      }
+    };
+
     this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
       console.log("mesh_id:", mesh_id);
@@ -103,7 +130,7 @@ class AdderSceneWrapper {
             // var filename = "file_".this.getUUID().".png";
             // console.log("filename:",filename);
             _meshWrapper.applyTextureFromDataURL(
-              "whatever.png",
+              new Date().toTimeString() + ".png",
               dataURL,
               scene
             );

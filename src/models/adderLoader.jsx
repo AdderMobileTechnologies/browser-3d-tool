@@ -11,7 +11,7 @@ import AdderSceneWrapper from "./adderSceneWrapper";
 //models
 import AdderModel from "./adderModel";
 import AdderMeshWrapper from "./adderMeshWrapper";
-
+import Memory from "./memory";
 class AdderLoader {
   constructor(adderSceneWrapper = null) {
     if (
@@ -66,61 +66,54 @@ class AdderLoader {
       //make adderModel parent mesh, the parent of all individual meshes.
       //wrap each mesh in the adderMeshWrapper class and build the array.
       //add the array to the model.
+      var mySelectables = [];
 
       result.meshes.forEach(function(mesh) {
+        //get Behaviors via models meta data.
         mesh.parent = adderModel.getParentMesh();
-        //define mesh behaviors based on meta data.
-        let behavior = adderModel.getBehavior();
-        let isSelectable = false;
-        let isHidden = false;
-        for (let x in behavior) {
-          if (behavior[x]["strategy"] === "select") {
-            let pickableMeshes = behavior[x]["parameters"]["pickableMeshes"];
-            if (pickableMeshes.length > 0) {
-              for (let p of pickableMeshes) {
-                //console.log("p mesh.id", mesh.id);
-                if (p === mesh.id) {
-                  console.log("selectable mesh id:", mesh.id);
-                  isSelectable = true;
-                } else {
-                  console.log("NOT selectable mesh id:", mesh.id);
-                  isSelectable = false;
-                }
+        var behavior = adderModel.getBehavior();
+        mesh.isPickable = false;
+        console.log("mesh.id:", mesh.id);
+        console.log("BEHAVIOR:", behavior);
+        var isSelectable = false;
+        for (var index in behavior) {
+          let currentStrategy = behavior[index]["strategy"];
+          if (currentStrategy == "select") {
+            var selectParams = behavior[index]["parameters"];
+            for (var meshIndex in selectParams["pickableMeshes"]) {
+              var currentPickableMeshName =
+                selectParams["pickableMeshes"][meshIndex];
+              if (currentPickableMeshName === mesh.id) {
+                console.log("match!");
+                mySelectables.push(mesh.id);
+                isSelectable = true;
+                mesh.isPickable = true;
+                console.log("did the isPickable property take? mesh:", mesh);
+              } else {
+                isSelectable = false;
               }
             }
+            // THIS shows me ALL of the meshes of a particular model.
+            // but I only want one or two.
+
+            console.log("mesh.id", mesh.id);
+            console.log("selectParams", selectParams);
           }
-          if (isSelectable) {
-            mesh.isPickable = true;
-          } else {
-            mesh.isPickable = false;
-          }
-          if (behavior[x]["strategy"] === "hidden") {
-            let hiddenMeshes = behavior[x]["parameters"]["hiddenMeshes"];
-            if (hiddenMeshes.length > 0) {
-              for (let hm of hiddenMeshes) {
-                if (hm === mesh.id) {
-                  console.log("hidden mesh.id", mesh.id);
-                  isHidden = true;
-                } else {
-                  console.log("visible mesh.id", mesh.id);
-                  isHidden = false;
-                }
-              }
-            }
+          if (currentStrategy == "no-select") {
+            isSelectable = false;
           }
         }
-        //TODO: isHidden or isVisible ? isVisible would be opposite
-        if (isHidden) {
-          mesh.isHidden = true;
-        } else {
-          mesh.isHidden = false;
-        }
-        //set all to selectable for testing:
-        // mesh.isPickable = true;
+        console.log(
+          "FINAL MESH TREATMENT BEFORE added to a Wrapper: mesh:",
+          mesh
+        );
 
         let newAdderMeshWrapper = new AdderMeshWrapper(mesh, null, null);
         adderMeshWrappers.push(newAdderMeshWrapper);
       });
+      console.log("mySelectables:", mySelectables);
+      // let mem = new Memory(mySelectables);
+      // mem.check();
       adderModel.setMeshWrappers(adderMeshWrappers);
     }
 

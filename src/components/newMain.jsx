@@ -104,6 +104,11 @@ class NewMain extends React.Component {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Consequences: 'state.startEditing' is a flag for showing/hiding the Image Editor Modal.
+
+    //TODO: if mesh.id belongs to a model that has select parameters match.
+
+    //////////////////////////////////////////////
+
     this.setState({
       startEditing: true,
       editing_mesh_id: mesh_id
@@ -182,6 +187,7 @@ class NewMain extends React.Component {
       }
     );
     scene.autoClear = true;
+    ////////////////////////////////////////
 
     engine.runRenderLoop(function() {
       if (typeof scene === "undefined") {
@@ -200,6 +206,9 @@ class NewMain extends React.Component {
     window.addEventListener("click", function() {
       //should only detect meshes where  isPickable = true;
       var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+      /* force it  with 3rd parameter.*/
+      // , function(   mesh  ) {  return mesh.name == "billboard_2sides_angled_sign_1"; // so only this will be pickable
+      // }
       console.log("pickResult, prior to handling:", pickResult);
       if (pickResult.pickedMesh === null) {
         return false;
@@ -212,7 +221,13 @@ class NewMain extends React.Component {
 
         //What happens after Apply Image(?) => onApplyCallback(DataURL) => props.sceneCanvasCallback(DataURL)
 
+        //TODO: check if pickable , it would be represented within a model.
+
         console.log("click() pickResult:", pickResult.pickedMesh.name);
+        console.log(
+          "PICKED MESH: look for isPickable property",
+          pickResult.pickedMesh
+        );
         scope.windowCallbackPickable(pickResult.pickedMesh.name);
       }
     });

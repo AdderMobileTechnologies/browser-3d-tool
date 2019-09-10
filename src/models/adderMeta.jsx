@@ -91,7 +91,7 @@ class AdderMeta {
         let rotation = value.meta_data[m]["rotation"];
         let scaling = value.meta_data[m]["scaling"];
         let behavior = value.meta_data[m]["behavior"];
-        console.log("behavior:", behavior);
+        //console.log("behavior:", behavior);
         var adderAsset = new AdderAsset(
           dir,
           filename,
@@ -102,7 +102,8 @@ class AdderMeta {
           behavior,
           adderSceneWrapper
         );
-
+        console.log("adderAsset name:", adderAsset.getFilename());
+        console.log("adderAsset behavior:", adderAsset.getBehavior());
         adderLoader.addSingleModel(adderAsset);
       }
     };
