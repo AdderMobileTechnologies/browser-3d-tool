@@ -214,10 +214,8 @@
                                     "strategy": "select",
                                     "parameters": {
                                         "pickableMeshes":[
-                                             "null_mesh_909",
                                              "billboard_2sides_angled_sign_1",
-                                             "billboard_2sides_angled_sign_2",
-                                             "null_mesh_end"
+                                             "billboard_2sides_angled_sign_2"
                                              ]
                                       
                                     }

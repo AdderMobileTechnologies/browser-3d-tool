@@ -19,3 +19,5 @@ next bugs:
 need to be able to change the image after a previous one has been applied. 
 billboard sign2 becomes invisible when picked ?  need somekind of flag for when to hide sister meshes....
 
+Server Issue: Cors: 
+The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed.

@@ -62,20 +62,19 @@ class AdderLoader {
     };
 
     function callback_ImportMeshAsync(adderModel, result) {
+      // Loop through meshes,set parent mesh, set behavior, embed in a MeshWrapper and append to model's array of MeshWrappers.
+      /**
+       * IN:
+       *  adderModel : The instance of a model that was just asynchronously pulled down from the server.
+       *  result: What is returned after a successful import, mainly the "meshes" that make up the model.
+       */
       const adderMeshWrappers = [];
-      //make adderModel parent mesh, the parent of all individual meshes.
-      //wrap each mesh in the adderMeshWrapper class and build the array.
-      //add the array to the model.
-      var mySelectables = [];
-
       result.meshes.forEach(function(mesh) {
         //get Behaviors via models meta data.
         mesh.parent = adderModel.getParentMesh();
         var behavior = adderModel.getBehavior();
-        mesh.isPickable = false;
-        console.log("mesh.id:", mesh.id);
-        console.log("BEHAVIOR:", behavior);
-        var isSelectable = false;
+        mesh.isPickable = false; // set all meshes to Not Clickable by default
+
         for (var index in behavior) {
           let currentStrategy = behavior[index]["strategy"];
           if (currentStrategy == "select") {
@@ -84,36 +83,17 @@ class AdderLoader {
               var currentPickableMeshName =
                 selectParams["pickableMeshes"][meshIndex];
               if (currentPickableMeshName === mesh.id) {
-                console.log("match!");
-                mySelectables.push(mesh.id);
-                isSelectable = true;
-                mesh.isPickable = true;
-                console.log("did the isPickable property take? mesh:", mesh);
-              } else {
-                isSelectable = false;
+                //console.log("MATCH!");
+                mesh.isPickable = true; // ONLY set meshes from the models meta data for behavior strategy select and pickableMeshes
               }
             }
-            // THIS shows me ALL of the meshes of a particular model.
-            // but I only want one or two.
-
-            console.log("mesh.id", mesh.id);
-            console.log("selectParams", selectParams);
-          }
-          if (currentStrategy == "no-select") {
-            isSelectable = false;
           }
         }
-        console.log(
-          "FINAL MESH TREATMENT BEFORE added to a Wrapper: mesh:",
-          mesh
-        );
 
         let newAdderMeshWrapper = new AdderMeshWrapper(mesh, null, null);
         adderMeshWrappers.push(newAdderMeshWrapper);
       });
-      console.log("mySelectables:", mySelectables);
-      // let mem = new Memory(mySelectables);
-      // mem.check();
+
       adderModel.setMeshWrappers(adderMeshWrappers);
     }
 
