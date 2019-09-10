@@ -11,6 +11,7 @@ import * as K from "../constants";
 import axios from "axios";
 import AdderAsset from "../models/adderAsset";
 import AdderSceneWrapper from "../models/adderSceneWrapper";
+import Grid from "@material-ui/core/Grid"; //
 
 var scope;
 class Designer extends React.Component {
@@ -201,28 +202,35 @@ class Designer extends React.Component {
     return (
       <div className="designer">
         <div>designer.jsx</div>
-        {this.state.isOnAdType && (
-          <UISelect
-            id={"ad_type"}
-            options={this.state.adType_options}
-            callback={this.adType_callback}
-          ></UISelect>
-        )}
-        {this.state.isOnSubType && (
-          <UISelect
-            id={"sub_type"}
-            options={this.state.subType_options}
-            callback={this.subType_callback}
-          ></UISelect>
-        )}
-
-        {this.state.isOnDetail && (
-          <UISelect
-            id={"detail"}
-            options={this.state.detail_options}
-            callback={this.detail_callback}
-          ></UISelect>
-        )}
+        <Grid container>
+          <Grid item={4}>
+            {this.state.isOnAdType && (
+              <UISelect
+                id={"ad_type"}
+                options={this.state.adType_options}
+                callback={this.adType_callback}
+              ></UISelect>
+            )}
+          </Grid>
+          <Grid item={4}>
+            {this.state.isOnSubType && (
+              <UISelect
+                id={"sub_type"}
+                options={this.state.subType_options}
+                callback={this.subType_callback}
+              ></UISelect>
+            )}
+          </Grid>
+          <Grid item={4}>
+            {this.state.isOnDetail && (
+              <UISelect
+                id={"detail"}
+                options={this.state.detail_options}
+                callback={this.detail_callback}
+              ></UISelect>
+            )}
+          </Grid>
+        </Grid>
       </div>
     );
   }

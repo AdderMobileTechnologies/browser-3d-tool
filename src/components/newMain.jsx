@@ -17,7 +17,57 @@ import AdderImageEditor from "./AdderImageEditor";
 import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 //////////////////////////////////////////
+import { makeStyles } from "@material-ui/core/styles";
+//TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
+import BillBoard from "../assets/Adder_3D_Tool2/billboardTopView.png";
+
+import "./minimum.css";
+import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
 var scope;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper
+  },
+  title: {
+    align: "center",
+    marginTop: "30px",
+    marginBottom: "30px",
+    marginRight: "auto",
+    marginLeft: "auto"
+  },
+  card: {
+    minWidth: 275,
+    backgroundColor: "#f4f6f8",
+    boxShadow: "none"
+  },
+  image: {
+    backgroundImage: "url(" + GrayCar + ")",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
+    backgroundPosition: "center"
+  },
+  image_billboard: {
+    backgroundImage: "url(" + BillBoard + ")",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
+    backgroundPosition: "center"
+  },
+  ui_panel: {}
+}));
+
+/*
+const meshSelectorContainerStyle = {
+  margin: "0px",
+  width: "100%",
+  height: "651px",
+  boxShadow: "none",
+  color: "#2f2f2f"
+};*/
 
 class NewMain extends React.Component {
   constructor(props) {
@@ -37,6 +87,7 @@ class NewMain extends React.Component {
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
     scope = this;
   }
+
   /*
   componentWillReceiveProps(newProps) {
     let aScene = newProps.adderSceneWrapper.getScene();
@@ -94,21 +145,6 @@ class NewMain extends React.Component {
   };
 
   windowCallbackPickable(mesh_id) {
-    console.log("mesh id that was picked.", mesh_id);
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    // hide all sister meshes for the selected mesh id.
-    //TODO: hide all but one type for vehicles.ie. not using the small , medium, arge feature anymore.
-    //either: make those meshes NOT pickable AND invisible , or hide them here.
-    //meta data would be the place to do this. at what point would the meta data be acted upon(?)
-    //= = = = = >>>   this.state.adderSceneWrapper.hideSisterMeshesForMeshId(mesh_id);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // Consequences: 'state.startEditing' is a flag for showing/hiding the Image Editor Modal.
-
-    //TODO: if mesh.id belongs to a model that has select parameters match.
-
-    //////////////////////////////////////////////
-
     this.setState({
       startEditing: true,
       editing_mesh_id: mesh_id
@@ -124,9 +160,7 @@ class NewMain extends React.Component {
     });
 
     let createScene = function() {
-      //create the scene.
       let scene = new BABYLON.Scene(engine);
-      // let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
       //build the camera.
@@ -187,7 +221,6 @@ class NewMain extends React.Component {
       }
     );
     scene.autoClear = true;
-    ////////////////////////////////////////
 
     engine.runRenderLoop(function() {
       if (typeof scene === "undefined") {
@@ -206,28 +239,9 @@ class NewMain extends React.Component {
     window.addEventListener("click", function() {
       //should only detect meshes where  isPickable = true;
       var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-      /* force it  with 3rd parameter.*/
-      // , function(   mesh  ) {  return mesh.name == "billboard_2sides_angled_sign_1"; // so only this will be pickable
-      // }
-      console.log("pickResult, prior to handling:", pickResult);
       if (pickResult.pickedMesh === null) {
         return false;
       } else {
-        //TODO: in the case of billboard sign 1 , although it is flagged as selectable, it's selection is not getting recognized.
-        //(?) - something to do with the new isHidden parameter? is hideSisters still executing.
-        // - action: added empty array to meta data for hidablemeshes ( same difference)
-        // STRANGE:(?) Why isn't "billboard_2sides_angled_sign_1" getting detected on click.(?)
-        // console.log("pickResult:", pickResult);
-
-        //What happens after Apply Image(?) => onApplyCallback(DataURL) => props.sceneCanvasCallback(DataURL)
-
-        //TODO: check if pickable , it would be represented within a model.
-
-        console.log("click() pickResult:", pickResult.pickedMesh.name);
-        console.log(
-          "PICKED MESH: look for isPickable property",
-          pickResult.pickedMesh
-        );
         scope.windowCallbackPickable(pickResult.pickedMesh.name);
       }
     });
@@ -237,36 +251,92 @@ class NewMain extends React.Component {
     return (
       <div>
         <div>NewMain.jsx</div>
-        <div>{this.state.selected_mesh_id}</div>
-        <div className="adder-3dTool-canvas-container">
-          <canvas
-            id="adder_3dTool_canvas"
-            className="adder-3dTool-canvas"
-            style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
-          />
-        </div>
-        <Grid item xs={4}>
-          {/** REMOVE: param from Designer calladderSceneWrapper={this.state.adderSceneWrapper} */}
-          <Designer
-            scene={this.state.scene}
-            getAdderSceneWrapper={this.getAdderSceneWrapper}
-            adderSceneWrapper={this.state.adderSceneWrapper}
-          ></Designer>
-        </Grid>
-        {this.state.startEditing && (
-          <div>
-            <Grid>
-              <DraggableDialog
-                sceneCanvasCallback={this.sceneCanvasCallback}
-                mesh_id={this.state.editing_mesh_id}
-              ></DraggableDialog>
+
+        <Grid
+          container
+          spacing={0}
+          id="ParentContainer"
+          style={{ border: " dotted 1px  lightblue " }}
+        >
+          <Grid
+            container
+            item
+            xs={12}
+            id="Header"
+            style={{ marginTop: "10px", border: " dotted 1px  lightblue " }}
+          >
+            <Grid item xs={4} id="LogoContainer">
+              <img
+                src={AdderLogoAndName}
+                style={{ height: "auto", width: "100%" }}
+                className="AdderLogoAndName"
+                id={"AdderLogo"}
+                alt="Adder Logo"
+              />
             </Grid>
-          </div>
-        )}
+          </Grid>{" "}
+          <Grid item xs={8}>
+            <div className="adder-3dTool-canvas-container">
+              <canvas
+                id="adder_3dTool_canvas"
+                className="adder-3dTool-canvas"
+                style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <Designer
+              scene={this.state.scene}
+              getAdderSceneWrapper={this.getAdderSceneWrapper}
+              adderSceneWrapper={this.state.adderSceneWrapper}
+            ></Designer>
+            <Grid
+              item
+              xs={12}
+              style={{
+                backgroundImage: "url(" + GrayCar + ")",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                height: "300px",
+                backgroundPosition: "center"
+              }}
+            >
+              <div
+                className="relativeContainer car"
+                id="ButtonContainer"
+                style={{ height: "300px" }}
+              >
+                <p>Select a Component to Edit</p>
+
+                {/**onClick={props.clickHood} */}
+                <button className="buttonSidebar buttonHood">HOOD</button>
+                <button className="buttonSidebar buttonLeft">LEFT</button>
+                <button className="buttonSidebar buttonRoof">ROOF</button>
+                <button className="buttonSidebar buttonRight">RIGHT</button>
+                <button className="buttonSidebar buttonTrunk">TRUNK</button>
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* .UI- Mesh Selectors*/}
+        {/* props.adType === 'vehicle'  && */}
+
+        {/* */}
+        <div>
+          {this.state.startEditing && (
+            <div>
+              <Grid>
+                <DraggableDialog
+                  sceneCanvasCallback={this.sceneCanvasCallback}
+                  mesh_id={this.state.editing_mesh_id}
+                ></DraggableDialog>
+              </Grid>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 }
 
 export default NewMain;
-//AdderModelWrapper UUID::: Mon Sep 09 2019 13:51:24 GMT-0400 (Eastern Daylight Time)

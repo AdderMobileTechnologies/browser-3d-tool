@@ -1,8 +1,18 @@
 
 TODO: 
-move meta data files to dbdev.adder.io from localhost.
+1- move meta data files to dbdev.adder.io from localhost.
+2- set up meta data index. 
+3- Get the 'sidebar' functionality for selecting meshes via button over image .
+4- Snap Shot FUnctionality and GridList
+5- saving the design data, ie. as was done with 'userSession' in version 1 .
 
-set up meta data index. 
+(3) need a flag for showing billboard selection versus vehicle 
+    background image 
+    buttons that trigger mesh selection. 
+    
+
+
+
 
 
  #done 
@@ -14,12 +24,14 @@ set up meta data index.
     changed meta files to house the 'pickable meshes' as a parameter array of mesh names. 
     created code to hide the sister meshes in the case of leftside_large, leftside_small,  where only one UVMapping structure is supposed to be visible.
 
-
 fixed bugs:
 # fixed: 9-10-2019 
    need to be able to change the image after a previous one has been applied. 
    billboard sign2 becomes invisible when picked ?  need somekind of flag for when to hide sister meshes....
+# Server Issue: Cors: 
+# The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed.
+
 
 new bugs:
-Server Issue: Cors: 
-The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed.
+
+
