@@ -43,7 +43,8 @@
                                     "strategy": "select",
                                     "parameters": {
                                          "pickableMeshes":[
-                                             "vehicle_2door_sportscar_leftside_medium"
+                                             "vehicle_2door_sportscar_leftside_medium",
+                                              "vehicle_2door_sportscar_rightside_medium"
                                             ]
                                        
                                     }

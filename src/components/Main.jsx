@@ -16,60 +16,18 @@ import "tui-image-editor/dist/tui-image-editor.css";
 import AdderImageEditor from "./AdderImageEditor";
 import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
+import AdderAsset from "../models/adderAsset";
 //////////////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
 import BillBoard from "../assets/Adder_3D_Tool2/billboardTopView.png";
 
 import "./minimum.css";
+import "./Main.css";
 import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
 var scope;
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
-  },
-  title: {
-    align: "center",
-    marginTop: "30px",
-    marginBottom: "30px",
-    marginRight: "auto",
-    marginLeft: "auto"
-  },
-  card: {
-    minWidth: 275,
-    backgroundColor: "#f4f6f8",
-    boxShadow: "none"
-  },
-  image: {
-    backgroundImage: "url(" + GrayCar + ")",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "contain",
-    backgroundPosition: "center"
-  },
-  image_billboard: {
-    backgroundImage: "url(" + BillBoard + ")",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "contain",
-    backgroundPosition: "center"
-  },
-  ui_panel: {}
-}));
-
-/*
-const meshSelectorContainerStyle = {
-  margin: "0px",
-  width: "100%",
-  height: "651px",
-  boxShadow: "none",
-  color: "#2f2f2f"
-};*/
-
-class NewMain extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +37,13 @@ class NewMain extends React.Component {
       selected_mesh_id: "",
       meta_data: {},
       startEditing: false,
-      editing_mesh_id: ""
+      editing_mesh_id: "",
+      selected_ad_type: -1,
+      hoodMeshId: null,
+      leftMeshId: null,
+      roofMeshId: null,
+      rightMeshId: null,
+      trunkMeshId: null
     };
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
@@ -88,14 +52,6 @@ class NewMain extends React.Component {
     scope = this;
   }
 
-  /*
-  componentWillReceiveProps(newProps) {
-    let aScene = newProps.adderSceneWrapper.getScene();
-    this.setState({
-      adderSceneWrapper: newProps.adderSceneWrapper
-    });
-  }
-*/
   getAdderSceneWrapper() {
     return this.state.adderSceneWrapper;
   }
@@ -112,23 +68,15 @@ class NewMain extends React.Component {
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
   }
-
-  sceneCanvasCallback = dataURL => {
-    console.log("=== DataURL ===", dataURL);
-    console.log("=== PREVIOUS DataURL: ", this.state.last_dataURL);
-    if (this.state.last_dataURL === dataURL) {
-      console.log("THE DATA URLS ARE THE SAME !");
-    } else {
-      console.log("THE DATA URLS ARE DIFFERENT.");
+  buttonClick(e) {
+    console.log(e.target.id);
+    if (e.target.id === "buttonLeft") {
+      console.log("hit");
+      //what is the current model and mesh in adderSceneWrapper?
+      console.log(e.target);
     }
-    console.log("this state editing_mesh_id is...", this.state.editing_mesh_id);
-    // 100% SURE I have the new image info at this point.Bayon 9-9-2019 2:20pm
-
-    //let adderSceneWrapper = new AdderSceneWrapper(this.state.scene);
-    // this.state.adderSceneWrapper.applyTextureToMesh(
-    //   this.state.editing_mesh_id,
-    //   dataURL
-    // );
+  }
+  sceneCanvasCallback = dataURL => {
     this.state.adderSceneWrapper.applyTextureToMesh(
       this.state.editing_mesh_id,
       dataURL
@@ -150,7 +98,68 @@ class NewMain extends React.Component {
       editing_mesh_id: mesh_id
     });
   }
+  // To hide or show the appropriate sidebar image and controls
+  callback_designer(args = null, adderAsset = null) {
+    if (args === "-1") {
+      scope.setState({ selected_ad_type: "-1" }); // reset ad type
+    }
+    if (args === "0") {
+      scope.setState({ selected_ad_type: "0" }); //vehicle
+    }
+    if (args === "1") {
+      scope.setState({ selected_ad_type: "1" }); //billboard
+    }
+    if (!(adderAsset instanceof AdderAsset)) {
+      console.log("NOT AN ADDER ASSET yet....");
+    } else {
+      let assetData = adderAsset.getBehavior();
+      console.log("assetData:");
+      console.log(assetData);
+      //strategy:SELECT:parameters:pickableMeshes
+      let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
+      console.log(pickableMeshes);
 
+      //"vehicle_2door_sportscar_leftside_medium","vehicle_2door_sportscar_rightside_medium"
+      //TODO: if I can split the items the 3rd element can determine which mesh belongs to which sidebar button.
+      var selectableMeshes = [];
+      var hoodMeshId = null,
+        leftMeshId = null,
+        roofMeshId = null,
+        rightMeshId = null,
+        trunkMeshId = null;
+      for (var i in pickableMeshes) {
+        let pickableMesh = pickableMeshes[i];
+        let splitData = pickableMesh.split("_");
+        if (splitData[3] == "leftside") {
+          leftMeshId = pickableMesh;
+        }
+        if (splitData[3] == "rightside") {
+          rightMeshId = pickableMesh;
+        }
+      }
+      console.log("Some Success if leftMeshId has a value:", leftMeshId);
+      scope.setState(
+        {
+          hoodMeshId: hoodMeshId,
+          leftMeshId: leftMeshId,
+          roofMeshId: roofMeshId,
+          rightMeshId: rightMeshId,
+          trunkMeshId: trunkMeshId
+        },
+        () => {
+          console.log("and success ---->");
+          console.log(scope.state.leftMeshId);
+        }
+      );
+      // once that is determined and saved in state, then the sidebar buttons can have a value that referes to it in state.
+      // thus we'll have a dynamic way of setting the values in the sidebar buttons,
+      // and after all of this, the point is to use the 'mesh_id' to select the mesh programatically rather than by direct click on mesh.
+      // then finally we should be able to call this... scope.windowCallbackPickable(pickResult.pickedMesh.name); with the "mesh name" instead of the pickResult.data object.
+    }
+  }
+  callback_withModelInfo(info = null) {
+    console.log("callback_withModelInfo:", info);
+  }
   componentDidMount() {
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
@@ -248,6 +257,8 @@ class NewMain extends React.Component {
   }
 
   render() {
+    //TODO: I need a method to periodically calll the adderSceneWrapper and get the currently selectable meshes.
+    //THEN : I could apply these mesh id's to the value for the sidebar buttons
     return (
       <div>
         <div>NewMain.jsx</div>
@@ -289,33 +300,74 @@ class NewMain extends React.Component {
               scene={this.state.scene}
               getAdderSceneWrapper={this.getAdderSceneWrapper}
               adderSceneWrapper={this.state.adderSceneWrapper}
+              callback={this.callback_designer}
+              callback_withModelInfo={this.callback_withModelInfo}
             ></Designer>
-            <Grid
-              item
-              xs={12}
-              style={{
-                backgroundImage: "url(" + GrayCar + ")",
-                backgroundSize: "contain",
-                backgroundRepeat: "no-repeat",
-                height: "300px",
-                backgroundPosition: "center"
-              }}
-            >
-              <div
-                className="relativeContainer car"
-                id="ButtonContainer"
-                style={{ height: "300px" }}
+            {this.state.selected_ad_type == "0" && (
+              <Grid
+                item
+                xs={12}
+                style={{
+                  backgroundImage: "url(" + GrayCar + ")",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  height: "300px",
+                  backgroundPosition: "center"
+                }}
               >
-                <p>Select a Component to Edit</p>
+                <div
+                  className="relativeContainer car"
+                  id="ButtonContainer"
+                  style={{ height: "300px" }}
+                >
+                  <p>Select a Component to Edit</p>
 
-                {/**onClick={props.clickHood} */}
-                <button className="buttonSidebar buttonHood">HOOD</button>
-                <button className="buttonSidebar buttonLeft">LEFT</button>
-                <button className="buttonSidebar buttonRoof">ROOF</button>
-                <button className="buttonSidebar buttonRight">RIGHT</button>
-                <button className="buttonSidebar buttonTrunk">TRUNK</button>
-              </div>
-            </Grid>
+                  {/**onClick={props.clickHood} */}
+                  <button
+                    className="buttonSidebar buttonHood"
+                    id="buttonHood"
+                    onClick={this.buttonClick}
+                  >
+                    HOOD
+                  </button>
+                  <button
+                    className="buttonSidebar buttonLeft"
+                    id="buttonLeft"
+                    value=""
+                    name={this.state.leftMeshId}
+                    onClick={this.buttonClick}
+                  >
+                    LEFT
+                  </button>
+                  <button
+                    className="buttonSidebar buttonRoof"
+                    id="buttonRoof"
+                    onClick={this.buttonClick}
+                  >
+                    ROOF
+                  </button>
+                  <button
+                    className="buttonSidebar buttonRight"
+                    id="buttonRight"
+                    value=""
+                    onClick={this.buttonClick}
+                  >
+                    RIGHT
+                  </button>
+                  <button
+                    className="buttonSidebar buttonTrunk"
+                    id="buttonTrunk"
+                    value=""
+                    onClick={this.buttonClick}
+                  >
+                    TRUNK
+                  </button>
+                </div>
+              </Grid>
+            )}
+            {this.state.selected_ad_type == "1" && (
+              <div>same for billboards</div>
+            )}
           </Grid>
         </Grid>
         {/* .UI- Mesh Selectors*/}
@@ -339,4 +391,4 @@ class NewMain extends React.Component {
   }
 }
 
-export default NewMain;
+export default Main;

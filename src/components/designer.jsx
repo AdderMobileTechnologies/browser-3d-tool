@@ -13,6 +13,9 @@ import AdderAsset from "../models/adderAsset";
 import AdderSceneWrapper from "../models/adderSceneWrapper";
 import Grid from "@material-ui/core/Grid"; //
 
+import "./minimum.css";
+import "./designer.css";
+
 var scope;
 class Designer extends React.Component {
   constructor(props) {
@@ -53,6 +56,7 @@ class Designer extends React.Component {
   };
   adType_callback = data => {
     console.log("adType_callback data:", data);
+    this.props.callback("-1");
     if (data.selectedOption != "-1") {
       this.resetDesign();
 
@@ -111,24 +115,6 @@ class Designer extends React.Component {
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
-      console.log("assetData:", assetData);
-      // let adderWrap = this.state.adderSceneWrapper;
-      // let scene = adderWrap.getScene();
-      console.log("scope:", scope);
-
-      let scene = this.props.scene;
-      console.log("scene:", scene);
-      console.log("this.state", this.state);
-      console.log("this props.scene:", this.props.scene);
-
-      if (!(this.props.scene instanceof Scene)) {
-        console.log("NOT INSTANCEOF");
-      } else {
-        console.log("instance of !");
-      }
-
-      /* = = = = >>   */
-      // let adderSceneWrapper = new AdderSceneWrapper(this.props.scene);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();
       let adderAsset = new AdderAsset(
@@ -146,6 +132,9 @@ class Designer extends React.Component {
 
       // = = = = = >>>>
       this.loadScene(adderAsset);
+      //TODO: declare what was selected.
+      this.props.callback(this.state.adTypeSelectedOption, adderAsset);
+      //LIKE TO : callback_withModelInfo :need the mesh_ids to select from buttons
     }
   };
 

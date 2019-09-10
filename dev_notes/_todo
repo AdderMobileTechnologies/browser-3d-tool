@@ -5,11 +5,15 @@ TODO:
 3- Get the 'sidebar' functionality for selecting meshes via button over image .
 4- Snap Shot FUnctionality and GridList
 5- saving the design data, ie. as was done with 'userSession' in version 1 .
+6- consider a "hasLoaded" method for models.
 
+
+
+6- Figure out why Porsche Right door not getting image applied to it event though it has been added to the meta data and is editable.
 (3) need a flag for showing billboard selection versus vehicle 
     background image 
     buttons that trigger mesh selection. 
-    
+
 
 
 
