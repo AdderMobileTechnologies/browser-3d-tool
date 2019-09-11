@@ -134,7 +134,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 30px;
-    box-shadow: 10px 10px 10px #ccc;
+    /*box-shadow: 10px 10px 10px #ccc;*/
 }
 
 /* Grid List        */
@@ -172,3 +172,30 @@ ul.MuiGridList-root li li img {
     }
  
 */
+
+#screenshots_container {
+    height: 200px;
+    width: 1024px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-repeat: no-repeat;
+    border: solid 3px #eeed;
+    /*solid 1px #ccc;*/
+    border-radius: 0px;
+    margin: 15px;
+    float: left;
+    /*box-shadow: 5px 5px 5px #111;*/
+}
+
+/* Grid List        */
+
+ul.MuiGridList-root li li {
+    margin: 2px !important;
+    border: solid 1px #ccc;
+    border-radius: 10px;
+}
+
+ul.MuiGridList-root li li img {
+    height: 150px;
+    max-height: 150px;
+}

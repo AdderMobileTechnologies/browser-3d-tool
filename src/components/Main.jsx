@@ -18,21 +18,78 @@ import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
 //////////////////////////////////////////
-import { makeStyles } from "@material-ui/core/styles";
+
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
 
 import "./minimum.css";
 import "./Main.css";
 import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
 import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
+import { makeStyles } from "@material-ui/core/styles";
+
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import IconButton from "@material-ui/core/IconButton";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+
 var scope;
+var scp;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper
+  },
+  gridList: {
+    flexWrap: "nowrap",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: "translateZ(0)"
+  }
+}));
+//region: Render Methods
+const UIGridList = props => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      {/**   one spot:  tileData={this.state.tileData} */}
+      <GridList className={classes.gridList} cols={2.5}>
+        {props.tileData.map(tile => (
+          <GridListTile key={tile.img}>
+            <img src={tile.img} alt={tile.title} />
+            <GridListTileBar
+              title={tile.title}
+              classes={{
+                root: classes.titleBar,
+                title: classes.title
+              }}
+              actionIcon={
+                <IconButton aria-label={`star ${tile.title}`}>
+                  <StarBorderIcon className={classes.title} />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+        {/**  */}
+      </GridList>
+    </div>
+  );
+};
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+    scp = this;
     this.state = {
       scene: {},
       sceneIsSet: false,
+      engine: null,
+      camera: null,
+      images: [],
       adderSceneWrapper: {},
       selected_mesh_id: "",
       meta_data: {},
@@ -45,13 +102,41 @@ class Main extends React.Component {
       rightMeshId: null,
       trunkMeshId: null,
       sign1MeshId: null,
-      sign2MeshId: null
+      sign2MeshId: null,
+      userSession: {
+        userInfo: [],
+        userModel: {
+          user_id: "",
+          username: ""
+        },
+        designs: [],
+        designActions: [],
+        designModel: {
+          designName: "",
+          adTypeFilepath: "",
+          environment: "",
+          environment_type: "",
+          environmentFilepath: "",
+          meshes: [],
+          screenShots: [],
+          ui_selections: {},
+          ui_status: {},
+          action: ""
+        }
+      },
+      tileData: []
     };
+    /* NEED IN STATE :
+     var engine = this.state.Ad_Scene.engine;
+    var camera = this.state.Ad_Scene.camera;
+    */
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
     //this.setScene = props.setScene;
     console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
     scope = this;
+    this.screenshotButtonPress = this.screenshotButtonPress.bind(this);
+    this.actionSave = this.actionSave.bind(this);
   }
 
   getAdderSceneWrapper() {
@@ -70,6 +155,32 @@ class Main extends React.Component {
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
   }
+  actionSave() {
+    //The purpose to save a history of
+
+    var design_obj = this.state.userSession.designModel;
+    //const obj = {'design': design_obj};
+    const newDesignsArray = this.state.userSession.designs.slice();
+    newDesignsArray.push(design_obj); // Push the object
+    this.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designs: newDesignsArray
+        }
+      }),
+      () => {
+        //note: saves the entire 'userSession'
+        let oldDesigns = JSON.parse(localStorage.getItem("designsArray")) || [];
+        let newDesign = this.state.userSession.designModel;
+        //push to local storage:
+        oldDesigns.push(newDesign);
+        localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+      }
+    );
+  }
+
   sidebarButtonClick(e) {
     //Usage: Sidebar-Selection
     //e.target.name should be the mesh_id that was selected in the sidebar.
@@ -213,11 +324,106 @@ class Main extends React.Component {
        */
       // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
       // - ROADBLOCKED !
-      // - start on the billboard sidebar
+      // - start on the billboard sidebar done(ish)
+      // - screenshots and overlay buttons
     }
   }
   callback_withModelInfo(info = null) {
     console.log("callback_withModelInfo:", info);
+  }
+
+  screenshotButtonPress(evt) {
+    var engine = this.state.engine; //was embedded under Ad_Scene in version 1
+    var camera = this.state.camera;
+    var stateScope = this.state;
+    let that = this;
+
+    function addScreenshot(src) {
+      var image_uid = "img_" + Date.now();
+
+      var image_model = {
+        image_id: image_uid,
+        image_name: "",
+        image_data: src,
+        image_url: "",
+        image_filename: "",
+        image_usage: "screenshot"
+      };
+      //TODO : check out state.images in version 1
+      const newArray = that.state.images.slice();
+      newArray.push(image_model);
+      that.setState(
+        prevState => ({
+          ...prevState,
+          images: newArray
+        }),
+        () => {
+          const obj = { image_id: image_uid, src: "" };
+          const newArray = that.state.userSession.designModel.screenShots.slice(); // Create a copy
+          newArray.push(obj);
+
+          that.setState(
+            prevState => ({
+              ...prevState,
+              userSession: {
+                ...prevState.userSession,
+                designModel: {
+                  ...prevState.userSession.designModel,
+                  screenShots: newArray
+                }
+              }
+            }),
+            () => {
+              //SAVE CHANGE ACTION
+              that.actionSave();
+            }
+          );
+
+          // we need to get the current array of tileData
+          // push to copy of it
+          // and redefine it
+          that.setState(prevState => ({
+            ...prevState,
+            tileData: {
+              ...prevState.tileData
+            }
+          }));
+          /////////////////////////
+          var tileDataObject = {
+            id: image_uid,
+            key: image_uid,
+            img: src,
+            title: image_uid,
+
+            cols: 2
+          };
+
+          const newTileDataArray = that.state.tileData.slice();
+          newTileDataArray.push(tileDataObject);
+          that.setState(
+            prevState => ({
+              ...prevState,
+              tileData: newTileDataArray
+            }),
+            () => {}
+          );
+
+          ///////////////////////////
+        }
+      );
+    }
+
+    BABYLON.Tools.CreateScreenshot(
+      engine,
+      camera,
+      { width: 274, height: 222 },
+      function(data) {
+        var img = document.createElement("img");
+        img.src = data;
+
+        addScreenshot(img.src);
+      }
+    );
   }
   componentDidMount() {
     let scope = this;
@@ -226,8 +432,9 @@ class Main extends React.Component {
       preserveDrawingBuffer: true,
       stencil: true
     });
+    this.setState({ engine: engine });
 
-    let createScene = function() {
+    let createScene = function(scp) {
       let scene = new BABYLON.Scene(engine);
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
@@ -255,6 +462,8 @@ class Main extends React.Component {
         cameraOptions
       );
       let camera = adderCam_arcRotate.getCamera();
+
+      scp.setState({ camera: camera });
       camera.attachControl(canvas, true); //add camera to the scene/canvas
       //create a light
       //let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
@@ -275,7 +484,7 @@ class Main extends React.Component {
       return scene;
     };
 
-    let scene = createScene();
+    let scene = createScene(scope);
     // this.props.setScene(scene);
     let adderSceneWrapper = new AdderSceneWrapper(scene);
     adderSceneWrapper.getUUID();
@@ -352,6 +561,35 @@ class Main extends React.Component {
                 className="adder-3dTool-canvas"
                 style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
               />
+              <div className="gui-overlay">
+                <button
+                  title="Screen Shot"
+                  buttonText="Save Image"
+                  onClick={this.screenshotButtonPress}
+                  iconName="camera_alt"
+                  classNames="icon_btn "
+                >
+                  sshot
+                </button>
+                {/**
+                <UIButton title="Crop Image"
+                          buttonText="Crop Image"
+                          onClick={this.iconCrop}
+                          iconName="crop"
+                          classNames="icon_btn dev_warning"/>
+                <UIButton title="XXXX"
+                          buttonText="XXXX"
+                          
+                          onClick={this.iconFormatColorFill}
+                          iconName="format_color_fill"
+                          classNames="icon_btn dev_warning"/>
+                <UIButton title="XXXX"
+                          buttonText="XXXX"
+                          onClick={this.iconTextFields}
+                          iconName="text_fields"
+                          classNames="icon_btn dev_warning"/>
+                */}
+              </div>
             </div>
           </Grid>
           <Grid item xs={4}>
@@ -466,6 +704,12 @@ class Main extends React.Component {
                 </div>
               </Grid>
             )}
+          </Grid>
+          <Grid item xs={9} id={"iconRow1screenshots_row"}>
+            <Grid item xs={12}>
+              {/**tileData={this.state.tileData} */}
+              <UIGridList tileData={this.state.tileData} />
+            </Grid>
           </Grid>
         </Grid>
 
