@@ -1,5 +1,8 @@
 import React from "react";
 import BABYLON from "babylonjs";
+import SidebarSelectorBillboards from "./subcomponents/_sidebarSelectorBillboards";
+import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
+
 // import * as GUI from "babylonjs-gui";
 import Grid from "@material-ui/core/Grid"; //
 //models
@@ -138,6 +141,11 @@ class Main extends React.Component {
     //e.target.name should be the mesh_id that was selected in the sidebar.
     scope.windowCallbackPickable(e.target.name);
   }
+  sidebarButtonClickAlt(args) {
+    console.log("sidebarButtonClickAlt(args):", args);
+    scope.windowCallbackPickable(args.name);
+  }
+
   imageEditorCallback = dataURL => {
     console.log(
       "Main:imageEditorCallback():editing_mesh_id:",
@@ -626,108 +634,25 @@ class Main extends React.Component {
             ></Designer>
             {/** DEV NOTE: I tried moving these sidebars into sub components but something went terribly wrong and I had to revert...saved the code in my _research folder. */}
             {this.state.selected_ad_type == "0" && (
-              <Grid
-                item
-                xs={12}
-                style={{
-                  backgroundImage: "url(" + GrayCar + ")",
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                  height: "300px",
-                  backgroundPosition: "center"
+              <SidebarSelectorVehicles
+                data={{
+                  hoodMeshId: this.state.hoodMeshId,
+                  leftMeshId: this.state.leftMeshId,
+                  rightMeshId: this.state.rightMeshId,
+                  roofMeshId: this.state.roofMeshId,
+                  trunkMeshId: this.state.trunkMeshId
                 }}
-              >
-                <div
-                  className="relativeContainer car"
-                  id="ButtonContainer"
-                  style={{ height: "300px", position: "relative" }}
-                >
-                  <p>Select a Component to Edit</p>
-
-                  {/**onClick={props.clickHood} */}
-                  <button
-                    className="buttonSidebar buttonHood"
-                    id="buttonHood"
-                    name={this.state.hoodMeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    HOOD
-                  </button>
-                  <button
-                    className="buttonSidebar buttonLeft"
-                    id="buttonLeft"
-                    name={this.state.leftMeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    LEFT
-                  </button>
-                  <button
-                    className="buttonSidebar buttonRoof"
-                    id="buttonRoof"
-                    name={this.state.roofMeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    ROOF
-                  </button>
-                  <button
-                    className="buttonSidebar buttonRight"
-                    id="buttonRight"
-                    name={this.state.rightMeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    RIGHT
-                  </button>
-                  <button
-                    className="buttonSidebar buttonTrunk"
-                    id="buttonTrunk"
-                    name={this.state.trunkMeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    TRUNK
-                  </button>
-                </div>
-              </Grid>
+                callback={this.sidebarButtonClickAlt}
+              ></SidebarSelectorVehicles>
             )}
             {this.state.selected_ad_type == "1" && (
-              <Grid
-                item
-                xs={12}
-                style={{
-                  backgroundImage: "url(" + Billboard + ")",
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                  height: "300px",
-                  backgroundPosition: "center"
+              <SidebarSelectorBillboards
+                data={{
+                  sign1MeshId: this.state.sign1MeshId,
+                  sign2MeshId: this.state.sign2MeshId
                 }}
-              >
-                <div
-                  className="relativeContainer car"
-                  id="ButtonContainer"
-                  style={{ height: "300px" }}
-                >
-                  <p>Select a Component to Edit</p>
-
-                  {/**onClick={props.clickHood} */}
-
-                  <button
-                    className="buttonSidebar buttonLeft"
-                    id="buttonLeft"
-                    name={this.state.sign1MeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    One
-                  </button>
-
-                  <button
-                    className="buttonSidebar buttonRight"
-                    id="buttonRight"
-                    name={this.state.sign2MeshId}
-                    onClick={this.sidebarButtonClick}
-                  >
-                    Two
-                  </button>
-                </div>
-              </Grid>
+                callback={this.sidebarButtonClickAlt}
+              ></SidebarSelectorBillboards>
             )}
           </Grid>
           {/** .UI- Block of Icon Actions Under the 3D Canvas */}
@@ -828,3 +753,4 @@ class Main extends React.Component {
 }
 
 export default Main;
+//  data={{ sign1MeshId: `${this.state.sign1MeshId}` }}
