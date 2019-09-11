@@ -70,10 +70,25 @@ class Main extends React.Component {
   }
   buttonClick(e) {
     console.log(e.target.id);
-    if (e.target.id === "buttonLeft") {
-      console.log("hit");
-      //what is the current model and mesh in adderSceneWrapper?
-      console.log(e.target);
+
+    switch (e.target.id) {
+      case "buttonLeft":
+        console.log(e.target);
+        break;
+      case "buttonRight":
+        console.log(e.target);
+        break;
+      case "buttonHood":
+        console.log(e.target);
+        break;
+      case "buttonRoof":
+        console.log(e.target);
+        break;
+      case "buttonTrunk":
+        console.log(e.target);
+        break;
+      default:
+        break;
     }
   }
   sceneCanvasCallback = dataURL => {
@@ -113,14 +128,10 @@ class Main extends React.Component {
       console.log("NOT AN ADDER ASSET yet....");
     } else {
       let assetData = adderAsset.getBehavior();
-      console.log("assetData:");
-      console.log(assetData);
       //strategy:SELECT:parameters:pickableMeshes
       let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
-      console.log(pickableMeshes);
 
-      //"vehicle_2door_sportscar_leftside_medium","vehicle_2door_sportscar_rightside_medium"
-      //TODO: if I can split the items the 3rd element can determine which mesh belongs to which sidebar button.
+      //USAGE: Sidebar-Selection
       var selectableMeshes = [];
       var hoodMeshId = null,
         leftMeshId = null,
@@ -130,27 +141,33 @@ class Main extends React.Component {
       for (var i in pickableMeshes) {
         let pickableMesh = pickableMeshes[i];
         let splitData = pickableMesh.split("_");
-        if (splitData[3] == "leftside") {
-          leftMeshId = pickableMesh;
-        }
-        if (splitData[3] == "rightside") {
-          rightMeshId = pickableMesh;
+        switch (splitData[3]) {
+          case "leftside":
+            leftMeshId = pickableMesh;
+            break;
+          case "rightside":
+            rightMeshId = pickableMesh;
+            break;
+          case "hood":
+            hoodMeshId = pickableMesh;
+            break;
+          case "roof":
+            roofMeshId = pickableMesh;
+            break;
+          case "trunk":
+            trunkMeshId = pickableMesh;
+            break;
+          default:
+            break;
         }
       }
-      console.log("Some Success if leftMeshId has a value:", leftMeshId);
-      scope.setState(
-        {
-          hoodMeshId: hoodMeshId,
-          leftMeshId: leftMeshId,
-          roofMeshId: roofMeshId,
-          rightMeshId: rightMeshId,
-          trunkMeshId: trunkMeshId
-        },
-        () => {
-          console.log("and success ---->");
-          console.log(scope.state.leftMeshId);
-        }
-      );
+      scope.setState({
+        hoodMeshId: hoodMeshId,
+        leftMeshId: leftMeshId,
+        roofMeshId: roofMeshId,
+        rightMeshId: rightMeshId,
+        trunkMeshId: trunkMeshId
+      });
       // once that is determined and saved in state, then the sidebar buttons can have a value that referes to it in state.
       // thus we'll have a dynamic way of setting the values in the sidebar buttons,
       // and after all of this, the point is to use the 'mesh_id' to select the mesh programatically rather than by direct click on mesh.
@@ -261,7 +278,7 @@ class Main extends React.Component {
     //THEN : I could apply these mesh id's to the value for the sidebar buttons
     return (
       <div>
-        <div>NewMain.jsx</div>
+        <div>Main.jsx</div>
 
         <Grid
           container
@@ -326,6 +343,7 @@ class Main extends React.Component {
                   <button
                     className="buttonSidebar buttonHood"
                     id="buttonHood"
+                    name={this.state.hoodMeshId}
                     onClick={this.buttonClick}
                   >
                     HOOD
@@ -333,7 +351,6 @@ class Main extends React.Component {
                   <button
                     className="buttonSidebar buttonLeft"
                     id="buttonLeft"
-                    value=""
                     name={this.state.leftMeshId}
                     onClick={this.buttonClick}
                   >
@@ -342,6 +359,7 @@ class Main extends React.Component {
                   <button
                     className="buttonSidebar buttonRoof"
                     id="buttonRoof"
+                    name={this.state.roofMeshId}
                     onClick={this.buttonClick}
                   >
                     ROOF
@@ -349,7 +367,7 @@ class Main extends React.Component {
                   <button
                     className="buttonSidebar buttonRight"
                     id="buttonRight"
-                    value=""
+                    name={this.state.rightMeshId}
                     onClick={this.buttonClick}
                   >
                     RIGHT
@@ -357,7 +375,7 @@ class Main extends React.Component {
                   <button
                     className="buttonSidebar buttonTrunk"
                     id="buttonTrunk"
-                    value=""
+                    name={this.state.trunkMeshId}
                     onClick={this.buttonClick}
                   >
                     TRUNK
