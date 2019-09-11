@@ -2,6 +2,8 @@ import React from "react";
 import BABYLON from "babylonjs";
 import SidebarSelectorBillboards from "./subcomponents/_sidebarSelectorBillboards";
 import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
+import IconControlGroup from "./subcomponents/_iconControlGroup";
+import OverlayControls from "./subcomponents/_overlayControls";
 
 // import * as GUI from "babylonjs-gui";
 import Grid from "@material-ui/core/Grid"; //
@@ -93,7 +95,12 @@ class Main extends React.Component {
     this.actionSave = this.actionSave.bind(this);
     scope = this;
   }
-
+  subCallback(args) {
+    console.log("subCallback with args:", args);
+  }
+  iconSave(args) {
+    console.log("subCallback with args:", args);
+  }
   getAdderSceneWrapper() {
     return this.state.adderSceneWrapper;
   }
@@ -592,6 +599,7 @@ class Main extends React.Component {
                 className="adder-3dTool-canvas"
                 style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
               />
+              {/** SUBCOMPONENTIZE : the canvas overlay buttons ie. camera icon for snap shots  _overlayControls.jsx*/}
               <div className="gui-overlay">
                 <UIButton
                   title="Screen Shot"
@@ -622,6 +630,7 @@ class Main extends React.Component {
                           classNames="icon_btn dev_warning"/>
                 */}
               </div>
+              {/** end subcompoentize */}
             </div>
           </Grid>
           <Grid item xs={4}>
@@ -661,10 +670,10 @@ class Main extends React.Component {
             id={"iconParentContainer"}
             style={{
               marginTop: "25px",
-              marginBottom: "5px",
-              border: "dotted green 1px "
+              marginBottom: "5px"
             }}
           >
+            {/** SUBCOMPONENTIZE : 6 icon buttons under the canvas:  _iconControlGroup.jsx */}
             <Grid item xs={3} id={"iconRow1"} style={{ padding: "15px" }}>
               <Grid container>
                 <Grid item xs={4}>
@@ -726,6 +735,8 @@ class Main extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
+            {/** end subcomponentize  */}
+
             <Grid item xs={9} id={"iconRow1screenshots_row"}>
               <Grid item xs={12} style={{ padding: "15px" }}>
                 {/**tileData={this.state.tileData} */}
@@ -747,6 +758,16 @@ class Main extends React.Component {
             </div>
           )}
         </div>
+        <IconControlGroup
+          callback={this.subCallback}
+          callbackSave={this.iconSave}
+          data={{ key: "value" }}
+        ></IconControlGroup>
+        {/**  */}
+        <OverlayControls
+          callback={this.subCallback}
+          data={{ key: "value" }}
+        ></OverlayControls>
       </div>
     );
   }
