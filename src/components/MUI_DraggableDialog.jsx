@@ -27,7 +27,7 @@ export default function DraggableDialog(props) {
   console.log("props on Draggable Dialog ...", props);
   //should have 'editing_mesh_id' now as well...should get passed along to the editor or at least used to bind the results together.
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,12 +45,19 @@ export default function DraggableDialog(props) {
 
   const handleImageEditorResults = dataURL => {
     //Usage: Editing-Mesh
+
     props.imageEditorCallback(dataURL);
+    setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onLoad={handleClickOpen}
+        onClick={handleClickOpen}
+      >
         Open Image Editor
       </Button>
       <Dialog

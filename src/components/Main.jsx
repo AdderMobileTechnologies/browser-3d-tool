@@ -17,6 +17,7 @@ import AdderImageEditor from "./AdderImageEditor";
 import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
+import UIButton from "./subcomponents/elements/UIButton";
 //////////////////////////////////////////
 
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
@@ -66,11 +67,12 @@ class Main extends React.Component {
         designs: [],
         designActions: [],
         designModel: {
-          designName: "",
+          designName: "InDevelopmentAddFieldForDesignName",
           adTypeFilepath: "",
           environment: "",
           environment_type: "",
-          environmentFilepath: "",
+          environmentFilepath:
+            "InDevelopmentAddDataForEnvironmemntNameOrREmove....",
           meshes: [],
           screenShots: [],
           ui_selections: {},
@@ -80,17 +82,13 @@ class Main extends React.Component {
       },
       tileData: []
     };
-    /* NEED IN STATE :
-     var engine = this.state.Ad_Scene.engine;
-    var camera = this.state.Ad_Scene.camera;
-    */
+
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
-    //this.setScene = props.setScene;
-    console.log("SCENE CANVAS props.adderSceneWrapper?:", props);
-    scope = this;
+
     this.screenshotButtonPress = this.screenshotButtonPress.bind(this);
     this.actionSave = this.actionSave.bind(this);
+    scope = this;
   }
 
   getAdderSceneWrapper() {
@@ -303,7 +301,7 @@ class Main extends React.Component {
         image_filename: "",
         image_usage: "screenshot"
       };
-      //TODO : check out state.images in version 1
+
       const newArray = that.state.images.slice();
       newArray.push(image_model);
       that.setState(
@@ -333,16 +331,14 @@ class Main extends React.Component {
             }
           );
 
-          // we need to get the current array of tileData
-          // push to copy of it
-          // and redefine it
+          // we need to get the current array of tileData  push to copy of it   and redefine it
           that.setState(prevState => ({
             ...prevState,
             tileData: {
               ...prevState.tileData
             }
           }));
-          /////////////////////////
+
           var tileDataObject = {
             id: image_uid,
             key: image_uid,
@@ -361,8 +357,6 @@ class Main extends React.Component {
             }),
             () => {}
           );
-
-          ///////////////////////////
         }
       );
     }
@@ -378,7 +372,8 @@ class Main extends React.Component {
         addScreenshot(img.src);
       }
     );
-  }
+  } //
+
   componentDidMount() {
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
@@ -476,6 +471,80 @@ class Main extends React.Component {
         scope.windowCallbackPickable(pickResult.pickedMesh.name);
       }
     });
+  } //
+
+  iconSave() {
+    //CHECK ONE: there is a 'design name' chosen...
+    if (
+      scope.state.userSession.designModel.designName !== "" &&
+      scope.state.userSession.designModel.designName !== "undefined"
+    ) {
+      // alert('DESIGN: check that all data is collected that is needed...see
+
+      //CHECK FOR:
+      /**
+       * - need a name
+       * - need a mesh with some changed of texture applied to it.
+       * -
+       *
+       */
+      if (
+        scope.state.userSession.designModel.environmentFilepath === "" ||
+        scope.state.userSession.designModel.environmentFilepath === "undefined"
+      ) {
+        var envData = "fooEnvironmentDatabar"; //scope.getFilenameAndTypeOfCurrentEnvironment();
+
+        alert("DESIGN: NEED DEFAULT ENVIRONMENT INFO !");
+      }
+      alert("mesh not yet saved to state.userSession......");
+      /*
+      if (scope.state.userSession.designModel.meshes.length <= 0) {
+        alert(
+          "DESIGN: NO MESH CHANGES HAVE BEEN MADE...no significant design changes.!"
+        );
+      }
+      */
+
+      var design_obj = scope.state.userSession.designModel;
+      design_obj.action = "final_save";
+
+      //const obj = {'design': design_obj};
+      const newDesignsArray = scope.state.userSession.designs.slice();
+      newDesignsArray.push(design_obj); // Push the object
+
+      //break into two separate functions:
+
+      scope.setState(
+        prevState => ({
+          ...prevState,
+          userSession: {
+            ...prevState.userSession,
+            designs: newDesignsArray,
+            savedDesigns: newDesignsArray
+          }
+        }),
+        () => {
+          //note: saves the entire 'userSession'
+          let oldDesigns =
+            JSON.parse(localStorage.getItem("designsArray")) || [];
+          let oldSavedDesigns =
+            JSON.parse(localStorage.getItem("savedDesignsArray")) || [];
+          let newDesign = scope.state.userSession.designModel;
+          newDesign.image = scope.state.images;
+          //loop through OR  push to local storage:
+          oldDesigns.push(newDesign);
+          oldSavedDesigns.push(newDesign);
+          localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+          localStorage.setItem(
+            "savedDesignsArray",
+            JSON.stringify(oldSavedDesigns)
+          );
+        }
+      );
+      /* */
+    } else {
+      alert("DESIGN: Your design needs a name before it can be saved.");
+    }
   }
 
   render() {
@@ -516,21 +585,22 @@ class Main extends React.Component {
                 style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
               />
               <div className="gui-overlay">
-                <button
+                <UIButton
                   title="Screen Shot"
                   buttonText="Save Image"
                   onClick={this.screenshotButtonPress}
                   iconName="camera_alt"
                   classNames="icon_btn "
-                >
-                  sshot
-                </button>
+                ></UIButton>
                 {/**
-                <UIButton title="Crop Image"
-                          buttonText="Crop Image"
-                          onClick={this.iconCrop}
-                          iconName="crop"
-                          classNames="icon_btn dev_warning"/>
+                <UIButton
+                  title="Crop Image"
+                  buttonText="Crop Image"
+                  onClick={this.iconCrop}
+                  iconName="crop"
+                  classNames="icon_btn dev_warning"
+                />
+               
                 <UIButton title="XXXX"
                           buttonText="XXXX"
                           
@@ -569,7 +639,7 @@ class Main extends React.Component {
                 <div
                   className="relativeContainer car"
                   id="ButtonContainer"
-                  style={{ height: "300px" }}
+                  style={{ height: "300px", position: "relative" }}
                 >
                   <p>Select a Component to Edit</p>
 
@@ -659,10 +729,82 @@ class Main extends React.Component {
               </Grid>
             )}
           </Grid>
-          <Grid item xs={9} id={"iconRow1screenshots_row"}>
-            <Grid item xs={12}>
-              {/**tileData={this.state.tileData} */}
-              <UIGridList tileData={this.state.tileData} />
+          {/** .UI- Block of Icon Actions Under the 3D Canvas */}
+          <Grid
+            container
+            id={"iconParentContainer"}
+            style={{
+              marginTop: "25px",
+              marginBottom: "5px",
+              border: "dotted green 1px "
+            }}
+          >
+            <Grid item xs={3} id={"iconRow1"} style={{ padding: "15px" }}>
+              <Grid container>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconSave}
+                    iconName="save"
+                    // classNames="icon_btn "
+                    style={{ backgroundColor: "#afafaf" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconDelete}
+                    iconName="delete"
+                    classNames="icon_btn "
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconRedo}
+                    iconName="redo"
+                    classNames="icon_btn "
+                  />
+                </Grid>
+              </Grid>
+              <Grid container style={{ marginTop: "15px" }}>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconSave_Alt}
+                    iconName="download"
+                    classNames="icon_btn "
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconShare}
+                    iconName="share"
+                    classNames="icon_btn "
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <UIButton
+                    title=""
+                    buttonText=""
+                    onClick={this.iconUndo}
+                    iconName="undo"
+                    classNames="icon_btn "
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={9} id={"iconRow1screenshots_row"}>
+              <Grid item xs={12} style={{ padding: "15px" }}>
+                {/**tileData={this.state.tileData} */}
+                <UIGridList tileData={this.state.tileData} />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

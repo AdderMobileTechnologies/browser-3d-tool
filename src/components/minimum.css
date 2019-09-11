@@ -24,6 +24,14 @@
     width: auto;
 }
 
+.tui-image-editor-header-logo {
+    display: none;
+}
+
+.tui-image-editor-download-btn {
+    display: none;
+}
+
 /* ORIGINAL MIN CSS BELOW HERE */
 
 /*
