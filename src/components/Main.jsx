@@ -20,11 +20,11 @@ import AdderAsset from "../models/adderAsset";
 //////////////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
-import BillBoard from "../assets/Adder_3D_Tool2/billboardTopView.png";
 
 import "./minimum.css";
 import "./Main.css";
 import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
+import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
 var scope;
 
 class Main extends React.Component {
@@ -43,7 +43,9 @@ class Main extends React.Component {
       leftMeshId: null,
       roofMeshId: null,
       rightMeshId: null,
-      trunkMeshId: null
+      trunkMeshId: null,
+      sign1MeshId: null,
+      sign2MeshId: null
     };
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
@@ -130,27 +132,60 @@ class Main extends React.Component {
         roofMeshId = null,
         rightMeshId = null,
         trunkMeshId = null;
+
+      var sign1MeshId = null,
+        sign2MeshId = null;
       for (var i in pickableMeshes) {
         let pickableMesh = pickableMeshes[i];
         let splitData = pickableMesh.split("_");
-        switch (splitData[3]) {
-          case "leftside":
-            leftMeshId = pickableMesh;
-            break;
-          case "rightside":
-            rightMeshId = pickableMesh;
-            break;
-          case "hood":
-            hoodMeshId = pickableMesh;
-            break;
-          case "roof":
-            roofMeshId = pickableMesh;
-            break;
-          case "trunk":
-            trunkMeshId = pickableMesh;
-            break;
-          default:
-            break;
+        console.log("splitData:", splitData);
+        console.log("think interms of future for other ad types....");
+        // ["billboard", "2sides", "angled", "sign", "1"]
+        // vs
+        //["vehicle", "2door", "sportscar", "leftside", "medium"]
+        if (splitData[0] === "vehicle") {
+          switch (splitData[3]) {
+            case "leftside":
+              leftMeshId = pickableMesh;
+              break;
+            case "rightside":
+              rightMeshId = pickableMesh;
+              break;
+            case "hood":
+              hoodMeshId = pickableMesh;
+              break;
+            case "roof":
+              roofMeshId = pickableMesh;
+              break;
+            case "trunk":
+              trunkMeshId = pickableMesh;
+              break;
+
+            default:
+              break;
+          }
+        }
+        if (splitData[0] === "billboard") {
+          if (splitData[1] === "2sides") {
+            if (splitData[2] === "angled") {
+              if (splitData[3] === "sign") {
+                switch (splitData[4]) {
+                  case "1":
+                    console.log("billbaord sign 1");
+                    sign1MeshId = pickableMesh;
+                    console.log(sign1MeshId);
+                    break;
+                  case "2":
+                    console.log("billboard sign 2");
+                    sign2MeshId = pickableMesh;
+                    console.log(sign2MeshId);
+                    break;
+                  default:
+                    break;
+                }
+              }
+            }
+          }
         }
       }
       scope.setState({
@@ -158,7 +193,9 @@ class Main extends React.Component {
         leftMeshId: leftMeshId,
         roofMeshId: roofMeshId,
         rightMeshId: rightMeshId,
-        trunkMeshId: trunkMeshId
+        trunkMeshId: trunkMeshId,
+        sign1MeshId: sign1MeshId,
+        sign2MeshId: sign2MeshId
       });
       // once that is determined and saved in state, then the sidebar buttons can have a value that referes to it in state.
       // thus we'll have a dynamic way of setting the values in the sidebar buttons,
@@ -175,6 +212,8 @@ class Main extends React.Component {
 
        */
       // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
+      // - ROADBLOCKED !
+      // - start on the billboard sidebar
     }
   }
   callback_withModelInfo(info = null) {
@@ -387,7 +426,45 @@ class Main extends React.Component {
               </Grid>
             )}
             {this.state.selected_ad_type == "1" && (
-              <div>same for billboards</div>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  backgroundImage: "url(" + Billboard + ")",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  height: "300px",
+                  backgroundPosition: "center"
+                }}
+              >
+                <div
+                  className="relativeContainer car"
+                  id="ButtonContainer"
+                  style={{ height: "300px" }}
+                >
+                  <p>Select a Component to Edit</p>
+
+                  {/**onClick={props.clickHood} */}
+
+                  <button
+                    className="buttonSidebar buttonLeft"
+                    id="buttonLeft"
+                    name={this.state.sign1MeshId}
+                    onClick={this.sidebarButtonClick}
+                  >
+                    One
+                  </button>
+
+                  <button
+                    className="buttonSidebar buttonRight"
+                    id="buttonRight"
+                    name={this.state.sign2MeshId}
+                    onClick={this.sidebarButtonClick}
+                  >
+                    Two
+                  </button>
+                </div>
+              </Grid>
             )}
           </Grid>
         </Grid>
