@@ -44,11 +44,8 @@ export default function DraggableDialog(props) {
   };
 
   const handleImageEditorResults = dataURL => {
-    console.log(
-      "MUI_DraggableDialog:handleImageEditorResults:dataURL:",
-      dataURL
-    );
-    props.sceneCanvasCallback(dataURL);
+    //Usage: Editing-Mesh
+    props.imageEditorCallback(dataURL);
   };
 
   return (
@@ -73,9 +70,6 @@ export default function DraggableDialog(props) {
               height={800}
               width={1000}
               mesh_id={props.mesh_id}
-              /*  onApplyCallback={DataURL => {
-                props.sceneCanvasCallback(DataURL);
-              }}*/
               onApplyCallback={handleImageEditorResults}
             />
           </DialogContentText>

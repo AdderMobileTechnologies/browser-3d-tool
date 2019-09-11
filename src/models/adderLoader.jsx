@@ -76,6 +76,7 @@ class AdderLoader {
 
         for (var index in behavior) {
           let currentStrategy = behavior[index]["strategy"];
+          //Usage: Set-Selectable-Meshes
           if (currentStrategy == "select") {
             var selectParams = behavior[index]["parameters"];
             for (var meshIndex in selectParams["pickableMeshes"]) {
@@ -84,6 +85,19 @@ class AdderLoader {
               if (currentPickableMeshName === mesh.id) {
                 //console.log("MATCH!");
                 mesh.isPickable = true; // ONLY set meshes from the models meta data for behavior strategy select and pickableMeshes
+              }
+            }
+          }
+          //Usage: Set-Hidden-Meshes
+          if (currentStrategy == "hidden") {
+            var hiddenParams = behavior[index]["parameters"];
+            for (var meshIndex in hiddenParams["hiddenMeshes"]) {
+              var currentHiddenMeshName =
+                hiddenParams["hiddenMeshes"][meshIndex];
+              if (currentHiddenMeshName === mesh.id) {
+                console.log("hidden MATCH!");
+                console.log(mesh.id);
+                mesh.isVisible = false; // NOT isHidden
               }
             }
           }

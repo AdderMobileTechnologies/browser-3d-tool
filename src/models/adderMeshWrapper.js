@@ -129,16 +129,23 @@ class AdderMeshWrapper {
     let _imgFileName = imgFileName;
     let _dataURL = dataURL;
     let _scene = scene;
-    var mesh = this.getMesh(); //was let
+    let mesh = this.getMesh(); //was let
     console.log("mesh:::", mesh);
     console.log("AdderMeshWrapper: mesh.id:", mesh.id);
     /////////////////-----------------------------------------------------------
 
-    var tex = Texture.LoadFromDataString(_imgFileName, _dataURL, _scene);
+    let tex = Texture.LoadFromDataString(_imgFileName, _dataURL, _scene);
+    console.log("The Texture tex:", tex);
     console.log("MESH WRAPPER UUID: ", this.getUUID());
-    var mat = new StandardMaterial("mat", _scene);
+    let mat = new StandardMaterial("mat", _scene);
+    console.log("mat object:mat:", mat);
     mat.diffuseTexture = tex;
     mesh.material = mat;
+    console.log("THE MESH:mesh:", mesh);
+    //_scene.render();
+    // 100%: At this point the mesh has the material with the diffuse texture and a _buffer of the exact image to be applied.
+    // the mesh is named correctly in the babylon file, and in the meta data.
+    // mesh texture not refreshing
 
     ///////////////////----------------------------------------------------
     /////////////////////////////////////////////////

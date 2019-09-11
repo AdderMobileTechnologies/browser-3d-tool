@@ -57,7 +57,9 @@
                                      "parameters": {
                                          "hiddenMeshes":[
                                              "vehicle_2door_sportscar_leftside_large",
-                                             "vehicle_2door_sportscar_leftside_small"]
+                                             "vehicle_2door_sportscar_leftside_small",
+                                              "vehicle_2door_sportscar_rightside_large",
+                                             "vehicle_2door_sportscar_rightside_small"]
                                        
                                     }
                                 }

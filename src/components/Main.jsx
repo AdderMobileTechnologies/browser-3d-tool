@@ -68,30 +68,16 @@ class Main extends React.Component {
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
   }
-  buttonClick(e) {
-    console.log(e.target.id);
-
-    switch (e.target.id) {
-      case "buttonLeft":
-        console.log(e.target);
-        break;
-      case "buttonRight":
-        console.log(e.target);
-        break;
-      case "buttonHood":
-        console.log(e.target);
-        break;
-      case "buttonRoof":
-        console.log(e.target);
-        break;
-      case "buttonTrunk":
-        console.log(e.target);
-        break;
-      default:
-        break;
-    }
+  sidebarButtonClick(e) {
+    //Usage: Sidebar-Selection
+    //e.target.name should be the mesh_id that was selected in the sidebar.
+    scope.windowCallbackPickable(e.target.name);
   }
-  sceneCanvasCallback = dataURL => {
+  imageEditorCallback = dataURL => {
+    console.log(
+      "Main:imageEditorCallback():editing_mesh_id:",
+      this.state.editing_mesh_id
+    );
     this.state.adderSceneWrapper.applyTextureToMesh(
       this.state.editing_mesh_id,
       dataURL
@@ -108,10 +94,16 @@ class Main extends React.Component {
   };
 
   windowCallbackPickable(mesh_id) {
-    this.setState({
-      startEditing: true,
-      editing_mesh_id: mesh_id
-    });
+    // Usage: Editing-Mesh
+    this.setState(
+      {
+        startEditing: true,
+        editing_mesh_id: mesh_id
+      },
+      () => {
+        console.log("editing mesh id:", mesh_id);
+      }
+    );
   }
   // To hide or show the appropriate sidebar image and controls
   callback_designer(args = null, adderAsset = null) {
@@ -172,6 +164,17 @@ class Main extends React.Component {
       // thus we'll have a dynamic way of setting the values in the sidebar buttons,
       // and after all of this, the point is to use the 'mesh_id' to select the mesh programatically rather than by direct click on mesh.
       // then finally we should be able to call this... scope.windowCallbackPickable(pickResult.pickedMesh.name); with the "mesh name" instead of the pickResult.data object.
+      // TODO: Image not applied to rightside mesh yet! Why(?) mesh naming correct ? hidden meshes ?
+      // - checked Blender file *
+      // - check babylon file in server. id and name : vehicle_2door_sportscar_rightside_medium in metadata: vehicle_2door_sportscar_rightside_medium SAME!
+      // - is set to selectable in meta data, other rightside meshes are hidden, - mesh id matches on selection -
+      /**
+       * AdderSceneWrapper:this.applyTextureToMesh:  
+         adderMeshWrapper.js:124 
+         AdderMeshWrapper:applyTextureFromDataURL() line 125
+
+       */
+      // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
     }
   }
   callback_withModelInfo(info = null) {
@@ -344,7 +347,7 @@ class Main extends React.Component {
                     className="buttonSidebar buttonHood"
                     id="buttonHood"
                     name={this.state.hoodMeshId}
-                    onClick={this.buttonClick}
+                    onClick={this.sidebarButtonClick}
                   >
                     HOOD
                   </button>
@@ -352,7 +355,7 @@ class Main extends React.Component {
                     className="buttonSidebar buttonLeft"
                     id="buttonLeft"
                     name={this.state.leftMeshId}
-                    onClick={this.buttonClick}
+                    onClick={this.sidebarButtonClick}
                   >
                     LEFT
                   </button>
@@ -360,7 +363,7 @@ class Main extends React.Component {
                     className="buttonSidebar buttonRoof"
                     id="buttonRoof"
                     name={this.state.roofMeshId}
-                    onClick={this.buttonClick}
+                    onClick={this.sidebarButtonClick}
                   >
                     ROOF
                   </button>
@@ -368,7 +371,7 @@ class Main extends React.Component {
                     className="buttonSidebar buttonRight"
                     id="buttonRight"
                     name={this.state.rightMeshId}
-                    onClick={this.buttonClick}
+                    onClick={this.sidebarButtonClick}
                   >
                     RIGHT
                   </button>
@@ -376,7 +379,7 @@ class Main extends React.Component {
                     className="buttonSidebar buttonTrunk"
                     id="buttonTrunk"
                     name={this.state.trunkMeshId}
-                    onClick={this.buttonClick}
+                    onClick={this.sidebarButtonClick}
                   >
                     TRUNK
                   </button>
@@ -388,16 +391,13 @@ class Main extends React.Component {
             )}
           </Grid>
         </Grid>
-        {/* .UI- Mesh Selectors*/}
-        {/* props.adType === 'vehicle'  && */}
 
-        {/* */}
         <div>
           {this.state.startEditing && (
             <div>
               <Grid>
                 <DraggableDialog
-                  sceneCanvasCallback={this.sceneCanvasCallback}
+                  imageEditorCallback={this.imageEditorCallback}
                   mesh_id={this.state.editing_mesh_id}
                 ></DraggableDialog>
               </Grid>
