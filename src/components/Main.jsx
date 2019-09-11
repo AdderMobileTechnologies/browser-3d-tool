@@ -624,6 +624,7 @@ class Main extends React.Component {
               callback={this.callback_designer}
               callback_withModelInfo={this.callback_withModelInfo}
             ></Designer>
+            {/** DEV NOTE: I tried moving these sidebars into sub components but something went terribly wrong and I had to revert...saved the code in my _research folder. */}
             {this.state.selected_ad_type == "0" && (
               <Grid
                 item
