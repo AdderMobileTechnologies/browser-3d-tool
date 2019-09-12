@@ -98,9 +98,7 @@ class Main extends React.Component {
   subCallback(args) {
     console.log("subCallback with args:", args);
   }
-  iconSave(args) {
-    console.log("subCallback with args:", args);
-  }
+
   getAdderSceneWrapper() {
     return this.state.adderSceneWrapper;
   }
@@ -149,7 +147,29 @@ class Main extends React.Component {
     scope.windowCallbackPickable(e.target.name);
   }
   sidebarButtonClickAlt(args) {
-    console.log("sidebarButtonClickAlt(args):", args);
+    console.log("Main:sidebarButtonClickAlt(args):", args);
+    //Purpose: save new mesh to array of meshes in state
+    const obj = { mesh_name: args.name };
+    const newArray = scp.state.userSession.designModel.meshes.slice(); // Create a copy
+    newArray.push(obj);
+
+    scp.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designModel: {
+            ...prevState.userSession.designModel,
+            meshes: newArray
+          }
+        }
+      }),
+      () => {
+        //SAVE CHANGE ACTION
+        // this.actionSave();
+      }
+    );
+
     scope.windowCallbackPickable(args.name);
   }
 
@@ -488,78 +508,54 @@ class Main extends React.Component {
     });
   } //
 
-  iconSave() {
-    //CHECK ONE: there is a 'design name' chosen...
-    if (
-      scope.state.userSession.designModel.designName !== "" &&
-      scope.state.userSession.designModel.designName !== "undefined"
-    ) {
-      // alert('DESIGN: check that all data is collected that is needed...see
+  iconDelete() {
+    console.log("iconDelete");
+  }
 
-      //CHECK FOR:
-      /**
-       * - need a name
-       * - need a mesh with some changed of texture applied to it.
-       * -
-       *
-       */
-      if (
-        scope.state.userSession.designModel.environmentFilepath === "" ||
-        scope.state.userSession.designModel.environmentFilepath === "undefined"
-      ) {
-        var envData = "fooEnvironmentDatabar"; //scope.getFilenameAndTypeOfCurrentEnvironment();
+  iconRedo() {
+    console.log("iconRedo");
+  }
+  iconSave_Alt() {
+    console.log("iconSave_Alt");
+  }
+  iconUndo() {
+    console.log("iconUndo");
+  }
+  iconRedo() {
+    console.log("iconRedo");
+  }
+  iconShare() {
+    console.log("iconShare");
+  }
 
-        alert("DESIGN: NEED DEFAULT ENVIRONMENT INFO !");
-      }
-      alert("mesh not yet saved to state.userSession......");
-      /*
-      if (scope.state.userSession.designModel.meshes.length <= 0) {
-        alert(
-          "DESIGN: NO MESH CHANGES HAVE BEEN MADE...no significant design changes.!"
+  iconSave_v2(newDesignsArray) {
+    console.log("iconSave_v2 with newDesignsArray:", newDesignsArray);
+    scope.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designs: newDesignsArray,
+          savedDesigns: newDesignsArray
+        }
+      }),
+      () => {
+        //note: saves the entire 'userSession'
+        let oldDesigns = JSON.parse(localStorage.getItem("designsArray")) || [];
+        let oldSavedDesigns =
+          JSON.parse(localStorage.getItem("savedDesignsArray")) || [];
+        let newDesign = scope.state.userSession.designModel;
+        newDesign.image = scope.state.images;
+        //loop through OR  push to local storage:
+        oldDesigns.push(newDesign);
+        oldSavedDesigns.push(newDesign);
+        localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+        localStorage.setItem(
+          "savedDesignsArray",
+          JSON.stringify(oldSavedDesigns)
         );
       }
-      */
-
-      var design_obj = scope.state.userSession.designModel;
-      design_obj.action = "final_save";
-
-      //const obj = {'design': design_obj};
-      const newDesignsArray = scope.state.userSession.designs.slice();
-      newDesignsArray.push(design_obj); // Push the object
-
-      //break into two separate functions:
-
-      scope.setState(
-        prevState => ({
-          ...prevState,
-          userSession: {
-            ...prevState.userSession,
-            designs: newDesignsArray,
-            savedDesigns: newDesignsArray
-          }
-        }),
-        () => {
-          //note: saves the entire 'userSession'
-          let oldDesigns =
-            JSON.parse(localStorage.getItem("designsArray")) || [];
-          let oldSavedDesigns =
-            JSON.parse(localStorage.getItem("savedDesignsArray")) || [];
-          let newDesign = scope.state.userSession.designModel;
-          newDesign.image = scope.state.images;
-          //loop through OR  push to local storage:
-          oldDesigns.push(newDesign);
-          oldSavedDesigns.push(newDesign);
-          localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
-          localStorage.setItem(
-            "savedDesignsArray",
-            JSON.stringify(oldSavedDesigns)
-          );
-        }
-      );
-      /* */
-    } else {
-      alert("DESIGN: Your design needs a name before it can be saved.");
-    }
+    );
   }
 
   render() {
@@ -599,38 +595,12 @@ class Main extends React.Component {
                 className="adder-3dTool-canvas"
                 style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
               />
-              {/** SUBCOMPONENTIZE : the canvas overlay buttons ie. camera icon for snap shots  _overlayControls.jsx*/}
-              <div className="gui-overlay">
-                <UIButton
-                  title="Screen Shot"
-                  buttonText="Save Image"
-                  onClick={this.screenshotButtonPress}
-                  iconName="camera_alt"
-                  classNames="icon_btn "
-                ></UIButton>
-                {/**
-                <UIButton
-                  title="Crop Image"
-                  buttonText="Crop Image"
-                  onClick={this.iconCrop}
-                  iconName="crop"
-                  classNames="icon_btn dev_warning"
-                />
-               
-                <UIButton title="XXXX"
-                          buttonText="XXXX"
-                          
-                          onClick={this.iconFormatColorFill}
-                          iconName="format_color_fill"
-                          classNames="icon_btn dev_warning"/>
-                <UIButton title="XXXX"
-                          buttonText="XXXX"
-                          onClick={this.iconTextFields}
-                          iconName="text_fields"
-                          classNames="icon_btn dev_warning"/>
-                */}
-              </div>
-              {/** end subcompoentize */}
+
+              <OverlayControls
+                callback={this.subCallback}
+                callback_ScreenShotButtonPress={this.screenshotButtonPress}
+                data={{ key: "value" }}
+              ></OverlayControls>
             </div>
           </Grid>
           <Grid item xs={4}>
@@ -673,69 +643,24 @@ class Main extends React.Component {
               marginBottom: "5px"
             }}
           >
-            {/** SUBCOMPONENTIZE : 6 icon buttons under the canvas:  _iconControlGroup.jsx */}
-            <Grid item xs={3} id={"iconRow1"} style={{ padding: "15px" }}>
-              <Grid container>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconSave}
-                    iconName="save"
-                    // classNames="icon_btn "
-                    style={{ backgroundColor: "#afafaf" }}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconDelete}
-                    iconName="delete"
-                    classNames="icon_btn "
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconRedo}
-                    iconName="redo"
-                    classNames="icon_btn "
-                  />
-                </Grid>
-              </Grid>
-              <Grid container style={{ marginTop: "15px" }}>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconSave_Alt}
-                    iconName="download"
-                    classNames="icon_btn "
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconShare}
-                    iconName="share"
-                    classNames="icon_btn "
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <UIButton
-                    title=""
-                    buttonText=""
-                    onClick={this.iconUndo}
-                    iconName="undo"
-                    classNames="icon_btn "
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-            {/** end subcomponentize  */}
+            <IconControlGroup
+              //  MESHES NEED TO BE ADDED TO STATE before Saving can happen.: if (_designModel.meshes.length <= 0) {
+              //(?) where: designer detail callback? no.
+              // sidebar selector..?
+              //Main:sidebarButtonClickAlt(args): args.name to state.meshes
+
+              callback_Save={this.iconSave}
+              callback_Save_v2={this.iconSave_v2}
+              callback_Delete={this.iconDelete}
+              callback_Redo={this.iconRedo}
+              callback_Save_Alt={this.iconSave_Alt}
+              callback_Share={this.iconShare}
+              callback_Undo={this.iconUndo}
+              data={{
+                designModel: scope.state.userSession.designModel,
+                designs: scope.state.userSession.designs
+              }}
+            ></IconControlGroup>
 
             <Grid item xs={9} id={"iconRow1screenshots_row"}>
               <Grid item xs={12} style={{ padding: "15px" }}>
@@ -758,16 +683,8 @@ class Main extends React.Component {
             </div>
           )}
         </div>
-        <IconControlGroup
-          callback={this.subCallback}
-          callbackSave={this.iconSave}
-          data={{ key: "value" }}
-        ></IconControlGroup>
-        {/**  */}
-        <OverlayControls
-          callback={this.subCallback}
-          data={{ key: "value" }}
-        ></OverlayControls>
+
+        {/** */}
       </div>
     );
   }
