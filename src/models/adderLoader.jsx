@@ -71,16 +71,16 @@ class AdderLoader {
       result.meshes.forEach(function(mesh) {
         //get Behaviors via models meta data.
         mesh.parent = adderModel.getParentMesh();
-        var behavior = adderModel.getBehavior();
+        let behavior = adderModel.getBehavior();
         mesh.isPickable = false; // set all meshes to Not Clickable by default
 
-        for (var index in behavior) {
+        for (let index in behavior) {
           let currentStrategy = behavior[index]["strategy"];
           //Usage: Set-Selectable-Meshes
           if (currentStrategy == "select") {
-            var selectParams = behavior[index]["parameters"];
-            for (var meshIndex in selectParams["pickableMeshes"]) {
-              var currentPickableMeshName =
+            let selectParams = behavior[index]["parameters"];
+            for (let meshIndex in selectParams["pickableMeshes"]) {
+              let currentPickableMeshName =
                 selectParams["pickableMeshes"][meshIndex];
               if (currentPickableMeshName === mesh.id) {
                 //console.log("MATCH!");
@@ -90,9 +90,9 @@ class AdderLoader {
           }
           //Usage: Set-Hidden-Meshes
           if (currentStrategy == "hidden") {
-            var hiddenParams = behavior[index]["parameters"];
-            for (var meshIndex in hiddenParams["hiddenMeshes"]) {
-              var currentHiddenMeshName =
+            let hiddenParams = behavior[index]["parameters"];
+            for (let meshIndex in hiddenParams["hiddenMeshes"]) {
+              let currentHiddenMeshName =
                 hiddenParams["hiddenMeshes"][meshIndex];
               if (currentHiddenMeshName === mesh.id) {
                 console.log("hidden MATCH!");
@@ -123,7 +123,7 @@ class AdderLoader {
         rotation.axis.y,
         rotation.axis.z
       );
-      var rotationAngle = parseFloat(rotation.angle);
+      let rotationAngle = parseFloat(rotation.angle);
       let scaling = adderAsset.getScaling();
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
       let behavior = adderAsset.getBehavior();
@@ -162,7 +162,7 @@ class AdderLoader {
       let adderModelRotationAngle = adderModel.getRotationAngle();
       let adderModelRotationRadian = adderModel.getRotationRadian();
       let adderModelRotationAxis = adderModel.getRotationAxis();
-      var quaternion = new BABYLON.Quaternion.RotationAxis(
+      let quaternion = new BABYLON.Quaternion.RotationAxis(
         adderModelRotationAxis,
         adderModelRotationRadian
       );

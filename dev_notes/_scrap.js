@@ -3,10 +3,13 @@ scope.setState(
     ...prevState,
     userSession: {
       ...prevState.userSession,
-      designs: newDesignsArray,
-      savedDesigns: newDesignsArray
+      designModel: {
+          ...prevState.userSession.designModel ,
+          designName:
+      }
     }
   }),
   () => {}
 );
+
 //state.userSession.designModel.designName

@@ -15,7 +15,7 @@ export default function IconControlGroup(props) {
     //Check for Required fields:
     if (_designName !== "" && _designName !== "undefined") {
       if (_environmentFilepath === "" && _environmentFilepath === "undefined") {
-        var envData =
+        let envData =
           "dev_only_environment_data_see:getfilenameAndTypeOfCurrentEnvironment()";
         console.log(envData);
         alert("DESIGN: NEED DEFAULT ENVIRONMENT INFO !");
@@ -25,7 +25,7 @@ export default function IconControlGroup(props) {
             "DESIGN: NO MESH CHANGES HAVE BEEN MADE...no significant design changes.!"
           );
         }
-        var design_obj = _designModel;
+        let design_obj = _designModel;
         design_obj.action = "final_save";
         //get existing array design models
         const newDesignsArray = _designs.slice();

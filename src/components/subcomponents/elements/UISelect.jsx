@@ -10,7 +10,7 @@ class UISelect extends Component {
     };
   }
   handleChange = e => {
-    var data = {};
+    let data = {};
     data.selectedOption = e.target.value;
     data.id = this.state.id;
     this.callback(data);
@@ -48,7 +48,7 @@ options_model: [
 
 or 
 
-  var  options_model = [
+  let  options_model = [
             { name: 'One', id: 1 },
             { name: 'Two', id: 2 },
             { name: 'Three', id: 3 },

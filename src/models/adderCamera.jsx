@@ -161,7 +161,7 @@ class AdderCamera {
 
   getCamera() {
     let scene = this.getScene();
-    var camera = new ArcRotateCamera(
+    let camera = new ArcRotateCamera(
       this.getName(),
       this.getBeta(),
       this.getAlpha(),
@@ -206,7 +206,7 @@ References:
     ArcRotateCamera:
     https://doc.babylonjs.com/api/classes/babylon.arcrotatecamera
         Actual Example:
-            var camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, Math.PI / 2
+            let camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, Math.PI / 2
                         , 10, BABYLON.Vector3.Zero(), scene);
                         camera.attachControl(canvas, true);
                         camera.lowerRadiusLimit = 6;

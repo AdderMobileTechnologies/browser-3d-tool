@@ -165,7 +165,7 @@ class AdderModel {
           `AddeModel:setParentMeshRotation() expected both a Vector3 for axis and a number for rotation. `
         );
       }
-      var quaternion = new BABYLON.Quaternion.RotationAxis(axis, angle);
+      let quaternion = new BABYLON.Quaternion.RotationAxis(axis, angle);
       _parentMesh.rotationQuaternion = quaternion;
     };
 
