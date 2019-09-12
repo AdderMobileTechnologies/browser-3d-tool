@@ -36,8 +36,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import * as K from "../constants"; // Required for GridList ( screenshots)
 import UITextInput from "./subcomponents/elements/UITextInput";
-var scope;
-var scp;
+let scope;
+let scp;
 const UIGridList = K.UIGridList;
 //region: Render Methods
 
@@ -146,7 +146,7 @@ class Main extends React.Component {
   actionSave() {
     //The purpose to save a history of
 
-    var design_obj = this.state.userSession.designModel;
+    let design_obj = this.state.userSession.designModel;
     //const obj = {'design': design_obj};
     const newDesignsArray = this.state.userSession.designs.slice();
     newDesignsArray.push(design_obj); // Push the object
@@ -247,16 +247,16 @@ class Main extends React.Component {
       let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
 
       //USAGE: Sidebar-Selection
-      var selectableMeshes = [];
-      var hoodMeshId = null,
+      let selectableMeshes = [];
+      let hoodMeshId = null,
         leftMeshId = null,
         roofMeshId = null,
         rightMeshId = null,
         trunkMeshId = null;
 
-      var sign1MeshId = null,
+      let sign1MeshId = null,
         sign2MeshId = null;
-      for (var i in pickableMeshes) {
+      for (let i in pickableMeshes) {
         let pickableMesh = pickableMeshes[i];
         let splitData = pickableMesh.split("_");
         console.log("splitData:", splitData);
@@ -338,26 +338,22 @@ class Main extends React.Component {
       // - screenshots and overlay buttons
     }
   }
-  callback_withModelInfo(info = null) {
-    console.log("callback_withModelInfo:", info);
-    console.log(
-      "info is hopefully the adder asset , if so then get the filepath and save it to state as the modelName...so it can be used to remove appropriate model."
-    );
-    console.log(info.filepath);
+  callback_withModelInfo(info) {
+    //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
     scope.setState({ modelName: info.filepath });
   }
 
   screenshotButtonPress(evt) {
     console.log("wth....evt:", evt);
-    var engine = this.state.engine; //was embedded under Ad_Scene in version 1
-    var camera = this.state.camera;
-    var stateScope = this.state;
+    let engine = this.state.engine; //was embedded under Ad_Scene in version 1
+    let camera = this.state.camera;
+    let stateScope = this.state;
     let that = this;
 
     function addScreenshot(src) {
-      var image_uid = "img_" + Date.now();
+      let image_uid = "img_" + Date.now();
 
-      var image_model = {
+      let image_model = {
         image_id: image_uid,
         image_name: "",
         image_data: src,
@@ -403,7 +399,7 @@ class Main extends React.Component {
             }
           }));
 
-          var tileDataObject = {
+          let tileDataObject = {
             id: image_uid,
             key: image_uid,
             img: src,
@@ -430,7 +426,7 @@ class Main extends React.Component {
       camera,
       { width: 274, height: 222 },
       function(data) {
-        var img = document.createElement("img");
+        let img = document.createElement("img");
         img.src = data;
 
         addScreenshot(img.src);
@@ -480,8 +476,8 @@ class Main extends React.Component {
       camera.attachControl(canvas, true); //add camera to the scene/canvas
       //create a light
       //let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-      //var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 2, 5), scene);
-      //var light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 10, -10), new BABYLON.Vector3(4, -1, 5), Math.PI/2, 2, scene);
+      //let light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 2, 5), scene);
+      //let light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 10, -10), new BABYLON.Vector3(4, -1, 5), Math.PI/2, 2, scene);
       //light.intensity = 2;
       let light_main = new BABYLON.HemisphericLight(
         "light",
@@ -489,7 +485,7 @@ class Main extends React.Component {
         scene
       );
       light_main.intensity = 0.8;
-      var light_point = new BABYLON.PointLight(
+      let light_point = new BABYLON.PointLight(
         "pointLight",
         new BABYLON.Vector3(5, 5, -0.1),
         scene
@@ -528,7 +524,7 @@ class Main extends React.Component {
 
     window.addEventListener("click", function() {
       //should only detect meshes where  isPickable = true;
-      var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+      let pickResult = scene.pick(scene.pointerX, scene.pointerY);
       if (pickResult.pickedMesh === null) {
         return false;
       } else {

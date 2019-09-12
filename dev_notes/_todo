@@ -51,3 +51,10 @@ new bugs:
 Save and Delete are basically working.
 
 how to do 'redo' and 'undo' 
+   #1) - if a texture is 'applied to' a mesh then it needs to be 'un-applied'. 
+
+   - if the camera is moved from position A to position B, then it might need to go back to position A.
+   - if the Zoom Level changes, it might need to gpo back .
+
+
+*** go through and make sure 'let' is used instaed of 'var' 
