@@ -42,7 +42,7 @@ class AdderSceneWrapper {
         "ready to append model to the adderSceneWrapper ....adderModel:",
         adderModel
       );
-      var previousModels = this.getModels();
+      let previousModels = this.getModels();
       previousModels.push(adderModel);
       this.setModels(previousModels);
     };
@@ -57,8 +57,8 @@ class AdderSceneWrapper {
       */
       let ModelsArray = this.getModels();
       for (let mIndex in ModelsArray) {
-        var model = ModelsArray[mIndex];
-        var meshWrappers = model.getMeshWrappers();
+        let model = ModelsArray[mIndex];
+        let meshWrappers = model.getMeshWrappers();
         for (let mwIndex in meshWrappers) {
           let meshWrapper = meshWrappers[mwIndex];
           let _mesh = meshWrapper.getMesh();
@@ -89,8 +89,8 @@ class AdderSceneWrapper {
       */
       let ModelsArray = this.getModels();
       for (let mIndex in ModelsArray) {
-        var model = ModelsArray[mIndex];
-        var meshWrappers = model.getMeshWrappers();
+        let model = ModelsArray[mIndex];
+        let meshWrappers = model.getMeshWrappers();
         for (let mwIndex in meshWrappers) {
           let meshWrapper = meshWrappers[mwIndex];
           let _mesh = meshWrapper.getMesh();
@@ -111,8 +111,8 @@ class AdderSceneWrapper {
       let ModelsArray = this.getModels();
 
       for (let mIndex in ModelsArray) {
-        var _model = ModelsArray[mIndex];
-        var _meshWrappers = _model.getMeshWrappers();
+        let _model = ModelsArray[mIndex];
+        let _meshWrappers = _model.getMeshWrappers();
         for (let mwIndex in _meshWrappers) {
           let _meshWrapper = _meshWrappers[mwIndex];
           let _mesh = _meshWrapper.getMesh();
@@ -130,15 +130,15 @@ class AdderSceneWrapper {
   }
   disposeOfMeshesForModel(givenModelName) {
     let models = this.getModels();
-    for (var x in models) {
+    for (let x in models) {
       let modelX = models[x];
       let modelFileName = modelX.getModelFile();
       if (modelFileName === givenModelName) {
         let wrappers = modelX.getMeshWrappers();
-        for (var w in wrappers) {
+        for (let w in wrappers) {
           let wrapperX = wrappers[w];
           let mesh = wrapperX.getMesh();
-          console.log("mesh.id:", mesh.id);
+          // console.log("mesh.id:", mesh.id);
           mesh.dispose();
         }
       }
