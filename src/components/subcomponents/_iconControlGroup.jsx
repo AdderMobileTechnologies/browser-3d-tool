@@ -7,10 +7,12 @@ export default function IconControlGroup(props) {
   console.log("check props data");
 
   const handleSaveClick = e => {
+    //downsize props variables
     let _designName = props.data.designModel.designName;
     let _environmentFilepath = props.data.designModel.environmentFilepath;
     let _designs = props.data.designs;
     let _designModel = props.data.designModel;
+    //Check for Required fields:
     if (_designName !== "" && _designName !== "undefined") {
       if (_environmentFilepath === "" && _environmentFilepath === "undefined") {
         var envData =
@@ -25,8 +27,11 @@ export default function IconControlGroup(props) {
         }
         var design_obj = _designModel;
         design_obj.action = "final_save";
+        //get existing array design models
         const newDesignsArray = _designs.slice();
+        //append a new one to it
         newDesignsArray.push(design_obj);
+        //send new array back to be added to the state
         props.callback_Save_v2(newDesignsArray);
       }
     } else {

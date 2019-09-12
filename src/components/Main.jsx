@@ -23,6 +23,7 @@ import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
 import UIButton from "./subcomponents/elements/UIButton";
+import MUI_AlertDialog from "./subcomponents/MUI_AlertDialog";
 //////////////////////////////////////////
 
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
@@ -34,7 +35,7 @@ import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
 import { makeStyles } from "@material-ui/core/styles";
 
 import * as K from "../constants"; // Required for GridList ( screenshots)
-
+import UITextInput from "./subcomponents/elements/UITextInput";
 var scope;
 var scp;
 const UIGridList = K.UIGridList;
@@ -44,6 +45,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     scp = this;
+
     this.state = {
       scene: {},
       sceneIsSet: false,
@@ -85,7 +87,10 @@ class Main extends React.Component {
           action: ""
         }
       },
-      tileData: []
+      tileData: [],
+      userAction: {
+        deleteSure: false
+      }
     };
 
     this.setUp = this.setUp.bind(this);
@@ -95,6 +100,34 @@ class Main extends React.Component {
     this.actionSave = this.actionSave.bind(this);
     scope = this;
   }
+
+  resetUserSession() {
+    this.setState({
+      userSession: {
+        userInfo: [],
+        userModel: {
+          user_id: "",
+          username: ""
+        },
+        designs: [],
+        designActions: [],
+        designModel: {
+          designName: "InDevelopmentAddFieldForDesignName",
+          adTypeFilepath: "",
+          environment: "",
+          environment_type: "",
+          environmentFilepath:
+            "InDevelopmentAddDataForEnvironmemntNameOrREmove....",
+          meshes: [],
+          screenShots: [],
+          ui_selections: {},
+          ui_status: {},
+          action: ""
+        }
+      }
+    });
+  }
+
   subCallback(args) {
     console.log("subCallback with args:", args);
   }
@@ -104,13 +137,8 @@ class Main extends React.Component {
   }
 
   setUp() {
-    console.log("this.state.adderSceneWrapper");
-    console.log(this.state.adderSceneWrapper);
-
     let adderMeta = new AdderMeta(this.state.adderSceneWrapper);
     adderMeta.getEnvironment();
-
-    // let scene = this.state.adderSceneWrapper.getScene();
     let scene = this.state.scene;
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
@@ -141,11 +169,6 @@ class Main extends React.Component {
     );
   }
 
-  sidebarButtonClick(e) {
-    //Usage: Sidebar-Selection
-    //e.target.name should be the mesh_id that was selected in the sidebar.
-    scope.windowCallbackPickable(e.target.name);
-  }
   sidebarButtonClickAlt(args) {
     console.log("Main:sidebarButtonClickAlt(args):", args);
     //Purpose: save new mesh to array of meshes in state
@@ -317,9 +340,15 @@ class Main extends React.Component {
   }
   callback_withModelInfo(info = null) {
     console.log("callback_withModelInfo:", info);
+    console.log(
+      "info is hopefully the adder asset , if so then get the filepath and save it to state as the modelName...so it can be used to remove appropriate model."
+    );
+    console.log(info.filepath);
+    scope.setState({ modelName: info.filepath });
   }
 
   screenshotButtonPress(evt) {
+    console.log("wth....evt:", evt);
     var engine = this.state.engine; //was embedded under Ad_Scene in version 1
     var camera = this.state.camera;
     var stateScope = this.state;
@@ -507,9 +536,96 @@ class Main extends React.Component {
       }
     });
   } //
-
+  callback_UITextInput(args) {
+    scope.setState(prevState => ({
+      ...prevState,
+      userSession: {
+        ...prevState.userSession,
+        designModel: {
+          ...prevState.userSession.designModel,
+          designName: args.value
+        }
+      }
+    }));
+  }
   iconDelete() {
     console.log("iconDelete");
+    //TODO:
+    /**
+     *  - are you sure? MUI_ALertDialog
+     */
+    let buttonAreYouSureDelete = window.document.querySelector(
+      "#deleteAreYouSure button"
+    );
+    buttonAreYouSureDelete.click();
+  }
+
+  resetForDelete() {
+    //1
+    scp.setState({ tileData: [] }); //success
+    //2
+    localStorage.removeItem("designsArray");
+    //3
+    //dispose of meshes
+    //also consider saving the users 'models' in state when they are loaded so upon delete they can be referenced easily
+    // let givenModelName =
+    // "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon";
+    let stateModelName = scp.state.modelName;
+    console.log("scp at delete:", scp);
+    //scp.disposeOfMeshesByModelFilename(givenModelName);
+    let asw = scp.state.adderSceneWrapper;
+    asw.disposeOfMeshesForModel(stateModelName);
+    //4 remove UI settings ie. design name and design selections.
+    //selected_ad_type: -1,
+    scp.setState({ selected_ad_type: -1 });
+    //5 design name
+    scp.resetUserSession();
+  }
+  callback_DeleteYes() {
+    console.log("YES DELETE IT.");
+    //this.state.userAction.deleteSure = true
+    scp.setState(
+      prevState => ({
+        ...prevState,
+        userAction: {
+          ...prevState.userAction,
+          deleteSure: true
+        }
+      }),
+      () => {
+        //SAVE CHANGE ACTION
+        // this.actionSave();
+        //TODO: laundry list of todos for deleting a design.
+        /*
+        - clear scene of any models / meshes (where should this happen? in the AdderSceneWrapper? )
+        - #clear the gridlist of screenshots 
+        - clear all the UI selections that have been set.
+        - reset state (?)
+        - #reset local_storage (?) 
+        */
+        /// NEED TO HAVE THE MODEL NAME SAVED IN STATE SOMEWHERE....or an array of model names if both car and billboard?
+
+        scp.resetForDelete();
+      }
+    );
+  }
+  callback_DeleteNo() {
+    console.log("NO DELETION.");
+    //this.state.userAction.deleteSure = false
+    //this.state.userAction.deleteSure = true
+    scp.setState(
+      prevState => ({
+        ...prevState,
+        userAction: {
+          ...prevState.userAction,
+          deleteSure: false
+        }
+      }),
+      () => {
+        //SAVE CHANGE ACTION
+        // this.actionSave();
+      }
+    );
   }
 
   iconRedo() {
@@ -604,6 +720,12 @@ class Main extends React.Component {
             </div>
           </Grid>
           <Grid item xs={4}>
+            <UITextInput
+              id="designName"
+              label="Design Name"
+              callback={this.callback_UITextInput}
+              placeholder="Enter a Design Name"
+            />
             <Designer
               scene={this.state.scene}
               getAdderSceneWrapper={this.getAdderSceneWrapper}
@@ -683,6 +805,11 @@ class Main extends React.Component {
             </div>
           )}
         </div>
+
+        <MUI_AlertDialog
+          callback_Yes={this.callback_DeleteYes}
+          callback_No={this.callback_DeleteNo}
+        ></MUI_AlertDialog>
 
         {/** */}
       </div>

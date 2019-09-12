@@ -128,5 +128,21 @@ class AdderSceneWrapper {
       }
     };
   }
+  disposeOfMeshesForModel(givenModelName) {
+    let models = this.getModels();
+    for (var x in models) {
+      let modelX = models[x];
+      let modelFileName = modelX.getModelFile();
+      if (modelFileName === givenModelName) {
+        let wrappers = modelX.getMeshWrappers();
+        for (var w in wrappers) {
+          let wrapperX = wrappers[w];
+          let mesh = wrapperX.getMesh();
+          console.log("mesh.id:", mesh.id);
+          mesh.dispose();
+        }
+      }
+    }
+  }
 }
 export default AdderSceneWrapper;

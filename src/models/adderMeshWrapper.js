@@ -122,8 +122,8 @@ class AdderMeshWrapper {
     }
 
     console.log("AdderMeshWrapper:applyTextureFromDataURL()");
-    console.log("parameters: imgFileName:", imgFileName);
-    console.log("dataURL :", dataURL);
+    console.log("parameters: imgFileName:", imgFileName); //unique name with timestamp
+    console.log("dataURL :", dataURL); // correct image sent
     console.log("scene:", scene);
 
     let _imgFileName = imgFileName;
@@ -133,6 +133,9 @@ class AdderMeshWrapper {
     console.log("mesh:::", mesh);
     console.log("AdderMeshWrapper: mesh.id:", mesh.id);
     /////////////////-----------------------------------------------------------
+    // DEV NOTE: Trying to figure out why the texture is NOT getting applied to the 'rightside' of the porsche.
+    // This is where the trail ends,
+    // logging out the 'texture' and the 'material' as well as the final 'mesh' itself.
 
     let tex = Texture.LoadFromDataString(_imgFileName, _dataURL, _scene);
     console.log("The Texture tex:", tex);
@@ -143,6 +146,7 @@ class AdderMeshWrapper {
     mesh.material = mat;
     console.log("THE MESH:mesh:", mesh);
     //_scene.render();
+    // Asking Brandon to look at it.
     // 100%: At this point the mesh has the material with the diffuse texture and a _buffer of the exact image to be applied.
     // the mesh is named correctly in the babylon file, and in the meta data.
     // mesh texture not refreshing

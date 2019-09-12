@@ -20,7 +20,21 @@ var scope;
 class Designer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.getInitialState();
+    scope = this;
+    // this.setScene = props.setScene;
+    /* this.getAdderSceneWrapper = () => {
+      return this.state.adderSceneWrapper;
+    };
+    */
+    this.getAdderSceneWrapper = props.getAdderSceneWrapper;
+
+    console.log("props:", props);
+    this.detail_callback = this.detail_callback.bind(this);
+  }
+
+  getInitialState() {
+    return {
       // adderSceneWrapper: props.adderSceneWrapper,
 
       adderSceneWrapper: {},
@@ -32,16 +46,6 @@ class Designer extends React.Component {
       detail_options: [],
       gotDesignMeta: false
     };
-    scope = this;
-    // this.setScene = props.setScene;
-    /* this.getAdderSceneWrapper = () => {
-      return this.state.adderSceneWrapper;
-    };
-    */
-    this.getAdderSceneWrapper = props.getAdderSceneWrapper;
-
-    console.log("props:", props);
-    this.detail_callback = this.detail_callback.bind(this);
   }
 
   resetDesign = () => {
@@ -115,6 +119,8 @@ class Designer extends React.Component {
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
+      //TODO: send assetData.filepath to state AS 'model name'.
+      this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();
       let adderAsset = new AdderAsset(

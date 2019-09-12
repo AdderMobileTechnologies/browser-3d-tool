@@ -1,0 +1,13 @@
+.ui-text-input-group {
+    padding: 5px;
+    margin: 15px;
+}
+
+.ui-text-input-label {
+    float: left;
+    margin-right: 15px;
+}
+
+.ui-text-input {
+    padding-left: 10px;
+}
