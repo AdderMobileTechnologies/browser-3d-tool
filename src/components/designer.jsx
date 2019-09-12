@@ -16,7 +16,7 @@ import Grid from "@material-ui/core/Grid"; //
 import "./minimum.css";
 import "./designer.css";
 
-var scope;
+let scope;
 class Designer extends React.Component {
   constructor(props) {
     super(props);
@@ -64,18 +64,18 @@ class Designer extends React.Component {
     if (data.selectedOption != "-1") {
       this.resetDesign();
 
-      var array = [];
-      var element = {};
+      let array = [];
+      let element = {};
 
       element = { name: `select`, id: -1 };
       array.push(element);
 
-      var adTypeSelectedOption = data.selectedOption;
-      var subTypeData = this.state.designChoiceMeta.children[
+      let adTypeSelectedOption = data.selectedOption;
+      let subTypeData = this.state.designChoiceMeta.children[
         adTypeSelectedOption
       ].children;
       for (let i in subTypeData) {
-        var sub_type = subTypeData[i].sub_type;
+        let sub_type = subTypeData[i].sub_type;
         element = { name: `${sub_type}`, id: i };
         array.push(element);
       }
@@ -89,18 +89,18 @@ class Designer extends React.Component {
   subType_callback = data => {
     console.log("subType_callback data:", data);
     if (data.selectedOption != "-1") {
-      var array = [];
-      var element = {};
+      let array = [];
+      let element = {};
 
       element = { name: `select`, id: -1 };
       array.push(element);
 
-      var subTypeSelectedOption = data.selectedOption;
-      var detailData = this.state.designChoiceMeta.children[
+      let subTypeSelectedOption = data.selectedOption;
+      let detailData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[subTypeSelectedOption].children;
       for (let i in detailData) {
-        var name = detailData[i].name;
+        let name = detailData[i].name;
         element = { name: `${name}`, id: i };
         array.push(element);
       }
@@ -114,8 +114,8 @@ class Designer extends React.Component {
   detail_callback = data => {
     console.log("detail_callback data:", data);
     if (data.selectedOption != "-1") {
-      var assetSelected = data.selectedOption;
-      var assetData = this.state.designChoiceMeta.children[
+      let assetSelected = data.selectedOption;
+      let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
@@ -158,7 +158,7 @@ class Designer extends React.Component {
       adderSceneWrapper: this.getAdderSceneWrapper()
     });
     //perform call to meta server for 'ad type' data.
-    var promise_designChoices = new Promise(function(resolve, reject) {
+    let promise_designChoices = new Promise(function(resolve, reject) {
       const url = `${K.META_URL}/meta/design`;
       axios
         .get(url)
@@ -176,14 +176,14 @@ class Designer extends React.Component {
     });
     function promise_designChoices_callback(value) {
       //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
-      var array = [];
-      var element = {};
+      let array = [];
+      let element = {};
 
       element = { name: `select`, id: -1 };
       array.push(element);
 
       for (let i in value.children) {
-        var ad_type = value.children[i].ad_type;
+        let ad_type = value.children[i].ad_type;
         element = { name: `${ad_type}`, id: i };
         array.push(element);
       }
