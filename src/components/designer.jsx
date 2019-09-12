@@ -20,23 +20,7 @@ let scope;
 class Designer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-    scope = this;
-    // this.setScene = props.setScene;
-    /* this.getAdderSceneWrapper = () => {
-      return this.state.adderSceneWrapper;
-    };
-    */
-    this.getAdderSceneWrapper = props.getAdderSceneWrapper;
-
-    console.log("props:", props);
-    this.detail_callback = this.detail_callback.bind(this);
-  }
-
-  getInitialState() {
-    return {
-      // adderSceneWrapper: props.adderSceneWrapper,
-
+    this.state = {
       adderSceneWrapper: {},
       isOnAdType: false,
       adType_options: [],
@@ -46,10 +30,12 @@ class Designer extends React.Component {
       detail_options: [],
       gotDesignMeta: false
     };
+    scope = this;
+    this.getAdderSceneWrapper = props.getAdderSceneWrapper;
+    this.detail_callback = this.detail_callback.bind(this);
   }
 
   resetDesign = () => {
-    //clear values for levels under 'ad_type'
     this.setState({
       isOnSubType: false,
       subType_options: [],
@@ -118,8 +104,7 @@ class Designer extends React.Component {
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
-
-      //TODO: send assetData.filepath to state AS 'model name'.
+      //send data to parent to name the 'model' after it's filepath property in the assetData.
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();
@@ -134,9 +119,6 @@ class Designer extends React.Component {
         adderSceneWrapper
       );
 
-      // this.state.adderSceneWrapper
-
-      // = = = = = >>>>
       this.loadScene(adderAsset);
       //TODO: declare what was selected.
       this.props.callback(this.state.adTypeSelectedOption, adderAsset);
@@ -145,8 +127,6 @@ class Designer extends React.Component {
   };
 
   loadScene = adderAsset => {
-    // let adderSceneWrapper = new AdderSceneWrapper(this.props.scene);
-    //let adderSceneWrapper = this.state.adderSceneWrapper;
     this.props.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
     adderLoader.addSingleModel(adderAsset);

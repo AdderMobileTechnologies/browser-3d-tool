@@ -144,8 +144,6 @@ class Main extends React.Component {
     adderSkybox.getSkybox();
   }
   actionSave() {
-    //The purpose to save a history of
-
     let design_obj = this.state.userSession.designModel;
     //const obj = {'design': design_obj};
     const newDesignsArray = this.state.userSession.designs.slice();
@@ -209,11 +207,6 @@ class Main extends React.Component {
       startEditing: false,
       last_dataURL: dataURL
     });
-    /*
-    DEV NOTES: 
-      pickResult, prior to handling (? where is this)
-      -->then adderSceneWrapper.applyTextureToMesh()
-    */
   };
 
   windowCallbackPickable(mesh_id) {
@@ -318,14 +311,7 @@ class Main extends React.Component {
         sign1MeshId: sign1MeshId,
         sign2MeshId: sign2MeshId
       });
-      // once that is determined and saved in state, then the sidebar buttons can have a value that referes to it in state.
-      // thus we'll have a dynamic way of setting the values in the sidebar buttons,
-      // and after all of this, the point is to use the 'mesh_id' to select the mesh programatically rather than by direct click on mesh.
-      // then finally we should be able to call this... scope.windowCallbackPickable(pickResult.pickedMesh.name); with the "mesh name" instead of the pickResult.data object.
-      // TODO: Image not applied to rightside mesh yet! Why(?) mesh naming correct ? hidden meshes ?
-      // - checked Blender file *
-      // - check babylon file in server. id and name : vehicle_2door_sportscar_rightside_medium in metadata: vehicle_2door_sportscar_rightside_medium SAME!
-      // - is set to selectable in meta data, other rightside meshes are hidden, - mesh id matches on selection -
+
       /**
        * AdderSceneWrapper:this.applyTextureToMesh:  
          adderMeshWrapper.js:124 
@@ -334,8 +320,6 @@ class Main extends React.Component {
        */
       // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
       // - ROADBLOCKED !
-      // - start on the billboard sidebar done(ish)
-      // - screenshots and overlay buttons
     }
   }
   callback_withModelInfo(info) {
@@ -557,29 +541,23 @@ class Main extends React.Component {
   }
 
   resetForDelete() {
-    //1
-    scp.setState({ tileData: [] }); //success
-    //2
+    //1 clear screenshots
+    scp.setState({ tileData: [] });
+    //2 clear non-saved local storage
     localStorage.removeItem("designsArray");
     //3
     //dispose of meshes
-    //also consider saving the users 'models' in state when they are loaded so upon delete they can be referenced easily
-    // let givenModelName =
-    // "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon";
     let stateModelName = scp.state.modelName;
-    console.log("scp at delete:", scp);
-    //scp.disposeOfMeshesByModelFilename(givenModelName);
     let asw = scp.state.adderSceneWrapper;
     asw.disposeOfMeshesForModel(stateModelName);
     //4 remove UI settings ie. design name and design selections.
-    //selected_ad_type: -1,
     scp.setState({ selected_ad_type: -1 });
     //5 design name
     scp.resetUserSession();
+    //*!* TODO: still need the selects to refresh and the design name to refresh.
   }
+
   callback_DeleteYes() {
-    console.log("YES DELETE IT.");
-    //this.state.userAction.deleteSure = true
     scp.setState(
       prevState => ({
         ...prevState,
@@ -591,24 +569,11 @@ class Main extends React.Component {
       () => {
         //SAVE CHANGE ACTION
         // this.actionSave();
-        //TODO: laundry list of todos for deleting a design.
-        /*
-        - clear scene of any models / meshes (where should this happen? in the AdderSceneWrapper? )
-        - #clear the gridlist of screenshots 
-        - clear all the UI selections that have been set.
-        - reset state (?)
-        - #reset local_storage (?) 
-        */
-        /// NEED TO HAVE THE MODEL NAME SAVED IN STATE SOMEWHERE....or an array of model names if both car and billboard?
-
         scp.resetForDelete();
       }
     );
   }
   callback_DeleteNo() {
-    console.log("NO DELETION.");
-    //this.state.userAction.deleteSure = false
-    //this.state.userAction.deleteSure = true
     scp.setState(
       prevState => ({
         ...prevState,
@@ -641,7 +606,6 @@ class Main extends React.Component {
   }
 
   iconSave_v2(newDesignsArray) {
-    console.log("iconSave_v2 with newDesignsArray:", newDesignsArray);
     scope.setState(
       prevState => ({
         ...prevState,
@@ -671,8 +635,6 @@ class Main extends React.Component {
   }
 
   render() {
-    //TODO: I need a method to periodically calll the adderSceneWrapper and get the currently selectable meshes.
-    //THEN : I could apply these mesh id's to the value for the sidebar buttons
     return (
       <div>
         <div>Main.jsx</div>
@@ -729,7 +691,6 @@ class Main extends React.Component {
               callback={this.callback_designer}
               callback_withModelInfo={this.callback_withModelInfo}
             ></Designer>
-            {/** DEV NOTE: I tried moving these sidebars into sub components but something went terribly wrong and I had to revert...saved the code in my _research folder. */}
             {this.state.selected_ad_type == "0" && (
               <SidebarSelectorVehicles
                 data={{
@@ -752,7 +713,6 @@ class Main extends React.Component {
               ></SidebarSelectorBillboards>
             )}
           </Grid>
-          {/** .UI- Block of Icon Actions Under the 3D Canvas */}
           <Grid
             container
             id={"iconParentContainer"}
@@ -762,11 +722,6 @@ class Main extends React.Component {
             }}
           >
             <IconControlGroup
-              //  MESHES NEED TO BE ADDED TO STATE before Saving can happen.: if (_designModel.meshes.length <= 0) {
-              //(?) where: designer detail callback? no.
-              // sidebar selector..?
-              //Main:sidebarButtonClickAlt(args): args.name to state.meshes
-
               callback_Save={this.iconSave}
               callback_Save_v2={this.iconSave_v2}
               callback_Delete={this.iconDelete}
@@ -782,7 +737,6 @@ class Main extends React.Component {
 
             <Grid item xs={9} id={"iconRow1screenshots_row"}>
               <Grid item xs={12} style={{ padding: "15px" }}>
-                {/**tileData={this.state.tileData} */}
                 <UIGridList tileData={this.state.tileData} />
               </Grid>
             </Grid>
@@ -814,4 +768,3 @@ class Main extends React.Component {
 }
 
 export default Main;
-//  data={{ sign1MeshId: `${this.state.sign1MeshId}` }}

@@ -48,7 +48,11 @@ new bugs:
 
    When trying to clear the slate on the Main file , most is working but the 'textInput' component is keeping its own state element for design name....
    trying to find solution: https://stackoverflow.com/questions/38901106/how-to-make-a-shared-state-between-two-react-components
+   * could just pull the input out of a subcomponent.
 Save and Delete are basically working.
+*** go through and make sure 'let' is used instaed of 'var'  
+
+
 
 how to do 'redo' and 'undo' 
    #1) - if a texture is 'applied to' a mesh then it needs to be 'un-applied'. 
@@ -57,4 +61,5 @@ how to do 'redo' and 'undo'
    - if the Zoom Level changes, it might need to gpo back .
 
 
-*** go through and make sure 'let' is used instaed of 'var' 
+
+

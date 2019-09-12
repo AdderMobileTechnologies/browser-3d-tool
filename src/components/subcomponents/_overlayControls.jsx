@@ -40,13 +40,3 @@ export default function OverlayControls(props) {
     </div>
   );
 }
-/*
- <button
-  id="buttonLeft"
-  name={props.data["key"]}
-  onClick={handleSubcomponentClick}
->
-  Click
-</button>
-
-*/

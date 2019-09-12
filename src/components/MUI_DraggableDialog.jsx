@@ -25,7 +25,6 @@ function PaperComponent(props) {
 
 export default function DraggableDialog(props) {
   console.log("props on Draggable Dialog ...", props);
-  //should have 'editing_mesh_id' now as well...should get passed along to the editor or at least used to bind the results together.
 
   const [open, setOpen] = React.useState(true);
 
@@ -34,7 +33,6 @@ export default function DraggableDialog(props) {
   };
 
   const handleClose = () => {
-    // props.callback();
     setOpen(false);
   };
 

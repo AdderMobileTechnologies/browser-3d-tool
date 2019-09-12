@@ -46,7 +46,6 @@ export default function IconControlGroup(props) {
           <UIButton
             title=""
             buttonText=""
-            //onClick={props.callback_Save}
             onClick={handleSaveClick}
             iconName="save"
             callback_Save_v2={props.iconSave_v2}
@@ -108,12 +107,3 @@ export default function IconControlGroup(props) {
     </Grid>
   );
 }
-/*
- <button
-    id="buttonLeft"
-    name={props.data["key"]}
-    onClick={handleSubcomponentClick}
-  >
-    Click
-  </button>
-  */
