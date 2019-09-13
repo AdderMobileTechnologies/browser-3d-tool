@@ -172,20 +172,81 @@ class Main extends React.Component {
 
           break;
         case "applyTextureToMesh":
-          // console.log(" case : applyTextureToMesh");
-          // console.log("lastAction:", lastAction);
-          // inverse action like imageEditorCallback
           scope.undo_ApplyTextureToMesh(lastAction);
-          //? anything to update in state ?
-          // last_dataURL maybe ?
-
+          break;
+        case "screenshot":
+          scope.undo_screenshot(lastAction);
           break;
         default:
+          console.log("no match for action: ", lastAction.action);
           break;
       }
     }
     //END IF
   }
+  undo_screenshot(args) {
+    console.log("undo_screenshot args:", args);
+    //TODO: get id of the 'from' screenshot, then look up its image data and delete it from state if there
+    // pop it off the actions localStorage...
+    if (
+      args.from != "" &&
+      args.from != "empty dataURL" &&
+      typeof args.from != "undefined"
+    ) {
+      //code here if a screen shot exists  to be undone...
+      console.log("undo the screen shot"); //img id last on the state.. img_1568406045575 is the same as the current image to undo.
+      // so pop last one of state and replace it.
+      // save the popped one in an array for 'redo' of screenshots.....
+      const array_image_models = scope.state.images.slice();
+      console.log("the current state images ", array_image_models);
+      var popped_image_model = array_image_models.pop();
+      //then set back to
+      scope.setState(
+        prevState => ({
+          ...prevState,
+          images: array_image_models
+        }),
+        () => {
+          console.log("confirm that the last one was popped off."); //img_1568406952023 from 6 to 5
+          console.log(scope.state.images); // confirmed
+        }
+      );
+      // THEN pop it off localstorage as well and save it in a redo array for images too ?...
+
+      /////   THIS MIGHT BE REDUNDANT ..... create a single function for removing the last action ?
+      let old_action_arrays =
+        JSON.parse(localStorage.getItem("actions_array")) || [];
+      if (old_action_arrays.length > 0) {
+        // can remove it
+        old_action_arrays.pop();
+        //localStorage.setItem
+        localStorage.setItem(
+          "actions_array",
+          JSON.stringify(old_action_arrays)
+        );
+        // WHILE it was successfully removed from state and localStorage , it STILL exists in the 'tileData'.
+        const currentTileDataArray = scope.state.tileData.slice();
+        currentTileDataArray.pop();
+        scope.setState(
+          prevState => ({
+            ...prevState,
+            tileData: currentTileDataArray
+          }),
+          () => {
+            console.log(
+              "confirm that screen shot was removed from tile data....still may need to save it  for REDO functionality....."
+            );
+          }
+        );
+      } else {
+        // nothing to remove
+        console.log(
+          "no more actions to remove from within the screenshots undo code. "
+        );
+      }
+    }
+  }
+
   undo_ApplyTextureToMesh(args) {
     console.log("  undo_ApplyTextureToMesh(args) args:", args);
     if (
@@ -251,7 +312,7 @@ class Main extends React.Component {
   }
   saveScreenshot() {
     let design_obj = this.state.userSession.designModel;
-    design_obj.action = "saveScreenshot";
+
     //const obj = {'design': design_obj};
     const newDesignsArray = this.state.userSession.designs.slice();
     newDesignsArray.push(design_obj); // Push the object
@@ -270,6 +331,11 @@ class Main extends React.Component {
         //push to local storage:
         oldDesigns.push(newDesign);
         localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+        // save action here as well (?)
+        //probably should just be the sreenshots not the entire state, that should be only on the 'save' disk icon.
+
+        //let newName = scope.state.userSession.designModel.designName;
+        // scope.save_UIAction("id_null", "screenshot", newName, oldName);
       }
     );
   }
@@ -440,9 +506,8 @@ class Main extends React.Component {
     //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
     scope.setState({ modelName: info.filepath });
   }
-
   screenshotButtonPress(evt) {
-    console.log("wth....evt:", evt);
+    console.log("- - - - screenshotButtonPress :evt:", evt);
     let engine = this.state.engine; //was embedded under Ad_Scene in version 1
     let camera = this.state.camera;
     let stateScope = this.state;
@@ -452,25 +517,53 @@ class Main extends React.Component {
       let image_uid = "img_" + Date.now();
 
       let image_model = {
-        image_id: image_uid,
-        image_name: "",
-        image_data: src,
-        image_url: "",
-        image_filename: "",
-        image_usage: "screenshot"
+        id: image_uid,
+        name: "",
+        data: src,
+        url: "",
+        filename: "",
+        usage: "screenshot"
       };
 
-      const newArray = that.state.images.slice();
-      newArray.push(image_model);
+      const array_image_models = that.state.images.slice();
+
+      console.log("array of images from state:");
+      console.log("array_image_models:", array_image_models);
+      //  IF array_image_models.length > 0  DO STUFF    ELSE  do NOT UNDO.
+      console.log("array_image_models length");
+      console.log(array_image_models.length);
+      if (array_image_models.length > 0) {
+        let lastIndex = array_image_models.length - 1;
+        let from_Screenshot = array_image_models[lastIndex];
+
+        console.log("from_Screenshot:", from_Screenshot);
+        scope.save_UIAction(
+          image_model.id,
+          "screenshot",
+          image_model,
+          from_Screenshot.id
+        );
+      } else {
+        scope.save_UIAction(
+          image_model.id,
+          "screenshot",
+          image_model,
+          "empty screenshot"
+        );
+      }
+
+      console.log("image_model:", image_model);
+      array_image_models.push(image_model);
       that.setState(
         prevState => ({
           ...prevState,
-          images: newArray
+          images: array_image_models
         }),
         () => {
           const obj = { image_id: image_uid, src: "" };
-          const newArray = that.state.userSession.designModel.screenShots.slice(); // Create a copy
-          newArray.push(obj);
+          console.log("");
+          const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
+          array_image_models.push(obj);
 
           that.setState(
             prevState => ({
@@ -480,13 +573,13 @@ class Main extends React.Component {
                 designModel: {
                   ...prevState.userSession.designModel,
                   action: "screenshot",
-                  screenShots: newArray
+                  screenShots: array_image_models
                 }
               }
             }),
             () => {
               //SAVE CHANGE ACTION
-              that.saveScreenshot();
+              //======>>>>>> OLD WAY   that.saveScreenshot();
               // that.save_UIAction();
             }
           );
@@ -533,7 +626,6 @@ class Main extends React.Component {
       }
     );
   } //
-
   componentDidMount() {
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");

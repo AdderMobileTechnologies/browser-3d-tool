@@ -17,7 +17,7 @@ class UISelect extends Component {
   };
   render() {
     let optionTemplate = this.props.options.map(v => (
-      <option value={v.id} className="ui-select-option">
+      <option key={v.id} value={v.id} className="ui-select-option">
         {v.name}
       </option>
     ));
