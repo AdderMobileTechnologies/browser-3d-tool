@@ -324,10 +324,6 @@ class Main extends React.Component {
       "Main:imageEditorCallback():editing_mesh_id:",
       this.state.editing_mesh_id
     );
-    //TODO: also need to save this texture image to a new state array of texture_images OR
-    // upon saving the design, the code must go get all data from actions named 'applyTextureToMesh' !!!!!!!!!!!!
-    // working ok but NOT getting into the final save for  'savedDesignsArray'
-    //now it is !
 
     let texture_image_model = {};
     texture_image_model.id = this.state.editing_mesh_id;
@@ -341,9 +337,6 @@ class Main extends React.Component {
       texture_images: array_texture_image_models
     }));
 
-    /*
-     
-  */
     this.state.adderSceneWrapper.applyTextureToMesh(
       this.state.editing_mesh_id,
       dataURL
