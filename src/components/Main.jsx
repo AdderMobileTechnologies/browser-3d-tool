@@ -72,9 +72,8 @@ class Main extends React.Component {
           username: ""
         },
         designs: [],
-        designActions: [],
         designModel: {
-          designName: "InDevelopmentAddFieldForDesignName",
+          designName: "Brand New Design Name",
           adTypeFilepath: "",
           environment: "",
           environment_type: "",
@@ -90,14 +89,19 @@ class Main extends React.Component {
       tileData: [],
       userAction: {
         deleteSure: false
-      }
+      },
+      actions: [],
+      undos: [],
+      redos: []
     };
 
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
 
     this.screenshotButtonPress = this.screenshotButtonPress.bind(this);
-    this.actionSave = this.actionSave.bind(this);
+    this.saveScreenshot = this.saveScreenshot.bind(this);
+    this.save_UIAction = this.save_UIAction.bind(this);
+
     scope = this;
   }
 
@@ -110,7 +114,6 @@ class Main extends React.Component {
           username: ""
         },
         designs: [],
-        designActions: [],
         designModel: {
           designName: "InDevelopmentAddFieldForDesignName",
           adTypeFilepath: "",
@@ -128,6 +131,109 @@ class Main extends React.Component {
     });
   }
 
+  iconUndo() {
+    console.log("iconUndo");
+    //TODO:
+    /*
+- get the last action 
+- based on  what type of action it was perform the inverse action.
+
+
+    */
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    console.log("old_actions:", old_actions);
+
+    //IF old_actions.length > 0
+    if (old_actions.length > 0) {
+      let lastIndex = old_actions.length - 1;
+      let lastAction = null;
+      for (let i in old_actions) {
+        if (i == lastIndex) {
+          console.log("i:", i);
+          console.log("lastIndex:", lastIndex);
+          lastAction = old_actions[i];
+        }
+      }
+      // ? upon undo, the last element has already been removed from local storage and the index is OFF by 1 .
+      // I've been tinkering with the state of the value in the UITextInput class.
+      // REFRESHED CACHE
+      //well, next time around it was changed correctly in state. BUT ! is not reflected in the UITextInput.
+      //also the item has NOT been removed from local storage...
+
+      console.log("lastAction:", lastAction);
+      console.log("lastAction:action", lastAction.action);
+
+      switch (lastAction.action) {
+        case "change_name":
+          //console.log("change the name what for?");
+          // change the value in state.
+          // 2 more things: the input itself needs to get passed a value from state instead of maintaining it's own state.
+          // then need to check that element is removed from arrays where necessary
+
+          // undo_UITextInput(args) to remove element from localstorage and state arrays if necessary.
+          scope.undo_UITextInput(lastAction);
+          scope.setState(prevState => ({
+            ...prevState,
+            userSession: {
+              ...prevState.userSession,
+              designModel: {
+                ...prevState.userSession.designModel,
+                designName: lastAction.from
+              }
+            }
+          }));
+          // remove the element from the array in localstorage and in the state.
+
+          break;
+
+        default:
+          break;
+      }
+    }
+    //END IF
+  }
+  undo_UITextInput(args) {
+    // undo_UITextInput(args) to remove element from localStorage  ...not using state.
+    console.log("  undo_UITextInput(args) ", args);
+    //1) localStorage
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    console.log("old_actions recovered from local Storage:", old_actions);
+    let poppedElement = old_actions.pop();
+    console.log("poppedElement:", poppedElement);
+    console.log("old_actions after:", old_actions);
+    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+    //TODO:
+    //now take the poppedElement.from  value and apply it to state for the model name.
+    console.log("change this to state..", poppedElement.from);
+    scope.setState(prevState => ({
+      ...prevState,
+      userSession: {
+        ...prevState.userSession,
+        designModel: {
+          ...prevState.userSession.designModel,
+          designName: poppedElement.from
+        }
+      }
+    }));
+  }
+  save_UIAction(_action, _to, _from) {
+    // let action_object = this.state.actions;
+    //BYPASS SAVING IN STATE
+    let action_object = {};
+    action_object.action = _action; // "save_UIAction";
+    action_object.to = _to; //"change to";
+    action_object.from = _from; // "change from";
+    console.log("Main:save_UIAction(): action_object:", action_object);
+
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    console.log("old_actions:", old_actions);
+
+    console.log("action_object:", action_object);
+    //push to local storage:
+    old_actions.push(action_object);
+    console.log("old_actions after push:", old_actions);
+    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+  }
   subCallback(args) {
     console.log("subCallback with args:", args);
   }
@@ -143,8 +249,9 @@ class Main extends React.Component {
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
   }
-  actionSave() {
+  saveScreenshot() {
     let design_obj = this.state.userSession.designModel;
+    design_obj.action = "saveScreenshot";
     //const obj = {'design': design_obj};
     const newDesignsArray = this.state.userSession.designs.slice();
     newDesignsArray.push(design_obj); // Push the object
@@ -181,13 +288,14 @@ class Main extends React.Component {
           ...prevState.userSession,
           designModel: {
             ...prevState.userSession.designModel,
-            meshes: newArray
+            meshes: newArray,
+            action: "sidebarButtonClickAlt"
           }
         }
       }),
       () => {
-        //SAVE CHANGE ACTION
-        // this.actionSave();
+        //new_actions_array;
+        // scope.save_UIAction();
       }
     );
 
@@ -365,13 +473,15 @@ class Main extends React.Component {
                 ...prevState.userSession,
                 designModel: {
                   ...prevState.userSession.designModel,
+                  action: "screenshot",
                   screenShots: newArray
                 }
               }
             }),
             () => {
               //SAVE CHANGE ACTION
-              that.actionSave();
+              that.saveScreenshot();
+              // that.save_UIAction();
             }
           );
 
@@ -516,21 +626,38 @@ class Main extends React.Component {
       }
     });
   } //
+
   callback_UITextInput(args) {
-    scope.setState(prevState => ({
-      ...prevState,
-      userSession: {
-        ...prevState.userSession,
-        designModel: {
-          ...prevState.userSession.designModel,
-          designName: args.value
+    let oldName = scope.state.userSession.designModel.designName;
+    scope.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designModel: {
+            ...prevState.userSession.designModel,
+            designName: args.value,
+            action: "design_name"
+          }
         }
+      }),
+      () => {
+        //SAVE CHANGE ACTION
+        console.log(
+          "Main:callback_UITextInput() chaning the design name with scope.save_UIAtion() "
+        );
+
+        let newName = scope.state.userSession.designModel.designName;
+        scope.save_UIAction("change_name", newName, oldName);
       }
-    }));
+    );
+    //save action:
   }
+
   iconDelete() {
     console.log("iconDelete");
     //TODO:
+    // NEED TO DELETE PAST ACTIONS AS WELL ...
     /**
      *  - are you sure? MUI_ALertDialog
      */
@@ -568,7 +695,7 @@ class Main extends React.Component {
       }),
       () => {
         //SAVE CHANGE ACTION
-        // this.actionSave();
+        //  scope.save_UIAction();
         scp.resetForDelete();
       }
     );
@@ -584,20 +711,15 @@ class Main extends React.Component {
       }),
       () => {
         //SAVE CHANGE ACTION
-        // this.actionSave();
+        // scope.save_UIAction();
       }
     );
   }
 
-  iconRedo() {
-    console.log("iconRedo");
-  }
   iconSave_Alt() {
     console.log("iconSave_Alt");
   }
-  iconUndo() {
-    console.log("iconUndo");
-  }
+
   iconRedo() {
     console.log("iconRedo");
   }
@@ -681,6 +803,7 @@ class Main extends React.Component {
             <UITextInput
               id="designName"
               label="Design Name"
+              value={this.state.userSession.designModel.designName}
               callback={this.callback_UITextInput}
               placeholder="Enter a Design Name"
             />

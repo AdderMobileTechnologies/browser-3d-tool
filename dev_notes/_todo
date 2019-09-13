@@ -40,6 +40,7 @@ fixed bugs:
 
 new bugs:
 ! can not get the Design Name to clear when deleting the previous design, HOWEVER, when a new one is saved after the delete it gets the new default name while the old name is still on display.
+# BUG: switching between the vehicles and then changing the leftside texture...NOT tracking mesh id appropriately.
 
 
 9-12-2019 compartmentalizing sections of the UI iconControlGroup and overlayControls   
@@ -47,12 +48,15 @@ new bugs:
    - create functionality for deleteing a design , asking for confirmation, removing screenshots, clearing localStorage, disposing of meshes...
 
    When trying to clear the slate on the Main file , most is working but the 'textInput' component is keeping its own state element for design name....
-   trying to find solution: https://stackoverflow.com/questions/38901106/how-to-make-a-shared-state-between-two-react-components
-   * could just pull the input out of a subcomponent.
-Save and Delete are basically working.
+   Save and Delete are basically working.
 *** go through and make sure 'let' is used instaed of 'var'  
 
 
+   trying to find solution: https://stackoverflow.com/questions/38901106/how-to-make-a-shared-state-between-two-react-components
+   * could just pull the input out of a subcomponent.
+
+
+LEFT OFF HERE : Friday morning look into this.
 
 how to do 'redo' and 'undo' 
    #1) - if a texture is 'applied to' a mesh then it needs to be 'un-applied'. 
@@ -61,5 +65,32 @@ how to do 'redo' and 'undo'
    - if the Zoom Level changes, it might need to gpo back .
 
 
+Brandons Explanation: 
+2 columns  1) undo 2) actions 3) redo(later)
+undo has objects:
+   obj:{
+      action:"",
+      to:"",
+      from:""
+   }
+
+actions: has object 
+   obj:{
+      action:"",
+      to:"",
+   }
+
+Upon an 'Undo' pull off the last item on the undo stack ,
+select appropriate inverse function, 
+then pop it off the undo stack.
+-----------------------------------
+currently: no actions are getting saved until the user hits the 'save' functionality.
+so change the name...for starters.
+Main:callback_UITextInput()
+
+*!*:: notes: one of two things: either at least one snapshot is needed before a save. OR . if no screenshot exists, take it automatically on save.
+quick check to see how actionSave was done in v1
+action defined in iconSave of old version like so...   design_obj.action = "final_save" 
 
 
+_iconControlGroup.handleSaveClick() ..... design_obj.action = "final_save";

@@ -13,6 +13,11 @@ class UITextInput extends Component {
       options: this.props.options
     };
   }
+  componentWillReceiveProps = newProps => {
+    console.log("componentWillReceiveProps(newProps) ", newProps);
+    console.log(newProps.value);
+    this.setState({ value: newProps.value });
+  };
   handleChange = e => {
     console.log("UITextInput:handleChange() e.target:", e.target);
     this.setState({ value: e.target.value });
@@ -31,7 +36,7 @@ class UITextInput extends Component {
         <label className="ui-text-input-label">{this.props.label}</label>
         <input
           className="ui-text-input"
-          value={this.props.value}
+          value={this.state.value}
           onChange={this.handleChange}
           onBlur={this.onBlur}
           placeholder={this.props.placeholder}
