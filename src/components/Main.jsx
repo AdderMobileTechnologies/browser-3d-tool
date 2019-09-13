@@ -52,6 +52,7 @@ class Main extends React.Component {
       engine: null,
       camera: null,
       images: [],
+      texture_images: [],
       adderSceneWrapper: {},
       selected_mesh_id: "",
       meta_data: {},
@@ -133,18 +134,6 @@ class Main extends React.Component {
   }
 
   iconUndo() {
-    console.log("iconUndo");
-    //TODO:
-    /*
-      - get the last action 
-      - based on  what type of action it was perform the inverse action.
-      - #change name 
-      - ! unapply texture 
-        to un apply texture: 
-          - mesh_id 
-          - model 
-          - access to adderSceneWrapper (?)
-    */
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
 
     if (old_actions.length > 0) {
@@ -182,62 +171,35 @@ class Main extends React.Component {
           break;
       }
     }
-    //END IF
   }
   undo_screenshot(args) {
-    console.log("undo_screenshot args:", args);
-    //TODO: get id of the 'from' screenshot, then look up its image data and delete it from state if there
-    // pop it off the actions localStorage...
     if (
       args.from != "" &&
       args.from != "empty dataURL" &&
       typeof args.from != "undefined"
     ) {
-      //code here if a screen shot exists  to be undone...
-      console.log("undo the screen shot"); //img id last on the state.. img_1568406045575 is the same as the current image to undo.
-      // so pop last one of state and replace it.
-      // save the popped one in an array for 'redo' of screenshots.....
       const array_image_models = scope.state.images.slice();
-      console.log("the current state images ", array_image_models);
       var popped_image_model = array_image_models.pop();
-      //then set back to
-      scope.setState(
-        prevState => ({
-          ...prevState,
-          images: array_image_models
-        }),
-        () => {
-          console.log("confirm that the last one was popped off."); //img_1568406952023 from 6 to 5
-          console.log(scope.state.images); // confirmed
-        }
-      );
-      // THEN pop it off localstorage as well and save it in a redo array for images too ?...
+      scope.setState(prevState => ({
+        ...prevState,
+        images: array_image_models
+      }));
 
-      /////   THIS MIGHT BE REDUNDANT ..... create a single function for removing the last action ?
       let old_action_arrays =
         JSON.parse(localStorage.getItem("actions_array")) || [];
       if (old_action_arrays.length > 0) {
-        // can remove it
         old_action_arrays.pop();
-        //localStorage.setItem
         localStorage.setItem(
           "actions_array",
           JSON.stringify(old_action_arrays)
         );
-        // WHILE it was successfully removed from state and localStorage , it STILL exists in the 'tileData'.
+        // remove from the 'tileData'.
         const currentTileDataArray = scope.state.tileData.slice();
         currentTileDataArray.pop();
-        scope.setState(
-          prevState => ({
-            ...prevState,
-            tileData: currentTileDataArray
-          }),
-          () => {
-            console.log(
-              "confirm that screen shot was removed from tile data....still may need to save it  for REDO functionality....."
-            );
-          }
-        );
+        scope.setState(prevState => ({
+          ...prevState,
+          tileData: currentTileDataArray
+        }));
       } else {
         // nothing to remove
         console.log(
@@ -288,13 +250,7 @@ class Main extends React.Component {
     old_actions.push(action_object);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
   }
-  /**
-   *  NEXT SAVE THE APPLICATION OF TEXTURE TO A MESH 
-   *   scope.save_UIAction("select_mesh", "toMesh", "fromMesh");
-        // let newName = scope.state.userSession.designModel.designName;
-        // scope.save_UIAction("change_name", newName, oldName);
-        //imageEditorCallback
-   */
+
   subCallback(args) {
     console.log("subCallback with args:", args);
   }
@@ -331,11 +287,6 @@ class Main extends React.Component {
         //push to local storage:
         oldDesigns.push(newDesign);
         localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
-        // save action here as well (?)
-        //probably should just be the sreenshots not the entire state, that should be only on the 'save' disk icon.
-
-        //let newName = scope.state.userSession.designModel.designName;
-        // scope.save_UIAction("id_null", "screenshot", newName, oldName);
       }
     );
   }
@@ -373,6 +324,26 @@ class Main extends React.Component {
       "Main:imageEditorCallback():editing_mesh_id:",
       this.state.editing_mesh_id
     );
+    //TODO: also need to save this texture image to a new state array of texture_images OR
+    // upon saving the design, the code must go get all data from actions named 'applyTextureToMesh' !!!!!!!!!!!!
+    // working ok but NOT getting into the final save for  'savedDesignsArray'
+    //now it is !
+
+    let texture_image_model = {};
+    texture_image_model.id = this.state.editing_mesh_id;
+    texture_image_model.dataURL = dataURL;
+
+    const array_texture_image_models = scope.state.texture_images.slice();
+    console.log("texture_image_model:", texture_image_model);
+    array_texture_image_models.push(texture_image_model);
+    scope.setState(prevState => ({
+      ...prevState,
+      texture_images: array_texture_image_models
+    }));
+
+    /*
+     
+  */
     this.state.adderSceneWrapper.applyTextureToMesh(
       this.state.editing_mesh_id,
       dataURL
@@ -844,6 +815,7 @@ class Main extends React.Component {
           JSON.parse(localStorage.getItem("savedDesignsArray")) || [];
         let newDesign = scope.state.userSession.designModel;
         newDesign.image = scope.state.images;
+        newDesign.texture_images = scope.state.texture_images;
         //loop through OR  push to local storage:
         oldDesigns.push(newDesign);
         oldSavedDesigns.push(newDesign);

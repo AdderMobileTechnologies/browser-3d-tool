@@ -94,3 +94,10 @@ action defined in iconSave of old version like so...   design_obj.action = "fina
 
 
 _iconControlGroup.handleSaveClick() ..... design_obj.action = "final_save";
+
+UNDO working pretty good HOWEVER... need to save the initial image before it gets applied as a texture... 
+we might not have been doing this before...
+
+
+
+Undo for screen name , applyingATexture, screenshots 
