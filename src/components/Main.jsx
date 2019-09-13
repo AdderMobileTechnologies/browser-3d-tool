@@ -56,7 +56,8 @@ class Main extends React.Component {
       selected_mesh_id: "",
       meta_data: {},
       startEditing: false,
-      editing_mesh_id: "",
+      editing_mesh_id: "empty mesh",
+      last_dataURL: "empty dataURL",
       selected_ad_type: -1,
       hoodMeshId: null,
       leftMeshId: null,
@@ -115,7 +116,7 @@ class Main extends React.Component {
         },
         designs: [],
         designModel: {
-          designName: "InDevelopmentAddFieldForDesignName",
+          designName: "Brand New Design Name",
           adTypeFilepath: "",
           environment: "",
           environment_type: "",
@@ -135,42 +136,28 @@ class Main extends React.Component {
     console.log("iconUndo");
     //TODO:
     /*
-- get the last action 
-- based on  what type of action it was perform the inverse action.
-
-
+      - get the last action 
+      - based on  what type of action it was perform the inverse action.
+      - #change name 
+      - ! unapply texture 
+        to un apply texture: 
+          - mesh_id 
+          - model 
+          - access to adderSceneWrapper (?)
     */
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    console.log("old_actions:", old_actions);
 
-    //IF old_actions.length > 0
     if (old_actions.length > 0) {
       let lastIndex = old_actions.length - 1;
       let lastAction = null;
       for (let i in old_actions) {
         if (i == lastIndex) {
-          console.log("i:", i);
-          console.log("lastIndex:", lastIndex);
           lastAction = old_actions[i];
         }
       }
-      // ? upon undo, the last element has already been removed from local storage and the index is OFF by 1 .
-      // I've been tinkering with the state of the value in the UITextInput class.
-      // REFRESHED CACHE
-      //well, next time around it was changed correctly in state. BUT ! is not reflected in the UITextInput.
-      //also the item has NOT been removed from local storage...
-
-      console.log("lastAction:", lastAction);
-      console.log("lastAction:action", lastAction.action);
 
       switch (lastAction.action) {
         case "change_name":
-          //console.log("change the name what for?");
-          // change the value in state.
-          // 2 more things: the input itself needs to get passed a value from state instead of maintaining it's own state.
-          // then need to check that element is removed from arrays where necessary
-
-          // undo_UITextInput(args) to remove element from localstorage and state arrays if necessary.
           scope.undo_UITextInput(lastAction);
           scope.setState(prevState => ({
             ...prevState,
@@ -182,29 +169,42 @@ class Main extends React.Component {
               }
             }
           }));
-          // remove the element from the array in localstorage and in the state.
 
           break;
+        case "applyTextureToMesh":
+          // console.log(" case : applyTextureToMesh");
+          // console.log("lastAction:", lastAction);
+          // inverse action like imageEditorCallback
+          scope.undo_ApplyTextureToMesh(lastAction);
+          //? anything to update in state ?
+          // last_dataURL maybe ?
 
+          break;
         default:
           break;
       }
     }
     //END IF
   }
+  undo_ApplyTextureToMesh(args) {
+    console.log("  undo_ApplyTextureToMesh(args) args:", args);
+    if (
+      args.from != "" &&
+      args.from != "empty dataURL" &&
+      typeof args.from != "undefined"
+    ) {
+      this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.from);
+      this.setState({
+        startEditing: false,
+        last_dataURL: args.from
+      });
+    }
+  }
+
   undo_UITextInput(args) {
-    // undo_UITextInput(args) to remove element from localStorage  ...not using state.
-    console.log("  undo_UITextInput(args) ", args);
-    //1) localStorage
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    console.log("old_actions recovered from local Storage:", old_actions);
     let poppedElement = old_actions.pop();
-    console.log("poppedElement:", poppedElement);
-    console.log("old_actions after:", old_actions);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
-    //TODO:
-    //now take the poppedElement.from  value and apply it to state for the model name.
-    console.log("change this to state..", poppedElement.from);
     scope.setState(prevState => ({
       ...prevState,
       userSession: {
@@ -216,24 +216,24 @@ class Main extends React.Component {
       }
     }));
   }
-  save_UIAction(_action, _to, _from) {
-    // let action_object = this.state.actions;
-    //BYPASS SAVING IN STATE
+  save_UIAction(_id, _action, _to, _from) {
     let action_object = {};
-    action_object.action = _action; // "save_UIAction";
-    action_object.to = _to; //"change to";
-    action_object.from = _from; // "change from";
-    console.log("Main:save_UIAction(): action_object:", action_object);
-
+    action_object.id = _id;
+    action_object.action = _action;
+    action_object.to = _to;
+    action_object.from = _from;
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    console.log("old_actions:", old_actions);
-
-    console.log("action_object:", action_object);
     //push to local storage:
     old_actions.push(action_object);
-    console.log("old_actions after push:", old_actions);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
   }
+  /**
+   *  NEXT SAVE THE APPLICATION OF TEXTURE TO A MESH 
+   *   scope.save_UIAction("select_mesh", "toMesh", "fromMesh");
+        // let newName = scope.state.userSession.designModel.designName;
+        // scope.save_UIAction("change_name", newName, oldName);
+        //imageEditorCallback
+   */
   subCallback(args) {
     console.log("subCallback with args:", args);
   }
@@ -295,7 +295,7 @@ class Main extends React.Component {
       }),
       () => {
         //new_actions_array;
-        // scope.save_UIAction();
+        // ALL THIS IS , IS the selection of a mesh and the opening of the image editor , no real change happends.
       }
     );
 
@@ -315,6 +315,12 @@ class Main extends React.Component {
       startEditing: false,
       last_dataURL: dataURL
     });
+    scope.save_UIAction(
+      this.state.editing_mesh_id,
+      "applyTextureToMesh",
+      dataURL,
+      this.state.last_dataURL
+    );
   };
 
   windowCallbackPickable(mesh_id) {
@@ -427,7 +433,7 @@ class Main extends React.Component {
 
        */
       // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
-      // - ROADBLOCKED !
+      // - ROADBLOCKED ! NOT able to apply Texture to rightside of porsche ?
     }
   }
   callback_withModelInfo(info) {
@@ -648,7 +654,7 @@ class Main extends React.Component {
         );
 
         let newName = scope.state.userSession.designModel.designName;
-        scope.save_UIAction("change_name", newName, oldName);
+        scope.save_UIAction("id_null", "change_name", newName, oldName);
       }
     );
     //save action:
@@ -682,6 +688,8 @@ class Main extends React.Component {
     //5 design name
     scp.resetUserSession();
     //*!* TODO: still need the selects to refresh and the design name to refresh.
+    //TODO: remove actions_array from localStorage
+    window.localStorage.removeItem("actions_array");
   }
 
   callback_DeleteYes() {
