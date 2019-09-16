@@ -94,7 +94,8 @@ class Main extends React.Component {
       },
       actions: [],
       undos: [],
-      redos: []
+      redos: [],
+      meshPicked: false
     };
 
     this.setUp = this.setUp.bind(this);
@@ -358,52 +359,72 @@ class Main extends React.Component {
       }
     );
 
+    // scope.windowCallbackPickable(args.name);
     scope.windowCallbackPickable(args.name);
   }
 
   imageEditorCallback = dataURL => {
-    console.log(
-      "Main:imageEditorCallback():editing_mesh_id:",
-      this.state.editing_mesh_id
-    );
+    this.setState(
+      {
+        startEditing: false,
+        last_dataURL: dataURL
+      },
+      () => {
+        //need to make sure modal is set OFF in state , no async latency still does it.
+        console.log(
+          "Main:imageEditorCallback():editing_mesh_id:",
+          this.state.editing_mesh_id
+        );
 
-    let texture_image_model = {};
-    texture_image_model.id = this.state.editing_mesh_id;
-    texture_image_model.dataURL = dataURL;
+        let texture_image_model = {};
+        texture_image_model.id = this.state.editing_mesh_id;
+        texture_image_model.dataURL = dataURL;
 
-    const array_texture_image_models = scope.state.texture_images.slice();
-    console.log("texture_image_model:", texture_image_model);
-    array_texture_image_models.push(texture_image_model);
-    scope.setState(prevState => ({
-      ...prevState,
-      texture_images: array_texture_image_models
-    }));
+        const array_texture_image_models = scope.state.texture_images.slice();
+        console.log("texture_image_model:", texture_image_model);
+        array_texture_image_models.push(texture_image_model);
+        scope.setState(prevState => ({
+          ...prevState,
+          texture_images: array_texture_image_models
+        }));
 
-    this.state.adderSceneWrapper.applyTextureToMesh(
-      this.state.editing_mesh_id,
-      dataURL
-    );
-    this.setState({
-      startEditing: false,
-      last_dataURL: dataURL
-    });
-    scope.save_UIAction(
-      this.state.editing_mesh_id,
-      "applyTextureToMesh",
-      dataURL,
-      this.state.last_dataURL
+        this.state.adderSceneWrapper.applyTextureToMesh(
+          this.state.editing_mesh_id,
+          dataURL
+        );
+
+        scope.save_UIAction(
+          this.state.editing_mesh_id,
+          "applyTextureToMesh",
+          dataURL,
+          this.state.last_dataURL
+        );
+      }
     );
   };
 
   windowCallbackPickable(mesh_id) {
-    // Usage: Editing-Mesh
     this.setState(
       {
-        startEditing: true,
-        editing_mesh_id: mesh_id
+        meshPicked: !this.state.meshPicked
       },
       () => {
-        console.log("editing mesh id:", mesh_id);
+        console.log("state of meshPicked:", this.state.meshPicked);
+        if (this.state.meshPicked) {
+          console.log(". . . windowCallbackPickable ");
+
+          // Usage: Editing-Mesh
+          console.log("mesh_id:", mesh_id);
+          this.setState(
+            {
+              startEditing: true,
+              editing_mesh_id: mesh_id
+            },
+            () => {
+              console.log("editing mesh id:", mesh_id);
+            }
+          );
+        }
       }
     );
   }
@@ -1011,6 +1032,7 @@ class Main extends React.Component {
         </Grid>
 
         <div>
+          {/** extricating the Draggable Dialog from this condition was no good. */}
           {this.state.startEditing && (
             <div>
               <Grid>
@@ -1022,13 +1044,13 @@ class Main extends React.Component {
             </div>
           )}
         </div>
-
+        {/**   DEV : commented out while trying to debug issue with modal opening twice, 
+        // HOWEVER: this is an important component of the "DELETE" design process.....
+        //commenting it out did not solve the problem  */}
         <MUI_AlertDialog
           callback_Yes={this.callback_DeleteYes}
           callback_No={this.callback_DeleteNo}
         ></MUI_AlertDialog>
-
-        {/** */}
       </div>
     );
   }

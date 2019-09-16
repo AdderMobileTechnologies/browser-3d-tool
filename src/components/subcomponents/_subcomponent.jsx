@@ -21,7 +21,7 @@ Call This Subcomponent Like This:
   
 */
 export default function Subcomponent(props) {
-  console.log("SubComponent: props:", props);
+  console.log("THE SubComponent: props:", props);
 
   const handleSubcomponentClick = e => {
     console.log("handleSubcomponentClick .....");

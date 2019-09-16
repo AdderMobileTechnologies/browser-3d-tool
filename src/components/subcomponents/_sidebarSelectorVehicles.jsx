@@ -3,7 +3,7 @@ import GrayCar from "../../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png"
 import Grid from "@material-ui/core/Grid"; //
 
 export default function SidebarSelectorVehicles(props) {
-  console.log("SubComponent: props:", props);
+  console.log("SidebarSelectorVehicles: props:", props);
 
   const handleSubcomponentClick = e => {
     console.log("handleSubcomponentClick .....");

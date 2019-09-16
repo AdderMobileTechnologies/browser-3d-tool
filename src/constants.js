@@ -6,10 +6,11 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import * as E from "./environment.js";
 export const DefaultUserImage = UserImage;
 
-export const META_URL = "http://localhost:8001";
-export const API_URL = "http://dbdev.adder.io";
+export const META_URL = E.META_URL; //"http://localhost:8001";
+export const API_URL = E.API_URL; //"http://dbdev.adder.io";
 //all calls to server are redirected directly to the html/assets/ folder, so that is where the 'filenames' of a models meta data picks up.
 
 export const useStyles = makeStyles(theme => ({
