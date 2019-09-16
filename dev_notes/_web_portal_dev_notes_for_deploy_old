@@ -1,0 +1,43 @@
+// === SUPER FAST UPDATE LIVE (3 steps : 1 script , 1 set of manually entered params, 1 script)=== //
+0) check commits and Pull Request
+1)
+  ssh bforte@157.230.217.249
+1.2)
+! make sure pull request was merged...
+  cd /var/www/web-portal-frontend/ && sudo git pull origin master
+2)
+  DO-pwd: adderbayon!@#  Git-user: bayon-adder ,  Git-pwd:  123adder!@#
+
+3) FROM:/var/www/web-portal-frontend/
+  sudo yarn build
+
+4)
+  cd /var/www/ &&
+  cp -R /var/www/html ~/html
+  rm -rf bk-html &&
+  mv html bk-html &&
+  mkdir html  &&
+  mv -v /var/www/web-portal-frontend/build/* /var/www/html/
+
+5) check it out live: 157.230.217.249
+
+6) back to local machine...
+cd /Applications/XAMPP/htdocs/WORK/xtreme-react-admin/web-portal-frontend && yarn start
+
+//=======================================================================
+
+DEVELOPMENT ENVIRONMENT SETUP:
+
+1) RUN mongodb with configuration file:
+$ cd /
+$ mongod --config /usr/local/etc/mongod.conf
+
+2) Start Server
+$ cd /web_api
+$ nodemon server
+
+3) start the web-portal-frontend
+$ cd /web-portal-frontend/
+$ yarn start
+
+ /* I made a copy of all the other content on my local machine. */
