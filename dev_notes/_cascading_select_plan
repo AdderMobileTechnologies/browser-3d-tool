@@ -1,0 +1,42 @@
+We will create a meta file for both
+- 'ad types' and 
+-'environment'
+
+the ad types json will show relation ship of hiearchy with array of children at each new level and then at the end of the chain , the path to a meta data file for that model.
+
+{
+    "children": [
+        {
+            "ad_type":"Vehicle",
+            "children":[]
+        },
+        {
+            "ad_type":"Billboard",
+            "children":[
+               {
+                   "sub_type":"One-Sided"
+               } ,
+               {
+                   "sub_type":"Two-Sided",
+                   "children":[
+                       {
+                           "detail":"Parallel",
+                           "children":[]
+                       },
+                       {
+                           "detail":"Angled",
+                            "metafile":"path/to/angled/billboard.babylon"
+                       }
+                   ]
+               }
+            ]
+        }
+    ]
+}
+
+
+Create a class for drop down select with simple handle method,
+Create another class for 'cascading selects' 
+    which handles the logic for drop downs that send to it. 
+
+    

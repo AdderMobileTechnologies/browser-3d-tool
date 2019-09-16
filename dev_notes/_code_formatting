@@ -1,0 +1,26 @@
+https://medium.com/technical-credit/using-prettier-with-vs-code-and-create-react-app-67c2449b9d08
+
+1)
+yarn add --dev --exact prettier
+yarn add --dev eslint-plugin-prettier
+2)
+Install 2 Extensions for VSCODE:
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+
+3)
+create a config file
+Create an .eslintrc file with the following contents:
+{
+  "extends": "react-app",
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
+
+4) 
+Automate it:
+You most likely want to apply the Prettier formatting whenever you save your files.
+To do so, add the following to your Visual Studio Code Workspace Settings:
+"editor.formatOnSave": true

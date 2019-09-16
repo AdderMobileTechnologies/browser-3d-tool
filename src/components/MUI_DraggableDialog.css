@@ -1,0 +1,7 @@
+/*
+For the purpose of overriding derfault css.
+*/
+
+.MuiDialog-paperWidthSm, .MuiDialog-paperWidthMd, .MuiDialog-paperWidthLg {
+    max-width: 100% !important;
+}

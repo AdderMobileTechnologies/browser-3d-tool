@@ -1,0 +1,117 @@
+
+TODO: 
+1- move meta data files to dbdev.adder.io from localhost.
+2- set up meta data index. 
+#3- Get the 'sidebar' functionality for selecting meshes via button over image .
+#4- Snap Shot FUnctionality and GridList
+5- saving the design data, ie. as was done with 'userSession' in version 1 .
+6- consider a "hasLoaded" method for models.
+
+
+
+6- Figure out why Porsche Right door not getting image applied to it event though it has been added to the meta data and is editable.
+   end of the trail is in 'AdderMeshWrapper:applyTextureFromDataURL()' 
+
+(3) need a flag for showing billboard selection versus vehicle 
+    background image 
+    buttons that trigger mesh selection. 
+
+
+
+
+
+
+ #done 
+    renamed classes and class files to have a consistent prefix of adder.
+    renamed mesh_ids in blender files and created new babylon files with the changed mesh names
+    created the directory tree on the server for the ad_type,sub_type,detail,asset hierarchy.
+    also renamed clickable meshes in same protocol. 
+    changed meta data to match new files and naming conventions 
+    changed meta files to house the 'pickable meshes' as a parameter array of mesh names. 
+    created code to hide the sister meshes in the case of leftside_large, leftside_small,  where only one UVMapping structure is supposed to be visible.
+
+fixed bugs:
+# fixed: 9-10-2019 
+   need to be able to change the image after a previous one has been applied. 
+   billboard sign2 becomes invisible when picked ?  need somekind of flag for when to hide sister meshes....
+# Server Issue: Cors: 
+# The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed.
+
+
+new bugs:
+! can not get the Design Name to clear when deleting the previous design, HOWEVER, when a new one is saved after the delete it gets the new default name while the old name is still on display.
+# BUG: switching between the vehicles and then changing the leftside texture...NOT tracking mesh id appropriately.
+
+
+9-12-2019 compartmentalizing sections of the UI iconControlGroup and overlayControls   
+   - create input for design name.
+   - create functionality for deleteing a design , asking for confirmation, removing screenshots, clearing localStorage, disposing of meshes...
+
+   When trying to clear the slate on the Main file , most is working but the 'textInput' component is keeping its own state element for design name....
+   Save and Delete are basically working.
+*** go through and make sure 'let' is used instaed of 'var'  
+
+
+   trying to find solution: https://stackoverflow.com/questions/38901106/how-to-make-a-shared-state-between-two-react-components
+   * could just pull the input out of a subcomponent.
+
+
+LEFT OFF HERE : Friday morning look into this.
+
+how to do 'redo' and 'undo' 
+   #1) - if a texture is 'applied to' a mesh then it needs to be 'un-applied'. 
+
+   - if the camera is moved from position A to position B, then it might need to go back to position A.
+   - if the Zoom Level changes, it might need to gpo back .
+
+
+Brandons Explanation: 
+2 columns  1) undo 2) actions 3) redo(later)
+undo has objects:
+   obj:{
+      action:"",
+      to:"",
+      from:""
+   }
+
+actions: has object 
+   obj:{
+      action:"",
+      to:"",
+   }
+
+Upon an 'Undo' pull off the last item on the undo stack ,
+select appropriate inverse function, 
+then pop it off the undo stack.
+-----------------------------------
+currently: no actions are getting saved until the user hits the 'save' functionality.
+so change the name...for starters.
+Main:callback_UITextInput()
+
+*!*:: notes: one of two things: either at least one snapshot is needed before a save. OR . if no screenshot exists, take it automatically on save.
+quick check to see how actionSave was done in v1
+action defined in iconSave of old version like so...   design_obj.action = "final_save" 
+
+
+_iconControlGroup.handleSaveClick() ..... design_obj.action = "final_save";
+
+UNDO working pretty good HOWEVER... need to save the initial image before it gets applied as a texture... 
+we might not have been doing this before...
+
+
+
+Undo for screen name , applyingATexture, screenshots 
+
+9-16-2019 
+Missing Pieces:
+   - can only select certain areas ie.left_side
+   - do not have all the 'textured meshes' needed from 'Blender File' on down . ie. roof, trunk, hood ... 
+   - porsche missing rear end piece.
+   - user might want to change the position of a model , rotation, scale ?? 
+   - user might want to change focal point of camera.
+
+time to merge dev-bayon into master for a demo.
+1) The Meta_Data Server 
+
+2) The 3d Tool 
+

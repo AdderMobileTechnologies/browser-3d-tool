@@ -1,0 +1,33 @@
+.buttonSidebar {
+    box-shadow: 2px 2px 2px #555;
+}
+
+.buttonHood {
+    position: absolute;
+    left: 40%;
+    top: 20%;
+}
+
+.buttonRight {
+    position: absolute;
+    left: 60%;
+    top: 60%;
+}
+
+.buttonLeft {
+    position: absolute;
+    left: 20%;
+    top: 60%;
+}
+
+.buttonRoof {
+    position: absolute;
+    left: 40%;
+    top: 60%;
+}
+
+.buttonTrunk {
+    position: absolute;
+    left: 40%;
+    top: 80%;
+}
