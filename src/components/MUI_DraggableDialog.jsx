@@ -58,14 +58,12 @@ export default function DraggableDialog(props) {
   return (
     <div>
       {/**  */}
-      <button id="myFrickinButton" onClick={handleClickOpen}>
-        my frickin button
-      </button>
+
       <Button
         variant="outlined"
         color="primary"
         onLoad={handleClickOpen}
-        // onClick={handleClickOpen}
+        onClick={handleClickOpen}
       >
         Open Image Editor
       </Button>

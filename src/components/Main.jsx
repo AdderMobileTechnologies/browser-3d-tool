@@ -965,6 +965,19 @@ class Main extends React.Component {
             </div>
           </Grid>
           <Grid item xs={4}>
+            <div>
+              {/** extricating the Draggable Dialog from this condition was no good. */}
+              {this.state.startEditing && (
+                <div>
+                  <Grid>
+                    <DraggableDialog
+                      imageEditorCallback={this.imageEditorCallback}
+                      mesh_id={this.state.editing_mesh_id}
+                    ></DraggableDialog>
+                  </Grid>
+                </div>
+              )}
+            </div>
             <UITextInput
               id="designName"
               label="Design Name"
@@ -1031,19 +1044,6 @@ class Main extends React.Component {
           </Grid>
         </Grid>
 
-        <div>
-          {/** extricating the Draggable Dialog from this condition was no good. */}
-          {this.state.startEditing && (
-            <div>
-              <Grid>
-                <DraggableDialog
-                  imageEditorCallback={this.imageEditorCallback}
-                  mesh_id={this.state.editing_mesh_id}
-                ></DraggableDialog>
-              </Grid>
-            </div>
-          )}
-        </div>
         {/**   DEV : commented out while trying to debug issue with modal opening twice, 
         // HOWEVER: this is an important component of the "DELETE" design process.....
         //commenting it out did not solve the problem  */}
