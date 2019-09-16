@@ -122,3 +122,7 @@ time to merge dev-bayon into master for a demo.
       
 
 Left off with REDO .
+@ UNDO...an item, instead of getting deleted, needs to go into the redo_array.
+
+
+Check if The Right Side Selection of the porsche is similar to the meta data issue we dealt with last week with the billboards.

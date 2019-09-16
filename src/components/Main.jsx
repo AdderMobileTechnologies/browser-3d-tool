@@ -201,16 +201,19 @@ class Main extends React.Component {
 
   undo_ApplyTextureToMesh(args) {
     console.log("  undo_ApplyTextureToMesh(args) args:", args);
-    if (
-      args.from != "" &&
-      args.from != "empty dataURL" &&
-      typeof args.from != "undefined"
-    ) {
-      this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.from);
-      this.setState({
-        startEditing: false,
-        last_dataURL: args.from
-      });
+    if (args.from != "" && typeof args.from != "undefined") {
+      if (args.from != "empty dataURL") {
+        //here we need to reapply original texture.
+        //which is done where? adderLoader?
+      } else {
+        this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.from);
+        this.setState({
+          startEditing: false,
+          last_dataURL: args.from
+        });
+      }
+    } else {
+      console.log("where is this?"); // removed this from condition:  args.from != "empty dataURL" &&
     }
     //Where is this getting popped of the undo list?
     // undo_InsertIntoRedo(popped_image_model);
