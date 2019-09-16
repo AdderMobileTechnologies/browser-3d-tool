@@ -148,17 +148,6 @@ class Main extends React.Component {
       switch (lastAction.action) {
         case "change_name":
           scope.undo_UITextInput(lastAction);
-          scope.setState(prevState => ({
-            ...prevState,
-            userSession: {
-              ...prevState.userSession,
-              designModel: {
-                ...prevState.userSession.designModel,
-                designName: lastAction.from
-              }
-            }
-          }));
-
           break;
         case "applyTextureToMesh":
           scope.undo_ApplyTextureToMesh(lastAction);
@@ -180,6 +169,7 @@ class Main extends React.Component {
     ) {
       const array_image_models = scope.state.images.slice();
       var popped_image_model = array_image_models.pop();
+      this.undo_InsertIntoRedo(popped_image_model);
       scope.setState(prevState => ({
         ...prevState,
         images: array_image_models
@@ -222,11 +212,40 @@ class Main extends React.Component {
         last_dataURL: args.from
       });
     }
+    //Where is this getting popped of the undo list?
+    // undo_InsertIntoRedo(popped_image_model);
   }
+  redo_UITextInput(args) {
+    // this will be very similar to the undo version except it will not pop off the last action, it will only add this redo_action to the actions_array.
 
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    console.log("REDO:");
+    console.log("old_actions:", old_actions);
+    console.log("type of args:", args);
+    console.log("args:", args);
+    //stringify first ? ?
+    old_actions.push(args);
+    console.log("old_actions AFTER the push:", old_actions);
+    console.log(typeof old_actions);
+    //Then we'll save the updated array back to local storage...
+    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+    //And then reset the 'designName' in state...appropriately.
+
+    scope.setState(prevState => ({
+      ...prevState,
+      userSession: {
+        ...prevState.userSession,
+        designModel: {
+          ...prevState.userSession.designModel,
+          designName: args.to
+        }
+      }
+    }));
+  }
   undo_UITextInput(args) {
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
     let poppedElement = old_actions.pop();
+    this.undo_InsertIntoRedo(poppedElement);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
     scope.setState(prevState => ({
       ...prevState,
@@ -238,6 +257,26 @@ class Main extends React.Component {
         }
       }
     }));
+  }
+  undo_InsertIntoRedo(args) {
+    // console.log("REDO: undo_InsertIntoRedos(args):", args);
+    //get last redo array from local storage, add this one to it, resave it into localStorage
+
+    let currentRedos =
+      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    if (
+      currentRedos === null ||
+      typeof currentRepos === "undefined" ||
+      currentRedos.length <= 0
+    ) {
+      //console.log("REDO: first insert in to REDO OR no more redos");
+      // This must be the first insert so...
+      currentRedos.push(args);
+      localStorage.setItem("redo_actions_array", JSON.stringify(currentRedos));
+    } else {
+      console.log("REDO: the current number of redos is ", currentRedos.length);
+      console.log(currentRedos);
+    }
   }
   save_UIAction(_id, _action, _to, _from) {
     let action_object = {};
@@ -784,8 +823,45 @@ class Main extends React.Component {
     console.log("iconSave_Alt");
   }
 
-  iconRedo() {
+  iconRedo(args) {
     console.log("iconRedo");
+    //redo_actions_array
+    // HERE we take pop the last item off the  'redo_actions_array', re-apply it with the appropriate measure.
+    let redo_actions_array =
+      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    if (redo_actions_array.length > 0) {
+      let lastRedoAction = redo_actions_array.pop();
+      //reapply the last RedoAction
+      console.log("action to redo is:", lastRedoAction);
+      console.log("and the redo action is:", lastRedoAction.action);
+      // ALSO: need
+
+      switch (lastRedoAction.action) {
+        case "change_name":
+          // scope.undo_UITextInput(lastAction);
+          scope.redo_UITextInput(lastRedoAction);
+
+          break;
+        case "applyTextureToMesh":
+          // scope.undo_ApplyTextureToMesh(lastAction);
+          break;
+        case "screenshot":
+          // scope.undo_screenshot(lastAction);
+          break;
+        default:
+          console.log("no match for action: ", lastRedoAction.action);
+          break;
+      }
+
+      //re-save redo_actions_array misnus the popped action.!
+      console.log("remaining REDO actions are:", redo_actions_array);
+      localStorage.setItem(
+        "redo_actions_array",
+        JSON.stringify(redo_actions_array)
+      );
+    } else {
+      console.log("there  are no more actions to be undone.");
+    }
   }
   iconShare() {
     console.log("iconShare");

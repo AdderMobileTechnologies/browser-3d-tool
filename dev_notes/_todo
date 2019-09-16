@@ -103,6 +103,9 @@ we might not have been doing this before...
 Undo for screen name , applyingATexture, screenshots 
 
 9-16-2019 
+
+Merged into Master for Demo Purposes...
+
 Missing Pieces:
    - can only select certain areas ie.left_side
    - do not have all the 'textured meshes' needed from 'Blender File' on down . ie. roof, trunk, hood ... 
@@ -111,7 +114,11 @@ Missing Pieces:
    - user might want to change focal point of camera.
 
 time to merge dev-bayon into master for a demo.
-1) The Meta_Data Server 
+   1) The Meta_Data Server 
+      at root level of repo, just needs to be implemented on the dbdev.adder.io server. 
 
-2) The 3d Tool 
+   2) The 3d Tool 
+      repo is up and merged with master . 
+      
 
+Left off with REDO .
