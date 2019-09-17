@@ -8,6 +8,15 @@
      outline: none;
  }
 
+ .user-name {
+     font-size: 1em;
+     color: #2f2f2f;
+     margin: 0px;
+     line-height: 40px;
+     text-justify: center;
+     text-align: center;
+ }
+
  @media (min-width: 0px) and (max-width: 768px) {
      .design-controls {
          xborder: dotted 1px red;
@@ -22,6 +31,10 @@
      }
      .sidebar-call-to-action {
          font-size: 1.1em !important;
+     }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
      }
  }
 
@@ -43,6 +56,10 @@
      .sidebar-call-to-action {
          font-size: 1.1em !important;
      }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
+     }
  }
 
  @media (min-width: 1001px) and (max-width: 1300px) {
@@ -59,6 +76,10 @@
      }
      .sidebar-call-to-action {
          font-size: 1.1em !important;
+     }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
      }
  }
 

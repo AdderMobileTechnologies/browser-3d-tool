@@ -74,6 +74,16 @@
     text-align: center;
 }
 
+.gui-overlay-left {
+    position: absolute;
+    top: 15%;
+    left: 5px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
+}
+
 .gui-overlay-right {
     position: absolute;
     top: 90%;

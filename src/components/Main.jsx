@@ -4,6 +4,7 @@ import SidebarSelectorBillboards from "./subcomponents/_sidebarSelectorBillboard
 import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
 import IconControlGroup from "./subcomponents/_iconControlGroup";
 import OverlayControls from "./subcomponents/_overlayControls";
+import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
 
 // import * as GUI from "babylonjs-gui";
 import Grid from "@material-ui/core/Grid"; //
@@ -977,19 +978,8 @@ class Main extends React.Component {
                     alt="The User Profile"
                   />
                 </Grid>
-                <Grid item xs={3}>
-                  <p
-                    style={{
-                      fontSize: "1em",
-                      color: "#2f2f2f",
-                      margin: "0px",
-                      lineHeight: "40px",
-                      textJustify: "center",
-                      textAlign: "center"
-                    }}
-                  >
-                    Ed Jellico
-                  </p>
+                <Grid item xs={9}>
+                  <p className="user-name">Ed Jellico</p>
                 </Grid>
               </Grid>
             </Grid>
@@ -1009,6 +999,11 @@ class Main extends React.Component {
                   callback_ScreenShotButtonPress={this.screenshotButtonPress}
                   data={{ key: "value" }}
                 ></OverlayControls>
+                <OverlayControlsRight
+                  callback={this.subCallback}
+                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
+                  data={{ key: "value" }}
+                ></OverlayControlsRight>
               </div>
             </Grid>
             <Grid container>
