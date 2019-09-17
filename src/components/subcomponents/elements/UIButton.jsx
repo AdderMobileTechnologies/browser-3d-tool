@@ -18,18 +18,18 @@ import TextFields from "@material-ui/icons/TextFields";
 
 const iconStyle = {
   common: {
-    width: "60px",
-    height: "60px",
-    backgroundColor: "#afafaf",
-    borderRadius: "16px",
-    boxShadow: "5px 10px 8px #2f2f2f"
+    width: "54px",
+    height: "54px",
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    xboxShadow: "5px 10px 8px #2f2f2f"
   },
   small: {
     width: "44px",
     height: "44px",
     backgroundColor: "#ddd",
     borderRadius: "6px",
-    boxShadow: "2px 3px 3px #ccc"
+    xboxShadow: "2px 3px 3px #ccc"
   }
 };
 

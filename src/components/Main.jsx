@@ -640,11 +640,13 @@ class Main extends React.Component {
         }
       );
     }
-
+    {
+      /**  { width: 274, height: 222 }, */
+    }
     BABYLON.Tools.CreateScreenshot(
       engine,
       camera,
-      { width: 274, height: 222 },
+      { width: 400, height: 300 },
       function(data) {
         let img = document.createElement("img");
         img.src = data;
@@ -654,6 +656,7 @@ class Main extends React.Component {
     );
   } //
   componentDidMount() {
+    localStorage.removeItem("actions_array");
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
@@ -923,9 +926,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>Main.jsx</div>
-
+      <Grid container>
         <Grid
           container
           spacing={0}
@@ -948,98 +949,129 @@ class Main extends React.Component {
                 alt="Adder Logo"
               />
             </Grid>
-          </Grid>{" "}
+          </Grid>
           <Grid item xs={8}>
-            <div className="adder-3dTool-canvas-container">
-              <canvas
-                id="adder_3dTool_canvas"
-                className="adder-3dTool-canvas"
-                style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
-              />
+            <Grid container style={{ border: "dotted 1px blue" }}>
+              <div className="adder-3dTool-canvas-container">
+                <canvas
+                  id="adder_3dTool_canvas"
+                  className="adder-3dTool-canvas"
+                  style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
+                />
 
-              <OverlayControls
-                callback={this.subCallback}
-                callback_ScreenShotButtonPress={this.screenshotButtonPress}
-                data={{ key: "value" }}
-              ></OverlayControls>
-            </div>
-          </Grid>
-          <Grid item xs={4}>
-            <div>
-              {/** extricating the Draggable Dialog from this condition was no good. */}
-              {this.state.startEditing && (
-                <div>
-                  <Grid>
-                    <DraggableDialog
-                      imageEditorCallback={this.imageEditorCallback}
-                      mesh_id={this.state.editing_mesh_id}
-                    ></DraggableDialog>
+                <OverlayControls
+                  callback={this.subCallback}
+                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
+                  data={{ key: "value" }}
+                ></OverlayControls>
+              </div>
+            </Grid>
+            <Grid container>
+              icon grid and screenshots
+              <Grid
+                container
+                id={"iconParentContainer"}
+                style={{
+                  marginTop: "25px",
+                  marginBottom: "5px",
+                  border: "dotted 1px purple"
+                }}
+              >
+                <IconControlGroup
+                  callback_Save={this.iconSave}
+                  callback_Save_v2={this.iconSave_v2}
+                  callback_Delete={this.iconDelete}
+                  callback_Redo={this.iconRedo}
+                  callback_Save_Alt={this.iconSave_Alt}
+                  callback_Share={this.iconShare}
+                  callback_Undo={this.iconUndo}
+                  data={{
+                    designModel: scope.state.userSession.designModel,
+                    designs: scope.state.userSession.designs
+                  }}
+                ></IconControlGroup>
+
+                <Grid item xs={9} id={"iconRow1screenshots_row"}>
+                  <Grid item style={{ border: "dotted 1px green" }}>
+                    <UIGridList tileData={this.state.tileData} />
                   </Grid>
-                </div>
-              )}
-            </div>
-            <UITextInput
-              id="designName"
-              label="Design Name"
-              value={this.state.userSession.designModel.designName}
-              callback={this.callback_UITextInput}
-              placeholder="Enter a Design Name"
-            />
-            <Designer
-              scene={this.state.scene}
-              getAdderSceneWrapper={this.getAdderSceneWrapper}
-              adderSceneWrapper={this.state.adderSceneWrapper}
-              callback={this.callback_designer}
-              callback_withModelInfo={this.callback_withModelInfo}
-            ></Designer>
-            {this.state.selected_ad_type === "0" && (
-              <SidebarSelectorVehicles
-                data={{
-                  hoodMeshId: this.state.hoodMeshId,
-                  leftMeshId: this.state.leftMeshId,
-                  rightMeshId: this.state.rightMeshId,
-                  roofMeshId: this.state.roofMeshId,
-                  trunkMeshId: this.state.trunkMeshId
-                }}
-                callback={this.sidebarButtonClickAlt}
-              ></SidebarSelectorVehicles>
-            )}
-            {this.state.selected_ad_type === "1" && (
-              <SidebarSelectorBillboards
-                data={{
-                  sign1MeshId: this.state.sign1MeshId,
-                  sign2MeshId: this.state.sign2MeshId
-                }}
-                callback={this.sidebarButtonClickAlt}
-              ></SidebarSelectorBillboards>
-            )}
-          </Grid>
-          <Grid
-            container
-            id={"iconParentContainer"}
-            style={{
-              marginTop: "25px",
-              marginBottom: "5px"
-            }}
-          >
-            <IconControlGroup
-              callback_Save={this.iconSave}
-              callback_Save_v2={this.iconSave_v2}
-              callback_Delete={this.iconDelete}
-              callback_Redo={this.iconRedo}
-              callback_Save_Alt={this.iconSave_Alt}
-              callback_Share={this.iconShare}
-              callback_Undo={this.iconUndo}
-              data={{
-                designModel: scope.state.userSession.designModel,
-                designs: scope.state.userSession.designs
-              }}
-            ></IconControlGroup>
-
-            <Grid item xs={9} id={"iconRow1screenshots_row"}>
-              <Grid item xs={12} style={{ padding: "15px" }}>
-                <UIGridList tileData={this.state.tileData} />
+                </Grid>
               </Grid>
+            </Grid>
+          </Grid>
+          <Grid item md={4} style={{ border: "dotted 1px black" }}>
+            <Grid container style={{ border: "dotted 1px black" }}>
+              <Grid item xs={1} style={{ border: "dotted 1px red" }}></Grid>
+              <div
+                className="design-controls"
+                style={{
+                  border: "dotted 1px orange",
+                  width: "80%",
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }}
+              >
+                <Grid
+                  item
+                  md={10}
+                  style={{
+                    border: "dotted 1px blue",
+                    width: "100%",
+                    marginLeft: "auto",
+                    marginRight: "auto"
+                  }}
+                >
+                  <div>
+                    {/** extricating the Draggable Dialog from this condition was no good. */}
+                    {this.state.startEditing && (
+                      <div>
+                        <Grid>
+                          <DraggableDialog
+                            imageEditorCallback={this.imageEditorCallback}
+                            mesh_id={this.state.editing_mesh_id}
+                          ></DraggableDialog>
+                        </Grid>
+                      </div>
+                    )}
+                  </div>
+                  <UITextInput
+                    id="designName"
+                    label="Design Name"
+                    value={this.state.userSession.designModel.designName}
+                    callback={this.callback_UITextInput}
+                    placeholder="Enter a Design Name"
+                  />
+                  <Designer
+                    scene={this.state.scene}
+                    getAdderSceneWrapper={this.getAdderSceneWrapper}
+                    adderSceneWrapper={this.state.adderSceneWrapper}
+                    callback={this.callback_designer}
+                    callback_withModelInfo={this.callback_withModelInfo}
+                  ></Designer>
+                  {this.state.selected_ad_type === "0" && (
+                    <SidebarSelectorVehicles
+                      data={{
+                        hoodMeshId: this.state.hoodMeshId,
+                        leftMeshId: this.state.leftMeshId,
+                        rightMeshId: this.state.rightMeshId,
+                        roofMeshId: this.state.roofMeshId,
+                        trunkMeshId: this.state.trunkMeshId
+                      }}
+                      callback={this.sidebarButtonClickAlt}
+                    ></SidebarSelectorVehicles>
+                  )}
+                  {this.state.selected_ad_type === "1" && (
+                    <SidebarSelectorBillboards
+                      data={{
+                        sign1MeshId: this.state.sign1MeshId,
+                        sign2MeshId: this.state.sign2MeshId
+                      }}
+                      callback={this.sidebarButtonClickAlt}
+                    ></SidebarSelectorBillboards>
+                  )}
+                </Grid>
+              </div>
+              <Grid item md={1} style={{ border: "dotted 1px red" }}></Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -1051,7 +1083,7 @@ class Main extends React.Component {
           callback_Yes={this.callback_DeleteYes}
           callback_No={this.callback_DeleteNo}
         ></MUIAlertDialog>
-      </div>
+      </Grid>
     );
   }
 }

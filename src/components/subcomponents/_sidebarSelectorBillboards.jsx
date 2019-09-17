@@ -15,26 +15,80 @@ export default function SidebarSelectorBillboards(props) {
   };
 
   return (
-    <div>
-      <Grid
-        item
-        xs={12}
-        style={{
-          backgroundImage: "url(" + Billboard + ")",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          height: "300px",
-          backgroundPosition: "center"
-        }}
-      >
-        <div
+    <Grid
+      container
+      style={{
+        backgroundImage: "url(" + Billboard + ")",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        height: "300px",
+        backgroundPosition: "center"
+      }}
+    >
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs>
+          <button
+            className="buttonSidebar xbuttonLeft"
+            id="buttonLeft"
+            name={props.data["sign1MeshId"]}
+            onClick={handleSubcomponentClick}
+          >
+            One
+          </button>
+        </Grid>
+        <Grid item xs></Grid>
+        <Grid item xs>
+          <button
+            className="buttonSidebar xbuttonRight"
+            id="buttonRight"
+            name={props.data["sign2MeshId"]}
+            onClick={handleSubcomponentClick}
+          >
+            Two
+          </button>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+    </Grid>
+  );
+}
+
+/*
+ <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+
+
+
+  <div
           className="relativeContainer car"
           id="ButtonContainer"
           style={{ height: "300px" }}
         >
           <p>Select a Component to Edit</p>
 
-          {/**onClick={props.clickHood} */}
+         
 
           <button
             className="buttonSidebar buttonLeft"
@@ -54,7 +108,8 @@ export default function SidebarSelectorBillboards(props) {
             Two
           </button>
         </div>
-      </Grid>
-    </div>
-  );
-}
+
+
+
+
+      */

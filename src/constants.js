@@ -19,12 +19,15 @@ export const useStyles = makeStyles(theme => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
+
     backgroundColor: theme.palette.background.paper
   },
   gridList: {
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
+    transform: "translateZ(0)",
+
+    height: "150px"
   }
 }));
 export const UIGridList = props => {
@@ -32,10 +35,23 @@ export const UIGridList = props => {
   return (
     <div className={classes.root}>
       {/**   one spot:  tileData={this.state.tileData} */}
-      <GridList className={classes.gridList} cols={2.5}>
+      <GridList
+        className={classes.gridList}
+        cols={3.5}
+        style={{ border: "dashed 1px blue" }}
+      >
         {props.tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+          <GridListTile
+            key={tile.img}
+            style={{
+              borderRadius: "30px !important",
+              marginRight: "10px",
+              height: "125px",
+              maxHeight: "125px"
+            }}
+          >
+            <img src={tile.img} alt={tile.title} style={{}} />
+            {/**
             <GridListTileBar
               title={tile.title}
               classes={{
@@ -48,74 +64,10 @@ export const UIGridList = props => {
                 </IconButton>
               }
             />
+            */}
           </GridListTile>
         ))}
-        {/**  */}
       </GridList>
     </div>
   );
 };
-/*
-export const tileData = [
-  {
-    img: UserImage,
-    title: "Breakfast",
-    author: "jill111",
-    cols: 2,
-    featured: true
-  },
-  {
-    img: UserImage,
-    title: "Tasty burger",
-    author: "director90"
-  },
-  {
-    img: UserImage,
-    title: "Camera",
-    author: "Danson67"
-  }
-];
-export const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
-  },
-  gridList: {
-    flexWrap: "nowrap",
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
-  }
-}));
-export const UIGridList = props => {
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      //  one spot:  tileData={this.state.tileData}/////
-      <GridList className={classes.gridList} cols={2.5}>
-         
-                    //  {props.tileData.map(tile => (
-                    //     <GridListTile key={tile.img}>
-                    //         <img src={tile.img} alt={tile.title} />
-                    //         <GridListTileBar
-                    //         title={tile.title}
-                    //         classes={{
-                    //             root: classes.titleBar,
-                    //             title: classes.title,
-                    //         }}
-                    //         actionIcon={
-                    //             <IconButton aria-label={`star ${tile.title}`}>
-                    //             <StarBorderIcon className={classes.title} /> 
-                    //             </IconButton>
-                    //         }
-                    //         />
-                    //     </GridListTile>
-                    //     ))}
-                     
-      </GridList>
-    </div>
-  );
-};
-*/
