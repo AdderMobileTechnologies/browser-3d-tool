@@ -252,3 +252,6 @@ which goes to ....
     setOpen(false);
   };
 
+Tuesday 9-17-2019 :
+Plan:  Try to isolate anywhere the modal is opened or closed. 
+Pay special attention to the strange callback .

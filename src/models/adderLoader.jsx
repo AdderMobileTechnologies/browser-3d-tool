@@ -6,7 +6,7 @@
  */
 import BABYLON from "babylonjs";
 import * as K from "../constants";
-import { Scene } from "babylonjs";
+//import { Scene } from "babylonjs";
 import AdderSceneWrapper from "./adderSceneWrapper";
 //models
 import AdderModel from "./adderModel";
@@ -77,7 +77,7 @@ class AdderLoader {
         for (let index in behavior) {
           let currentStrategy = behavior[index]["strategy"];
           //Usage: Set-Selectable-Meshes
-          if (currentStrategy == "select") {
+          if (currentStrategy === "select") {
             let selectParams = behavior[index]["parameters"];
             for (let meshIndex in selectParams["pickableMeshes"]) {
               let currentPickableMeshName =
@@ -89,7 +89,7 @@ class AdderLoader {
             }
           }
           //Usage: Set-Hidden-Meshes
-          if (currentStrategy == "hidden") {
+          if (currentStrategy === "hidden") {
             let hiddenParams = behavior[index]["parameters"];
             for (let meshIndex in hiddenParams["hiddenMeshes"]) {
               let currentHiddenMeshName =
@@ -128,11 +128,10 @@ class AdderLoader {
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
       let behavior = adderAsset.getBehavior();
 
-      let dir = adderAsset.getDir();
       let filename = adderAsset.getFilename();
       let filepath = adderAsset.getFilepath();
       //////////////////////////////////////////////////////////////
-      //let modelFile = dir + "/" + filename + `.babylon`;
+
       let modelFile = filepath;
       console.log("model path to file modelFile:", modelFile);
       ///////////////////////////////////////////////////////////////////

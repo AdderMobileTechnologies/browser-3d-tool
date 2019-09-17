@@ -3,14 +3,14 @@
  * Purpose:
  * To manage the cascading select options available to the user during the design process.
  */
-import { Scene } from "babylonjs";
+//import { Scene } from "babylonjs";
 import React from "react";
 import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "../constants";
 import axios from "axios";
 import AdderAsset from "../models/adderAsset";
-import AdderSceneWrapper from "../models/adderSceneWrapper";
+//import AdderSceneWrapper from "../models/adderSceneWrapper";
 import Grid from "@material-ui/core/Grid"; //
 
 import "./minimum.css";
@@ -47,7 +47,7 @@ class Designer extends React.Component {
   adType_callback = data => {
     console.log("adType_callback data:", data);
     this.props.callback("-1");
-    if (data.selectedOption != "-1") {
+    if (data.selectedOption !== "-1") {
       this.resetDesign();
 
       let array = [];
@@ -74,7 +74,7 @@ class Designer extends React.Component {
   };
   subType_callback = data => {
     console.log("subType_callback data:", data);
-    if (data.selectedOption != "-1") {
+    if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
 
@@ -99,7 +99,7 @@ class Designer extends React.Component {
   };
   detail_callback = data => {
     console.log("detail_callback data:", data);
-    if (data.selectedOption != "-1") {
+    if (data.selectedOption !== "-1") {
       let assetSelected = data.selectedOption;
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
@@ -178,7 +178,7 @@ class Designer extends React.Component {
       <div className="designer">
         <div>designer.jsx</div>
         <Grid container>
-          <Grid item={4}>
+          <Grid item xs={4}>
             {this.state.isOnAdType && (
               <UISelect
                 id={"ad_type"}
@@ -187,7 +187,7 @@ class Designer extends React.Component {
               ></UISelect>
             )}
           </Grid>
-          <Grid item={4}>
+          <Grid item xs={4}>
             {this.state.isOnSubType && (
               <UISelect
                 id={"sub_type"}
@@ -196,7 +196,7 @@ class Designer extends React.Component {
               ></UISelect>
             )}
           </Grid>
-          <Grid item={4}>
+          <Grid item xs={4}>
             {this.state.isOnDetail && (
               <UISelect
                 id={"detail"}

@@ -16,14 +16,8 @@ ie.
 rotationAxis = null,
 rotationAngle = null,
 */
-import {
-  Mesh,
-  Vector3,
-  Quaternion,
-  Texture,
-  StandardMaterial,
-  Scene
-} from "babylonjs";
+import { Mesh, Vector3, Texture, StandardMaterial, Scene } from "babylonjs";
+//removed:  Quaternion,
 
 class AdderMeshWrapper {
   constructor(mesh = null, position = null, rotation = null) {
@@ -67,6 +61,7 @@ class AdderMeshWrapper {
     };
 
     this.onEvent = e => {
+      //terminal error:  'listener' is defined but never used    no-unused-vars
       for (let listener of _arrayOfListeners) {
         listener(e);
       }

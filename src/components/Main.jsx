@@ -18,21 +18,21 @@ import AdderSceneWrapper from "../models/adderSceneWrapper";
 //import Grid from "@material-ui/core/Grid"; //
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
 import "tui-image-editor/dist/tui-image-editor.css";
-import AdderImageEditor from "./AdderImageEditor";
+//import AdderImageEditor from "./AdderImageEditor";
 import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
-import UIButton from "./subcomponents/elements/UIButton";
-import MUI_AlertDialog from "./subcomponents/MUI_AlertDialog";
+//import UIButton from "./subcomponents/elements/UIButton";
+import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
 //////////////////////////////////////////
 
 //TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
 
 import "./minimum.css";
 import "./Main.css";
-import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
-import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
-import { makeStyles } from "@material-ui/core/styles";
+//import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
+//import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
+//import { makeStyles } from "@material-ui/core/styles";
 
 import * as K from "../constants"; // Required for GridList ( screenshots)
 import UITextInput from "./subcomponents/elements/UITextInput";
@@ -141,7 +141,7 @@ class Main extends React.Component {
       let lastIndex = old_actions.length - 1;
       let lastAction = null;
       for (let i in old_actions) {
-        if (i == lastIndex) {
+        if (i === lastIndex) {
           lastAction = old_actions[i];
         }
       }
@@ -164,8 +164,8 @@ class Main extends React.Component {
   }
   undo_screenshot(args) {
     if (
-      args.from != "" &&
-      args.from != "empty dataURL" &&
+      args.from !== "" &&
+      args.from !== "empty dataURL" &&
       typeof args.from != "undefined"
     ) {
       const array_image_models = scope.state.images.slice();
@@ -202,8 +202,8 @@ class Main extends React.Component {
 
   undo_ApplyTextureToMesh(args) {
     console.log("  undo_ApplyTextureToMesh(args) args:", args);
-    if (args.from != "" && typeof args.from != "undefined") {
-      if (args.from != "empty dataURL") {
+    if (args.from !== "" && typeof args.from != "undefined") {
+      if (args.from !== "empty dataURL") {
         //here we need to reapply original texture.
         //which is done where? adderLoader?
       } else {
@@ -447,7 +447,7 @@ class Main extends React.Component {
       let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
 
       //USAGE: Sidebar-Selection
-      let selectableMeshes = [];
+      // let selectableMeshes = [];
       let hoodMeshId = null,
         leftMeshId = null,
         roofMeshId = null,
@@ -537,7 +537,7 @@ class Main extends React.Component {
     console.log("- - - - screenshotButtonPress :evt:", evt);
     let engine = this.state.engine; //was embedded under Ad_Scene in version 1
     let camera = this.state.camera;
-    let stateScope = this.state;
+    //let stateScope = this.state;
     let that = this;
 
     function addScreenshot(src) {
@@ -992,7 +992,7 @@ class Main extends React.Component {
               callback={this.callback_designer}
               callback_withModelInfo={this.callback_withModelInfo}
             ></Designer>
-            {this.state.selected_ad_type == "0" && (
+            {this.state.selected_ad_type === "0" && (
               <SidebarSelectorVehicles
                 data={{
                   hoodMeshId: this.state.hoodMeshId,
@@ -1004,7 +1004,7 @@ class Main extends React.Component {
                 callback={this.sidebarButtonClickAlt}
               ></SidebarSelectorVehicles>
             )}
-            {this.state.selected_ad_type == "1" && (
+            {this.state.selected_ad_type === "1" && (
               <SidebarSelectorBillboards
                 data={{
                   sign1MeshId: this.state.sign1MeshId,
@@ -1047,10 +1047,10 @@ class Main extends React.Component {
         {/**   DEV : commented out while trying to debug issue with modal opening twice, 
         // HOWEVER: this is an important component of the "DELETE" design process.....
         //commenting it out did not solve the problem  */}
-        <MUI_AlertDialog
+        <MUIAlertDialog
           callback_Yes={this.callback_DeleteYes}
           callback_No={this.callback_DeleteNo}
-        ></MUI_AlertDialog>
+        ></MUIAlertDialog>
       </div>
     );
   }

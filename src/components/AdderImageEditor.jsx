@@ -26,10 +26,11 @@ const modalStyle = {
   width: "100%",
   height: "800px"
 };
+/*
 const footerRowStyle = {
   height: "32px",
   width: "100%"
-};
+};*/
 const footerStyleNoHover = {
   height: "32px",
   width: "100%",
