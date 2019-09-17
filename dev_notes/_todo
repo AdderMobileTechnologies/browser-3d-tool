@@ -126,3 +126,129 @@ Left off with REDO .
 
 
 Check if The Right Side Selection of the porsche is similar to the meta data issue we dealt with last week with the billboards.
+
+// for adderSceneWrapper 
+getDefaultMaterialForMeshId(mesh_id) {
+    let ModelsArray = this.getModels();
+    let meshMat = null;
+    for (let mIndex in ModelsArray) {
+      let _model = ModelsArray[mIndex];
+      let _meshWrappers = _model.getMeshWrappers();
+      for (let mwIndex in _meshWrappers) {
+        let _meshWrapper = _meshWrappers[mwIndex];
+        let _mesh = _meshWrapper.getMesh();
+        if (_mesh.id === mesh_id) {
+          meshMat = _mesh.material;
+          console.log("MESH MATERIAL DEFAULT gotten for mesh.id");
+          return meshMat;
+        }
+      }
+    }
+    return meshMat;
+  }
+  applyMaterialToMeshId(mesh_id, material) {
+    let ModelsArray = this.getModels();
+
+    for (let mIndex in ModelsArray) {
+      let _model = ModelsArray[mIndex];
+      let _meshWrappers = _model.getMeshWrappers();
+      for (let mwIndex in _meshWrappers) {
+        let _meshWrapper = _meshWrappers[mwIndex];
+        let _mesh = _meshWrapper.getMesh();
+        if (_mesh.id === mesh_id) {
+          _mesh.material = material;
+          //or should we have a meshWrapper  setMaterial method ?
+        }
+      }
+    }
+  }
+
+// I also had some of the redo working for design name....
+
+//The environment.js file and the .gitignore 
+
+
+
+  // TODO notes:
+  
+/*
+Check if The Right Side Selection of the porsche is similar to the meta data issue we dealt with last week with the billboards.
+
+
+When a mesh is selected for a change in texture , grab it's default material ie. mesh.material 
+sidebarButtonClickAlt(args)   args.name or e.target.name = mesh.id 
+so I'd use adderSceneWrapper to find meshWrapper and get the original material from it.
+
+ie.
+//adderSceneWrapper.getDefaultMaterialForMeshId(mesh_id)
+
+
+
+undo_ApplyTextureToMesh
+
+
+OR 
+
+	var whiteMat = new BABYLON.StandardMaterial("whiteMat", scene);
+	whiteMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+   whiteSphere.material = whiteMat;
+
+   environment.js file 
+
+   .gitignore 
+
+
+*/
+
+// MAIN PROBLEM: The Modal Editor on and off behavior...
+1) user selects a mesh modal pops up like supposed to.
+2) user closes the modal, it pops up again by itself. 
+3) user closes the second one,
+4) now the modal is unresponsive to clicks and leaves the Open Image Editor button on the page.
+
+
+start_editing is TRUE modal pops up 
+chnage made in modal and 
+AdderImageEditor.jsx
+ onApplyClick() {
+    //console.log(this.imageEditor.toDataURL({ format: "png" }));
+    //data to apply to an image class of the current model/mesh.
+    let DataURL = this.imageEditor.toDataURL({ format: "png" });
+    this.onApplyCallback(DataURL);
+  }
+
+
+goes back to ...
+
+MUI_DraggableDialog.jsx 
+  <DialogContentText>
+            <AdderImageEditor
+              height={800}
+              width={1000}
+              mesh_id={props.mesh_id}
+              onApplyCallback={handleImageEditorResults}
+            />
+          </DialogContentText>
+
+which goes to ....
+
+   const handleImageEditorResults = dataURL => {
+    //Usage: Editing-Mesh
+
+    props.imageEditorCallback(dataURL);
+    setOpen(false);
+  };
+
+  /////////////////////////////////////////
+  I have a hunch that I'm doing something wrong in regards to this...  setOpen true/false and React.useState.
+  export default function DraggableDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
