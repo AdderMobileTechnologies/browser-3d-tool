@@ -52,12 +52,12 @@ export default function SidebarSelectorVehicles(props) {
       <Grid container spacing={3}>
         <Grid item xs>
           <button
-            className="buttonSidebar xbuttonRight"
-            id="buttonRight"
-            name={props.data["rightMeshId"]}
+            className="buttonSidebar xbuttonLeft"
+            id="buttonLeft"
+            name={props.data["leftMeshId"]}
             onClick={handleSubcomponentClick}
           >
-            RIGHT
+            LEFT
           </button>
         </Grid>
         <Grid item xs>
@@ -72,12 +72,12 @@ export default function SidebarSelectorVehicles(props) {
         </Grid>
         <Grid item xs>
           <button
-            className="buttonSidebar xbuttonLeft"
-            id="buttonLeft"
-            name={props.data["leftMeshId"]}
+            className="buttonSidebar xbuttonRight"
+            id="buttonRight"
+            name={props.data["rightMeshId"]}
             onClick={handleSubcomponentClick}
           >
-            LEFT
+            RIGHT
           </button>
         </Grid>
       </Grid>
