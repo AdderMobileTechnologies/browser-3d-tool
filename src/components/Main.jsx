@@ -75,7 +75,7 @@ class Main extends React.Component {
         },
         designs: [],
         designModel: {
-          designName: "Brand New Design Name",
+          designName: "",
           adTypeFilepath: "",
           environment: "",
           environment_type: "",
@@ -951,7 +951,7 @@ class Main extends React.Component {
             </Grid>
           </Grid>
           <Grid item xs={8}>
-            <Grid container style={{ border: "dotted 1px blue" }}>
+            <Grid container>
               <div className="adder-3dTool-canvas-container">
                 <canvas
                   id="adder_3dTool_canvas"
@@ -967,14 +967,12 @@ class Main extends React.Component {
               </div>
             </Grid>
             <Grid container>
-              icon grid and screenshots
               <Grid
                 container
                 id={"iconParentContainer"}
                 style={{
                   marginTop: "25px",
-                  marginBottom: "5px",
-                  border: "dotted 1px purple"
+                  marginBottom: "5px"
                 }}
               >
                 <IconControlGroup
@@ -992,20 +990,19 @@ class Main extends React.Component {
                 ></IconControlGroup>
 
                 <Grid item xs={9} id={"iconRow1screenshots_row"}>
-                  <Grid item style={{ border: "dotted 1px green" }}>
+                  <Grid item>
                     <UIGridList tileData={this.state.tileData} />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={4} style={{ border: "dotted 1px black" }}>
-            <Grid container style={{ border: "dotted 1px black" }}>
-              <Grid item xs={1} style={{ border: "dotted 1px red" }}></Grid>
+          <Grid item md={4}>
+            <Grid container>
+              <Grid item xs={1}></Grid>
               <div
                 className="design-controls"
                 style={{
-                  border: "dotted 1px orange",
                   width: "80%",
                   marginLeft: "auto",
                   marginRight: "auto"
@@ -1015,8 +1012,8 @@ class Main extends React.Component {
                   item
                   md={10}
                   style={{
-                    border: "dotted 1px blue",
                     width: "100%",
+                    marginTop: "30px",
                     marginLeft: "auto",
                     marginRight: "auto"
                   }}
@@ -1039,7 +1036,7 @@ class Main extends React.Component {
                     label="Design Name"
                     value={this.state.userSession.designModel.designName}
                     callback={this.callback_UITextInput}
-                    placeholder="Enter a Design Name"
+                    placeholder="Enter Design Name"
                   />
                   <Designer
                     scene={this.state.scene}
@@ -1048,6 +1045,19 @@ class Main extends React.Component {
                     callback={this.callback_designer}
                     callback_withModelInfo={this.callback_withModelInfo}
                   ></Designer>
+
+                  {this.state.selected_ad_type === "0" && (
+                    <p className="sidebar-call-to-action">
+                      Select a Component to Edit
+                    </p>
+                  )}
+
+                  {this.state.selected_ad_type === "1" && (
+                    <p className="sidebar-call-to-action">
+                      Select a Component to Edit
+                    </p>
+                  )}
+
                   {this.state.selected_ad_type === "0" && (
                     <SidebarSelectorVehicles
                       data={{
@@ -1071,7 +1081,7 @@ class Main extends React.Component {
                   )}
                 </Grid>
               </div>
-              <Grid item md={1} style={{ border: "dotted 1px red" }}></Grid>
+              <Grid item md={1}></Grid>
             </Grid>
           </Grid>
         </Grid>

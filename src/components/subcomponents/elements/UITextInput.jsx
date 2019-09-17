@@ -33,7 +33,7 @@ class UITextInput extends Component {
   render() {
     return (
       <div className="ui-text-input-group">
-        <label className="ui-text-input-label">{this.props.label}</label>
+        {/** <label className="ui-text-input-label">{this.props.label}</label> */}
         <input
           className="ui-text-input"
           value={this.state.value}

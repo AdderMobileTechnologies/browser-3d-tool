@@ -35,11 +35,7 @@ export const UIGridList = props => {
   return (
     <div className={classes.root}>
       {/**   one spot:  tileData={this.state.tileData} */}
-      <GridList
-        className={classes.gridList}
-        cols={3.5}
-        style={{ border: "dashed 1px blue" }}
-      >
+      <GridList className={classes.gridList} cols={3.5}>
         {props.tileData.map(tile => (
           <GridListTile
             key={tile.img}

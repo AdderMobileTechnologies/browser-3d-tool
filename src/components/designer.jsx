@@ -176,7 +176,7 @@ class Designer extends React.Component {
   render() {
     return (
       <div className="designer">
-        <div>designer.jsx</div>
+        <hr />
         <Grid container>
           <Grid item xs={4}>
             {this.state.isOnAdType && (
@@ -206,6 +206,7 @@ class Designer extends React.Component {
             )}
           </Grid>
         </Grid>
+        <hr style={{ marginTop: "25px" }} />
       </div>
     );
   }

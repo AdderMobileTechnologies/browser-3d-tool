@@ -10,4 +10,10 @@
 
 .ui-text-input {
     padding-left: 10px;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.5em;
+    border: none;
+    background-color: #eee;
 }

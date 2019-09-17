@@ -38,7 +38,7 @@ export default function SidebarSelectorBillboards(props) {
       <Grid container spacing={3}>
         <Grid item xs>
           <button
-            className="buttonSidebar xbuttonLeft"
+            className="buttonSidebar  "
             id="buttonLeft"
             name={props.data["sign1MeshId"]}
             onClick={handleSubcomponentClick}
@@ -49,7 +49,7 @@ export default function SidebarSelectorBillboards(props) {
         <Grid item xs></Grid>
         <Grid item xs>
           <button
-            className="buttonSidebar xbuttonRight"
+            className="buttonSidebar  "
             id="buttonRight"
             name={props.data["sign2MeshId"]}
             onClick={handleSubcomponentClick}
