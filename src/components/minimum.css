@@ -111,10 +111,10 @@
     border: none;
     font-size: .8em;
     background-color: #fff;
-    box-shadow: 2px 10x 10x #888;
     padding: 3px;
     padding-left: 15px;
     padding-right: 15px;
+    box-shadow: 1px 1px 10px 1px #ddd;
 }
 
 .designer {
@@ -150,19 +150,6 @@
     /*box-shadow: 10px 10px 10px #ccc;*/
 }
 
-/* Grid List        */
-
-ul.MuiGridList-root li li {
-    margin: 2px !important;
-    border: solid 1px #ccc;
-    border-radius: 10px;
-}
-
-ul.MuiGridList-root li li img {
-    height: 150px;
-    max-height: 150px;
-}
-
 /* Uncategorized            */
 
 .red {
@@ -186,21 +173,29 @@ ul.MuiGridList-root li li img {
  
 */
 
+/*
 #screenshots_container {
     height: 200px;
     width: 1024px;
     overflow-y: scroll;
     overflow-x: scroll;
     background-repeat: no-repeat;
-    border: solid 3px #eeed;
-    /*solid 1px #ccc;*/
+    border: solid 3px red;
+   
     border-radius: 0px;
     margin: 15px;
     float: left;
-    /*box-shadow: 5px 5px 5px #111;*/
+   
 }
+*/
 
 /* Grid List        */
+
+/* Grid List        */
+
+.makeStyles-gridList-124 {
+    height: 100px !important;
+}
 
 ul.MuiGridList-root li li {
     margin: 2px !important;
@@ -209,6 +204,6 @@ ul.MuiGridList-root li li {
 }
 
 ul.MuiGridList-root li li img {
-    height: 150px;
-    max-height: 150px;
+    height: 100px;
+    max-height: 100px;
 }

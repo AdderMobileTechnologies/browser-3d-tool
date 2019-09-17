@@ -26,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
-
+    backgroundColor: "#eee",
     height: "150px"
   }
 }));
@@ -34,16 +34,14 @@ export const UIGridList = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {/**   one spot:  tileData={this.state.tileData} */}
       <GridList className={classes.gridList} cols={3.5}>
         {props.tileData.map(tile => (
           <GridListTile
             key={tile.img}
             style={{
-              borderRadius: "30px !important",
               marginRight: "10px",
-              height: "125px",
-              maxHeight: "125px"
+              height: "80px",
+              maxHeight: "80px"
             }}
           >
             <img src={tile.img} alt={tile.title} style={{}} />

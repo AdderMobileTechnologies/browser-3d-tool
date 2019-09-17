@@ -17,6 +17,7 @@ import Designer from "./designer";
 import AdderSceneWrapper from "../models/adderSceneWrapper";
 //import Grid from "@material-ui/core/Grid"; //
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
+import UserImage from "../assets/Adder_3D_Tool2/contact_photo.png";
 import "tui-image-editor/dist/tui-image-editor.css";
 //import AdderImageEditor from "./AdderImageEditor";
 import AdderSkyBox from "../models/adderSkybox";
@@ -136,29 +137,36 @@ class Main extends React.Component {
 
   iconUndo() {
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-
+    console.log("OLD ACTIONS:", old_actions);
     if (old_actions.length > 0) {
       let lastIndex = old_actions.length - 1;
-      let lastAction = null;
+      console.log("lastIndex:", lastIndex);
+      let lastAction = {};
       for (let i in old_actions) {
-        if (i === lastIndex) {
+        console.log("i:", i);
+        if (i == lastIndex) {
+          console.log("i:", i, "lastIndex:", lastIndex);
           lastAction = old_actions[i];
         }
       }
-
-      switch (lastAction.action) {
-        case "change_name":
-          scope.undo_UITextInput(lastAction);
-          break;
-        case "applyTextureToMesh":
-          scope.undo_ApplyTextureToMesh(lastAction);
-          break;
-        case "screenshot":
-          scope.undo_screenshot(lastAction);
-          break;
-        default:
-          console.log("no match for action: ", lastAction.action);
-          break;
+      console.log("lastAction:", lastAction);
+      if (lastAction !== null && typeof lastAction !== "undefined") {
+        switch (lastAction.action) {
+          case "change_name":
+            scope.undo_UITextInput(lastAction);
+            break;
+          case "applyTextureToMesh":
+            scope.undo_ApplyTextureToMesh(lastAction);
+            break;
+          case "screenshot":
+            scope.undo_screenshot(lastAction);
+            break;
+          default:
+            console.log("no match for action: ", lastAction.action);
+            break;
+        }
+      } else {
+        console.log("welp...? something not defined.");
       }
     }
   }
@@ -657,6 +665,7 @@ class Main extends React.Component {
   } //
   componentDidMount() {
     localStorage.removeItem("actions_array");
+
     let scope = this;
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
@@ -684,7 +693,7 @@ class Main extends React.Component {
         canvas,
         "ArcRotateCamera",
         "AdderCam_One",
-        Math.PI / 4,
+        Math.PI / 2.5,
         Math.PI / 4,
         30,
         BABYLON.Vector3.Zero(),
@@ -927,18 +936,13 @@ class Main extends React.Component {
   render() {
     return (
       <Grid container>
-        <Grid
-          container
-          spacing={0}
-          id="ParentContainer"
-          style={{ border: " dotted 1px  lightblue " }}
-        >
+        <Grid container spacing={0} id="ParentContainer">
           <Grid
             container
             item
             xs={12}
             id="Header"
-            style={{ marginTop: "10px", border: " dotted 1px  lightblue " }}
+            style={{ marginTop: "10px" }}
           >
             <Grid item xs={4} id="LogoContainer">
               <img
@@ -949,6 +953,47 @@ class Main extends React.Component {
                 alt="Adder Logo"
               />
             </Grid>
+            <Grid item xs={2} id="LogoContainer"></Grid>
+            <Grid item xs={2} id="LogoContainer"></Grid>
+            <Grid item xs={1} id="LogoContainer"></Grid>
+            <Grid item xs={2} id="LogoContainer">
+              <Grid
+                container
+                style={{
+                  backgroundColor: "#afafaf",
+                  marginTop: "10px",
+                  height: "40px",
+                  padding: "0px",
+
+                  borderRadius: "16px",
+                  boxShadow: "3px 3px 8px #2f2f2f"
+                }}
+              >
+                <Grid item xs={3}>
+                  <img
+                    src={UserImage}
+                    className="UserImage"
+                    style={{ height: "40px" }}
+                    alt="The User Profile"
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <p
+                    style={{
+                      fontSize: "1em",
+                      color: "#2f2f2f",
+                      margin: "0px",
+                      lineHeight: "40px",
+                      textJustify: "center",
+                      textAlign: "center"
+                    }}
+                  >
+                    Ed Jellico
+                  </p>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={1} id="LogoContainer"></Grid>
           </Grid>
           <Grid item xs={8}>
             <Grid container>
@@ -990,8 +1035,20 @@ class Main extends React.Component {
                 ></IconControlGroup>
 
                 <Grid item xs={9} id={"iconRow1screenshots_row"}>
-                  <Grid item>
-                    <UIGridList tileData={this.state.tileData} />
+                  <Grid
+                    container
+                    style={{
+                      padding: "15px",
+                      backgroundColor: "#eee",
+                      borderRadius: "20px"
+                    }}
+                  >
+                    <Grid item style={{ textAlign: "left" }}>
+                      My Designs
+                    </Grid>
+                    <Grid item>
+                      <UIGridList tileData={this.state.tileData} />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
