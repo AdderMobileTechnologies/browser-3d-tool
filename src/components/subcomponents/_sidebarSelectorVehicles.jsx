@@ -15,69 +15,138 @@ export default function SidebarSelectorVehicles(props) {
   };
 
   return (
-    <div>
-      {" "}
-      <Grid
-        item
-        xs={12}
-        style={{
-          backgroundImage: "url(" + GrayCar + ")",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          height: "300px",
-          backgroundPosition: "center"
-        }}
-      >
-        <div
-          className="relativeContainer car"
-          id="ButtonContainer"
-          style={{ height: "300px", position: "relative" }}
-        >
-          <p>Select a Component to Edit</p>
-
-          {/**onClick={props.clickHood} */}
+    <Grid
+      container
+      style={{
+        backgroundImage: "url(" + GrayCar + ")",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        height: "300px",
+        backgroundPosition: "center"
+      }}
+    >
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonHood"
+            className="buttonSidebar xbuttonHood"
             id="buttonHood"
             name={props.data["hoodMeshId"]}
             onClick={handleSubcomponentClick}
           >
             HOOD
           </button>
+        </Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonLeft"
-            id="buttonLeft"
-            name={props.data["leftMeshId"]}
-            onClick={handleSubcomponentClick}
-          >
-            LEFT
-          </button>
-          <button
-            className="buttonSidebar buttonRoof"
-            id="buttonRoof"
-            name={props.data["roofMeshId"]}
-            onClick={handleSubcomponentClick}
-          >
-            ROOF
-          </button>
-          <button
-            className="buttonSidebar buttonRight"
+            className="buttonSidebar xbuttonRight"
             id="buttonRight"
             name={props.data["rightMeshId"]}
             onClick={handleSubcomponentClick}
           >
             RIGHT
           </button>
+        </Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonTrunk"
+            className="buttonSidebar xbuttonRoof"
+            id="buttonRoof"
+            name={props.data["roofMeshId"]}
+            onClick={handleSubcomponentClick}
+          >
+            ROOF
+          </button>
+        </Grid>
+        <Grid item xs>
+          <button
+            className="buttonSidebar xbuttonLeft"
+            id="buttonLeft"
+            name={props.data["leftMeshId"]}
+            onClick={handleSubcomponentClick}
+          >
+            LEFT
+          </button>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs>
+          <button
+            className="buttonSidebar xbuttonTrunk"
             id="buttonTrunk"
             name={props.data["trunkMeshId"]}
             onClick={handleSubcomponentClick}
           >
             TRUNK
           </button>
-        </div>
+        </Grid>
+        <Grid item xs></Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 }
+
+/*
+<div
+className="relativeContainer car"
+id="ButtonContainer"
+style={{ height: "300px", position: "relative" }}
+>
+<p>Select a Component to Edit</p>
+
+ 
+<button
+  className="buttonSidebar buttonHood"
+  id="buttonHood"
+  name={props.data["hoodMeshId"]}
+  onClick={handleSubcomponentClick}
+>
+  HOOD
+</button>
+<button
+  className="buttonSidebar buttonLeft"
+  id="buttonLeft"
+  name={props.data["leftMeshId"]}
+  onClick={handleSubcomponentClick}
+>
+  LEFT
+</button>
+<button
+  className="buttonSidebar buttonRoof"
+  id="buttonRoof"
+  name={props.data["roofMeshId"]}
+  onClick={handleSubcomponentClick}
+>
+  ROOF
+</button>
+<button
+  className="buttonSidebar buttonRight"
+  id="buttonRight"
+  name={props.data["rightMeshId"]}
+  onClick={handleSubcomponentClick}
+>
+  RIGHT
+</button>
+<button
+  className="buttonSidebar buttonTrunk"
+  id="buttonTrunk"
+  name={props.data["trunkMeshId"]}
+  onClick={handleSubcomponentClick}
+>
+  TRUNK
+</button>
+</div>
+*/
