@@ -694,7 +694,7 @@ class Main extends React.Component {
         "ArcRotateCamera",
         "AdderCam_One",
         Math.PI / 2.5,
-        Math.PI / 4,
+        Math.PI / 3,
         30,
         BABYLON.Vector3.Zero(),
         scene,
@@ -1046,6 +1046,11 @@ class Main extends React.Component {
                     <Grid item style={{ textAlign: "left" }}>
                       My Designs
                     </Grid>
+                    {/**  
+                        Style Notes for GridList: The slider view for screenshots.
+                        styles are located in minimum.css as well as in constants.jsx
+                      
+                      */}
                     <Grid item>
                       <UIGridList tileData={this.state.tileData} />
                     </Grid>
