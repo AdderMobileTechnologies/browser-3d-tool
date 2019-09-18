@@ -1,6 +1,20 @@
 import React from "react";
 //import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
+//icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCoffee,
+  faBinoculars,
+  faFillDrip,
+  faCamera,
+  faTextsize,
+  faLock,
+  faCrop,
+  faObjectGroup
+} from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faCoffee} />;
 
 export default function OverlayControlsLeft(props) {
   console.log("OverlayControls: props:", props);
