@@ -105,8 +105,8 @@ class Main extends React.Component {
       undos: [],
       redos: [],
       meshPicked: false,
-      width: 600,
-      height: 250
+      width: 500,
+      height: 150
     };
 
     this.setUp = this.setUp.bind(this);
@@ -1049,25 +1049,53 @@ class Main extends React.Component {
                 ></IconControlGroup>
 
                 <Grid item xs={9} id={"iconRow1screenshots_row"}>
-                  <Grid
-                    container
-                    style={{
-                      padding: "15px",
-                      backgroundColor: "#eee",
-                      borderRadius: "20px"
-                    }}
-                  >
-                    <Grid item style={{ textAlign: "left" }}>
-                      My Designs
-                    </Grid>
-                    {/**  
-                        Style Notes for GridList: The slider view for screenshots.
-                        styles are located in minimum.css as well as in constants.jsx
-                      
-                      */}
-                    <Grid item>
-                      <UIGridList tileData={this.state.tileData} />
-                    </Grid>
+                  <Grid>
+                    <div>
+                      {/**
+              <button onClick={this.onClick} style={{ marginBottom: "10px" }}>
+              Reset first element's width/height
+            </button>
+             */}
+
+                      <div className="layoutRoot">
+                        <Resizable
+                          className="box"
+                          height={this.state.height}
+                          width={this.state.width}
+                          onResize={this.onResize}
+                          resizeHandles={["se"]}
+                          minConstraints={[600, 150]}
+                          maxConstraints={[1200, 300]}
+                        >
+                          <div
+                            className="box"
+                            style={{
+                              width: this.state.width + "px",
+                              height: this.state.height + "px",
+                              padding: "15px",
+                              backgroundColor: "#eee",
+                              borderRadius: "20px"
+                            }}
+                          >
+                            <Grid item style={{ textAlign: "left" }}>
+                              My Designs
+                            </Grid>
+                            {/**  
+                          Style Notes for GridList: The slider view for screenshots.
+                          styles are located in minimum.css as well as in constants.jsx
+                        
+                        */}
+                            <Grid item>
+                              <UIGridList
+                                tileData={this.state.tileData}
+                                width={this.state.width / 2 + "px"}
+                                height={this.state.height / 1.5 + "px"}
+                              />
+                            </Grid>
+                          </div>
+                        </Resizable>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
@@ -1161,51 +1189,10 @@ class Main extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid>
-          <div>
-            {/**
-              <button onClick={this.onClick} style={{ marginBottom: "10px" }}>
-              Reset first element's width/height
-            </button>
-             */}
 
-            <div className="layoutRoot">
-              <Resizable
-                className="box"
-                height={this.state.height}
-                width={this.state.width}
-                onResize={this.onResize}
-                resizeHandles={["se"]}
-              >
-                <div
-                  className="box"
-                  style={{
-                    width: this.state.width + "px",
-                    height: this.state.height + "px",
-                    padding: "15px",
-                    backgroundColor: "#eee",
-                    borderRadius: "20px"
-                  }}
-                >
-                  <Grid item style={{ textAlign: "left" }}>
-                    My Designs
-                  </Grid>
-                  {/**  
-                        Style Notes for GridList: The slider view for screenshots.
-                        styles are located in minimum.css as well as in constants.jsx
-                      
-                      */}
-                  <Grid item>
-                    <UIGridList tileData={this.state.tileData} />
-                  </Grid>
-                </div>
-              </Resizable>
-            </div>
-          </div>
-        </Grid>
         <Grid container>
           <Grid item xs={12}>
-            space
+            <div style={{ height: "100px", width: "100%" }}></div>
           </Grid>
         </Grid>
         {/**   DEV : commented out while trying to debug issue with modal opening twice, 

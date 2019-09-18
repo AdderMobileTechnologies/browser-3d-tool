@@ -27,7 +27,7 @@ export const useStyles = makeStyles(theme => ({
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
     backgroundColor: "#eee",
-    height: "150px"
+    height: "auto"
   }
 }));
 export const UIGridList = props => {
@@ -41,10 +41,13 @@ export const UIGridList = props => {
             key={timestamp + "_" + tile.img}
             style={{
               marginRight: "10px",
-              height: "80px",
-              maxHeight: "80px"
+              height: props.height,
+              width: props.width
             }}
           >
+            {/** take off max value so can resize :  maxHeight: "80px" 
+          can I send dimension props in for the style={{}} to use? 
+          */}
             <img src={tile.img} alt={tile.title} style={{}} />
             {/**
             <GridListTileBar
