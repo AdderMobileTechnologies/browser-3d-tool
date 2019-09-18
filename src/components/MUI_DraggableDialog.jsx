@@ -53,20 +53,28 @@ export default function DraggableDialog(props) {
     //Usage: Editing-Mesh
 
     props.imageEditorCallback(dataURL);
+
+    //setOpen(false); // added here to see if order of operations ws playing  role in this.
   };
 
   return (
     <div>
-      {/**  */}
+      {/**  
 
       <Button
         variant="outlined"
         color="primary"
-        onLoad={handleClickOpen}
+        //onLoad={handleClickOpen}
         onClick={handleClickOpen}
       >
         Open Image Editor
       </Button>
+      */}
+      {/** 
+       React limits the number of renders to prevent an infinite loop.
+      {props.isEditing && handleClickOpen()}
+      {!props.isEditing && handleClose()} 
+      */}
 
       <Dialog
         open={open}

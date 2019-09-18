@@ -11,6 +11,7 @@ export default function SidebarSelectorVehicles(props) {
     console.log("e.target.name =", e.target.name);
     console.log("props sent in during constructor:", props);
     let returnData = { id: e.target.id, name: e.target.name };
+    console.log("sidebar vehicles return data:", returnData);
     props.callback(returnData);
   };
 

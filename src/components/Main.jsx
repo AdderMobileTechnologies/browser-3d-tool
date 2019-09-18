@@ -66,6 +66,7 @@ class Main extends React.Component {
       selected_mesh_id: "",
       meta_data: {},
       startEditing: false,
+      finishedEditing: true,
       editing_mesh_id: "empty mesh",
       last_dataURL: "empty dataURL",
       selected_ad_type: -1,
@@ -115,6 +116,9 @@ class Main extends React.Component {
     this.screenshotButtonPress = this.screenshotButtonPress.bind(this);
     this.saveScreenshot = this.saveScreenshot.bind(this);
     this.save_UIAction = this.save_UIAction.bind(this);
+
+    this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
+    this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
 
     scope = this;
   }
@@ -365,11 +369,15 @@ class Main extends React.Component {
   sidebarButtonClickAlt(args) {
     console.log("Main:sidebarButtonClickAlt(args):", args);
     //Purpose: save new mesh to array of meshes in state
+    console.log("this vs scp ");
+    console.log("this:", this);
+    console.log("scp", scp);
+
     const obj = { mesh_name: args.name };
-    const newArray = scp.state.userSession.designModel.meshes.slice(); // Create a copy
+    const newArray = this.state.userSession.designModel.meshes.slice(); // Create a copy
     newArray.push(obj);
 
-    scp.setState(
+    this.setState(
       prevState => ({
         ...prevState,
         userSession: {
@@ -384,18 +392,26 @@ class Main extends React.Component {
       () => {
         //new_actions_array;
         // ALL THIS IS , IS the selection of a mesh and the opening of the image editor , no real change happends.
+        console.log(
+          "scp -> this.state.userSession.designModel.meshes:",
+          this.state.userSession.designModel.meshes
+        );
       }
     );
 
-    // scope.windowCallbackPickable(args.name);
-    scope.windowCallbackPickable(args.name);
+    // scope -> this.windowCallbackPickable(args.name);
+    console.log("scope -> this.windowCallbackPickable(args.name);");
+    this.windowCallbackPickable(args.name, "sidebarButtonClickAlt");
   }
 
   imageEditorCallback = dataURL => {
+    console.log("image editor callback ...");
     this.setState(
       {
         startEditing: false,
-        last_dataURL: dataURL
+        last_dataURL: dataURL,
+        finishedEditing: true
+        //meshPicked: false
       },
       () => {
         //need to make sure modal is set OFF in state , no async latency still does it.
@@ -431,30 +447,31 @@ class Main extends React.Component {
     );
   };
 
-  windowCallbackPickable(mesh_id) {
-    this.setState(
-      {
-        meshPicked: !this.state.meshPicked
-      },
-      () => {
-        console.log("state of meshPicked:", this.state.meshPicked);
-        if (this.state.meshPicked) {
-          console.log(". . . windowCallbackPickable ");
+  windowCallbackPickable(mesh_id, caller) {
+    if (!this.state.startEditing) {
+      console.log(
+        "______________windowCallbackPickable_____________________caller:",
+        caller,
+        " mesh_id:" + mesh_id
+      );
 
-          // Usage: Editing-Mesh
-          console.log("mesh_id:", mesh_id);
-          this.setState(
-            {
-              startEditing: true,
-              editing_mesh_id: mesh_id
-            },
-            () => {
-              console.log("editing mesh id:", mesh_id);
-            }
-          );
+      this.setState(
+        {
+          startEditing: true,
+          editing_mesh_id: mesh_id,
+          finishedEditing: false
+          //meshPicked: false
+        },
+        () => {
+          console.log("async after async...");
+          console.log("editing mesh id:", mesh_id);
         }
-      }
-    );
+      );
+    } else {
+      console.log("already editing ...");
+      console.log("this.state.startEditing:::", this.state.startEditing);
+      console.log("this.state.finishedEditing:::", this.state.finishedEditing);
+    }
   }
   // To hide or show the appropriate sidebar image and controls
   callback_designer(args = null, adderAsset = null) {
@@ -687,6 +704,12 @@ class Main extends React.Component {
     localStorage.removeItem("actions_array");
 
     let scope = this;
+
+    console.log("Main.jsx componentDidMount:::: this---scope---scp---");
+    console.log("this:", this);
+    console.log("scope:", scope);
+    console.log("scp:", scp);
+
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
@@ -773,13 +796,28 @@ class Main extends React.Component {
       engine.resize();
     });
 
-    window.addEventListener("click", function() {
-      //should only detect meshes where  isPickable = true;
-      let pickResult = scene.pick(scene.pointerX, scene.pointerY);
-      if (pickResult.pickedMesh === null) {
-        return false;
+    window.addEventListener("click", function(e) {
+      console.log("Main.jsx CLICK: EVENT");
+      console.log("e.target", e.target);
+
+      if (e.target.innerHTML == "Apply Image") {
+        console.log("HARD STOP !...");
       } else {
-        scope.windowCallbackPickable(pickResult.pickedMesh.name);
+        console.log("this:", this); //window
+        console.log("scope:", scope); //main
+        console.log("scp:", scp); //main
+        //should only detect meshes where  isPickable = true;
+        let pickResult = scene.pick(scene.pointerX, scene.pointerY);
+        if (pickResult.pickedMesh === null) {
+          console.log("CLICK: pickedMesh is NULL .....");
+          return false;
+        } else {
+          console.log("CLICK: continue to windowCallbackPickable .....");
+          scope.windowCallbackPickable(
+            pickResult.pickedMesh.name,
+            "eventListener"
+          );
+        }
       }
     });
   } //
@@ -1130,6 +1168,7 @@ class Main extends React.Component {
                           <DraggableDialog
                             imageEditorCallback={this.imageEditorCallback}
                             mesh_id={this.state.editing_mesh_id}
+                            isEditing={this.state.startEditing}
                           ></DraggableDialog>
                         </Grid>
                       </div>

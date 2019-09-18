@@ -322,3 +322,54 @@ render() {
 
 ok. found and applied a resizable box to the screenshots. 
 now to get them to expand with the box ... 
+
+1:00pm 
+Try to figure out the modal pop up issue. 
+THESE are all direct clicks on the mesh itself. ..................
+- create billboard , straight apply an image , all good. 
+- click other side, straight apply image , all good. 
+- open porsche, straighrt apply image, all good.
+- apply to other side othe car straight image no problem , all good. 
+- load the vw, apply straight image no problem .
+- applied straight image to the otherside all good. 
+
+NOW ... use the sidebar buttons. 
+load the two sided billboard , add image with the one button select , works, but then 
+-frozen can not select the other side of the billboard. with a 'direct click' BUT can select it with the other sidebar button
+TRY again:
+second time the sidebar button was frozen and ... I COULD click directly on sign two.
+
+now select porsche , left side from sidebar apply image all good. BUT can NOT direct select the right side,
+However if I use sidebar to select rightside it works ... 
+
+conclusions:
+1) definitely related to the sidebar buttons. 
+2) there is an alternating aspect that works , while using the same method for 2 consecutive times fails on the second.
+
+exceptions: 
+2 consecutive direct clicks on the vw worked.
+
+CHANGES: 
+
+    this.sidebarButtonClickAlt. = this.sidebarButtonClickAlt.bind(this) 
+     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
+
+     try to eliminate the 'scp and scope' factors.
+
+     AFTER windowCallbackPickable ,,, I needed to reset flag back to false. This fixed the back to back sidebar selection.
+     HOWEVER, upon a direct click afterwards on billboard I get the 'double popup and freeze.' 
+
+
+  Now repeated sidebar click s work until interrupted by a window click....
+
+  on 'Apply Image' it is calling past the flag for isEditing... a third time. 
+
+//==========================================================
+  open a model 
+  'direct click' 
+  edit 
+  apply image 
+  * modal pops back up 
+  close it 
+  THEN it never opens again via 'direct click'  OR 'via' sidebar buttons .
+  
