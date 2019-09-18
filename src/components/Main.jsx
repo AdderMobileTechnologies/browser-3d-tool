@@ -38,6 +38,13 @@ import "./Main.css";
 
 import * as K from "../constants"; // Required for GridList ( screenshots)
 import UITextInput from "./subcomponents/elements/UITextInput";
+
+//const Resizable = require('react-resizable').Resizable; // or,
+//const ResizableBox = require('react-resizable').ResizableBox;
+
+// ES6
+import { Resizable, ResizableBox } from "react-resizable";
+
 let scope;
 let scp;
 const UIGridList = K.UIGridList;
@@ -97,7 +104,9 @@ class Main extends React.Component {
       actions: [],
       undos: [],
       redos: [],
-      meshPicked: false
+      meshPicked: false,
+      width: 600,
+      height: 250
     };
 
     this.setUp = this.setUp.bind(this);
@@ -109,6 +118,16 @@ class Main extends React.Component {
 
     scope = this;
   }
+  // resizable functions
+
+  onClick = () => {
+    this.setState({ width: 200, height: 200 });
+  };
+
+  onResize = (event, { element, size, handle }) => {
+    this.setState({ width: size.width, height: size.height });
+  };
+  // end resizable
 
   resetUserSession() {
     this.setState({
@@ -1142,7 +1161,53 @@ class Main extends React.Component {
             </Grid>
           </Grid>
         </Grid>
+        <Grid>
+          <div>
+            {/**
+              <button onClick={this.onClick} style={{ marginBottom: "10px" }}>
+              Reset first element's width/height
+            </button>
+             */}
 
+            <div className="layoutRoot">
+              <Resizable
+                className="box"
+                height={this.state.height}
+                width={this.state.width}
+                onResize={this.onResize}
+                resizeHandles={["se"]}
+              >
+                <div
+                  className="box"
+                  style={{
+                    width: this.state.width + "px",
+                    height: this.state.height + "px",
+                    padding: "15px",
+                    backgroundColor: "#eee",
+                    borderRadius: "20px"
+                  }}
+                >
+                  <Grid item style={{ textAlign: "left" }}>
+                    My Designs
+                  </Grid>
+                  {/**  
+                        Style Notes for GridList: The slider view for screenshots.
+                        styles are located in minimum.css as well as in constants.jsx
+                      
+                      */}
+                  <Grid item>
+                    <UIGridList tileData={this.state.tileData} />
+                  </Grid>
+                </div>
+              </Resizable>
+            </div>
+          </div>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            space
+          </Grid>
+        </Grid>
         {/**   DEV : commented out while trying to debug issue with modal opening twice, 
         // HOWEVER: this is an important component of the "DELETE" design process.....
         //commenting it out did not solve the problem  */}

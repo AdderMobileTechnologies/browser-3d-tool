@@ -16,6 +16,22 @@ import CropIcon from "@material-ui/icons/Crop";
 import FormatColorFill from "@material-ui/icons/FormatColorFill";
 import TextFields from "@material-ui/icons/TextFields";
 
+//icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCoffee,
+  faBinoculars,
+  faFillDrip,
+  faCamera,
+  faTextsize,
+  faLock,
+  faCrop,
+  faObjectGroup,
+  faTextHeight
+} from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faCoffee} />;
+
 const iconStyle = {
   common: {
     width: "54px",
@@ -171,6 +187,63 @@ class UIButton extends Component {
             </button>
           </form>
         );
+      case "faCrop":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faCrop} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faFillDrip":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faFillDrip} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faTextHeight":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faTextHeight} />
+              </Avatar>
+            </button>
+          </form>
+        );
       default:
         alt = "null";
         src = null;
@@ -190,3 +263,13 @@ class UIButton extends Component {
 }
 
 export default UIButton;
+/*
+<FontAwesomeIcon icon={faCoffee} />
+<FontAwesomeIcon icon={faBinoculars} />
+<FontAwesomeIcon icon={faFillDrip} />
+<FontAwesomeIcon icon={faCamera} />
+ 
+<FontAwesomeIcon icon={faLock} />
+<FontAwesomeIcon icon={faCrop} />
+<FontAwesomeIcon icon={faObjectGroup} />
+*/

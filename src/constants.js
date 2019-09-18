@@ -32,12 +32,13 @@ export const useStyles = makeStyles(theme => ({
 }));
 export const UIGridList = props => {
   const classes = useStyles();
+  let timestamp = Date();
   return (
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={3.5}>
         {props.tileData.map(tile => (
           <GridListTile
-            key={tile.img}
+            key={timestamp + "_" + tile.img}
             style={{
               marginRight: "10px",
               height: "80px",

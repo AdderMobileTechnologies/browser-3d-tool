@@ -1,0 +1,23 @@
+//icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCoffee,
+  faBinoculars,
+  faFillDrip,
+  faCamera,
+  faTextsize,
+  faLock,
+  faCrop,
+  faObjectGroup
+} from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faCoffee} />;
+
+<FontAwesomeIcon icon={faCoffee} />
+<FontAwesomeIcon icon={faBinoculars} />
+<FontAwesomeIcon icon={faFillDrip} />
+<FontAwesomeIcon icon={faCamera} />
+{/**  <FontAwesomeIcon icon={faTextsize} />  */}
+<FontAwesomeIcon icon={faLock} />
+<FontAwesomeIcon icon={faCrop} />
+<FontAwesomeIcon icon={faObjectGroup} />
