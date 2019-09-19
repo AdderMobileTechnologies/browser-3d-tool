@@ -8,6 +8,7 @@ import AdderSceneWrapper from "../models/adderSceneWrapper";
 import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
+import AdderLoader from "../models/adderLoader";
 //components
 import DraggableDialog from "./MUI_DraggableDialog";
 import Designer from "./designer";
@@ -46,6 +47,7 @@ class Main extends React.Component {
     this.state = {
       scene: {},
       canvas: {},
+      last_adderAssetObject: "empty asset",
       sceneIsSet: false,
       engine: null,
       camera: null,
@@ -177,7 +179,10 @@ class Main extends React.Component {
             scope.undo_ApplyTextureToMesh(lastAction);
             break;
           case "screenshot":
-            scope.undo_screenshot(lastAction);
+            //scope.undo_screenshot(lastAction);
+            break;
+          case "change asset":
+            scope.undo_asset(lastAction);
             break;
           default:
             console.log("no match for action: ", lastAction.action);
@@ -205,6 +210,9 @@ class Main extends React.Component {
         case "screenshot":
           // scope.undo_screenshot(lastAction);
           break;
+        case "change asset":
+          scope.redo_asset(lastRedoAction);
+          break;
         default:
           console.log("no match for action: ", lastRedoAction.action);
           break;
@@ -230,10 +238,11 @@ class Main extends React.Component {
         ...prevState,
         images: array_image_models
       }));
-
+      /*
       let old_action_arrays =
         JSON.parse(localStorage.getItem("actions_array")) || [];
       if (old_action_arrays.length > 0) {
+        
         old_action_arrays.pop();
         localStorage.setItem(
           "actions_array",
@@ -252,16 +261,15 @@ class Main extends React.Component {
           "no more actions to remove from within the screenshots undo code. "
         );
       }
+      */
     }
   }
 
   undo_ApplyTextureToMesh(args) {
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
     if (old_actions.length > 0) {
-      let poppedAction = old_actions.pop();
-      this.reset_InsertIntoRedo(poppedAction);
-      localStorage.setItem("actions_array", JSON.stringify(old_actions));
-      //poppedAction.from
+      let poppedAction = scope.popOffAction();
+
       if (poppedAction.from != "empty dataURL") {
         this.state.adderSceneWrapper.applyTextureToMesh(
           poppedAction.id,
@@ -289,12 +297,73 @@ class Main extends React.Component {
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
     this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.to);
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-  undo_UITextInput(args) {
+  undo_asset(args) {
+    console.log("undo_Asset args:", args);
+    // pop off the 'TO' asset , move it into the redo array
+    //see the delete function for reference.
+    let poppedAction = scope.popOffAction();
+
+    let asw = scope.state.adderSceneWrapper;
+    asw.disposeOfMeshesForModel(args.id);
+    scope.setState({ selected_ad_type: -1 });
+    // TODO: reset the selects in Designer ?
+  }
+  // LEFT OFF HERE: Thur. 9-19-2019
+  // trying to redo the model/assets almost works but they get out of sync somehow...
+  // *porsche is not getting added back to the actions array the 2nd redo doesn't put the object back into actions array.
+
+  redo_asset(args) {
+    console.log("redo_Asset args:", args);
+    //pop off redo, push to actions
+    let poppedRedo = scope.popOffRedo();
+    //should handle pushing back into actions as well...
+    // so what will load it onto the canvas
+    console.log("reload with args:", args);
+    //adderSceneWrapper
+    console.log("do we have a scene wrapper....");
+    console.log(scope);
+    let asw = scope.getAdderSceneWrapper();
+    console.log("asw:", asw);
+    //asw.getUUID();
+    let adderAsset = new AdderAsset(
+      args.to.dir,
+      args.to.filename,
+      args.to.filepath,
+      args.to.position,
+      args.to.rotation,
+      args.to.scaling,
+      args.to.behavior,
+      asw
+    );
+    // TODO:
+    // 1)
+    scope.loadScene(adderAsset);
+    // 2)  define which meshes will be selectable. for the UI buttons
+    scope.defineSelectableMeshesForAdderAsset(adderAsset);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  popOffAction() {
+    //handles popping off actions array and pushing back into redo array
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
     let poppedAction = old_actions.pop();
     this.reset_InsertIntoRedo(poppedAction);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
+    return poppedAction;
+  }
+  popOffRedo() {
+    //todo:
+    let old_redos =
+      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    let poppedRedo = old_redos.pop();
+    this.reset_InsertIntoActions(poppedRedo);
+    localStorage.setItem("redo_actions_array", JSON.stringify(old_redos));
+    return poppedRedo;
+  }
+  undo_UITextInput(args) {
+    let poppedAction = scope.popOffAction();
     scope.setState(prevState => ({
       ...prevState,
       userSession: {
@@ -499,7 +568,7 @@ class Main extends React.Component {
     }
   }
   // To hide or show the appropriate sidebar image and controls
-  callback_designer(args = null, adderAsset = null) {
+  callback_Designer(args = null, adderAsset = null, adderAssetObject = null) {
     if (args === "-1") {
       scope.setState({ selected_ad_type: "-1" }); // reset ad type
     }
@@ -512,92 +581,107 @@ class Main extends React.Component {
     if (!(adderAsset instanceof AdderAsset)) {
       console.log("NOT AN ADDER ASSET yet....");
     } else {
-      let assetData = adderAsset.getBehavior();
-      //strategy:SELECT:parameters:pickableMeshes
-      let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
+      //HERE : we would save the 'adderAsset' that just got added to the canvas.
+      // if(this.state.last_adderAssetObject != "empty asset"){
 
-      //USAGE: Sidebar-Selection
-      // let selectableMeshes = [];
-      let hoodMeshId = null,
-        leftMeshId = null,
-        roofMeshId = null,
-        rightMeshId = null,
-        trunkMeshId = null;
+      // }
+      // save_UIAction(_id, _action, _to, _from)
+      scope.save_UIAction(
+        adderAsset.getFilepath(),
+        "change asset",
+        adderAssetObject,
+        scope.state.last_adderAssetObject
+      );
 
-      let sign1MeshId = null,
-        sign2MeshId = null;
-      for (let i in pickableMeshes) {
-        let pickableMesh = pickableMeshes[i];
-        let splitData = pickableMesh.split("_");
-        console.log("splitData:", splitData);
-        console.log("think in terms of future for other ad types....");
-        // ["billboard", "2sides", "angled", "sign", "1"]
-        // vs
-        //["vehicle", "2door", "sportscar", "leftside", "medium"]
-        if (splitData[0] === "vehicle") {
-          switch (splitData[3]) {
-            case "leftside":
-              leftMeshId = pickableMesh;
-              break;
-            case "rightside":
-              rightMeshId = pickableMesh;
-              break;
-            case "hood":
-              hoodMeshId = pickableMesh;
-              break;
-            case "roof":
-              roofMeshId = pickableMesh;
-              break;
-            case "trunk":
-              trunkMeshId = pickableMesh;
-              break;
+      scope.setState({
+        last_adderAssetObject: adderAssetObject
+      });
+      // TODO:
+      // 1)
+      scope.loadScene(adderAsset);
+      // 2)  define which meshes will be selectable. for the UI buttons
+      scope.defineSelectableMeshesForAdderAsset(adderAsset);
+    }
+  }
+  loadScene = adderAsset => {
+    this.state.adderSceneWrapper.getUUID();
+    let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
+    adderLoader.addSingleModel(adderAsset);
+  };
+  defineSelectableMeshesForAdderAsset(adderAsset) {
+    let assetData = adderAsset.getBehavior();
+    //strategy:SELECT:parameters:pickableMeshes
+    let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
 
-            default:
-              break;
-          }
+    //USAGE: Sidebar-Selection
+    // let selectableMeshes = [];
+    let hoodMeshId = null,
+      leftMeshId = null,
+      roofMeshId = null,
+      rightMeshId = null,
+      trunkMeshId = null;
+
+    let sign1MeshId = null,
+      sign2MeshId = null;
+
+    for (let i in pickableMeshes) {
+      let pickableMesh = pickableMeshes[i];
+      let splitData = pickableMesh.split("_");
+
+      // ["billboard", "2sides", "angled", "sign", "1"]
+      //     vs
+      // ["vehicle", "2door", "sportscar", "leftside", "medium"]
+
+      if (splitData[0] === "vehicle") {
+        switch (splitData[3]) {
+          case "leftside":
+            leftMeshId = pickableMesh;
+            break;
+          case "rightside":
+            rightMeshId = pickableMesh;
+            break;
+          case "hood":
+            hoodMeshId = pickableMesh;
+            break;
+          case "roof":
+            roofMeshId = pickableMesh;
+            break;
+          case "trunk":
+            trunkMeshId = pickableMesh;
+            break;
+
+          default:
+            break;
         }
-        if (splitData[0] === "billboard") {
-          if (splitData[1] === "2sides") {
-            if (splitData[2] === "angled") {
-              if (splitData[3] === "sign") {
-                switch (splitData[4]) {
-                  case "1":
-                    console.log("billbaord sign 1");
-                    sign1MeshId = pickableMesh;
-                    console.log(sign1MeshId);
-                    break;
-                  case "2":
-                    console.log("billboard sign 2");
-                    sign2MeshId = pickableMesh;
-                    console.log(sign2MeshId);
-                    break;
-                  default:
-                    break;
-                }
+      }
+      if (splitData[0] === "billboard") {
+        if (splitData[1] === "2sides") {
+          if (splitData[2] === "angled") {
+            if (splitData[3] === "sign") {
+              switch (splitData[4]) {
+                case "1":
+                  sign1MeshId = pickableMesh;
+                  break;
+                case "2":
+                  sign2MeshId = pickableMesh;
+                  break;
+                default:
+                  break;
               }
             }
           }
         }
       }
-      scope.setState({
-        hoodMeshId: hoodMeshId,
-        leftMeshId: leftMeshId,
-        roofMeshId: roofMeshId,
-        rightMeshId: rightMeshId,
-        trunkMeshId: trunkMeshId,
-        sign1MeshId: sign1MeshId,
-        sign2MeshId: sign2MeshId
-      });
-
-      /**
-       * AdderSceneWrapper:this.applyTextureToMesh:  
-         adderMeshWrapper.js:124 
-         AdderMeshWrapper:applyTextureFromDataURL() line 125
-
-       */
-      // - checked that hidden uses "isVisible", - change var to let in adderMeshWrapper apply mesh code..., - tex texture appears to have _buffer with correct image data.
-      // - ROADBLOCKED ! NOT able to apply Texture to rightside of porsche ?
     }
+    scope.setState({
+      hoodMeshId: hoodMeshId,
+      leftMeshId: leftMeshId,
+      roofMeshId: roofMeshId,
+      rightMeshId: rightMeshId,
+      trunkMeshId: trunkMeshId,
+      sign1MeshId: sign1MeshId,
+      sign2MeshId: sign2MeshId
+    });
   }
   callback_withModelInfo(info) {
     //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
@@ -1195,7 +1279,7 @@ class Main extends React.Component {
                     scene={this.state.scene}
                     getAdderSceneWrapper={this.getAdderSceneWrapper}
                     adderSceneWrapper={this.state.adderSceneWrapper}
-                    callback={this.callback_designer}
+                    callback={this.callback_Designer}
                     callback_withModelInfo={this.callback_withModelInfo}
                   ></Designer>
 

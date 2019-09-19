@@ -390,3 +390,10 @@ Still To Do:
 
 inspect undo and redo data in console: 
 - actions array catches name changes, and puts them into redo_actions_array.
+- actions tracks screenshots , and undoes them but does NOT redo them...Brandon said not to track screenshots though,...we'll have a delete button for them.
+- texture:
+  - issue: hitting the 'undo' button brought up the modal window.? then froze modal again.!
+  -click on anywhere on the screen pulling up modal ? 
+
+  NEXT: undo and redo chosen Model ?? 
+  

@@ -100,10 +100,14 @@ class Designer extends React.Component {
   detail_callback = data => {
     console.log("detail_callback data:", data);
     if (data.selectedOption !== "-1") {
+      //could just return the data here
+
       let assetSelected = data.selectedOption;
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
+
+      console.log("assetSelected:", assetSelected);
       //send data to parent to name the 'model' after it's filepath property in the assetData.
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
@@ -118,19 +122,35 @@ class Designer extends React.Component {
         assetData.behavior,
         adderSceneWrapper
       );
+      let adderAssetObject = {};
+      adderAssetObject.dir = assetData.dir;
+      adderAssetObject.filename = assetData.filename;
+      adderAssetObject.filepath = assetData.filepath;
+      adderAssetObject.position = assetData.position;
+      adderAssetObject.rotation = assetData.rotation;
+      adderAssetObject.scaling = assetData.scaling;
+      adderAssetObject.behavior = assetData.behavior;
 
-      this.loadScene(adderAsset);
+      console.log("adderAssetObject:", adderAssetObject);
+
+      console.log("WHAT DOES ADDER ASSET LOOK LIKE ? ");
+      console.log(adderAsset);
+      //** */ this.loadScene(adderAsset);
       //TODO: declare what was selected.
-      this.props.callback(this.state.adTypeSelectedOption, adderAsset);
+      this.props.callback(
+        this.state.adTypeSelectedOption,
+        adderAsset,
+        adderAssetObject
+      );
       //LIKE TO : callback_withModelInfo :need the mesh_ids to select from buttons
     }
   };
 
-  loadScene = adderAsset => {
-    this.props.adderSceneWrapper.getUUID();
-    let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
-    adderLoader.addSingleModel(adderAsset);
-  };
+  // loadScene = adderAsset => {
+  //   this.props.adderSceneWrapper.getUUID();
+  //   let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
+  //   adderLoader.addSingleModel(adderAsset);
+  // };
 
   componentDidMount() {
     let scope = this;

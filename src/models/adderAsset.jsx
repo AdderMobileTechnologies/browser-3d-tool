@@ -97,6 +97,9 @@ class AdderAsset {
     this.getAdderSceneWrapper = () => {
       return _adderSceneWrapper;
     };
+    this.getAdderAsset = () => {
+      return this;
+    };
   }
 }
 export default AdderAsset;
