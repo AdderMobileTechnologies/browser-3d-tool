@@ -144,21 +144,30 @@ class Main extends React.Component {
     });
   }
 
+  // UNDOs and REDOs:
+  /*
+
+- iconUndo
+- iconRedo
+- undo_screenshot
+- undo_ApplyTextureToMesh
+- redo_ApplyTextureToMesh
+- undo_UITextInput
+- redo_UITextInput
+- reset_InsertIntoRedo
+- reset_InsertIntoActions
+*/
+
   iconUndo() {
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    console.log("OLD ACTIONS:", old_actions);
     if (old_actions.length > 0) {
       let lastIndex = old_actions.length - 1;
-      console.log("lastIndex:", lastIndex);
       let lastAction = {};
       for (let i in old_actions) {
-        console.log("i:", i);
         if (i == lastIndex) {
-          console.log("i:", i, "lastIndex:", lastIndex);
           lastAction = old_actions[i];
         }
       }
-      console.log("lastAction:", lastAction);
       if (lastAction !== null && typeof lastAction !== "undefined") {
         switch (lastAction.action) {
           case "change_name":
@@ -179,15 +188,44 @@ class Main extends React.Component {
       }
     }
   }
+  iconRedo(args) {
+    // HERE we take pop the last item off the  'redo_actions_array', re-apply it with the appropriate measure.
+    let redo_actions_array =
+      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    if (redo_actions_array.length > 0) {
+      let lastRedoAction = redo_actions_array.pop();
+      //reapply the last RedoAction
+      switch (lastRedoAction.action) {
+        case "change_name":
+          scope.redo_UITextInput(lastRedoAction);
+          break;
+        case "applyTextureToMesh":
+          scope.redo_ApplyTextureToMesh(lastRedoAction);
+          break;
+        case "screenshot":
+          // scope.undo_screenshot(lastAction);
+          break;
+        default:
+          console.log("no match for action: ", lastRedoAction.action);
+          break;
+      }
+
+      //re-save redo_actions_array misnus the popped action.!
+      localStorage.setItem(
+        "redo_actions_array",
+        JSON.stringify(redo_actions_array)
+      );
+      // put the last redo action into the actions array.....
+    } else {
+      console.log("there  are no more actions to be undone.");
+    }
+  }
   undo_screenshot(args) {
-    if (
-      args.from !== "" &&
-      args.from !== "empty dataURL" &&
-      typeof args.from != "undefined"
-    ) {
+    // args.from !== "empty dataURL" &&
+    if (args.from !== "" && typeof args.from != "undefined") {
       const array_image_models = scope.state.images.slice();
       var popped_image_model = array_image_models.pop();
-      this.undo_InsertIntoRedo(popped_image_model);
+      this.reset_InsertIntoRedo(popped_image_model);
       scope.setState(prevState => ({
         ...prevState,
         images: array_image_models
@@ -218,40 +256,60 @@ class Main extends React.Component {
   }
 
   undo_ApplyTextureToMesh(args) {
-    console.log("  undo_ApplyTextureToMesh(args) args:", args);
-    if (args.from !== "" && typeof args.from != "undefined") {
-      if (args.from !== "empty dataURL") {
-        //here we need to reapply original texture.
-        //which is done where? adderLoader?
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    if (old_actions.length > 0) {
+      let poppedAction = old_actions.pop();
+      this.reset_InsertIntoRedo(poppedAction);
+      localStorage.setItem("actions_array", JSON.stringify(old_actions));
+      //poppedAction.from
+      if (poppedAction.from != "empty dataURL") {
+        this.state.adderSceneWrapper.applyTextureToMesh(
+          poppedAction.id,
+          poppedAction.from
+        );
       } else {
-        this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.from);
-        this.setState({
-          startEditing: false,
-          last_dataURL: args.from
-        });
+        console.log(
+          "perform undo texture...but back to the original texture  HOW TO RESTORE ORIGINAL TEXTURE ? "
+        );
+        console.log(
+          "APPLY default texture blank: ie: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        );
+        this.state.adderSceneWrapper.applyTextureToMesh(
+          poppedAction.id,
+          "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        );
       }
     } else {
-      console.log("where is this?"); // removed this from condition:  args.from != "empty dataURL" &&
+      //nothing in there
     }
-    //Where is this getting popped of the undo list?
-    // undo_InsertIntoRedo(popped_image_model);
+  }
+  redo_ApplyTextureToMesh(args) {
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    old_actions.push(args);
+    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+    this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.to);
+  }
+
+  undo_UITextInput(args) {
+    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
+    let poppedAction = old_actions.pop();
+    this.reset_InsertIntoRedo(poppedAction);
+    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+    scope.setState(prevState => ({
+      ...prevState,
+      userSession: {
+        ...prevState.userSession,
+        designModel: {
+          ...prevState.userSession.designModel,
+          designName: poppedAction.from
+        }
+      }
+    }));
   }
   redo_UITextInput(args) {
-    // this will be very similar to the undo version except it will not pop off the last action, it will only add this redo_action to the actions_array.
-
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    console.log("REDO:");
-    console.log("old_actions:", old_actions);
-    console.log("type of args:", args);
-    console.log("args:", args);
-    //stringify first ? ?
     old_actions.push(args);
-    console.log("old_actions AFTER the push:", old_actions);
-    console.log(typeof old_actions);
-    //Then we'll save the updated array back to local storage...
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
-    //And then reset the 'designName' in state...appropriately.
-
     scope.setState(prevState => ({
       ...prevState,
       userSession: {
@@ -263,26 +321,7 @@ class Main extends React.Component {
       }
     }));
   }
-  undo_UITextInput(args) {
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    let poppedElement = old_actions.pop();
-    this.undo_InsertIntoRedo(poppedElement);
-    localStorage.setItem("actions_array", JSON.stringify(old_actions));
-    scope.setState(prevState => ({
-      ...prevState,
-      userSession: {
-        ...prevState.userSession,
-        designModel: {
-          ...prevState.userSession.designModel,
-          designName: poppedElement.from
-        }
-      }
-    }));
-  }
-  undo_InsertIntoRedo(args) {
-    // console.log("REDO: undo_InsertIntoRedos(args):", args);
-    //get last redo array from local storage, add this one to it, resave it into localStorage
-
+  reset_InsertIntoRedo(args) {
     let currentRedos =
       JSON.parse(localStorage.getItem("redo_actions_array")) || [];
     if (
@@ -290,15 +329,31 @@ class Main extends React.Component {
       typeof currentRepos === "undefined" ||
       currentRedos.length <= 0
     ) {
-      //console.log("REDO: first insert in to REDO OR no more redos");
-      // This must be the first insert so...
       currentRedos.push(args);
       localStorage.setItem("redo_actions_array", JSON.stringify(currentRedos));
     } else {
       console.log("REDO: the current number of redos is ", currentRedos.length);
-      console.log(currentRedos);
     }
   }
+
+  reset_InsertIntoActions(args) {
+    let currentActions =
+      JSON.parse(localStorage.getItem("actions_array")) || [];
+    if (
+      currentActions === null ||
+      typeof currentActions === "undefined" ||
+      currentActions.length <= 0
+    ) {
+      currentActions.push(args);
+      localStorage.setItem("actions_array", JSON.stringify(currentActions));
+    } else {
+      console.log(
+        "ACTION: the current number of actions is ",
+        currentActions.length
+      );
+    }
+  }
+  //////////////////////////   end undos and redos
   save_UIAction(_id, _action, _to, _from) {
     let action_object = {};
     action_object.id = _id;
@@ -385,7 +440,7 @@ class Main extends React.Component {
     this.setState(
       {
         startEditing: false,
-        last_dataURL: dataURL,
+        // last_dataURL: dataURL,
         finishedEditing: true
         //meshPicked: false
       },
@@ -419,6 +474,9 @@ class Main extends React.Component {
           dataURL,
           this.state.last_dataURL
         );
+        scope.setState({
+          last_dataURL: dataURL
+        });
       }
     );
   };
@@ -905,46 +963,6 @@ class Main extends React.Component {
     console.log("iconSave_Alt");
   }
 
-  iconRedo(args) {
-    console.log("iconRedo");
-    //redo_actions_array
-    // HERE we take pop the last item off the  'redo_actions_array', re-apply it with the appropriate measure.
-    let redo_actions_array =
-      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
-    if (redo_actions_array.length > 0) {
-      let lastRedoAction = redo_actions_array.pop();
-      //reapply the last RedoAction
-      console.log("action to redo is:", lastRedoAction);
-      console.log("and the redo action is:", lastRedoAction.action);
-      // ALSO: need
-
-      switch (lastRedoAction.action) {
-        case "change_name":
-          // scope.undo_UITextInput(lastAction);
-          scope.redo_UITextInput(lastRedoAction);
-
-          break;
-        case "applyTextureToMesh":
-          // scope.undo_ApplyTextureToMesh(lastAction);
-          break;
-        case "screenshot":
-          // scope.undo_screenshot(lastAction);
-          break;
-        default:
-          console.log("no match for action: ", lastRedoAction.action);
-          break;
-      }
-
-      //re-save redo_actions_array misnus the popped action.!
-      console.log("remaining REDO actions are:", redo_actions_array);
-      localStorage.setItem(
-        "redo_actions_array",
-        JSON.stringify(redo_actions_array)
-      );
-    } else {
-      console.log("there  are no more actions to be undone.");
-    }
-  }
   iconShare() {
     console.log("iconShare");
   }
