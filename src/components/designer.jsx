@@ -187,7 +187,16 @@ class Designer extends React.Component {
               ></UISelect>
             )}
           </Grid>
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={4}
+            style={{
+              borderLeft: "solid 1px #ccc",
+              borderRight: "solid 1px #ccc",
+              paddingLeft: "5px",
+              paddingRight: "5px"
+            }}
+          >
             {this.state.isOnSubType && (
               <UISelect
                 id={"sub_type"}

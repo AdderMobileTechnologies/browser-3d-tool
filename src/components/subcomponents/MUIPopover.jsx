@@ -32,7 +32,7 @@ export default function SimplePopover(props) {
       var data = {};
       data.selectedOption = textValue;
       // props.callback(data);
-      //props.callback();
+      // props.callback();
       console.log("data:", data);
     }
   }
@@ -42,9 +42,12 @@ export default function SimplePopover(props) {
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        scene
-      </Button>
+      <UIButton
+        aria-describedby={id}
+        variant="contained"
+        onClick={handleClick}
+        iconName="faBinoculars"
+      ></UIButton>
 
       <Popover
         id={id}
@@ -80,3 +83,11 @@ export default function SimplePopover(props) {
     </div>
   );
 }
+/*
+ <Button 
+        aria-describedby={id} 
+        variant="contained" 
+        onClick={handleClick}>
+        scene
+      </Button>
+      */

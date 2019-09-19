@@ -64,9 +64,19 @@
     height: auto;
 }
 
+.gui-overlay-upper-right {
+    position: absolute;
+    top: 1%;
+    left: 5px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
+}
+
 .gui-overlay {
     position: absolute;
-    top: 15%;
+    top: 25%;
     left: 5px;
     background-color: #eee;
     width: 45px;
@@ -76,7 +86,7 @@
 
 .gui-overlay-left {
     position: absolute;
-    top: 15%;
+    top: 25%;
     left: 5px;
     background-color: #eee;
     width: 45px;
@@ -86,11 +96,11 @@
 
 .gui-overlay-right {
     position: absolute;
-    top: 90%;
+    top: 85%;
     right: 50px;
     background-color: #eee;
     width: 45px;
-    border-radius: 16px;
+    border-radius: 30px;
     text-align: center;
 }
 
@@ -205,11 +215,13 @@
 
 .MuiGrid-root div .makeStyles-root-144 {
     background: #eee;
+    background-color: #eee;
 }
 
 .MuiGrid-root div ul {
     /*height: 100px !important;*/
     height: auto;
+    background: #eee;
 }
 
 /*
@@ -221,6 +233,11 @@
     height: 100px !important;
 }
 */
+
+.makeStyles-root-124 {
+    background: #eee !important;
+    background-color: #eee !important;
+}
 
 ul.MuiGridList-root li li {
     margin: 2px !important;

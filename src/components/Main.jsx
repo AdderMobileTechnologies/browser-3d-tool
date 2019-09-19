@@ -5,6 +5,7 @@ import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
 import IconControlGroup from "./subcomponents/_iconControlGroup";
 import OverlayControls from "./subcomponents/_overlayControls";
 import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
+import OverlayControlsUpperRight from "./subcomponents/_overlayControlsUpperRight";
 
 // import * as GUI from "babylonjs-gui";
 import Grid from "@material-ui/core/Grid"; //
@@ -44,6 +45,8 @@ import UITextInput from "./subcomponents/elements/UITextInput";
 
 // ES6
 import { Resizable, ResizableBox } from "react-resizable";
+
+//
 
 let scope;
 let scp;
@@ -367,11 +370,8 @@ class Main extends React.Component {
   }
 
   sidebarButtonClickAlt(args) {
-    console.log("Main:sidebarButtonClickAlt(args):", args);
+    // console.log("Main:sidebarButtonClickAlt(args):", args);
     //Purpose: save new mesh to array of meshes in state
-    console.log("this vs scp ");
-    console.log("this:", this);
-    console.log("scp", scp);
 
     const obj = { mesh_name: args.name };
     const newArray = this.state.userSession.designModel.meshes.slice(); // Create a copy
@@ -392,15 +392,9 @@ class Main extends React.Component {
       () => {
         //new_actions_array;
         // ALL THIS IS , IS the selection of a mesh and the opening of the image editor , no real change happends.
-        console.log(
-          "scp -> this.state.userSession.designModel.meshes:",
-          this.state.userSession.designModel.meshes
-        );
       }
     );
 
-    // scope -> this.windowCallbackPickable(args.name);
-    console.log("scope -> this.windowCallbackPickable(args.name);");
     this.windowCallbackPickable(args.name, "sidebarButtonClickAlt");
   }
 
@@ -415,17 +409,17 @@ class Main extends React.Component {
       },
       () => {
         //need to make sure modal is set OFF in state , no async latency still does it.
-        console.log(
-          "Main:imageEditorCallback():editing_mesh_id:",
-          this.state.editing_mesh_id
-        );
+        // console.log(
+        //   "Main:imageEditorCallback():editing_mesh_id:",
+        //   this.state.editing_mesh_id
+        // );
 
         let texture_image_model = {};
         texture_image_model.id = this.state.editing_mesh_id;
         texture_image_model.dataURL = dataURL;
 
         const array_texture_image_models = scope.state.texture_images.slice();
-        console.log("texture_image_model:", texture_image_model);
+        // console.log("texture_image_model:", texture_image_model);
         array_texture_image_models.push(texture_image_model);
         scope.setState(prevState => ({
           ...prevState,
@@ -449,12 +443,6 @@ class Main extends React.Component {
 
   windowCallbackPickable(mesh_id, caller) {
     if (!this.state.startEditing) {
-      console.log(
-        "______________windowCallbackPickable_____________________caller:",
-        caller,
-        " mesh_id:" + mesh_id
-      );
-
       this.setState(
         {
           startEditing: true,
@@ -463,14 +451,11 @@ class Main extends React.Component {
           //meshPicked: false
         },
         () => {
-          console.log("async after async...");
-          console.log("editing mesh id:", mesh_id);
+          //console.log("editing mesh id:", mesh_id);
         }
       );
     } else {
-      console.log("already editing ...");
-      console.log("this.state.startEditing:::", this.state.startEditing);
-      console.log("this.state.finishedEditing:::", this.state.finishedEditing);
+      //console.log("already editing ...");
     }
   }
   // To hide or show the appropriate sidebar image and controls
@@ -505,7 +490,7 @@ class Main extends React.Component {
         let pickableMesh = pickableMeshes[i];
         let splitData = pickableMesh.split("_");
         console.log("splitData:", splitData);
-        console.log("think interms of future for other ad types....");
+        console.log("think in terms of future for other ad types....");
         // ["billboard", "2sides", "angled", "sign", "1"]
         // vs
         //["vehicle", "2door", "sportscar", "leftside", "medium"]
@@ -633,7 +618,7 @@ class Main extends React.Component {
         }),
         () => {
           const obj = { image_id: image_uid, src: "" };
-          console.log("");
+          //console.log("");
           const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
           array_image_models.push(obj);
 
@@ -704,12 +689,6 @@ class Main extends React.Component {
     localStorage.removeItem("actions_array");
 
     let scope = this;
-
-    console.log("Main.jsx componentDidMount:::: this---scope---scp---");
-    console.log("this:", this);
-    console.log("scope:", scope);
-    console.log("scp:", scp);
-
     let canvas = document.getElementById("adder_3dTool_canvas");
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
@@ -797,22 +776,14 @@ class Main extends React.Component {
     });
 
     window.addEventListener("click", function(e) {
-      console.log("Main.jsx CLICK: EVENT");
-      console.log("e.target", e.target);
-
       if (e.target.innerHTML == "Apply Image") {
         console.log("HARD STOP !...");
       } else {
-        console.log("this:", this); //window
-        console.log("scope:", scope); //main
-        console.log("scp:", scp); //main
         //should only detect meshes where  isPickable = true;
         let pickResult = scene.pick(scene.pointerX, scene.pointerY);
         if (pickResult.pickedMesh === null) {
-          console.log("CLICK: pickedMesh is NULL .....");
           return false;
         } else {
-          console.log("CLICK: continue to windowCallbackPickable .....");
           scope.windowCallbackPickable(
             pickResult.pickedMesh.name,
             "eventListener"
@@ -1050,6 +1021,10 @@ class Main extends React.Component {
                   className="adder-3dTool-canvas"
                   style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
                 />
+                <OverlayControlsUpperRight
+                  callback={this.subCallback}
+                  data={{ key: "value" }}
+                ></OverlayControlsUpperRight>
 
                 <OverlayControls
                   callback={this.subCallback}

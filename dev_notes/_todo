@@ -372,4 +372,17 @@ CHANGES:
   * modal pops back up 
   close it 
   THEN it never opens again via 'direct click'  OR 'via' sidebar buttons .
-  
+
+The modal issue... based on a too lenient array of window click listening... certain clicked elements need to be filtered out for
+specific actions such as the 'Apply Image' button in the modal . It shoudl have stopped any further editing.
+
+
+Thursday:
+Things I think might be good: 
+1) have the camera focal point change to what ever got selected. 
+2) be able to rotate the selected object  horizontal slider ? 
+3) be able to reposition the selected model x,y,z 3 vertical sliders ?
+
+Still To Do: 
+1) undo and redo texture / material 
+

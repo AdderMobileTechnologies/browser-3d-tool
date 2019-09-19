@@ -24,18 +24,18 @@ function PaperComponent(props) {
 }
 
 export default function DraggableDialog(props) {
-  console.log("props on Draggable Dialog ...", props);
+  // console.log("props on Draggable Dialog ...", props);
   ///////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
-    console.log("MODAL: handleClickOpen()");
+    // console.log("MODAL: handleClickOpen()");
     // console.log(this.state.open);
     setOpen(true);
   };
 
   const handleClose = () => {
-    console.log("MODAL: handleClose()");
+    // console.log("MODAL: handleClose()");
     // console.log(this.state.open); can not read property 'state' of undefined.
     setOpen(false);
   };
@@ -48,7 +48,7 @@ export default function DraggableDialog(props) {
   const handleImageEditorResults = dataURL => {
     //COMMENT OUT ALTOGETHER
     setOpen(false); //move this before the callback
-    console.log("MODAL: handleImageEditorResults()");
+    //console.log("MODAL: handleImageEditorResults()");
     //console.log(this.state.open); result: can not read property 'state' of undefined.
     //Usage: Editing-Mesh
 

@@ -6,12 +6,8 @@ export default function SidebarSelectorVehicles(props) {
   console.log("SidebarSelectorVehicles: props:", props);
 
   const handleSubcomponentClick = e => {
-    console.log("handleSubcomponentClick .....");
-    console.log("e.target.id = ", e.target.id);
-    console.log("e.target.name =", e.target.name);
-    console.log("props sent in during constructor:", props);
     let returnData = { id: e.target.id, name: e.target.name };
-    console.log("sidebar vehicles return data:", returnData);
+    //console.log("sidebar vehicles return data:", returnData);
     props.callback(returnData);
   };
 
@@ -99,55 +95,3 @@ export default function SidebarSelectorVehicles(props) {
     </Grid>
   );
 }
-
-/*
-<div
-className="relativeContainer car"
-id="ButtonContainer"
-style={{ height: "300px", position: "relative" }}
->
-<p>Select a Component to Edit</p>
-
- 
-<button
-  className="buttonSidebar buttonHood"
-  id="buttonHood"
-  name={props.data["hoodMeshId"]}
-  onClick={handleSubcomponentClick}
->
-  HOOD
-</button>
-<button
-  className="buttonSidebar buttonLeft"
-  id="buttonLeft"
-  name={props.data["leftMeshId"]}
-  onClick={handleSubcomponentClick}
->
-  LEFT
-</button>
-<button
-  className="buttonSidebar buttonRoof"
-  id="buttonRoof"
-  name={props.data["roofMeshId"]}
-  onClick={handleSubcomponentClick}
->
-  ROOF
-</button>
-<button
-  className="buttonSidebar buttonRight"
-  id="buttonRight"
-  name={props.data["rightMeshId"]}
-  onClick={handleSubcomponentClick}
->
-  RIGHT
-</button>
-<button
-  className="buttonSidebar buttonTrunk"
-  id="buttonTrunk"
-  name={props.data["trunkMeshId"]}
-  onClick={handleSubcomponentClick}
->
-  TRUNK
-</button>
-</div>
-*/

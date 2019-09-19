@@ -244,6 +244,52 @@ class UIButton extends Component {
             </button>
           </form>
         );
+      case "faBinoculars":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+              style={{ ...iconStyle.common }}
+            >
+              <Avatar style={{ backgroundColor: "green" }}>
+                <FontAwesomeIcon
+                  icon={faBinoculars}
+                  style={{ backgroundColor: "green" }}
+                />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faLock":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+              style={{ ...iconStyle.small }}
+            >
+              <Avatar style={{ backgroundColor: "green" }}>
+                <FontAwesomeIcon
+                  icon={faLock}
+                  style={{ backgroundColor: "green" }}
+                />
+              </Avatar>
+            </button>
+          </form>
+        );
       default:
         alt = "null";
         src = null;
