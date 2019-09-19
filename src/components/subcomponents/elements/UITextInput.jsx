@@ -14,8 +14,8 @@ class UITextInput extends Component {
     };
   }
   componentWillReceiveProps = newProps => {
-    console.log("componentWillReceiveProps(newProps) ", newProps);
-    console.log(newProps.value);
+    // console.log("componentWillReceiveProps(newProps) ", newProps);
+    //console.log(newProps.value);
     this.setState({ value: newProps.value });
   };
   handleChange = e => {

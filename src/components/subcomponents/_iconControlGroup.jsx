@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
 
 export default function IconControlGroup(props) {
-  console.log("IconControlGroup: props:", props);
-  console.log("check props data");
+  // console.log("IconControlGroup: props:", props);
+  // console.log("check props data");
 
   const handleSaveClick = e => {
     //downsize props variables

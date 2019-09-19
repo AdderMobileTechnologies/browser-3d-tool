@@ -1,65 +1,51 @@
 import React from "react";
 import BABYLON from "babylonjs";
+
+import * as K from "../constants"; // Required for GridList ( screenshots)
+//models
+import AdderCamera from "../models/adderCamera";
+import AdderSceneWrapper from "../models/adderSceneWrapper";
+import AdderSkyBox from "../models/adderSkybox";
+import AdderMeta from "../models/adderMeta";
+import AdderAsset from "../models/adderAsset";
+//components
+import DraggableDialog from "./MUI_DraggableDialog";
+import Designer from "./designer";
+//subcomponents
 import SidebarSelectorBillboards from "./subcomponents/_sidebarSelectorBillboards";
 import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
 import IconControlGroup from "./subcomponents/_iconControlGroup";
 import OverlayControls from "./subcomponents/_overlayControls";
 import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
 import OverlayControlsUpperRight from "./subcomponents/_overlayControlsUpperRight";
-
-// import * as GUI from "babylonjs-gui";
-import Grid from "@material-ui/core/Grid"; //
-//models
-import AdderCamera from "../models/adderCamera";
-
-import DraggableDialog from "./MUI_DraggableDialog";
-import Designer from "./designer";
-////////////////////////////////////////////
-//import { Scene } from "babylonjs";
-import AdderSceneWrapper from "../models/adderSceneWrapper";
-//import Grid from "@material-ui/core/Grid"; //
+import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
+import UITextInput from "./subcomponents/elements/UITextInput";
+//assets
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
 import UserImage from "../assets/Adder_3D_Tool2/contact_photo.png";
+
+//third party
+import Grid from "@material-ui/core/Grid"; //
 import "tui-image-editor/dist/tui-image-editor.css";
-//import AdderImageEditor from "./AdderImageEditor";
-import AdderSkyBox from "../models/adderSkybox";
-import AdderMeta from "../models/adderMeta";
-import AdderAsset from "../models/adderAsset";
-//import UIButton from "./subcomponents/elements/UIButton";
-import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
-//////////////////////////////////////////
-
-//TODO: NEED TO REMOVE GrayCar ASSET AND REPLACE WITH OUR OWN IMAGE!!!!!
-
-import "./minimum.css";
-import "./Main.css";
-//import GrayCar from "../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png";
-//import Billboard from "../assets/Adder_3D_Tool2/billboardTopView.png";
-//import { makeStyles } from "@material-ui/core/styles";
-
-import * as K from "../constants"; // Required for GridList ( screenshots)
-import UITextInput from "./subcomponents/elements/UITextInput";
-
-//const Resizable = require('react-resizable').Resizable; // or,
-//const ResizableBox = require('react-resizable').ResizableBox;
-
-// ES6
 import { Resizable, ResizableBox } from "react-resizable";
 
-//
+//css
+import "./minimum.css";
+import "./Main.css";
 
 let scope;
-let scp;
 const UIGridList = K.UIGridList;
 //region: Render Methods
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    scp = this;
+
+    scope = this;
 
     this.state = {
       scene: {},
+      canvas: {},
       sceneIsSet: false,
       engine: null,
       camera: null,
@@ -112,18 +98,14 @@ class Main extends React.Component {
       width: 500,
       height: 150
     };
-
+    //methods
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
-
     this.screenshotButtonPress = this.screenshotButtonPress.bind(this);
     this.saveScreenshot = this.saveScreenshot.bind(this);
     this.save_UIAction = this.save_UIAction.bind(this);
-
     this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
-
-    scope = this;
   }
   // resizable functions
 
@@ -563,6 +545,7 @@ class Main extends React.Component {
     //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
     scope.setState({ modelName: info.filepath });
   }
+
   screenshotButtonPress(evt) {
     console.log("- - - - screenshotButtonPress :evt:", evt);
     let engine = this.state.engine; //was embedded under Ad_Scene in version 1
@@ -687,16 +670,19 @@ class Main extends React.Component {
   } //
   componentDidMount() {
     localStorage.removeItem("actions_array");
+    localStorage.removeItem("redo_actions_array");
 
     let scope = this;
+
     let canvas = document.getElementById("adder_3dTool_canvas");
+
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
       stencil: true
     });
     this.setState({ engine: engine });
 
-    let createScene = function(scp) {
+    let createScene = function(scope) {
       let scene = new BABYLON.Scene(engine);
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
@@ -725,7 +711,7 @@ class Main extends React.Component {
       );
       let camera = adderCam_arcRotate.getCamera();
 
-      scp.setState({ camera: camera });
+      scope.setState({ camera: camera });
       camera.attachControl(canvas, true); //add camera to the scene/canvas
       //create a light
       //let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
@@ -770,26 +756,57 @@ class Main extends React.Component {
         }
       }
     });
-
+    let canvasClick = null;
+    canvas.addEventListener("click", () => {
+      //use canvas click to compensate for babylonjs scene.pick persisting incorrect x and y positions when clicked outside of scene.
+      canvasClick = true;
+    });
     window.addEventListener("resize", function() {
       engine.resize();
+      ///canvas dimensions need to be recalculated on window resize
     });
 
     window.addEventListener("click", function(e) {
-      if (e.target.innerHTML == "Apply Image") {
-        console.log("HARD STOP !...");
-      } else {
-        //should only detect meshes where  isPickable = true;
-        let pickResult = scene.pick(scene.pointerX, scene.pointerY);
-        if (pickResult.pickedMesh === null) {
-          return false;
+      ///////////////////////////////////// have to recalculate because on component did mount was inaccurate.
+
+      if (canvasClick) {
+        //ROOT PROBLEM: all clicks outside of the canvasregister as the 'last click' made inside the canvas.
+        // Is a canvas click, do work for inside babylonjs
+
+        if (e.target.innerHTML == "Apply Image") {
+          console.log("CLICK: HARD STOP !.. applied image.");
+          scope.setState({
+            startEditing: false,
+            finishedEditing: true
+          });
         } else {
-          scope.windowCallbackPickable(
-            pickResult.pickedMesh.name,
-            "eventListener"
-          );
+          //should only detect meshes where  isPickable = true;
+          console.log("CLICK: check to see if mesh or not");
+          let pickResult = scene.pick(scene.pointerX, scene.pointerY);
+          // console.log("scene point x:", scene.pointerX);
+          // console.log("scene pointer y: ", scene.pointerY);
+          if (pickResult.pickedMesh === null) {
+            console.log("CLICK: not a mesh ");
+            //return false;
+            scope.setState({
+              startEditing: false,
+              finishedEditing: true
+            });
+          } else {
+            console.log("pickResult.pickedMesh:", pickResult.pickedMesh);
+            console.log("CLICK:  was a mesh refer to windowCallbackPickable ");
+            scope.windowCallbackPickable(
+              pickResult.pickedMesh.name,
+              "eventListener"
+            );
+          }
         }
+        //THEN RESET canvas click value back to False
+        canvasClick = false;
+      } else {
+        //Is NOT a canvas click , do not do work for inside of babylonjs scene canvas.
       }
+      ///////////////////////////////////////////
     });
   } //
 
@@ -835,25 +852,25 @@ class Main extends React.Component {
 
   resetForDelete() {
     //1 clear screenshots
-    scp.setState({ tileData: [] });
+    scope.setState({ tileData: [] });
     //2 clear non-saved local storage
     localStorage.removeItem("designsArray");
     //3
     //dispose of meshes
-    let stateModelName = scp.state.modelName;
-    let asw = scp.state.adderSceneWrapper;
+    let stateModelName = scope.state.modelName;
+    let asw = scope.state.adderSceneWrapper;
     asw.disposeOfMeshesForModel(stateModelName);
     //4 remove UI settings ie. design name and design selections.
-    scp.setState({ selected_ad_type: -1 });
+    scope.setState({ selected_ad_type: -1 });
     //5 design name
-    scp.resetUserSession();
+    scope.resetUserSession();
     //*!* TODO: still need the selects to refresh and the design name to refresh.
     //TODO: remove actions_array from localStorage
     window.localStorage.removeItem("actions_array");
   }
 
   callback_DeleteYes() {
-    scp.setState(
+    scope.setState(
       prevState => ({
         ...prevState,
         userAction: {
@@ -864,12 +881,12 @@ class Main extends React.Component {
       () => {
         //SAVE CHANGE ACTION
         //  scope.save_UIAction();
-        scp.resetForDelete();
+        scope.resetForDelete();
       }
     );
   }
   callback_DeleteNo() {
-    scp.setState(
+    scope.setState(
       prevState => ({
         ...prevState,
         userAction: {

@@ -385,4 +385,8 @@ Things I think might be good:
 
 Still To Do: 
 1) undo and redo texture / material 
+2) changing 'scene' between city and country
+3) 
 
+inspect undo and redo data in console: 
+- actions array catches name changes, and puts them into redo_actions_array.

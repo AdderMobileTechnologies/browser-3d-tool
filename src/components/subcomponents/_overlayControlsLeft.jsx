@@ -17,7 +17,7 @@ import {
 const element = <FontAwesomeIcon icon={faCoffee} />;
 
 export default function OverlayControlsLeft(props) {
-  console.log("OverlayControls: props:", props);
+  // console.log("OverlayControls: props:", props);
 
   return (
     <div className="gui-overlay-left">

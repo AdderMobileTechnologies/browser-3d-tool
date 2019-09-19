@@ -3,7 +3,7 @@ import React from "react";
 import UIButton from "./elements/UIButton";
 
 export default function OverlayControlsUpperRight(props) {
-  console.log("OverlayControls: props:", props);
+  // console.log("OverlayControls: props:", props);
 
   return (
     <div>
