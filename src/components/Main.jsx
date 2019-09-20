@@ -51,6 +51,8 @@ class Main extends React.Component {
       sceneIsSet: false,
       engine: null,
       camera: null,
+      camera_target: new BABYLON.Vector3(2, 0, 2),
+      camera_target_y: 10,
       images: [],
       texture_images: [],
       adderSceneWrapper: {},
@@ -110,6 +112,12 @@ class Main extends React.Component {
     this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
     this.imageEditorClose = this.imageEditorClose.bind(this);
+    {
+      /**
+  this.cameraTargetY_up = this.cameraTargetY_up.bind(this);
+    this.cameraTargetY_down = this.cameraTargetY_down.bind(this);
+  */
+    }
   }
   // resizable functions
 
@@ -856,12 +864,12 @@ class Main extends React.Component {
       BABYLON.Database.IDBStorageEnabled = true;
       //build the camera.
       const cameraOptions = {
-        lowerAlphaLimit: -Math.PI,
-        upperAlphaLimit: Math.PI,
+        lowerAlphaLimit: -0.2,
+        upperAlphaLimit: Math.PI / 1.8,
         lowerBetaLimit: 0,
-        upperBetaLimit: Math.PI / 2.2,
-        lowerRadiusLimit: 5,
-        upperRadiusLimit: 200,
+        upperBetaLimit: Math.PI / 2.15,
+        lowerRadiusLimit: 15,
+        upperRadiusLimit: 60,
         useAutoRotationBehavior: false,
         attachControl: true
       };
@@ -872,11 +880,27 @@ class Main extends React.Component {
         Math.PI / 2.5,
         Math.PI / 3,
         30,
-        BABYLON.Vector3.Zero(),
+        scope.state.camera_target,
         scene,
         true,
         cameraOptions
       );
+      /*
+      new BABYLON.Vector3(4, 2, 4),
+      constructor(
+      canvas = null,
+      type = null,
+      name = null,
+      alpha = null,
+      beta = null,
+      radius = null,
+      target = new Vector3(0, 0, 0),
+      scene = null,
+      setActiveOnSceneNoneActive = null,
+      options = null
+      ) 
+      */
+      // BABYLON.Vector3.Zero(),
       let camera = adderCam_arcRotate.getCamera();
 
       scope.setState({ camera: camera });
@@ -894,7 +918,7 @@ class Main extends React.Component {
       light_main.intensity = 0.8;
       let light_point = new BABYLON.PointLight(
         "pointLight",
-        new BABYLON.Vector3(5, 5, -0.1),
+        new BABYLON.Vector3(15, 20, 30),
         scene
       );
       return scene;
@@ -1107,7 +1131,21 @@ class Main extends React.Component {
       }
     );
   }
-
+  /*
+  camera target change in state does not appear to effect the existing scene?
+  cameraTargetY_up() {
+    console.log("up");
+    let current = this.state.camera_target_y;
+    current = current + 2;
+    scope.setState({
+      camera_target_y: current,
+      camera_target: new BABYLON.Vector3(0, current, 0)
+    });
+  }
+  cameraTargetY_down() {
+    console.log("down...");
+  }
+*/
   render() {
     return (
       <Grid container>
@@ -1262,7 +1300,7 @@ class Main extends React.Component {
           </Grid>
           <Grid item md={4} xs={12}>
             <Grid container>
-              <Grid item sm={1} xs={0}></Grid>
+              <Grid item sm={1}></Grid>
               <div
                 className="design-controls"
                 style={{
@@ -1346,7 +1384,7 @@ class Main extends React.Component {
                   )}
                 </Grid>
               </div>
-              <Grid item sm={1} xs={0}></Grid>
+              <Grid item sm={1}></Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -1363,6 +1401,10 @@ class Main extends React.Component {
           callback_Yes={this.callback_DeleteYes}
           callback_No={this.callback_DeleteNo}
         ></MUIAlertDialog>
+        {/**
+          <button onClick={this.cameraTargetY_up}>+</button>
+        <button onClick={this.cameraTargetY_down}>-</button>
+        */}
       </Grid>
     );
   }

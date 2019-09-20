@@ -118,12 +118,14 @@ class AdderLoader {
         position.z
       );
       let rotation = adderAsset.getRotation();
+      console.log("rotation:", rotation);
       let rotationAxisVect = new BABYLON.Vector3(
         rotation.axis.x,
         rotation.axis.y,
         rotation.axis.z
       );
       let rotationAngle = parseFloat(rotation.angle);
+      console.log("rotationAngle:", rotationAngle);
       let scaling = adderAsset.getScaling();
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
       let behavior = adderAsset.getBehavior();

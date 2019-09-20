@@ -13,8 +13,8 @@
                             "filename": "porsche2.2",
                             "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
                             "position": {
-                                "x": "16",
-                                "y": "1",
+                                "x": "12",
+                                "y": ".80",
                                 "z": "3"
                             },
                             "rotation": {
@@ -78,17 +78,17 @@
                             "dir": "vw_toureg",
                             "filename": "vw_toureg-2.5",
                             "position": {
-                                "x": "-1",
+                                "x": "0",
                                 "y": "1.1",
-                                "z": "10"
+                                "z": "18"
                             },
                             "rotation": {
                                 "axis": {
                                     "x": "0",
-                                    "y": "90",
+                                    "y": "1",
                                     "z": "0"
                                 },
-                                "angle": "-45"
+                                "angle": "-90"
                             },
                             "scaling": {
                                 "x": ".5",
@@ -202,10 +202,10 @@
                             "rotation": {
                                 "axis": {
                                     "x": "0",
-                                    "y": "0",
+                                    "y": "1",
                                     "z": "0"
                                 },
-                                "angle": "-90"
+                                "angle": "25"
                             },
                             "scaling": {
                                 "x": "1",
