@@ -74,7 +74,7 @@
                        {
                             "uuid": "4door_001",
                             "name": "Station Wagon",
-                            "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.5.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon",
                             "dir": "vw_toureg",
                             "filename": "vw_toureg-2.5",
                             "position": {

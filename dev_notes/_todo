@@ -402,3 +402,18 @@ inspect undo and redo data in console:
           image_model,
           "empty screenshot"
         );
+
+        Friday 9-20-2019 : 
+        bug: at some point during the redo and undo of a porsch , with texture, to billboard , with two textures...
+        undoing the 2nd texture on the billboard reveals an 'incorrect' texture on the billboard, what appears to be the texture 
+        currently applied to the porsche. 
+
+        solved. There needed to be a flag for a models initial load so that it could either get a default texture or the previous texture.
+  
+      now. Can we get the default texture, or do we have to apply a generic white dataURL. ? 
+      (?) should we make 'original dataURL' part of a models meta data ?  NO there are a zillion different materials applied to a model. 
+      we could apply the default material to all the selectable meshes...
+
+      what if all the Blender models have the same starting default material. 
+      
+

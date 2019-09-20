@@ -107,22 +107,22 @@ class AdderSceneWrapper {
 
     this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
-
-      let ModelsArray = this.getModels();
-
-      for (let mIndex in ModelsArray) {
-        let _model = ModelsArray[mIndex];
-        let _meshWrappers = _model.getMeshWrappers();
-        for (let mwIndex in _meshWrappers) {
-          let _meshWrapper = _meshWrappers[mwIndex];
-          let _mesh = _meshWrapper.getMesh();
-          if (_mesh.id === mesh_id) {
-            let scene = this.getScene();
-            _meshWrapper.applyTextureFromDataURL(
-              new Date().toTimeString() + ".png",
-              dataURL,
-              scene
-            );
+      if (dataURL != "empty dataURL") {
+        let ModelsArray = this.getModels();
+        for (let mIndex in ModelsArray) {
+          let _model = ModelsArray[mIndex];
+          let _meshWrappers = _model.getMeshWrappers();
+          for (let mwIndex in _meshWrappers) {
+            let _meshWrapper = _meshWrappers[mwIndex];
+            let _mesh = _meshWrapper.getMesh();
+            if (_mesh.id === mesh_id) {
+              let scene = this.getScene();
+              _meshWrapper.applyTextureFromDataURL(
+                new Date().toTimeString() + ".png",
+                dataURL,
+                scene
+              );
+            }
           }
         }
       }

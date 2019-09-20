@@ -59,6 +59,7 @@ class Main extends React.Component {
       startEditing: false,
       finishedEditing: true,
       editing_mesh_id: "empty mesh",
+      editing_mesh_initial_load: false,
       last_dataURL: "empty dataURL",
       selected_ad_type: -1,
       hoodMeshId: null,
@@ -270,6 +271,10 @@ class Main extends React.Component {
     if (old_actions.length > 0) {
       let poppedAction = scope.popOffAction();
 
+      console.log("poppedAction:", poppedAction);
+      console.log("typeof poppedAction:", typeof poppedAction);
+      // I think there are three types of vars in the from field. [ text, dataURL, and assetObject ]
+      // may need to add 'empty asset' to the condition
       if (poppedAction.from != "empty dataURL") {
         this.state.adderSceneWrapper.applyTextureToMesh(
           poppedAction.id,
@@ -280,11 +285,16 @@ class Main extends React.Component {
           "perform undo texture...but back to the original texture  HOW TO RESTORE ORIGINAL TEXTURE ? "
         );
         console.log(
-          "APPLY default texture blank: ie: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          `APPLY empty dataURL blank: ie: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw== 
+           OR 
+           data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw== 
+           OR data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/1+yHgAHtAKYD9BncgAAAABJRU5ErkJggg==
+           OR WHITE data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=
+           `
         );
         this.state.adderSceneWrapper.applyTextureToMesh(
           poppedAction.id,
-          "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII="
         );
       }
     } else {
@@ -349,6 +359,10 @@ class Main extends React.Component {
     //handles popping off actions array and pushing back into redo array
     let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
     let poppedAction = old_actions.pop();
+    console.log(
+      "looking for popped action type of action:",
+      poppedAction.action
+    );
     this.reset_InsertIntoRedo(poppedAction);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
     return poppedAction;
@@ -520,26 +534,42 @@ class Main extends React.Component {
           this.state.editing_mesh_id,
           dataURL
         );
+        // ISSUE: this.state.last_dataURL in save_UIAction parameters. In the case of first adding a texture to an asset, it really did NOT have a 'from' texture.
+        // There may need to be a condition to check for this. ( maybe? this.state.editing_mesh_id needs a sister variable for hasTexture or initialLoad ...)
+        // OR IF editing_mesh_id === "empty mesh"
 
-        scope.save_UIAction(
-          this.state.editing_mesh_id,
-          "applyTextureToMesh",
-          dataURL,
-          this.state.last_dataURL
-        );
+        if (this.state.editing_mesh_initial_load) {
+          scope.save_UIAction(
+            this.state.editing_mesh_id,
+            "applyTextureToMesh",
+            dataURL,
+            "empty dataURL"
+          );
+        } else {
+          scope.save_UIAction(
+            this.state.editing_mesh_id,
+            "applyTextureToMesh",
+            dataURL,
+            this.state.last_dataURL
+          );
+        }
+
         scope.setState({
-          last_dataURL: dataURL
+          last_dataURL: dataURL,
+          editing_mesh_initial_load: false
         });
       }
     );
   };
 
   windowCallbackPickable(mesh_id, caller) {
+    console.log("mesh_id:", mesh_id);
     if (!this.state.startEditing) {
       this.setState(
         {
           startEditing: true,
           editing_mesh_id: mesh_id,
+          editing_mesh_initial_load: true,
           finishedEditing: false
           //meshPicked: false
         },
