@@ -429,3 +429,35 @@ inspect undo and redo data in console:
           BUG: if I load an image into the editor and then hit the 'close' button with out making an edit.... 
 
           Dialog: on close something like this with different arg :: props.imageEditorCallback(dataURL);
+
+
+          BUG: save: no meshes are getting saved like they used to. They used to get saved everytime the user created a screen shot , 
+          now that we are not doing it that way , figure out how. 
+          Not seeing it. Now though it should happen when the asset is loaded.
+           callback_Designer -> adderLoader.addSingleModel(adderAsset); ->  
+           
+           Actually...it should happen when a mesh is selected and edited.
+           so on apply image. ( should I be saving the 'models' as well ...or is that redundant. )
+
+           What exactly are we saving for the user ? 
+            - Just the final image on screen? 
+            - the ability to reload the deisgn project ? 
+
+  send actions array to this in the data param to be saved ....???? 
+  actions_array will be gotten from localstorage though instaed of from scope. 
+  BUT it might need to be saved in state so that it can be accesses when params are sent to the iconControls otherwise, it could get pulled later...
+
+               <IconControlGroup
+                  callback_Save={this.iconSave}
+                  callback_Save_v2={this.iconSave_v2}
+                  callback_Delete={this.iconDelete}
+                  callback_Redo={this.iconRedo}
+                  callback_Save_Alt={this.iconSave_Alt}
+                  callback_Share={this.iconShare}
+                  callback_Undo={this.iconUndo}
+                  data={{
+                    designModel: scope.state.userSession.designModel,
+                    designs: scope.state.userSession.designs
+                    
+                  }}
+                ></IconControlGroup>

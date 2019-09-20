@@ -432,6 +432,8 @@ class Main extends React.Component {
     //push to local storage:
     old_actions.push(action_object);
     localStorage.setItem("actions_array", JSON.stringify(old_actions));
+
+    //if _action == "" THEN save mesh
   }
 
   subCallback(args) {
@@ -717,6 +719,7 @@ class Main extends React.Component {
     let that = this;
 
     function addScreenshot(src) {
+      console.log("addScreenShot(src) src:", src);
       let image_uid = "img_" + Date.now();
 
       let image_model = {
@@ -1032,6 +1035,7 @@ class Main extends React.Component {
     //*!* TODO: still need the selects to refresh and the design name to refresh.
     //TODO: remove actions_array from localStorage
     window.localStorage.removeItem("actions_array");
+    window.localStorage.removeItem("redo_actions_array");
   }
 
   callback_DeleteYes() {
