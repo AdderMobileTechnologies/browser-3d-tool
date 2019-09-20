@@ -425,3 +425,7 @@ inspect undo and redo data in console:
         console log errors: 
           * Failed Prop TYpe prop chidren marked as requiired...
           * AdderImageEditor validateDOMNesting  161, MUI_DraggableDialog 92, 
+
+          BUG: if I load an image into the editor and then hit the 'close' button with out making an edit.... 
+
+          Dialog: on close something like this with different arg :: props.imageEditorCallback(dataURL);

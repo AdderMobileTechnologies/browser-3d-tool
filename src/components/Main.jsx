@@ -109,6 +109,7 @@ class Main extends React.Component {
     this.save_UIAction = this.save_UIAction.bind(this);
     this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
+    this.imageEditorClose = this.imageEditorClose.bind(this);
   }
   // resizable functions
 
@@ -502,6 +503,12 @@ class Main extends React.Component {
     this.windowCallbackPickable(args.name, "sidebarButtonClickAlt");
   }
 
+  imageEditorClose = () => {
+    this.setState({
+      startEditing: false,
+      finishedEditing: true
+    });
+  };
   imageEditorCallback = dataURL => {
     console.log("image editor callback ...");
     this.setState(
@@ -1108,7 +1115,7 @@ class Main extends React.Component {
             id="Header"
             style={{ marginTop: "10px" }}
           >
-            <Grid item xs={4} id="LogoContainer">
+            <Grid item sm={4} xs={12} id="LogoContainer">
               <img
                 src={AdderLogoAndName}
                 style={{ height: "auto", width: "100%" }}
@@ -1120,7 +1127,7 @@ class Main extends React.Component {
             <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={1} id="LogoContainer"></Grid>
-            <Grid item xs={2} id="LogoContainer">
+            <Grid item sm={2} xs={12} id="LogoContainer">
               <Grid
                 container
                 style={{
@@ -1148,8 +1155,8 @@ class Main extends React.Component {
             </Grid>
             <Grid item xs={1} id="LogoContainer"></Grid>
           </Grid>
-          <Grid item xs={8}>
-            <Grid container>
+          <Grid item md={8} sm={12} xs={12}>
+            <Grid container className="canvas-container">
               <div className="adder-3dTool-canvas-container">
                 <canvas
                   id="adder_3dTool_canvas"
@@ -1196,7 +1203,7 @@ class Main extends React.Component {
                   }}
                 ></IconControlGroup>
 
-                <Grid item xs={9} id={"iconRow1screenshots_row"}>
+                <Grid item sm={9} xs={12} id={"iconRow1screenshots_row"}>
                   <Grid>
                     <div>
                       {/**
@@ -1212,7 +1219,7 @@ class Main extends React.Component {
                           width={this.state.width}
                           onResize={this.onResize}
                           resizeHandles={["se"]}
-                          minConstraints={[600, 150]}
+                          minConstraints={[300, 150]}
                           maxConstraints={[1200, 300]}
                         >
                           <div
@@ -1249,9 +1256,9 @@ class Main extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
             <Grid container>
-              <Grid item xs={1}></Grid>
+              <Grid item sm={1} xs={0}></Grid>
               <div
                 className="design-controls"
                 style={{
@@ -1276,6 +1283,7 @@ class Main extends React.Component {
                       <div>
                         <Grid>
                           <DraggableDialog
+                            imageEditorClose={this.imageEditorClose}
                             imageEditorCallback={this.imageEditorCallback}
                             mesh_id={this.state.editing_mesh_id}
                             isEditing={this.state.startEditing}
@@ -1334,7 +1342,7 @@ class Main extends React.Component {
                   )}
                 </Grid>
               </div>
-              <Grid item md={1}></Grid>
+              <Grid item sm={1} xs={0}></Grid>
             </Grid>
           </Grid>
         </Grid>

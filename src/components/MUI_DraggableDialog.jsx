@@ -24,7 +24,7 @@ function PaperComponent(props) {
 }
 
 export default function DraggableDialog(props) {
-  // console.log("props on Draggable Dialog ...", props);
+  console.log("props on Draggable Dialog ...", props);
   ///////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(true);
 
@@ -38,6 +38,7 @@ export default function DraggableDialog(props) {
     // console.log("MODAL: handleClose()");
     // console.log(this.state.open); can not read property 'state' of undefined.
     setOpen(false);
+    props.imageEditorClose();
   };
   /////////////////////////////////////////////////////////////
   // const handleApply = () => {

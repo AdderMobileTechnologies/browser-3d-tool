@@ -30,6 +30,10 @@
     */
 }
 
+.tui-image-editor-container .tui-image-editor-header {
+    min-width: 250px !important;
+}
+
 div.MuiDialogContent-root {
     background-color: #000 !important;
     background: #000 !important;

@@ -40,7 +40,14 @@ export default function IconControlGroup(props) {
   };
 
   return (
-    <Grid item xs={3} id={"iconRow1"} style={{ paddingTop: "0px" }}>
+    <Grid
+      item
+      md={3}
+      sm={12}
+      xs={12}
+      id={"iconRow1"}
+      style={{ paddingTop: "0px" }}
+    >
       <Grid container>
         <Grid item xs={4}>
           <UIButton
