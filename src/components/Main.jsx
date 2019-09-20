@@ -728,6 +728,8 @@ class Main extends React.Component {
       //  IF array_image_models.length > 0  DO STUFF    ELSE  do NOT UNDO.
       console.log("array_image_models length");
       console.log(array_image_models.length);
+      /*
+      //This code interferes with the way the Undo Redo functionality is currently working..... 
       if (array_image_models.length > 0) {
         let lastIndex = array_image_models.length - 1;
         let from_Screenshot = array_image_models[lastIndex];
@@ -747,7 +749,7 @@ class Main extends React.Component {
           "empty screenshot"
         );
       }
-
+      */
       console.log("image_model:", image_model);
       array_image_models.push(image_model);
       that.setState(

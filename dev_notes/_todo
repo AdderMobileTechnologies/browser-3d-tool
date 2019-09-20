@@ -415,5 +415,13 @@ inspect undo and redo data in console:
       we could apply the default material to all the selectable meshes...
 
       what if all the Blender models have the same starting default material. 
-      
 
+
+      Another Bug: 
+        after adding screen shots ... at some point the undo function stopped working period.
+        As soon as a screen shot was taken , the UNDO function stopped.
+
+
+        console log errors: 
+          * Failed Prop TYpe prop chidren marked as requiired...
+          * AdderImageEditor validateDOMNesting  161, MUI_DraggableDialog 92, 
