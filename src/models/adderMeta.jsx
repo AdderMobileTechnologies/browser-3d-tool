@@ -102,8 +102,8 @@ class AdderMeta {
           behavior,
           adderSceneWrapper
         );
-        console.log("adderAsset name:", adderAsset.getFilename());
-        console.log("adderAsset behavior:", adderAsset.getBehavior());
+        // console.log("adderAsset name:", adderAsset.getFilename());
+        // console.log("adderAsset behavior:", adderAsset.getBehavior());
         adderLoader.addSingleModel(adderAsset);
       }
     };

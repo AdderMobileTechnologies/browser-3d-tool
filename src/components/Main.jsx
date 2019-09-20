@@ -303,11 +303,11 @@ class Main extends React.Component {
     console.log("undo_Asset args:", args);
     // pop off the 'TO' asset , move it into the redo array
     //see the delete function for reference.
-    let poppedAction = scope.popOffAction();
+    let poppedAction = scope.popOffAction(); // (?) is this getting saved into the 'redo' array every time ?
 
     let asw = scope.state.adderSceneWrapper;
     asw.disposeOfMeshesForModel(args.id);
-    scope.setState({ selected_ad_type: -1 });
+    scope.setState({ selected_ad_type: -1 }); // (?) can this value refresh the selects in Designer ?
     // TODO: reset the selects in Designer ?
   }
   // LEFT OFF HERE: Thur. 9-19-2019
@@ -315,17 +315,17 @@ class Main extends React.Component {
   // *porsche is not getting added back to the actions array the 2nd redo doesn't put the object back into actions array.
 
   redo_asset(args) {
-    console.log("redo_Asset args:", args);
+    console.log("... redo_Asset args:", args);
     //pop off redo, push to actions
     let poppedRedo = scope.popOffRedo();
     //should handle pushing back into actions as well...
     // so what will load it onto the canvas
-    console.log("reload with args:", args);
+    //console.log("reload with args:", args);
     //adderSceneWrapper
-    console.log("do we have a scene wrapper....");
-    console.log(scope);
+    //console.log("do we have a scene wrapper....");
+    //console.log(scope);
     let asw = scope.getAdderSceneWrapper();
-    console.log("asw:", asw);
+    //console.log("asw:", asw);
     //asw.getUUID();
     let adderAsset = new AdderAsset(
       args.to.dir,
@@ -354,10 +354,13 @@ class Main extends React.Component {
     return poppedAction;
   }
   popOffRedo() {
+    console.log("...popOffRedo() ");
     //todo:
     let old_redos =
       JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    console.log("# of redos:", old_redos.length);
     let poppedRedo = old_redos.pop();
+    console.log("The popped redo:", poppedRedo);
     this.reset_InsertIntoActions(poppedRedo);
     localStorage.setItem("redo_actions_array", JSON.stringify(old_redos));
     return poppedRedo;
@@ -393,34 +396,15 @@ class Main extends React.Component {
   reset_InsertIntoRedo(args) {
     let currentRedos =
       JSON.parse(localStorage.getItem("redo_actions_array")) || [];
-    if (
-      currentRedos === null ||
-      typeof currentRepos === "undefined" ||
-      currentRedos.length <= 0
-    ) {
-      currentRedos.push(args);
-      localStorage.setItem("redo_actions_array", JSON.stringify(currentRedos));
-    } else {
-      console.log("REDO: the current number of redos is ", currentRedos.length);
-    }
+    currentRedos.push(args);
+    localStorage.setItem("redo_actions_array", JSON.stringify(currentRedos));
   }
 
   reset_InsertIntoActions(args) {
     let currentActions =
       JSON.parse(localStorage.getItem("actions_array")) || [];
-    if (
-      currentActions === null ||
-      typeof currentActions === "undefined" ||
-      currentActions.length <= 0
-    ) {
-      currentActions.push(args);
-      localStorage.setItem("actions_array", JSON.stringify(currentActions));
-    } else {
-      console.log(
-        "ACTION: the current number of actions is ",
-        currentActions.length
-      );
-    }
+    currentActions.push(args);
+    localStorage.setItem("actions_array", JSON.stringify(currentActions));
   }
   //////////////////////////   end undos and redos
   save_UIAction(_id, _action, _to, _from) {
@@ -579,7 +563,7 @@ class Main extends React.Component {
       scope.setState({ selected_ad_type: "1" }); //billboard
     }
     if (!(adderAsset instanceof AdderAsset)) {
-      console.log("NOT AN ADDER ASSET yet....");
+      // console.log("NOT AN ADDER ASSET yet....");
     } else {
       //HERE : we would save the 'adderAsset' that just got added to the canvas.
       // if(this.state.last_adderAssetObject != "empty asset"){

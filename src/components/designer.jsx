@@ -45,7 +45,7 @@ class Designer extends React.Component {
     });
   };
   adType_callback = data => {
-    console.log("adType_callback data:", data);
+    // console.log("adType_callback data:", data);
     this.props.callback("-1");
     if (data.selectedOption !== "-1") {
       this.resetDesign();
@@ -73,7 +73,7 @@ class Designer extends React.Component {
     }
   };
   subType_callback = data => {
-    console.log("subType_callback data:", data);
+    // console.log("subType_callback data:", data);
     if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
@@ -98,7 +98,7 @@ class Designer extends React.Component {
     }
   };
   detail_callback = data => {
-    console.log("detail_callback data:", data);
+    // console.log("detail_callback data:", data);
     if (data.selectedOption !== "-1") {
       //could just return the data here
 
@@ -107,7 +107,7 @@ class Designer extends React.Component {
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
 
-      console.log("assetSelected:", assetSelected);
+      //console.log("assetSelected:", assetSelected);
       //send data to parent to name the 'model' after it's filepath property in the assetData.
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
@@ -131,10 +131,10 @@ class Designer extends React.Component {
       adderAssetObject.scaling = assetData.scaling;
       adderAssetObject.behavior = assetData.behavior;
 
-      console.log("adderAssetObject:", adderAssetObject);
+      // console.log("adderAssetObject:", adderAssetObject);
 
-      console.log("WHAT DOES ADDER ASSET LOOK LIKE ? ");
-      console.log(adderAsset);
+      //console.log("WHAT DOES ADDER ASSET LOOK LIKE ? ");
+      //console.log(adderAsset);
       //** */ this.loadScene(adderAsset);
       //TODO: declare what was selected.
       this.props.callback(

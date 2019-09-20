@@ -396,4 +396,9 @@ inspect undo and redo data in console:
   -click on anywhere on the screen pulling up modal ? 
 
   NEXT: undo and redo chosen Model ?? 
-  
+   scope.save_UIAction(
+          image_model.id,
+          "screenshot",
+          image_model,
+          "empty screenshot"
+        );

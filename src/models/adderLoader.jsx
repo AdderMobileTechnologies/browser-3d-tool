@@ -95,8 +95,8 @@ class AdderLoader {
               let currentHiddenMeshName =
                 hiddenParams["hiddenMeshes"][meshIndex];
               if (currentHiddenMeshName === mesh.id) {
-                console.log("hidden MATCH!");
-                console.log(mesh.id);
+                // console.log("hidden MATCH!");
+                // console.log(mesh.id);
                 mesh.isVisible = false; // NOT isHidden
               }
             }
@@ -133,7 +133,7 @@ class AdderLoader {
       //////////////////////////////////////////////////////////////
 
       let modelFile = filepath;
-      console.log("model path to file modelFile:", modelFile);
+      // console.log("model path to file modelFile:", modelFile);
       ///////////////////////////////////////////////////////////////////
       let adderModel = new AdderModel(
         adderSceneWrapper,

@@ -20,7 +20,7 @@ class AdderSceneWrapper {
     let _uuid = Date();
 
     this.getUUID = () => {
-      console.log("AdderModelWrapper UUID:::", _uuid);
+      // console.log("AdderModelWrapper UUID:::", _uuid);
       return _uuid;
     };
 
@@ -38,10 +38,10 @@ class AdderSceneWrapper {
     };
 
     this.appendModel = adderModel => {
-      console.log(
-        "ready to append model to the adderSceneWrapper ....adderModel:",
-        adderModel
-      );
+      // console.log(
+      //   "ready to append model to the adderSceneWrapper ....adderModel:",
+      //   adderModel
+      // );
       let previousModels = this.getModels();
       previousModels.push(adderModel);
       this.setModels(previousModels);

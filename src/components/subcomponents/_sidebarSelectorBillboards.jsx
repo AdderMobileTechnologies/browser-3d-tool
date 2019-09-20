@@ -3,7 +3,7 @@ import Billboard from "../../assets/Adder_3D_Tool2/billboardTopView.png";
 import Grid from "@material-ui/core/Grid"; //
 
 export default function SidebarSelectorBillboards(props) {
-  console.log("SidebarSelectorBillboards: props:", props);
+  //console.log("SidebarSelectorBillboards: props:", props);
 
   const handleSubcomponentClick = e => {
     console.log("handleSubcomponentClick .....");
