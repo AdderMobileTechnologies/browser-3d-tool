@@ -476,4 +476,13 @@ Monday: 9-23-19
 Debug: 
   - Upon delete, not all models were deleted from the screen. The Application data was though correctly. 
   - it appears to only get the last item/model that was added to the screen. 
-  
+  commit:
+   "fixed the deletion method by gathering an array of user models as opposed to just the last model added."
+
+
+BUG: The (Designer Selects are not always right on.!) ie. upon selection of 4door( after billboard and porsche have been added), 
+automatically sets the value of 'stationwagon' instead of 'select'.
+ 
+Improvement: might just want to save image information in texture_images ( for textures applied to userModels) 
+That way , duplicates of dataURL will not be stored in the 'actions' array, HOWEVER, that would require swapping out the image 
+in actions array with an id, AND using the id in the texture_images array. 

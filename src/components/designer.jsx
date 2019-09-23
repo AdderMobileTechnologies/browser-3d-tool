@@ -33,23 +33,30 @@ class Designer extends React.Component {
     scope = this;
     this.getAdderSceneWrapper = props.getAdderSceneWrapper;
     this.detail_callback = this.detail_callback.bind(this);
+    this.resetDesign = this.resetDesign.bind(this);
+    this.continue_adType_callback = this.continue_adType_callback.bind(this);
   }
 
-  resetDesign = () => {
-    this.setState({
-      isOnSubType: false,
-      subType_options: [],
-      isOnDetail: false,
-      detail_options: [],
-      gotDesignMeta: false
-    });
-  };
-  adType_callback = data => {
-    // console.log("adType_callback data:", data);
-    this.props.callback("-1");
-    if (data.selectedOption !== "-1") {
-      this.resetDesign();
+  async resetDesign(data) {
+    await this.setState(
+      {
+        isOnSubType: false,
+        subType_options: [],
+        isOnDetail: false,
+        detail_options: [],
+        gotDesignMeta: false
+      },
+      () => {
+        scope.continue_adType_callback(data);
+      }
+    );
+  }
 
+  //resetDesign needed to be an async await.
+
+  continue_adType_callback = data => {
+    //console.log("async await callback ....");
+    if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
 
@@ -71,6 +78,13 @@ class Designer extends React.Component {
         adTypeSelectedOption: adTypeSelectedOption
       });
     }
+  };
+
+  adType_callback = data => {
+    // console.log("adType_callback data:", data);
+    this.props.callback("-1");
+    console.log("designer: adType_callback(): data:", data);
+    this.resetDesign(data);
   };
   subType_callback = data => {
     // console.log("subType_callback data:", data);
