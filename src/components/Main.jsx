@@ -96,6 +96,7 @@ class Main extends React.Component {
       userAction: {
         deleteSure: false
       },
+      userModels: [],
       actions: [],
       undos: [],
       redos: [],
@@ -716,7 +717,23 @@ class Main extends React.Component {
   }
   callback_withModelInfo(info) {
     //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
-    scope.setState({ modelName: info.filepath });
+    // SWAP OUT FOR ARRAY: ====>>>  scope.setState({ modelName: info.filepath });
+    //TODO: BUG: since only the last model was getting deleted, I should create a list of all models , then loop through them
+    // when time to delete.
+    // OR get all models from the asw adderScreenWrapper (x: that's really everything not just user models.)
+    //building array in state
+
+    //1) create object to push to the existing array
+    let data_model = { modelName: info.filepath };
+    //2) get the existing array
+    const userModels = scope.state.userModels.slice();
+    //3) push to the state array
+    userModels.push(data_model);
+    //4) change out the new array with the edits for the old array.
+    scope.setState(prevState => ({
+      ...prevState,
+      userModels: userModels
+    }));
   }
 
   screenshotButtonPress(evt) {
@@ -1040,6 +1057,7 @@ class Main extends React.Component {
       "#deleteAreYouSure button"
     );
     buttonAreYouSureDelete.click();
+    //which points to callback_Yes() --> callback_DeleteYes() --> resetForDelete()
   }
 
   resetForDelete() {
@@ -1049,9 +1067,19 @@ class Main extends React.Component {
     localStorage.removeItem("designsArray");
     //3
     //dispose of meshes
+    //BUG:TODO: This is only getting the 'last' model that was created.
     let stateModelName = scope.state.modelName;
     let asw = scope.state.adderSceneWrapper;
-    asw.disposeOfMeshesForModel(stateModelName);
+    //TODO: get ALL models that have been added to the scene from asw.
+    //let modelsArray = asw.getModels();
+    let modelsArray = scope.state.userModels;
+    for (let mx of modelsArray) {
+      console.log("mx:", mx);
+      //THIS IS "ALL" of the models , not just the 'added' models by the "User".
+      asw.disposeOfMeshesForModel(mx.modelName); // (previously was:) asw.disposeOfMeshesForModel(stateModelName);
+    }
+
+    // asw.disposeOfMeshesForModel(stateModelName);
     //4 remove UI settings ie. design name and design selections.
     scope.setState({ selected_ad_type: -1 });
     //5 design name

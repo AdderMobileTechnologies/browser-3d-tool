@@ -461,3 +461,19 @@ inspect undo and redo data in console:
                     
                   }}
                 ></IconControlGroup>
+
+
+
+Friday Commit Messages:
+- now 'redo and undo' of models is working.
+- now undo redo appears to be working correctly for multiple models using a vareity of actions such as adding assets applying texture   
+- some style changes on the image editor.
+- fix bug when 'closing image editor without an edit', also some responsive design updates.
+- added the actions_array to the 'save feature' as well as fixed style of the 'delete alert dialog'.
+- repositioned lights cameras and modesl to make their default locations and limits please the eye.
+
+Monday: 9-23-19
+Debug: 
+  - Upon delete, not all models were deleted from the screen. The Application data was though correctly. 
+  - it appears to only get the last item/model that was added to the screen. 
+  
