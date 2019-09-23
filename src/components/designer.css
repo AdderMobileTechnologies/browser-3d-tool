@@ -1,1 +1,15 @@
-.designer {}
+ .designer hr {
+     border: solid .5px #ddd;
+ }
+
+ .design-controls {
+     border-radius: 25px;
+     max-height: 820px;
+     min-height: 450px;
+     background-color: #f0eeee;
+ }
+
+ .sidebar-call-to-action {
+     font-size: 2em;
+     color: #555;
+ }

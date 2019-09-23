@@ -1,9 +1,9 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid"; //
+//import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
 
 export default function OverlayControls(props) {
-  console.log("OverlayControls: props:", props);
+  // console.log("OverlayControls: props:", props);
 
   return (
     <div>
@@ -15,6 +15,28 @@ export default function OverlayControls(props) {
           iconName="camera_alt"
           classNames="icon_btn "
         ></UIButton>
+        <UIButton
+          title="crop"
+          buttonText="Crop Image"
+          onClick={props.callback}
+          iconName="faCrop"
+          classNames="icon_btn "
+        ></UIButton>
+        <UIButton
+          title="fill"
+          buttonText="Fill Color"
+          onClick={props.callback}
+          iconName="faFillDrip"
+          classNames="icon_btn "
+        ></UIButton>
+        <UIButton
+          title="text format"
+          buttonText="text format"
+          onClick={props.callback}
+          iconName="faTextHeight"
+          classNames="icon_btn "
+        ></UIButton>
+
         {/**
                 <UIButton
                   title="Crop Image"

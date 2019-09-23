@@ -3,14 +3,14 @@
  * Purpose:
  * To manage the cascading select options available to the user during the design process.
  */
-import { Scene } from "babylonjs";
+//import { Scene } from "babylonjs";
 import React from "react";
 import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "../constants";
 import axios from "axios";
 import AdderAsset from "../models/adderAsset";
-import AdderSceneWrapper from "../models/adderSceneWrapper";
+//import AdderSceneWrapper from "../models/adderSceneWrapper";
 import Grid from "@material-ui/core/Grid"; //
 
 import "./minimum.css";
@@ -33,23 +33,30 @@ class Designer extends React.Component {
     scope = this;
     this.getAdderSceneWrapper = props.getAdderSceneWrapper;
     this.detail_callback = this.detail_callback.bind(this);
+    this.resetDesign = this.resetDesign.bind(this);
+    this.continue_adType_callback = this.continue_adType_callback.bind(this);
   }
 
-  resetDesign = () => {
-    this.setState({
-      isOnSubType: false,
-      subType_options: [],
-      isOnDetail: false,
-      detail_options: [],
-      gotDesignMeta: false
-    });
-  };
-  adType_callback = data => {
-    console.log("adType_callback data:", data);
-    this.props.callback("-1");
-    if (data.selectedOption != "-1") {
-      this.resetDesign();
+  async resetDesign(data) {
+    await this.setState(
+      {
+        isOnSubType: false,
+        subType_options: [],
+        isOnDetail: false,
+        detail_options: [],
+        gotDesignMeta: false
+      },
+      () => {
+        scope.continue_adType_callback(data);
+      }
+    );
+  }
 
+  //resetDesign needed to be an async await.
+
+  continue_adType_callback = data => {
+    //console.log("async await callback ....");
+    if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
 
@@ -72,9 +79,16 @@ class Designer extends React.Component {
       });
     }
   };
+
+  adType_callback = data => {
+    // console.log("adType_callback data:", data);
+    this.props.callback("-1");
+    console.log("designer: adType_callback(): data:", data);
+    this.resetDesign(data);
+  };
   subType_callback = data => {
-    console.log("subType_callback data:", data);
-    if (data.selectedOption != "-1") {
+    // console.log("subType_callback data:", data);
+    if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
 
@@ -98,12 +112,16 @@ class Designer extends React.Component {
     }
   };
   detail_callback = data => {
-    console.log("detail_callback data:", data);
-    if (data.selectedOption != "-1") {
+    // console.log("detail_callback data:", data);
+    if (data.selectedOption !== "-1") {
+      //could just return the data here
+
       let assetSelected = data.selectedOption;
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
+
+      //console.log("assetSelected:", assetSelected);
       //send data to parent to name the 'model' after it's filepath property in the assetData.
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
@@ -118,19 +136,35 @@ class Designer extends React.Component {
         assetData.behavior,
         adderSceneWrapper
       );
+      let adderAssetObject = {};
+      adderAssetObject.dir = assetData.dir;
+      adderAssetObject.filename = assetData.filename;
+      adderAssetObject.filepath = assetData.filepath;
+      adderAssetObject.position = assetData.position;
+      adderAssetObject.rotation = assetData.rotation;
+      adderAssetObject.scaling = assetData.scaling;
+      adderAssetObject.behavior = assetData.behavior;
 
-      this.loadScene(adderAsset);
+      // console.log("adderAssetObject:", adderAssetObject);
+
+      //console.log("WHAT DOES ADDER ASSET LOOK LIKE ? ");
+      //console.log(adderAsset);
+      //** */ this.loadScene(adderAsset);
       //TODO: declare what was selected.
-      this.props.callback(this.state.adTypeSelectedOption, adderAsset);
+      this.props.callback(
+        this.state.adTypeSelectedOption,
+        adderAsset,
+        adderAssetObject
+      );
       //LIKE TO : callback_withModelInfo :need the mesh_ids to select from buttons
     }
   };
 
-  loadScene = adderAsset => {
-    this.props.adderSceneWrapper.getUUID();
-    let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
-    adderLoader.addSingleModel(adderAsset);
-  };
+  // loadScene = adderAsset => {
+  //   this.props.adderSceneWrapper.getUUID();
+  //   let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
+  //   adderLoader.addSingleModel(adderAsset);
+  // };
 
   componentDidMount() {
     let scope = this;
@@ -176,9 +210,9 @@ class Designer extends React.Component {
   render() {
     return (
       <div className="designer">
-        <div>designer.jsx</div>
+        <hr />
         <Grid container>
-          <Grid item={4}>
+          <Grid item xs={4}>
             {this.state.isOnAdType && (
               <UISelect
                 id={"ad_type"}
@@ -187,7 +221,16 @@ class Designer extends React.Component {
               ></UISelect>
             )}
           </Grid>
-          <Grid item={4}>
+          <Grid
+            item
+            xs={4}
+            style={{
+              borderLeft: "solid 1px #ccc",
+              borderRight: "solid 1px #ccc",
+              paddingLeft: "5px",
+              paddingRight: "5px"
+            }}
+          >
             {this.state.isOnSubType && (
               <UISelect
                 id={"sub_type"}
@@ -196,7 +239,7 @@ class Designer extends React.Component {
               ></UISelect>
             )}
           </Grid>
-          <Grid item={4}>
+          <Grid item xs={4}>
             {this.state.isOnDetail && (
               <UISelect
                 id={"detail"}
@@ -206,6 +249,7 @@ class Designer extends React.Component {
             )}
           </Grid>
         </Grid>
+        <hr style={{ marginTop: "25px" }} />
       </div>
     );
   }

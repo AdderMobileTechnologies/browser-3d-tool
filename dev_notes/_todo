@@ -126,3 +126,363 @@ Left off with REDO .
 
 
 Check if The Right Side Selection of the porsche is similar to the meta data issue we dealt with last week with the billboards.
+
+// for adderSceneWrapper 
+getDefaultMaterialForMeshId(mesh_id) {
+    let ModelsArray = this.getModels();
+    let meshMat = null;
+    for (let mIndex in ModelsArray) {
+      let _model = ModelsArray[mIndex];
+      let _meshWrappers = _model.getMeshWrappers();
+      for (let mwIndex in _meshWrappers) {
+        let _meshWrapper = _meshWrappers[mwIndex];
+        let _mesh = _meshWrapper.getMesh();
+        if (_mesh.id === mesh_id) {
+          meshMat = _mesh.material;
+          console.log("MESH MATERIAL DEFAULT gotten for mesh.id");
+          return meshMat;
+        }
+      }
+    }
+    return meshMat;
+  }
+  applyMaterialToMeshId(mesh_id, material) {
+    let ModelsArray = this.getModels();
+
+    for (let mIndex in ModelsArray) {
+      let _model = ModelsArray[mIndex];
+      let _meshWrappers = _model.getMeshWrappers();
+      for (let mwIndex in _meshWrappers) {
+        let _meshWrapper = _meshWrappers[mwIndex];
+        let _mesh = _meshWrapper.getMesh();
+        if (_mesh.id === mesh_id) {
+          _mesh.material = material;
+          //or should we have a meshWrapper  setMaterial method ?
+        }
+      }
+    }
+  }
+
+// I also had some of the redo working for design name....
+
+//The environment.js file and the .gitignore 
+
+
+
+  // TODO notes:
+  
+/*
+Check if The Right Side Selection of the porsche is similar to the meta data issue we dealt with last week with the billboards.
+
+
+When a mesh is selected for a change in texture , grab it's default material ie. mesh.material 
+sidebarButtonClickAlt(args)   args.name or e.target.name = mesh.id 
+so I'd use adderSceneWrapper to find meshWrapper and get the original material from it.
+
+ie.
+//adderSceneWrapper.getDefaultMaterialForMeshId(mesh_id)
+
+
+
+undo_ApplyTextureToMesh
+
+
+OR 
+
+	var whiteMat = new BABYLON.StandardMaterial("whiteMat", scene);
+	whiteMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+   whiteSphere.material = whiteMat;
+
+   environment.js file 
+
+   .gitignore 
+
+
+*/
+
+// MAIN PROBLEM: The Modal Editor on and off behavior...
+1) user selects a mesh modal pops up like supposed to.
+2) user closes the modal, it pops up again by itself. 
+3) user closes the second one,
+4) now the modal is unresponsive to clicks and leaves the Open Image Editor button on the page.
+
+
+start_editing is TRUE modal pops up 
+chnage made in modal and 
+AdderImageEditor.jsx
+ onApplyClick() {
+    //console.log(this.imageEditor.toDataURL({ format: "png" }));
+    //data to apply to an image class of the current model/mesh.
+    let DataURL = this.imageEditor.toDataURL({ format: "png" });
+    this.onApplyCallback(DataURL);
+  }
+
+
+goes back to ...
+
+MUI_DraggableDialog.jsx 
+  <DialogContentText>
+            <AdderImageEditor
+              height={800}
+              width={1000}
+              mesh_id={props.mesh_id}
+              onApplyCallback={handleImageEditorResults}
+            />
+          </DialogContentText>
+
+which goes to ....
+
+   const handleImageEditorResults = dataURL => {
+    //Usage: Editing-Mesh
+
+    props.imageEditorCallback(dataURL);
+    setOpen(false);
+  };
+
+  /////////////////////////////////////////
+  I have a hunch that I'm doing something wrong in regards to this...  setOpen true/false and React.useState.
+  export default function DraggableDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+Tuesday 9-17-2019 :
+Plan:  Try to isolate anywhere the modal is opened or closed. 
+Pay special attention to the strange callback .
+
+icons to add : 
+Tt is text_fields  
+tT is format_size
+
+
+914ac26dff4f6f352a3
+--------------------------------------------------------------------
+ICONS: 
+https://github.com/FortAwesome/react-fontawesome
+
+https://fontawesome.com/icons?d=gallery&q=save
+
+$ yarn add @fortawesome/free-solid-svg-icons
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+const element = <FontAwesomeIcon icon={faCoffee} />
+--------------------------------------------------------------------
+
+Wed. 9-18-2019 
+bug: If user screenshots same exact image we get duplicate key errors, probably not an issue.
+
+resizable box:
+https://www.npmjs.com/package/react-resizable
+$ npm install --save react-resizable
+
+const Resizable = require('react-resizable').Resizable; // or,
+const ResizableBox = require('react-resizable').ResizableBox;
+ 
+// ES6
+import { Resizable, ResizableBox } from 'react-resizable';
+ 
+// ...
+render() {
+  return (
+    <ResizableBox width={200} height={200} draggableOpts={{...}}
+        minConstraints={[100, 100]} maxConstraints={[300, 300]}>
+      <span>Contents</span>
+    </ResizableBox>
+  );
+}
+/* PROPS:
+{
+  children: React.Element<any>,
+  width: number,
+  height: number,
+  // Either a ReactElement to be used as handle, or a function returning an element that is fed the handle's location as its first argument.
+  handle: ReactElement<any> | (resizeHandle: 's' | 'w' | 'e' | 'n' | 'sw' | 'nw' | 'se' | 'ne') => ReactElement<any>,
+  // If you change this, be sure to update your css
+  handleSize: [number, number] = [10, 10],
+  lockAspectRatio: boolean = false,
+  axis: 'both' | 'x' | 'y' | 'none' = 'both',
+  minConstraints: [number, number] = [10, 10],
+  maxConstraints: [number, number] = [Infinity, Infinity],
+  onResizeStop?: ?(e: SyntheticEvent, data: ResizeCallbackData) => any,
+  onResizeStart?: ?(e: SyntheticEvent, data: ResizeCallbackData) => any,
+  onResize?: ?(e: SyntheticEvent, data: ResizeCallbackData) => any,
+  draggableOpts?: ?Object,
+  resizeHandles?: ?Array<'s' | 'w' | 'e' | 'n' | 'sw' | 'nw' | 'se' | 'ne'> = ['se']
+};
+*/
+
+
+ok. found and applied a resizable box to the screenshots. 
+now to get them to expand with the box ... 
+
+1:00pm 
+Try to figure out the modal pop up issue. 
+THESE are all direct clicks on the mesh itself. ..................
+- create billboard , straight apply an image , all good. 
+- click other side, straight apply image , all good. 
+- open porsche, straighrt apply image, all good.
+- apply to other side othe car straight image no problem , all good. 
+- load the vw, apply straight image no problem .
+- applied straight image to the otherside all good. 
+
+NOW ... use the sidebar buttons. 
+load the two sided billboard , add image with the one button select , works, but then 
+-frozen can not select the other side of the billboard. with a 'direct click' BUT can select it with the other sidebar button
+TRY again:
+second time the sidebar button was frozen and ... I COULD click directly on sign two.
+
+now select porsche , left side from sidebar apply image all good. BUT can NOT direct select the right side,
+However if I use sidebar to select rightside it works ... 
+
+conclusions:
+1) definitely related to the sidebar buttons. 
+2) there is an alternating aspect that works , while using the same method for 2 consecutive times fails on the second.
+
+exceptions: 
+2 consecutive direct clicks on the vw worked.
+
+CHANGES: 
+
+    this.sidebarButtonClickAlt. = this.sidebarButtonClickAlt.bind(this) 
+     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
+
+     try to eliminate the 'scp and scope' factors.
+
+     AFTER windowCallbackPickable ,,, I needed to reset flag back to false. This fixed the back to back sidebar selection.
+     HOWEVER, upon a direct click afterwards on billboard I get the 'double popup and freeze.' 
+
+
+  Now repeated sidebar click s work until interrupted by a window click....
+
+  on 'Apply Image' it is calling past the flag for isEditing... a third time. 
+
+//==========================================================
+  open a model 
+  'direct click' 
+  edit 
+  apply image 
+  * modal pops back up 
+  close it 
+  THEN it never opens again via 'direct click'  OR 'via' sidebar buttons .
+
+The modal issue... based on a too lenient array of window click listening... certain clicked elements need to be filtered out for
+specific actions such as the 'Apply Image' button in the modal . It shoudl have stopped any further editing.
+
+
+Thursday:
+Things I think might be good: 
+1) have the camera focal point change to what ever got selected. 
+2) be able to rotate the selected object  horizontal slider ? 
+3) be able to reposition the selected model x,y,z 3 vertical sliders ?
+
+Still To Do: 
+1) undo and redo texture / material 
+2) changing 'scene' between city and country
+3) 
+
+inspect undo and redo data in console: 
+- actions array catches name changes, and puts them into redo_actions_array.
+- actions tracks screenshots , and undoes them but does NOT redo them...Brandon said not to track screenshots though,...we'll have a delete button for them.
+- texture:
+  - issue: hitting the 'undo' button brought up the modal window.? then froze modal again.!
+  -click on anywhere on the screen pulling up modal ? 
+
+  NEXT: undo and redo chosen Model ?? 
+   scope.save_UIAction(
+          image_model.id,
+          "screenshot",
+          image_model,
+          "empty screenshot"
+        );
+
+        Friday 9-20-2019 : 
+        bug: at some point during the redo and undo of a porsch , with texture, to billboard , with two textures...
+        undoing the 2nd texture on the billboard reveals an 'incorrect' texture on the billboard, what appears to be the texture 
+        currently applied to the porsche. 
+
+        solved. There needed to be a flag for a models initial load so that it could either get a default texture or the previous texture.
+  
+      now. Can we get the default texture, or do we have to apply a generic white dataURL. ? 
+      (?) should we make 'original dataURL' part of a models meta data ?  NO there are a zillion different materials applied to a model. 
+      we could apply the default material to all the selectable meshes...
+
+      what if all the Blender models have the same starting default material. 
+
+
+      Another Bug: 
+        after adding screen shots ... at some point the undo function stopped working period.
+        As soon as a screen shot was taken , the UNDO function stopped.
+
+
+        console log errors: 
+          * Failed Prop TYpe prop chidren marked as requiired...
+          * AdderImageEditor validateDOMNesting  161, MUI_DraggableDialog 92, 
+
+          BUG: if I load an image into the editor and then hit the 'close' button with out making an edit.... 
+
+          Dialog: on close something like this with different arg :: props.imageEditorCallback(dataURL);
+
+
+          BUG: save: no meshes are getting saved like they used to. They used to get saved everytime the user created a screen shot , 
+          now that we are not doing it that way , figure out how. 
+          Not seeing it. Now though it should happen when the asset is loaded.
+           callback_Designer -> adderLoader.addSingleModel(adderAsset); ->  
+           
+           Actually...it should happen when a mesh is selected and edited.
+           so on apply image. ( should I be saving the 'models' as well ...or is that redundant. )
+
+           What exactly are we saving for the user ? 
+            - Just the final image on screen? 
+            - the ability to reload the deisgn project ? 
+
+  send actions array to this in the data param to be saved ....???? 
+  actions_array will be gotten from localstorage though instaed of from scope. 
+  BUT it might need to be saved in state so that it can be accesses when params are sent to the iconControls otherwise, it could get pulled later...
+
+               <IconControlGroup
+                  callback_Save={this.iconSave}
+                  callback_Save_v2={this.iconSave_v2}
+                  callback_Delete={this.iconDelete}
+                  callback_Redo={this.iconRedo}
+                  callback_Save_Alt={this.iconSave_Alt}
+                  callback_Share={this.iconShare}
+                  callback_Undo={this.iconUndo}
+                  data={{
+                    designModel: scope.state.userSession.designModel,
+                    designs: scope.state.userSession.designs
+                    
+                  }}
+                ></IconControlGroup>
+
+
+
+Friday Commit Messages:
+- now 'redo and undo' of models is working.
+- now undo redo appears to be working correctly for multiple models using a vareity of actions such as adding assets applying texture   
+- some style changes on the image editor.
+- fix bug when 'closing image editor without an edit', also some responsive design updates.
+- added the actions_array to the 'save feature' as well as fixed style of the 'delete alert dialog'.
+- repositioned lights cameras and modesl to make their default locations and limits please the eye.
+
+Monday: 9-23-19
+Debug: 
+  - Upon delete, not all models were deleted from the screen. The Application data was though correctly. 
+  - it appears to only get the last item/model that was added to the screen. 
+  commit:
+   "fixed the deletion method by gathering an array of user models as opposed to just the last model added."
+
+
+BUG: The (Designer Selects are not always right on.!) ie. upon selection of 4door( after billboard and porsche have been added), 
+automatically sets the value of 'stationwagon' instead of 'select'.
+ 
+Improvement: might just want to save image information in texture_images ( for textures applied to userModels) 
+That way , duplicates of dataURL will not be stored in the 'actions' array, HOWEVER, that would require swapping out the image 
+in actions array with an id, AND using the id in the texture_images array. 

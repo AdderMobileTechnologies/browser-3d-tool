@@ -3,81 +3,95 @@ import GrayCar from "../../assets/Adder_3D_Tool2/carMeshSelectorTransparent.png"
 import Grid from "@material-ui/core/Grid"; //
 
 export default function SidebarSelectorVehicles(props) {
-  console.log("SubComponent: props:", props);
+  //console.log("SidebarSelectorVehicles: props:", props);
 
   const handleSubcomponentClick = e => {
-    console.log("handleSubcomponentClick .....");
-    console.log("e.target.id = ", e.target.id);
-    console.log("e.target.name =", e.target.name);
-    console.log("props sent in during constructor:", props);
     let returnData = { id: e.target.id, name: e.target.name };
+    //console.log("sidebar vehicles return data:", returnData);
     props.callback(returnData);
   };
 
   return (
-    <div>
-      {" "}
-      <Grid
-        item
-        xs={12}
-        style={{
-          backgroundImage: "url(" + GrayCar + ")",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          height: "300px",
-          backgroundPosition: "center"
-        }}
-      >
-        <div
-          className="relativeContainer car"
-          id="ButtonContainer"
-          style={{ height: "300px", position: "relative" }}
-        >
-          <p>Select a Component to Edit</p>
-
-          {/**onClick={props.clickHood} */}
+    <Grid
+      container
+      style={{
+        backgroundImage: "url(" + GrayCar + ")",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        height: "300px",
+        backgroundPosition: "center"
+      }}
+    >
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonHood"
+            className="buttonSidebar xbuttonHood"
             id="buttonHood"
             name={props.data["hoodMeshId"]}
             onClick={handleSubcomponentClick}
           >
             HOOD
           </button>
+        </Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+        <Grid item xs></Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonLeft"
+            className="buttonSidebar xbuttonLeft"
             id="buttonLeft"
             name={props.data["leftMeshId"]}
             onClick={handleSubcomponentClick}
           >
             LEFT
           </button>
+        </Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonRoof"
+            className="buttonSidebar xbuttonRoof"
             id="buttonRoof"
             name={props.data["roofMeshId"]}
             onClick={handleSubcomponentClick}
           >
             ROOF
           </button>
+        </Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonRight"
+            className="buttonSidebar xbuttonRight"
             id="buttonRight"
             name={props.data["rightMeshId"]}
             onClick={handleSubcomponentClick}
           >
             RIGHT
           </button>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs>
           <button
-            className="buttonSidebar buttonTrunk"
+            className="buttonSidebar xbuttonTrunk"
             id="buttonTrunk"
             name={props.data["trunkMeshId"]}
             onClick={handleSubcomponentClick}
           >
             TRUNK
           </button>
-        </div>
+        </Grid>
+        <Grid item xs></Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 }

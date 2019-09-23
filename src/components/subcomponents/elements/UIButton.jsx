@@ -16,20 +16,36 @@ import CropIcon from "@material-ui/icons/Crop";
 import FormatColorFill from "@material-ui/icons/FormatColorFill";
 import TextFields from "@material-ui/icons/TextFields";
 
+//icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCoffee,
+  faBinoculars,
+  faFillDrip,
+  faCamera,
+  faTextsize,
+  faLock,
+  faCrop,
+  faObjectGroup,
+  faTextHeight
+} from "@fortawesome/free-solid-svg-icons";
+
+const element = <FontAwesomeIcon icon={faCoffee} />;
+
 const iconStyle = {
   common: {
-    width: "60px",
-    height: "60px",
-    backgroundColor: "#afafaf",
-    borderRadius: "16px",
-    boxShadow: "5px 10px 8px #2f2f2f"
+    width: "54px",
+    height: "54px",
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    xboxShadow: "5px 10px 8px #2f2f2f"
   },
   small: {
     width: "44px",
     height: "44px",
     backgroundColor: "#ddd",
     borderRadius: "6px",
-    boxShadow: "2px 3px 3px #ccc"
+    xboxShadow: "2px 3px 3px #ccc"
   }
 };
 
@@ -171,6 +187,109 @@ class UIButton extends Component {
             </button>
           </form>
         );
+      case "faCrop":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faCrop} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faFillDrip":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faFillDrip} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faTextHeight":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+            >
+              <Avatar>
+                <FontAwesomeIcon icon={faTextHeight} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faBinoculars":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+              style={{ ...iconStyle.common }}
+            >
+              <Avatar style={{ backgroundColor: "green" }}>
+                <FontAwesomeIcon
+                  icon={faBinoculars}
+                  style={{ backgroundColor: "green" }}
+                />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "faLock":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+              style={{ ...iconStyle.small }}
+            >
+              <Avatar style={{ backgroundColor: "green" }}>
+                <FontAwesomeIcon
+                  icon={faLock}
+                  style={{ backgroundColor: "green" }}
+                />
+              </Avatar>
+            </button>
+          </form>
+        );
       default:
         alt = "null";
         src = null;
@@ -190,3 +309,13 @@ class UIButton extends Component {
 }
 
 export default UIButton;
+/*
+<FontAwesomeIcon icon={faCoffee} />
+<FontAwesomeIcon icon={faBinoculars} />
+<FontAwesomeIcon icon={faFillDrip} />
+<FontAwesomeIcon icon={faCamera} />
+ 
+<FontAwesomeIcon icon={faLock} />
+<FontAwesomeIcon icon={faCrop} />
+<FontAwesomeIcon icon={faObjectGroup} />
+*/

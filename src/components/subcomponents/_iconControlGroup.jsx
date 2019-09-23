@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
 
 export default function IconControlGroup(props) {
-  console.log("IconControlGroup: props:", props);
-  console.log("check props data");
+  // console.log("IconControlGroup: props:", props);
+  // console.log("check props data");
 
   const handleSaveClick = e => {
     //downsize props variables
@@ -12,6 +12,9 @@ export default function IconControlGroup(props) {
     let _environmentFilepath = props.data.designModel.environmentFilepath;
     let _designs = props.data.designs;
     let _designModel = props.data.designModel;
+
+    let design_actions =
+      JSON.parse(localStorage.getItem("actions_array")) || [];
     //Check for Required fields:
     if (_designName !== "" && _designName !== "undefined") {
       if (_environmentFilepath === "" && _environmentFilepath === "undefined") {
@@ -26,7 +29,8 @@ export default function IconControlGroup(props) {
           );
         }
         let design_obj = _designModel;
-        design_obj.action = "final_save";
+
+        design_obj.actions = design_actions;
         //get existing array design models
         const newDesignsArray = _designs.slice();
         //append a new one to it
@@ -40,7 +44,14 @@ export default function IconControlGroup(props) {
   };
 
   return (
-    <Grid item xs={3} id={"iconRow1"} style={{ padding: "15px" }}>
+    <Grid
+      item
+      md={3}
+      sm={12}
+      xs={12}
+      id={"iconRow1"}
+      style={{ paddingTop: "0px" }}
+    >
       <Grid container>
         <Grid item xs={4}>
           <UIButton

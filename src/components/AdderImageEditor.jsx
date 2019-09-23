@@ -26,10 +26,11 @@ const modalStyle = {
   width: "100%",
   height: "800px"
 };
+/*
 const footerRowStyle = {
   height: "32px",
   width: "100%"
-};
+};*/
 const footerStyleNoHover = {
   height: "32px",
   width: "100%",
@@ -38,11 +39,11 @@ const footerStyleNoHover = {
   color: "#ffffff"
 };
 const footerStyleHover = {
-  height: "32px",
+  /* height: "32px",
   width: "100%",
   borderStyle: "none",
-  backgroundColor: "#ffffff",
-  color: "#151515"
+  backgroundColor: "#777",
+  color: "#151515"*/
 };
 
 const tuiStyle = {
@@ -161,7 +162,7 @@ class AdderImageEditor extends Component {
         </Row>
         <Row style={this.state.footerStyle}>
           <Button
-            className="footer"
+            className="footer editor-button"
             onClick={this.onApplyClick}
             onMouseEnter={() => {
               this.setState({
@@ -183,3 +184,34 @@ class AdderImageEditor extends Component {
 }
 
 export default AdderImageEditor;
+
+/*
+
+For some reason switching to material UI Grid casued the styling around the tools to go light. 
+
+import Grid from "@material-ui/core/Grid"; //
+
+  <Grid container>
+        <Grid item style={modalRowStyle}>
+          <div id="modal" style={modalStyle}></div>
+        </Grid>
+        <Grid style={this.state.footerStyle}>
+          <Button
+            className="footer"
+            onClick={this.onApplyClick}
+            onMouseEnter={() => {
+              this.setState({
+                footerStyle: footerStyleHover
+              });
+            }}
+            onMouseLeave={() => {
+              this.setState({
+                footerStyle: footerStyleNoHover
+              });
+            }}
+          >
+            Apply Image
+          </Button>
+        </Grid>
+      </Grid>
+      */

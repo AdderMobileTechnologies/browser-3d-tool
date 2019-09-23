@@ -1,24 +1,69 @@
 .modal {
     /*display: none; !* Hidden by default *!*/
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
     scrollbar-color: dark !important;
 }
 
 .footer {
+    /*
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-name: fadeMe;
     animation-name: fadeMe;
+    */
 }
+
+.tui-image-editor-container .tui-image-editor-header {
+    min-width: 250px !important;
+}
+
+div.MuiDialogContent-root {
+    background-color: #000 !important;
+    background: #000 !important;
+}
+
+.MuiDialogTitle-root {
+    background-color: #000 !important;
+    background: #000 !important;
+}
+
+.MuiDialogActions-root {
+    background-color: #000 !important;
+    background: #000 !important;
+}
+
+.tui-image-editor-download-btn {
+    display: none !important;
+}
+
+.editor-button {
+    border: none;
+    width: 150px;
+    height: 44px;
+    background-color: #eee;
+    border-radius: 20px;
+    box-shadow: 2px 2px 8px #555;
+    margin-bottom: 20px;
+}
+
+/*
 @keyframes fadeMe {
     from {
         background-color: #151515;
@@ -27,3 +72,4 @@
         opacity: 0;
     }
 }
+*/

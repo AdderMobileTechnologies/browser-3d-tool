@@ -25,39 +25,58 @@ function PaperComponent(props) {
 
 export default function DraggableDialog(props) {
   console.log("props on Draggable Dialog ...", props);
-
+  ///////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
+    // console.log("MODAL: handleClickOpen()");
+    // console.log(this.state.open);
     setOpen(true);
   };
 
   const handleClose = () => {
+    // console.log("MODAL: handleClose()");
+    // console.log(this.state.open); can not read property 'state' of undefined.
     setOpen(false);
+    props.imageEditorClose();
   };
-
-  const handleApply = () => {
-    console.log("handle apply .....");
-    setOpen(false);
-  };
+  /////////////////////////////////////////////////////////////
+  // const handleApply = () => {
+  //   console.log("handle apply .....");
+  //   setOpen(false);
+  // };
 
   const handleImageEditorResults = dataURL => {
+    //COMMENT OUT ALTOGETHER
+    setOpen(false); //move this before the callback
+    //console.log("MODAL: handleImageEditorResults()");
+    //console.log(this.state.open); result: can not read property 'state' of undefined.
     //Usage: Editing-Mesh
 
     props.imageEditorCallback(dataURL);
-    setOpen(false);
+
+    //setOpen(false); // added here to see if order of operations ws playing  role in this.
   };
 
   return (
     <div>
+      {/**  
+
       <Button
         variant="outlined"
         color="primary"
-        onLoad={handleClickOpen}
+        //onLoad={handleClickOpen}
         onClick={handleClickOpen}
       >
         Open Image Editor
       </Button>
+      */}
+      {/** 
+       React limits the number of renders to prevent an infinite loop.
+      {props.isEditing && handleClickOpen()}
+      {!props.isEditing && handleClose()} 
+      */}
+
       <Dialog
         open={open}
         onClose={handleClose}

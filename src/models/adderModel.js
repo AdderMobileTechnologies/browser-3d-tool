@@ -148,7 +148,7 @@ class AdderModel {
     this.getBehavior = () => {
       return _behavior;
     };
-
+    /*
     this.setParentMeshPosition = positionVector3 => {
       if (!(positionVector3 instanceof BABYLON.Vector3)) {
         throw new Error(
@@ -156,9 +156,9 @@ class AdderModel {
         );
       }
 
-      let parentMesh = this.getParentMesh();
+      //let parentMesh = this.getParentMesh();
     };
-
+*/
     this.setParentMeshRotation = (axis, angle) => {
       if (!(axis instanceof BABYLON.Vector3) || typeof angle !== "number") {
         throw new Error(

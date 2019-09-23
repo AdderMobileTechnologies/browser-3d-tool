@@ -20,7 +20,7 @@ class AdderSceneWrapper {
     let _uuid = Date();
 
     this.getUUID = () => {
-      console.log("AdderModelWrapper UUID:::", _uuid);
+      // console.log("AdderModelWrapper UUID:::", _uuid);
       return _uuid;
     };
 
@@ -38,10 +38,10 @@ class AdderSceneWrapper {
     };
 
     this.appendModel = adderModel => {
-      console.log(
-        "ready to append model to the adderSceneWrapper ....adderModel:",
-        adderModel
-      );
+      // console.log(
+      //   "ready to append model to the adderSceneWrapper ....adderModel:",
+      //   adderModel
+      // );
       let previousModels = this.getModels();
       previousModels.push(adderModel);
       this.setModels(previousModels);
@@ -107,22 +107,22 @@ class AdderSceneWrapper {
 
     this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
-
-      let ModelsArray = this.getModels();
-
-      for (let mIndex in ModelsArray) {
-        let _model = ModelsArray[mIndex];
-        let _meshWrappers = _model.getMeshWrappers();
-        for (let mwIndex in _meshWrappers) {
-          let _meshWrapper = _meshWrappers[mwIndex];
-          let _mesh = _meshWrapper.getMesh();
-          if (_mesh.id === mesh_id) {
-            let scene = this.getScene();
-            _meshWrapper.applyTextureFromDataURL(
-              new Date().toTimeString() + ".png",
-              dataURL,
-              scene
-            );
+      if (dataURL != "empty dataURL") {
+        let ModelsArray = this.getModels();
+        for (let mIndex in ModelsArray) {
+          let _model = ModelsArray[mIndex];
+          let _meshWrappers = _model.getMeshWrappers();
+          for (let mwIndex in _meshWrappers) {
+            let _meshWrapper = _meshWrappers[mwIndex];
+            let _mesh = _meshWrapper.getMesh();
+            if (_mesh.id === mesh_id) {
+              let scene = this.getScene();
+              _meshWrapper.applyTextureFromDataURL(
+                new Date().toTimeString() + ".png",
+                dataURL,
+                scene
+              );
+            }
           }
         }
       }

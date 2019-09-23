@@ -4,10 +4,10 @@
  */
 
 import AdderLoader from "./adderLoader";
-import AdderSceneWrapper from "./adderSceneWrapper";
+//import AdderSceneWrapper from "./adderSceneWrapper";
 import * as K from "../constants";
 import axios from "axios";
-import { Scene } from "babylonjs";
+//import { Scene } from "babylonjs";
 import AdderAsset from "./adderAsset";
 class AdderMeta {
   constructor(adderSceneWrapper = null) {
@@ -29,7 +29,7 @@ class AdderMeta {
     };
 
     this.getEnvironment = () => {
-      let adderSceneWrapper = this.getAdderSceneWrapper();
+      //  let adderSceneWrapper = this.getAdderSceneWrapper(); //commented out because was not getting used.
       let thisClass = this;
       this.promise_environments = new Promise(function(resolve, reject) {
         const url = `${K.META_URL}/meta/environment`;
@@ -46,7 +46,7 @@ class AdderMeta {
     };
 
     this.getAdTypes = () => {
-      let scene = this.getScene();
+      // let scene = this.getScene();
       let thisClass = this;
       this.promise_adTypes = new Promise(function(resolve, reject) {
         const url = `${K.META_URL}/meta/ad_types`;
@@ -63,7 +63,7 @@ class AdderMeta {
     };
 
     this.getDesignOptions = () => {
-      let scene = this.getScene();
+      // let scene = this.getScene();
       let thisClass = this;
 
       this.promise_designOptions = new Promise(function(resolve, reject) {
@@ -102,8 +102,8 @@ class AdderMeta {
           behavior,
           adderSceneWrapper
         );
-        console.log("adderAsset name:", adderAsset.getFilename());
-        console.log("adderAsset behavior:", adderAsset.getBehavior());
+        // console.log("adderAsset name:", adderAsset.getFilename());
+        // console.log("adderAsset behavior:", adderAsset.getBehavior());
         adderLoader.addSingleModel(adderAsset);
       }
     };

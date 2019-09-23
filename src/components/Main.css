@@ -1,33 +1,121 @@
-.buttonSidebar {
-    box-shadow: 2px 2px 2px #555;
-}
+ /*---QUICK RWD----------------------------------------*/
 
-.buttonHood {
-    position: absolute;
-    left: 40%;
-    top: 20%;
-}
+ /*---  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">  ---*/
 
-.buttonRight {
-    position: absolute;
-    left: 60%;
-    top: 60%;
-}
+ /*remove blue highlight from input elements*/
 
-.buttonLeft {
-    position: absolute;
-    left: 20%;
-    top: 60%;
-}
+ input:focus, select:focus, option:focus, textarea:focus, button:focus {
+     outline: none;
+ }
 
-.buttonRoof {
-    position: absolute;
-    left: 40%;
-    top: 60%;
-}
+ .user-name {
+     font-size: 1em;
+     color: #2f2f2f;
+     margin: 0px;
+     line-height: 40px;
+     text-justify: center;
+     text-align: center;
+ }
 
-.buttonTrunk {
-    position: absolute;
-    left: 40%;
-    top: 80%;
-}
+ @media (min-width: 0px) and (max-width: 768px) {
+     .design-controls {
+         xborder: dotted 1px red;
+         height: 450px;
+     }
+     .ui-text-input {
+         font-size: 1.1em !important;
+     }
+     .ui-select {
+         font-size: .9em !important;
+         width: 100%;
+     }
+     .sidebar-call-to-action {
+         font-size: 1.1em !important;
+     }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
+     }
+     .canvas-container {
+         margin-top: 15px;
+     }
+ }
+
+ @media (min-width: 769px) and (max-width: 1000px) {
+     .design-controls {
+         xborder: dotted 1px green;
+         height: 450px;
+     }
+     .ui-text-input {
+         font-size: .8em;
+     }
+     .ui-text-input {
+         font-size: 1.1em !important;
+     }
+     .ui-select {
+         font-size: .9em !important;
+         width: 100%;
+     }
+     .sidebar-call-to-action {
+         font-size: 1.1em !important;
+     }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
+     }
+     .canvas-container {
+         margin-top: 15px;
+     }
+ }
+
+ @media (min-width: 1001px) and (max-width: 1300px) {
+     .design-controls {
+         xborder: dotted 1px orange;
+         height: 600px;
+     }
+     .ui-text-input {
+         font-size: 1.1em !important;
+     }
+     .ui-select {
+         font-size: .9em !important;
+         width: 100%;
+     }
+     .sidebar-call-to-action {
+         font-size: 1.1em !important;
+     }
+     .user-name {
+         font-size: 1em;
+         line-height: 35px;
+     }
+ }
+
+ @media (min-width: 1301px) and (max-width: 1600px) {
+     .design-controls {
+         xborder: dotted 1px purple;
+         height: 650px;
+     }
+     .ui-text-input {
+         font-size: 1.5em !important;
+     }
+     .ui-select {
+         font-size: 1em !important;
+         width: 100%;
+     }
+     .sidebar-call-to-action {
+         font-size: 1.5em !important;
+     }
+ }
+
+ @media (min-width: 1601px) and (max-width: 2000px) {
+     .design-controls {
+         xborder: dotted 1px brown;
+         height: 750px;
+     }
+ }
+
+ @media (min-width: 2001px) {
+     .design-controls {
+         xborder: dotted 1px orange;
+         height: 900px;
+     }
+ }

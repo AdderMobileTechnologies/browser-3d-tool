@@ -6,10 +6,11 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import * as E from "./environment.js";
 export const DefaultUserImage = UserImage;
 
-export const META_URL = "http://localhost:8001";
-export const API_URL = "http://dbdev.adder.io";
+export const META_URL = E.META_URL; //"http://localhost:8001";
+export const API_URL = E.API_URL; //"http://dbdev.adder.io";
 //all calls to server are redirected directly to the html/assets/ folder, so that is where the 'filenames' of a models meta data picks up.
 
 export const useStyles = makeStyles(theme => ({
@@ -18,23 +19,37 @@ export const useStyles = makeStyles(theme => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
+
     backgroundColor: theme.palette.background.paper
   },
   gridList: {
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
+    transform: "translateZ(0)",
+    backgroundColor: "#eee",
+    height: "auto"
   }
 }));
 export const UIGridList = props => {
   const classes = useStyles();
+  let timestamp = Date();
   return (
     <div className={classes.root}>
-      {/**   one spot:  tileData={this.state.tileData} */}
-      <GridList className={classes.gridList} cols={2.5}>
+      <GridList className={classes.gridList} cols={3.5}>
         {props.tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+          <GridListTile
+            key={timestamp + "_" + tile.img}
+            style={{
+              marginRight: "10px",
+              height: props.height,
+              width: props.width
+            }}
+          >
+            {/** take off max value so can resize :  maxHeight: "80px" 
+          can I send dimension props in for the style={{}} to use? 
+          */}
+            <img src={tile.img} alt={tile.title} style={{}} />
+            {/**
             <GridListTileBar
               title={tile.title}
               classes={{
@@ -47,74 +62,10 @@ export const UIGridList = props => {
                 </IconButton>
               }
             />
+            */}
           </GridListTile>
         ))}
-        {/**  */}
       </GridList>
     </div>
   );
 };
-/*
-export const tileData = [
-  {
-    img: UserImage,
-    title: "Breakfast",
-    author: "jill111",
-    cols: 2,
-    featured: true
-  },
-  {
-    img: UserImage,
-    title: "Tasty burger",
-    author: "director90"
-  },
-  {
-    img: UserImage,
-    title: "Camera",
-    author: "Danson67"
-  }
-];
-export const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
-  },
-  gridList: {
-    flexWrap: "nowrap",
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
-  }
-}));
-export const UIGridList = props => {
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      //  one spot:  tileData={this.state.tileData}/////
-      <GridList className={classes.gridList} cols={2.5}>
-         
-                    //  {props.tileData.map(tile => (
-                    //     <GridListTile key={tile.img}>
-                    //         <img src={tile.img} alt={tile.title} />
-                    //         <GridListTileBar
-                    //         title={tile.title}
-                    //         classes={{
-                    //             root: classes.titleBar,
-                    //             title: classes.title,
-                    //         }}
-                    //         actionIcon={
-                    //             <IconButton aria-label={`star ${tile.title}`}>
-                    //             <StarBorderIcon className={classes.title} /> 
-                    //             </IconButton>
-                    //         }
-                    //         />
-                    //     </GridListTile>
-                    //     ))}
-                     
-      </GridList>
-    </div>
-  );
-};
-*/

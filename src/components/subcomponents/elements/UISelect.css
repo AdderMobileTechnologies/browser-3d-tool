@@ -1,0 +1,11 @@
+.ui-select {
+    font-size: 1.2em;
+    background-color: #f0eeee;
+    border: none;
+    outline: none;
+    outline: 0;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}

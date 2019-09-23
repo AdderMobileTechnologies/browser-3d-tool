@@ -64,9 +64,29 @@
     height: auto;
 }
 
+.gui-overlay-upper-right {
+    position: absolute;
+    top: 1%;
+    left: 5px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
+}
+
 .gui-overlay {
     position: absolute;
-    top: 15%;
+    top: 25%;
+    left: 5px;
+    background-color: #eee;
+    width: 45px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.gui-overlay-left {
+    position: absolute;
+    top: 25%;
     left: 5px;
     background-color: #eee;
     width: 45px;
@@ -76,11 +96,11 @@
 
 .gui-overlay-right {
     position: absolute;
-    top: 90%;
+    top: 85%;
     right: 50px;
     background-color: #eee;
     width: 45px;
-    border-radius: 16px;
+    border-radius: 30px;
     text-align: center;
 }
 
@@ -107,13 +127,18 @@
 }
 
 .buttonSidebar {
-    border-radius: 4px;
-    border: solid .5px #ccc;
-    font-size: ".2em";
+    border-radius: 8px;
+    border: none;
+    font-size: .8em;
+    background-color: #fff;
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-shadow: 1px 1px 10px 1px #ddd;
 }
 
 .designer {
-    padding: 15px;
+    /*padding: 15px;*/
 }
 
 /* 5) Icon Overlays     */
@@ -145,19 +170,6 @@
     /*box-shadow: 10px 10px 10px #ccc;*/
 }
 
-/* Grid List        */
-
-ul.MuiGridList-root li li {
-    margin: 2px !important;
-    border: solid 1px #ccc;
-    border-radius: 10px;
-}
-
-ul.MuiGridList-root li li img {
-    height: 150px;
-    max-height: 150px;
-}
-
 /* Uncategorized            */
 
 .red {
@@ -181,21 +193,51 @@ ul.MuiGridList-root li li img {
  
 */
 
+/*
 #screenshots_container {
     height: 200px;
     width: 1024px;
     overflow-y: scroll;
     overflow-x: scroll;
     background-repeat: no-repeat;
-    border: solid 3px #eeed;
-    /*solid 1px #ccc;*/
+    border: solid 3px red;
+   
     border-radius: 0px;
     margin: 15px;
     float: left;
-    /*box-shadow: 5px 5px 5px #111;*/
+   
 }
+*/
 
 /* Grid List        */
+
+/* Grid List        */
+
+.MuiGrid-root div .makeStyles-root-144 {
+    background: #eee;
+    background-color: #eee;
+}
+
+.MuiGrid-root div ul {
+    /*height: 100px !important;*/
+    height: auto;
+    background: #eee;
+}
+
+/*
+.makeStyles-gridList-145 {
+    height: 100px !important;
+}
+
+.makeStyles-gridList-124 {
+    height: 100px !important;
+}
+*/
+
+.makeStyles-root-124 {
+    background: #eee !important;
+    background-color: #eee !important;
+}
 
 ul.MuiGridList-root li li {
     margin: 2px !important;
@@ -204,6 +246,83 @@ ul.MuiGridList-root li li {
 }
 
 ul.MuiGridList-root li li img {
-    height: 150px;
-    max-height: 150px;
+    /* height: 100px; */
+    /* max-height: 100px;*/
+}
+
+/* The following css is for the react-resizable elements.*/
+
+.react-resizable {
+    position: relative;
+}
+
+.react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    box-sizing: border-box;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
+    background-position: bottom right;
+    padding: 0 3px 3px 0;
+}
+
+.react-resizable-handle-sw {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+    transform: rotate(90deg);
+}
+
+.react-resizable-handle-se {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.react-resizable-handle-nw {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+    transform: rotate(180deg);
+}
+
+.react-resizable-handle-ne {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+    transform: rotate(270deg);
+}
+
+.react-resizable-handle-w, .react-resizable-handle-e {
+    top: 50%;
+    margin-top: -10px;
+    cursor: ew-resize;
+}
+
+.react-resizable-handle-w {
+    left: 0;
+    transform: rotate(135deg);
+}
+
+.react-resizable-handle-e {
+    right: 0;
+    transform: rotate(315deg);
+}
+
+.react-resizable-handle-n, .react-resizable-handle-s {
+    left: 50%;
+    margin-left: -10px;
+    cursor: ns-resize;
+}
+
+.react-resizable-handle-n {
+    top: 0;
+    transform: rotate(225deg);
+}
+
+.react-resizable-handle-s {
+    bottom: 0;
+    transform: rotate(45deg);
 }

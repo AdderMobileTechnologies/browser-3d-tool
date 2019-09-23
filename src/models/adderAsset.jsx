@@ -5,8 +5,8 @@ LEFT OFF HERE:
 create an asset class to clean up the way I currently call AdderLoader.addSingleModel 
 then... look into handling behavior of clicks .
 */
-import { Scene } from "babylonjs";
-import * as K from "../constants";
+//import { Scene } from "babylonjs";
+//import * as K from "../constants";
 import AdderSceneWrapper from "./adderSceneWrapper";
 class AdderAsset {
   constructor(
@@ -96,6 +96,9 @@ class AdderAsset {
     };
     this.getAdderSceneWrapper = () => {
       return _adderSceneWrapper;
+    };
+    this.getAdderAsset = () => {
+      return this;
     };
   }
 }
