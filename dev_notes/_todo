@@ -476,13 +476,372 @@ Monday: 9-23-19
 Debug: 
   - Upon delete, not all models were deleted from the screen. The Application data was though correctly. 
   - it appears to only get the last item/model that was added to the screen. 
+  SOLVED:
   commit:
    "fixed the deletion method by gathering an array of user models as opposed to just the last model added."
 
 
 BUG: The (Designer Selects are not always right on.!) ie. upon selection of 4door( after billboard and porsche have been added), 
 automatically sets the value of 'stationwagon' instead of 'select'.
+SOLVED: by wrapping functionality in Async Await clause.
  
 Improvement: might just want to save image information in texture_images ( for textures applied to userModels) 
 That way , duplicates of dataURL will not be stored in the 'actions' array, HOWEVER, that would require swapping out the image 
 in actions array with an id, AND using the id in the texture_images array. 
+
+
+* we just had to reset git because of some merge issues. Probably due to node_modules NOT getting ignored properly in .gitignore. 
+
+BUG: issue with localStorage maximum capacity.... 
+  - options:
+    - reduce size of screen shot. 
+    - limit size of input or compress imported images before using them or storing them. 
+    - create our own limiting array of images to keep in history. 
+
+    created a utility class to check localStorage capacity... 
+    Can use it as a reference for when to act. 
+    currently saving image data 3x  ... once(to and from though...) in actions array  , once in texture_images   , and again in 'save' function.
+
+    WHERE: 
+    texture_images 
+      - Main.jsx -> imageEditorCallback()   goes only in to state.
+      - iconSave_v2  ---no reason to save I don't think so I removed it from the save. 
+
+  something I've done has broken seeing the image on undo...
+  the images are still there on the redo so ... the 'from' value is getting set to 'empty dataURL' incorrectly during an exchange. 
+  The issue revolves around the code that checks the state of editing....
+Flags Related: 
+  - editing_mesh_initial_load
+ SOLUTION: fix the flag 'editing_mesh_initial_load' . still a bit unpredictable but appears to be happeing fairly consistently.
+ -very first time on complete undo the first image does not get removed during its turn.  after that it works fine, maybe an async latency delay thing. 
+ the last apply Image undo on billboard, failed to apply default texture and instead,
+ applied one of the other textures.
+ guess: ->   scope.undo_ApplyTextureToMesh(lastAction);
+
+ The problem arises when a 'change action' of different type , contains a 'From' image dataURL , even if the change Action does NOT equal applyImageToMesh...it does. 
+ so make a condition for only if action === aplyImage... not that easy. 
+ NEED TO GET that flag back for a 'models' first image application. But can not get confused with different models.  
+
+   //TODO: redo/undo image out od sync ...
+        //and flag should get set to true when ever an asset is added to the screen. editing_mesh_initial_load
+
+//The original idea that started all this was trying to reduce the number of times a dataURL got saved to once. 
+
+9-23-2019: 4:50pm HUGE improvement on use of localStorage memory. 
+STILL have issue with undo transition between two different action types, where the second model retains the last image of the first model, due to the linked list nature of our redo undo stacks."
+
+
+fixed some bugs in the refreshing of the 'cascading selects',
+ changed code to save image dataURLs only once with a unique id and then use the uuid to get the images when needed during the redo and undo processes, saves a ton on how much localStorage is getting used.
+
+
+Tues: 9-24-2019 
+babylon Tool Next steps(?): 
+#- ability to change scenery 
+    starts in the environment meta data. 
+    looks like we might want a separate meta data file for different environments ...
+        let adderMeta = new AdderMeta(this.state.adderSceneWrapper);
+          adderMeta.getEnvironment(); //args: ie. 'environment1' , 'environment2'
+      // would have to have a way to remove meshes of 'just' the previous environment. 
+      //left off lookign at adderMeta , expecting to see the 'user added models' log out in the loop like the environment models do , but did not. 
+-------------------------------------------------------------
+- ability to download ( images or saved design json ... )
+- deep dive into css 
+- debug 
+- the 'lock' icon 
+- ability to rotate and change position of models 
+    - would re-involve the babylon GUI .
+    #- rotate:
+    - position:
+- blender models that account for hood, roof and trunk meshes. 
+- 'share' icon ( do we need to set up an app on facebook , twitter, etc to push these to? )
+
+* added a manifest file for the billbaord. 
+
+Thur 9-26-2019 : 
+on the table: changing scenes 
+  Needs:
+   # - some visual synchronicity for where the 'ad' models exist on both the 'city' and the 'country' scenes. 
+   # - if I rotate the block 90 degrees clockwise I will have a straigt away road with a t-intersection to the left. 
+     # - The construction site will be on the right 
+     # - I will move the billboard to the right side of the straight away.
+      #- the construction will need to get pushed to the right some amount.
+     # - the rounded building will need to move to the opposite corner than it is on currently. 
+     # - the other models will need to be adjusted as well. 
+      
+  other ongoing concerns: (listed above on Tue 9-24-2019)
+  
+Scene Change Bugs: 
+  - billboard goes between scenes by itself ok. 
+  - billboard and the vw disappear coming from 'country' to 'city'.
+  - the glitch appears to happen when there is more than one model present. 
+  # Solved i THINK.
+
+ GUI adding parent.mesh in the AdderLoader file based on strategy from meta data. 
+
+ GUI NOTES: 
+  probably just need one grid to house all controls, curently adding one in the loader...
+  
+  //// EXAMPLE OF GRID WITH MULTIPLE PANELS : from : https://www.babylonjs-playground.com/#3VMTI9#0
+TODAY: 
+    -     rearranged models to adapt to both city and country scene settings. Also mainly fixed bug when losing user models inbetween scene changes.
+    -     made sure no duplicates of dropped models were getting added to array. ( for environment change cleanup)
+    -     added a class for handling  babylon GUI controls and utilized the strategy desgign pattern in meta data to trigger gui for parent meshes of models.
+    -     successfully added sliders for rotating each of the current models.
+    -     styling the sliders and making sure that left and right sliding mirrors the rotation direction.
+
+Friday 9-27-2019:
+#solved: BUG: IF scenery changes when NO User Model is on screen, the two scenes merge together . 
+//#############################################################################################
+Mon. 9-30-2019 
+
+Start With these notes from last week.
+- debug 
+- ability to download ( images or saved design json ... and upload it?  )
+- blender models that account for hood, roof and trunk meshes. 
+- 'share' icon ( do we need to set up an app on facebook , twitter, etc to push these to? ) email ??? 
+- deep dive into css 
+- ability to rotate and change position of models 
+    - would re-involve the babylon GUI .
+    #- rotate:
+    - position:
+- the 'lock' icon 
+//---------------------------------Tue: 10-01-2019
+# -swap out lock icon with screen shot icon 
+- swap out binoculars with a 'scene' icon ie. movie set scene...
+# - hide Ed Jellico 
+#- hide left overlay 
+#- adjusted height and depth of road way in country scene
+- get hood, roof, and trunk working for both vehicles. C:\Users\Bayon\projects\adder_creative_resources\blender_models\
+
+      sudo mv x 
+/var/www/html/assets/ad_type/vehicle/sub_type/4door/detail/stationwagon/
+/var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
+
+
+--Quick Bug Check: 
+  
+  #- SIDEBAR ISSUES: with billboard and with vehicles ? (!)  AND RESPONSVE collapse...
+    #- loading image to billboard from sidebar to sign1 did NOT work ? ! 
+    #- Logic issues were related to hard coded index for strategies...
+    # - responsive: 
+  #- select : when on Vehicle, changing from 2 door to 4 door , stationwagon is ALREADY selected...needed to be reset at some previous point.
+    #- fixed...due to sub_type needed a reset like ad_type had.
+  - REDO and UNDO - cause the GUI sliders to multiply.
+
+ # - MANIFESTS: 
+          #- StraightRoad.babylon 
+          #- mount.blend1.babylon 
+  #-CONSOLE ERRORS: 
+          - prop 'children' error in MUI_Draggable, I believe it has to do with the HOC aspect of the 'Paper' object. 
+          - validateDOMNesting(...):    <div> can not be descendant of <p>  AdderImageEditor or MUI_DraggableDialog 
+        AdderImageEditor:160  ------>>>>>    <Row style={modalRowStyle}>
+          p createdBy Typography
+        MUI_DraggableDialog:80 ----------->>>>>>>>
+        <Dialog
+              children="none"
+              open={open}
+              onClose={handleClose}
+              PaperComponent={PaperComponent}
+              aria-labelledby="draggable-dialog-title"
+              style={{ width: "96% ", marginRight: "auto", marginLeft: "auto" }}
+            >
+        forwardRef :
+        https://reactjs.org/docs/forwarding-refs.html
+
+- Re-define the users perspective: 
+I'm a marketing agent for  a billboard company and I want to be able to visualize  a design to convince the owner of the company to use this 
+companies advertising and data collection service. If I use this tool I can throw a few images together with different logos or advertisements  
+displayed on the billboards , I can 'print them off', 'email them' , or 'share' them with my boss to help them visualize it as well. 
+I want my 'billboard' to be the center of attention. and I need a result to share.   I'll want larger higher resolution images as well as the thumbnails in 
+the slider. 
+When I hit save or Download , do I care about uploading a previous design, or do I just care about the final image. 
+
+--- 
+ok I think 2 main things 
+  1) change the focus to the selected item. 
+  2) email a design to someone  
+    - option: https://medium.com/ingenious/sending-emails-from-a-create-react-app-dad5756a4ff2 
+    - option: https://www.freecodecamp.org/news/how-to-create-email-chips-in-pure-react-ad1cc3ecea16/ 
+    - option: https://www.npmjs.com/package/react-multi-email 
+    - option: https://sheelahb.com/blog/how-to-send-email-from-react-without-a-backend/
+
+changing the target of a camera 
+click on a mesh: 
+Main.jsx -> windowCallbackPickable(mesh_id, caller) ... 
+  1st you need the vector3 of the models parent mesh position.
+    - get 'mesh parent' 
+    - get 'mesh parent' vector3 position.
+
+  then send it to the following function to change the focus.
+
+  camera.settarget(new BABYLON.Vector3(30, 0, 0));
+
+  //-------------------------------------------------------------------
+
+ // in componentDidMount
+  
+        var button = document.getElementById('btn-download');
+        this.setState({
+            downloadButton: button,
+        }) 
+  
+  iconSave_Alt() {
+        
+        let canvas = this.state.canvas;
+        let dataURL = canvas.toDataURL('image/png');
+        let button = this.state.downloadButton;
+        button.href = dataURL;
+        //TODO: save this to the user session as well.
+        button.click();
+    }
+
+  <a
+                        href="#"
+                        className="button"
+                        id="btn-download"
+                        download="my-file-name.png"
+                        style={{
+                            opacity: "0"
+                        }} >Download
+                    </a>
+    //------------------------------------------
+  GIT ISSUES: I tried to fix the issue with the large file in api_assets dir but I cant seem to get it to clear. 
+
+  OTHER MESHES: 
+"ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
+"vehicle_2door_sportscar_hood_medium",
+"vehicle_2door_sportscar_roof_medium",
+"vehicle_2door_sportscar_trunk_medium"
+
+ "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon",
+"vehicle_4door_stationwagon_hood_medium",
+"vehicle_4door_stationwagon_roof_medium",
+"vehicle_4door_stationwagon_trunk_medium"
+
+/var/www/html/assets/ad_type/vehicle/sub_type/4door/detail/stationwagon/
+
+EOD: log:
+
+
+MASKING: feature.
+
+- detected a bug in hardcoded index for meta data strategy when reading whether a mesh is selectable or not.
+- fixed the hard coded check for strategy replace with condition for strategy in loop.
+- fix responsive css issue with vehicle sidebar buttons.
+- fix the reset of details when sub_type changes on the designer selects for models.
+- remove one of the warnings about componentWillReceiveProps
+- worked on removing a lot of warnings from the console.
+- added some code to try and change the target of the camera to the just selected model, not working yet and commented out.
+- added the basic ability to download the main image
+- remove directory with large files
+- resolve some conflicts after removing large files in api_assets directory.
+- added roof and trunk meshes for the vw 
+
+LEFT OFF HERE : look into Masking Ability 
+- convert a profile image of the vw into black and white 
+  - pull it into Blender and try to apply it as texture.
+  - will probably need to use a texture setting that contains the entire image.
+  - download and install GIMP 
+
+# solved * checkered texture on new hood and roof and trunk meshes?
+basic particle emitter for rain effect 
+
+-envato account ? 
+line icons and 3D tool 
+
+REMOVE from blender file: http://dbdev.adder.io/assets/c4d13e1ef5c20e49d7206aefff123f19--no-signal-tv-white-noise.jpg
+
+Tuesday EOD Notes:
+Todays Git Commits: 
+- hid the left overlay controls and swapped out cmera icon for screenshots  instaed of lock icon in uppler left
+- removed user info section
+- adjusted height and depth of road way in country scene
+- both vw and porsche have hood,roof,and trunk...porsche no trunk
+- all sections on all vehicles are able to have texture applied and have correct default color coating.
+- added simple particle system helper for rain effect
+- added manifest files for the two new babylon model files
+------------------------------------------------------------------------------------------------------------------------------
+
+Wed 10-02-2019 
+- get the 'scene' icon to replace the binoculars 
+
+git_recovery_notes:
+ 
+find dif between last commit:  NEW
+ 966279929e723b2774b5447bdb2a6b3739d1ef5b 
+
+ and first Monday commit: OLD
+ 209e449c4d14e04a52307fdd60f843b0bf631d9b
+
+
+https://stackoverflow.com/questions/3368590/show-diff-between-commits/51139381
+git diff oldCommit..newCommit
+ And if you need to get only files names (e.g. to copy hotfix them manually):
+
+git diff k73ud dj374 --name-only
+
+
+git diff 209e449c4d14e04a52307fdd60f843b0bf631d9b 966279929e723b2774b5447bdb2a6b3739d1ef5b --name-only
+
+RESULTS: 
+ 
+dev_notes/_todo
+#
+meta_data/design.meta
+meta_data/environment.meta
+meta_data/environment2.meta
+#
+src/assets/babylon_files/cocacola2.png
+src/assets/babylon_files/porsche.rear.1.mtl
+src/assets/babylon_files/porsche.rear.1.obj
+src/assets/babylon_files/porsche2.2.1.babylon
+src/assets/babylon_files/porsche2.2.1.glass.babylon
+src/assets/babylon_files/porsche2.2.1.glass.log
+src/assets/babylon_files/porsche2.2.1.log
+src/assets/babylon_files/porsche2.2.1babylon.log
+src/assets/babylon_files/vw_toureg-2.6.1.babylon
+src/assets/babylon_files/vw_toureg-2.6.1.log
+src/assets/babylon_files/vw_toureg-2.6.babylon
+src/assets/babylon_files/vw_toureg-2.6.log
+#
+src/components/MUI_DraggableDialog.jsx
+src/components/Main.css
+src/components/Main.jsx
+src/components/designer.jsx
+src/components/subcomponents/MUIPopover.jsx
+src/components/subcomponents/_overlayControlsUpperLeft.jsx
+src/components/subcomponents/elements/UITextInput.jsx
+#
+src/constants.js
+#
+src/models/adderCamera.jsx
+src/models/adderLoader.jsx
+src/models/adderMeta.jsx
+src/models/adderSceneWrapper.jsx
+
+SO: copy files from the 'RESULTS' into the NEW repo branch 
+everything has been replaced and committed, check to see results.
+
+LOST: the mountains model ? 
+
+MISSING IMAGES: 
+"materials":[{"name":"porsche2_2_1.Material.006","id":"porsche2_2_1.Material.006",
+tv-white-noise...
+ exported to babylon here:
+ C:\Users\Bayon\projects\adder_creative_resources\blender_models\porsche-911-carrera-4s\source\
+
+
+ mv 
+ ad_type/vehicle/sub_type/2door/detail/sportscar/
+ sudo mv porsche2.2.1.babylon /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon
+                              /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
+
+
+NODEMAILER_SMTP_HOST=smtp.gmail.com
+NODEMAILER_SMTP_PORT=465
+NODEMAILER_USER=no-reply@addermobile.com
+NODEMAILER_PASS=Sharedacces$1
+
+in web-api, under routes/v2/auth/register/driverMiddleware, line 153 has an example of how to use it
+
