@@ -860,10 +860,21 @@ https://blog.mailtrap.io/sending-emails-with-nodemailer/
   - find and example calling meta server 
 
 
-  Wed. 10-02-2019 
+
+Email Remaining Concerns:
+What needs to happen: 
+I would want the user to be able to send an email and keep everything as it already is , so the user can keep on working on it if they choose to. 
+If we have to we can store the actions temporarily and then rebuild the scene for them after they send the email and the page refreshes. 
+Also, clicking the share button makes the email form appear, it also sets the 'latest on screen design' to the dataURL for the email. 
+If it stays up for a while, and the user makes changes again before sending the email, the latest changes might not get added/updated to the dataURL.
+
+SO ... can I load a scene based on the saveActions array? 
+
+
+Wed. 10-02-2019 
 - recover the latest work on a branch that got corrupted with a large file issue.
 - recovery looks complete had to remove reference to an image in babylon file and update manifest
 - update dev notes in _todo after recovery completed.
 - added in basic ability to send emails via the meta_server with nodemailer.
 - added the ability to email the lastest image on the screen as an attachment 
--  add the movie scene icon to replace the binoculars.
+- add the movie scene icon to replace the binoculars.

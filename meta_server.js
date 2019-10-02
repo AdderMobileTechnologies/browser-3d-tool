@@ -102,7 +102,24 @@ app.post("/email/send/", function(req, res) {
   */
   //------------------------------------
 });
+app.post("/design/save/", function(req, res) {
+  console.log("post: /design/save/");
+  let dataString = JSON.stringify(req.body.saved_designs_array);
+  fs.writeFile("SavedDesignActions.js", dataString, err => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
 
+    // success case, the file was saved
+    console.log("data saved!");
+  });
+});
+app.get("/design/save/", function(req, res) {
+  console.log("get: /design/save/");
+  fs.readFile("SavedDesignActions.js", "utf8", function(err, data) {
+    if (err) throw err;
+    res.send(JSON.parse(data));
+  });
+});
 app.listen(8001, function() {
   console.log("App running on port 8001");
 });

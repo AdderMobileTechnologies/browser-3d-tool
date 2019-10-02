@@ -2,6 +2,7 @@ import React from "react";
 import BABYLON from "babylonjs";
 
 import * as K from "../constants"; // Required for GridList ( screenshots)
+import axios from "axios";
 //models
 import AdderCamera from "../models/adderCamera";
 import AdderSceneWrapper from "../models/adderSceneWrapper";
@@ -1183,8 +1184,29 @@ class Main extends React.Component {
         newDesign.actions = actions;
 
         util.store("append", K.SAVED_DESIGNS_ARRAY, newDesign); //2 lines replace about 10
+        scope.uploadSavedDesign();
       }
     );
+  }
+
+  uploadSavedDesign() {
+    let options = new Promise(function(resolve, reject) {
+      const url = `${K.META_URL}/design/save`;
+      let SAVED_DESIGNS_ARRAY = util.store("get", K.SAVED_DESIGNS_ARRAY);
+      let params = {
+        saved_designs_array: SAVED_DESIGNS_ARRAY
+      };
+
+      axios
+        .post(url, params)
+        .then(response => response.data)
+        .then(data => {
+          resolve(data);
+        });
+    });
+    options.then(function(value) {
+      console.log("value in promise response:", value);
+    });
   }
   /*
   camera target change in state does not appear to effect the existing scene?
@@ -1334,7 +1356,7 @@ class Main extends React.Component {
                             }}
                           >
                             <Grid item style={{ textAlign: "left" }}>
-                              My Designs
+                              My Screenshots
                             </Grid>
                             {/**  
                           Style Notes for GridList: The slider view for screenshots.
