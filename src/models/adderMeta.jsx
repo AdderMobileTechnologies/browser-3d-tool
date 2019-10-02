@@ -28,38 +28,55 @@ class AdderMeta {
       return _adderSceneWrapper;
     };
 
-    this.getEnvironment = () => {
+    this.getEnvironment = environment => {
       //  let adderSceneWrapper = this.getAdderSceneWrapper(); //commented out because was not getting used.
       let thisClass = this;
-      this.promise_environments = new Promise(function(resolve, reject) {
-        const url = `${K.META_URL}/meta/environment`;
-        axios
-          .get(url)
-          .then(response => response.data)
-          .then(data => {
-            resolve(data);
+      switch (environment) {
+        case "CITY":
+          this.promise_environments = new Promise(function(resolve, reject) {
+            const url = `${K.META_URL}/meta/environment`;
+            axios
+              .get(url)
+              .then(response => response.data)
+              .then(data => {
+                resolve(data);
+              });
           });
-      });
-      this.promise_environments.then(function(value) {
-        thisClass.looper(value);
-      });
-    };
+          this.promise_environments.then(function(value) {
+            thisClass.looper(value);
+          });
 
-    this.getAdTypes = () => {
-      // let scene = this.getScene();
-      let thisClass = this;
-      this.promise_adTypes = new Promise(function(resolve, reject) {
-        const url = `${K.META_URL}/meta/ad_types`;
-        axios
-          .get(url)
-          .then(response => response.data)
-          .then(data => {
-            resolve(data);
+          break;
+        case "COUNTRY":
+          console.log("AdderMeta: getEnvironment: COUNTRY");
+          this.promise_environments = new Promise(function(resolve, reject) {
+            const url = `${K.META_URL}/meta/environment2`;
+            axios
+              .get(url)
+              .then(response => response.data)
+              .then(data => {
+                resolve(data);
+              });
           });
-      });
-      this.promise_adTypes.then(function(value) {
-        thisClass.looper(value);
-      });
+          this.promise_environments.then(function(value) {
+            thisClass.looper(value);
+          });
+          break;
+        default:
+          this.promise_environments = new Promise(function(resolve, reject) {
+            const url = `${K.META_URL}/meta/environment`;
+            axios
+              .get(url)
+              .then(response => response.data)
+              .then(data => {
+                resolve(data);
+              });
+          });
+          this.promise_environments.then(function(value) {
+            thisClass.looper(value);
+          });
+          break;
+      }
     };
 
     this.getDesignOptions = () => {
@@ -104,6 +121,12 @@ class AdderMeta {
         );
         // console.log("adderAsset name:", adderAsset.getFilename());
         // console.log("adderAsset behavior:", adderAsset.getBehavior());
+        //TODO:Environment from adderMeta to adderSceneWrapper
+        // (?) Use 'adderSceneWrapper' to store an array of environment assets, so they can be used to swap out later.
+        // console.log("an adder asset:", adderAsset);
+        // console.log(adderAsset.getFilepath()); // example: CITY/construction_site.babylon
+        // IF we stored the files like this... Environment/CITY/construction_site.babylon , then we could split on "/" knowing that [0] = Environment [1] = either 'CITY' or 'COUNTRY' , etc.
+        //expected to see 'user selected models here as well but do not yet.
         adderLoader.addSingleModel(adderAsset);
       }
     };

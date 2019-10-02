@@ -11,6 +11,8 @@ import AdderSceneWrapper from "./adderSceneWrapper";
 //models
 import AdderModel from "./adderModel";
 import AdderMeshWrapper from "./adderMeshWrapper";
+import AdderGuiUtility from "./adderGuiUtility";
+
 class AdderLoader {
   constructor(adderSceneWrapper = null) {
     if (
@@ -67,7 +69,17 @@ class AdderLoader {
        *  adderModel : The instance of a model that was just asynchronously pulled down from the server.
        *  result: What is returned after a successful import, mainly the "meshes" that make up the model.
        */
+
       const adderMeshWrappers = [];
+      //------------------------------------------------
+      var applyGui = false;
+      var notAlreadyApplied = true;
+      const asw = adderModel.getAdderSceneWrapper();
+      const advancedTexture = asw.getAdvancedTexture();
+      let adderGuiUtility = new AdderGuiUtility(advancedTexture);
+      // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
+      const grid = asw.getGrid();
+      //--------------------------------------------------
       result.meshes.forEach(function(mesh) {
         //get Behaviors via models meta data.
         mesh.parent = adderModel.getParentMesh();
@@ -101,6 +113,79 @@ class AdderLoader {
               }
             }
           }
+          // Apply Control Group to The mesh.parent to effect the entire mesh. ie. for rotating a model.
+          if (currentStrategy === "gui") {
+            applyGui = true;
+            //can we use meta data for other gui  'conditions'  (?) maybe capture and store the entire strategy object and make it available in
+            // the upcoming switch case condition.
+          }
+        }
+
+        if (applyGui && notAlreadyApplied) {
+          //console.log("what is the mesh.parent", mesh.parent); //"name of self"
+          // var control = null;
+          var results = null;
+          var header = null;
+          var slider = null;
+          switch (mesh.parent.id) {
+            case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "billboard"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
+              break;
+            case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon":
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "porsche"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
+              break;
+            case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "porsche"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
+              break;
+            case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "vw"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);
+              break;
+            case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon":
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "vw"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);
+              break;
+            default:
+              console.log(
+                "> > > > >mesh parent id: mesh.parent.id:",
+                mesh.parent.id
+              );
+              break;
+          }
+
+          // console.log("GOT A CONTROL: control:", control);
+          //need col, and row info
+
+          applyGui = false; //reset flag
+          notAlreadyApplied = false;
         }
 
         let newAdderMeshWrapper = new AdderMeshWrapper(mesh, null, null);
@@ -118,19 +203,19 @@ class AdderLoader {
         position.z
       );
       let rotation = adderAsset.getRotation();
-      console.log("rotation:", rotation);
+      //console.log("rotation:", rotation);
       let rotationAxisVect = new BABYLON.Vector3(
         rotation.axis.x,
         rotation.axis.y,
         rotation.axis.z
       );
       let rotationAngle = parseFloat(rotation.angle);
-      console.log("rotationAngle:", rotationAngle);
+      //console.log("rotationAngle:", rotationAngle);
       let scaling = adderAsset.getScaling();
       let scalingVect = new BABYLON.Vector3(scaling.x, scaling.y, scaling.z);
       let behavior = adderAsset.getBehavior();
 
-      let filename = adderAsset.getFilename();
+      // let filename = adderAsset.getFilename();
       let filepath = adderAsset.getFilepath();
       //////////////////////////////////////////////////////////////
 
@@ -148,7 +233,7 @@ class AdderLoader {
         scalingVect,
         behavior
       );
-
+      //adderLoader.modelLoader(adderModel)
       this.modelLoader(adderModel);
 
       // Changing The Position of a PARENT MESH of an AdderModel currently requires 'getting the parent mesh and applying the babylon method to it.ie.setPositionWithLocalVector(Vector3)
@@ -160,7 +245,7 @@ class AdderLoader {
       let adderModelPosition = adderModel.getPosition();
       adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
       //Rotation:
-      let adderModelRotationAngle = adderModel.getRotationAngle();
+      // let adderModelRotationAngle = adderModel.getRotationAngle();
       let adderModelRotationRadian = adderModel.getRotationRadian();
       let adderModelRotationAxis = adderModel.getRotationAxis();
       let quaternion = new BABYLON.Quaternion.RotationAxis(

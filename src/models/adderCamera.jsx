@@ -173,12 +173,7 @@ class AdderCamera {
     //camera.setAttachControl(this.getCanvas(),true)
     let options = this.getOptions();
 
-    if (
-      options != null &&
-      typeof options != "" &&
-      typeof options != "undefined" &&
-      typeof options != null
-    ) {
+    if (options != null && typeof options !== "undefined") {
       camera.upperRadiusLimit = options.upperRadiusLimit;
       camera.lowerBetaLimit = options.lowerBetaLimit;
       camera.upperBetaLimit = options.upperBetaLimit;

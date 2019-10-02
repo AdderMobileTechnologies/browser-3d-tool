@@ -5,19 +5,35 @@
  * well as any other global parameter that might need to be available.
  */
 import { Scene } from "babylonjs";
+import * as GUI from "babylonjs-gui";
+import AdderGuiUtility from "./adderGuiUtility";
 
 class AdderSceneWrapper {
-  constructor(scene = null, models = null) {
+  constructor(scene = null, models = null, advancedTexture = null) {
     if (scene === null || !(scene instanceof Scene)) {
       throw new Error("AdderSceneWrapper");
+    } else {
+      // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
     }
     if (models === null) {
       // they might be null at first to be loaded later.
       models = [];
     }
+    if (
+      advancedTexture === null ||
+      !(advancedTexture instanceof GUI.AdvancedDynamicTexture)
+    ) {
+      throw new Error(
+        "AdderSceneWrapper: Constructor: Expects a Gui.AdvancedDynamicTexture as an arguement."
+      );
+    }
+
     let _scene = scene;
     let _models = models;
     let _uuid = Date();
+    let _advancedTexture = advancedTexture;
+    let adderGuiUtility = new AdderGuiUtility();
+    let _grid = adderGuiUtility.gui_create_grid2(_advancedTexture);
 
     this.getUUID = () => {
       // console.log("AdderModelWrapper UUID:::", _uuid);
@@ -33,6 +49,13 @@ class AdderSceneWrapper {
     this.setModels = models => {
       _models = models;
     };
+    this.getAdvancedTexture = () => {
+      return _advancedTexture;
+    };
+    this.getGrid = () => {
+      return _grid;
+    };
+
     this.appendModels = adderModel => {
       _models.push(adderModel);
     };
@@ -46,6 +69,7 @@ class AdderSceneWrapper {
       previousModels.push(adderModel);
       this.setModels(previousModels);
     };
+
     this.hideSisterMeshesForMeshId = mesh_id => {
       console.log("adderSceneWrapper:hideSisterMeshesForMeshId()");
       /*
@@ -66,13 +90,8 @@ class AdderSceneWrapper {
           let currentMeshName = _mesh.name;
           let splitCurrentMesh = currentMeshName.split("_");
           if (_mesh.id !== mesh_id && splitName[3] === splitCurrentMesh[3]) {
-            console.log("setting mesh to invisible: _mesh.id", _mesh.id);
+            // console.log("setting mesh to invisible: _mesh.id", _mesh.id);
             _mesh.isVisible = false;
-          }
-          if (_mesh.id === mesh_id) {
-            console.log("Match mesh.id:", mesh_id);
-            console.log("Match parent model:", model);
-            console.log("Match meshWrapper:", meshWrapper);
           }
         }
       }
@@ -96,9 +115,6 @@ class AdderSceneWrapper {
           let _mesh = meshWrapper.getMesh();
 
           if (_mesh.id === mesh_id) {
-            console.log("Match mesh.id:", mesh_id);
-            console.log("Match parent model:", model);
-            console.log("Match meshWrapper:", meshWrapper);
             return model;
           }
         }
@@ -107,7 +123,7 @@ class AdderSceneWrapper {
 
     this.applyTextureToMesh = (mesh_id, dataURL) => {
       console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
-      if (dataURL != "empty dataURL") {
+      if (dataURL !== "empty dataURL") {
         let ModelsArray = this.getModels();
         for (let mIndex in ModelsArray) {
           let _model = ModelsArray[mIndex];
@@ -141,6 +157,59 @@ class AdderSceneWrapper {
           // console.log("mesh.id:", mesh.id);
           mesh.dispose();
         }
+      }
+    }
+  }
+
+  removeEnvironmentModels(userModels) {
+    /*
+    IN: 
+    userModels:  a key value array of user model names. ie. modelName:path to .babylon file
+    ie.  {modelName: "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon"}
+    OUT: 
+    void
+    */
+    //console.log(" removeEnvironmentModels(userModels):", userModels);
+    let AllModels = this.getModels();
+    let keptModels = [];
+    let droppedModels = [];
+
+    // IF userModels.length > 0 OTHERWISE remove all models
+    console.log("userModels.length:", userModels.length);
+
+    if (userModels.length > 0) {
+      for (let x in AllModels) {
+        let modelX = AllModels[x];
+        let modelFileName = modelX.getModelFile();
+
+        for (let um of userModels) {
+          if (um.modelName !== modelFileName) {
+            //prevent adding duplicates
+            if (!droppedModels.includes(modelFileName)) {
+              droppedModels.push(modelFileName);
+            } else {
+              //ignore
+            }
+          } else {
+            keptModels.push(modelFileName);
+          }
+        }
+      }
+      //now loop through droppedModel and if NOT in kept then drop
+      for (let dropper of droppedModels) {
+        if (keptModels.includes(dropper)) {
+          //leave it
+        } else {
+          //remove it
+          this.disposeOfMeshesForModel(dropper);
+        }
+      }
+    } else {
+      console.log("remove previous environmenty models here.");
+      for (let x in AllModels) {
+        let modelX = AllModels[x];
+        let modelFileName = modelX.getModelFile();
+        this.disposeOfMeshesForModel(modelFileName);
       }
     }
   }

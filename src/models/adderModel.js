@@ -44,7 +44,7 @@ class AdderModel {
       let mesh_parentOptions = { width: 0, height: 0, depth: 0 };
       let scene = adderSceneWrapper.getScene();
       let mesh_parent = BABYLON.MeshBuilder.CreateBox(
-        "name_of_self",
+        modelFile,
         mesh_parentOptions,
         scene
       );
