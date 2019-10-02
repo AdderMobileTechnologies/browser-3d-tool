@@ -32,6 +32,14 @@ app.get("/meta/environment/", function(req, res) {
   });
 });
 
+app.get("/meta/environment2/", function(req, res) {
+  console.log("/meta/environment2/");
+  fs.readFile("meta_data/environment2.meta", "utf8", function(err, data) {
+    if (err) throw err;
+    res.send(JSON.parse(data));
+  });
+});
+
 app.get("/meta/design/", function(req, res) {
   console.log("/meta/design/");
   fs.readFile("meta_data/design.meta", "utf8", function(err, data) {
