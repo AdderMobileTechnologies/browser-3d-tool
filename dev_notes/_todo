@@ -869,6 +869,9 @@ Also, clicking the share button makes the email form appear, it also sets the 'l
 If it stays up for a while, and the user makes changes again before sending the email, the latest changes might not get added/updated to the dataURL.
 
 SO ... can I load a scene based on the saveActions array? 
+- upload actions to the server
+      - ok but missing actual dataURLs only have uuid at the moment. need to gather up.
+      loop through state._images and if match uuid get dataURL and add to 'save array'  WHERE? 
 
 
 Wed. 10-02-2019 
@@ -878,3 +881,11 @@ Wed. 10-02-2019
 - added in basic ability to send emails via the meta_server with nodemailer.
 - added the ability to email the lastest image on the screen as an attachment 
 - add the movie scene icon to replace the binoculars.
+
+
+- run through the actions like a 'redo' 
+- downloadSavedDesign
+
+ISSUES: 
+  - still having issues with an image related to the porsche I think, trying to get loaded over and over.
+  - also uploading the dataURL didn't give me something I could look at on the server side, I think the json stringify messed. 

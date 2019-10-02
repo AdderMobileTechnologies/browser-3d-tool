@@ -357,6 +357,89 @@ class Main extends React.Component {
     util.store("append", K.ACTIONS_ARRAY, args);
     scope.setState_designName(args.to, scope.callback_setState);
   }
+
+  totalRedo() {
+    let redo_actions_array = util.store("get", "temp"); // 1 replace 2
+    for (let i of redo_actions_array) {
+      // console.log("i:", i);
+      // console.log("i.actions:", i.actions);
+
+      // if (redo_actions_array.length > 0) {
+      let lastRedoAction = i.actions.shift(); // redo_actions_array.pop();
+      // console.log("lastRedoAction:", lastRedoAction);
+      for (let act of i.actions) {
+        console.log("act:", act);
+        switch (act.action) {
+          case "change_name":
+            scope.redo_UITextInput(act.action);
+            break;
+          case "applyTextureToMesh":
+            console.log("applyTextToMesh ...... ");
+            scope.redo_ApplyTextureToMesh(act.action);
+            break;
+          case "screenshot":
+            // scope.undo_screenshot(lastAction);
+            break;
+          case "change asset":
+            scope.redo_asset(act.action);
+            /* THROWS ERROR: 
+            cannot read property 'dir' of undefined...
+            Main.redo_asset
+            C:/Users/Bayon/projects/3d-tool-v2/src/components/Main.jsx:327
+            */
+            break;
+          default:
+            console.log("no match for act.action: ", act.action);
+            break;
+        }
+      }
+      /*
+      switch (lastRedoAction) {
+        case "change_name":
+          scope.redo_UITextInput(lastRedoAction);
+          break;
+        case "applyTextureToMesh":
+          console.log("applyTextToMesh ...... ");
+          scope.redo_ApplyTextureToMesh(lastRedoAction);
+          break;
+        case "screenshot":
+          // scope.undo_screenshot(lastAction);
+          break;
+        case "change asset":
+          scope.redo_asset(lastRedoAction);
+          break;
+        default:
+          console.log("no match for action: ", lastRedoAction.action);
+          break;
+      }
+      */
+    }
+    /*
+    if (redo_actions_array.length > 0) {
+      let lastRedoAction = redo_actions_array.pop();
+      switch (lastRedoAction.action) {
+        case "change_name":
+          scope.redo_UITextInput(lastRedoAction);
+          break;
+        case "applyTextureToMesh":
+          scope.redo_ApplyTextureToMesh(lastRedoAction);
+          break;
+        case "screenshot":
+          // scope.undo_screenshot(lastAction);
+          break;
+        case "change asset":
+          scope.redo_asset(lastRedoAction);
+          break;
+        default:
+          console.log("no match for action: ", lastRedoAction.action);
+          break;
+      }
+     
+    } else {
+      console.log("there  are no more actions to be undone.");
+    }
+    */
+  }
   //////////////////////////////////////////////////////////////////
   //setState_var(x)
   // designName, images,
@@ -823,6 +906,7 @@ class Main extends React.Component {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
     //----------------------------------------------
+    this.downloadSavedDesign();
     // in componentDidMount
 
     var button = document.getElementById("btn-download");
@@ -1165,6 +1249,7 @@ class Main extends React.Component {
   }
 
   iconSave(newDesignsArray) {
+    let thatscope = scope;
     scope.setState(
       prevState => ({
         ...prevState,
@@ -1182,8 +1267,11 @@ class Main extends React.Component {
         //MAY NEED TO APPEND ACTIONS ARRAY TO THE newDESIGN
         let actions = util.store("get", K.ACTIONS_ARRAY);
         newDesign.actions = actions;
+        newDesign.images = thatscope.state._images;
+        console.log("need the images:", thatscope.state._images);
 
         util.store("append", K.SAVED_DESIGNS_ARRAY, newDesign); //2 lines replace about 10
+        //====>
         scope.uploadSavedDesign();
       }
     );
@@ -1208,6 +1296,24 @@ class Main extends React.Component {
       console.log("value in promise response:", value);
     });
   }
+
+  downloadSavedDesign() {
+    let options = new Promise(function(resolve, reject) {
+      const url = `${K.META_URL}/design/get`;
+      axios
+        .get(url)
+        .then(response => response.data)
+        .then(data => {
+          resolve(data);
+        });
+    });
+    options.then(function(value) {
+      console.log("value in promise response:", value);
+      util.store("set", "temp", value);
+      //=====>>>> LEFT OFF HERE 10-02-2019 trying to load Saved Design....===> scope.totalRedo();
+    });
+  }
+
   /*
   camera target change in state does not appear to effect the existing scene?
   cameraTargetY_up() {

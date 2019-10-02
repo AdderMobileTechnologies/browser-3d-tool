@@ -113,8 +113,8 @@ app.post("/design/save/", function(req, res) {
     console.log("data saved!");
   });
 });
-app.get("/design/save/", function(req, res) {
-  console.log("get: /design/save/");
+app.get("/design/get/", function(req, res) {
+  console.log("get: /design/get/");
   fs.readFile("SavedDesignActions.js", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
