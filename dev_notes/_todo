@@ -858,4 +858,12 @@ https://blog.mailtrap.io/sending-emails-with-nodemailer/
 
   - adapt meta_server.js to handle this email function. 
   - find and example calling meta server 
-  
+
+
+  Wed. 10-02-2019 
+- recover the latest work on a branch that got corrupted with a large file issue.
+- recovery looks complete had to remove reference to an image in babylon file and update manifest
+- update dev notes in _todo after recovery completed.
+- added in basic ability to send emails via the meta_server with nodemailer.
+- added the ability to email the lastest image on the screen as an attachment 
+-  add the movie scene icon to replace the binoculars.
