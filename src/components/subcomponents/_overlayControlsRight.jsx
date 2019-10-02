@@ -6,7 +6,7 @@ export default function OverlayControlsRight(props) {
 
   return (
     <div className="gui-overlay-right">
-      <MUIPopover callback={console.log("-")}></MUIPopover>
+      <MUIPopover callback={props.callback}></MUIPopover>
     </div>
   );
 }

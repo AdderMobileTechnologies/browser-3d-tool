@@ -9,6 +9,7 @@ import AdderSkyBox from "../models/adderSkybox";
 import AdderMeta from "../models/adderMeta";
 import AdderAsset from "../models/adderAsset";
 import AdderLoader from "../models/adderLoader";
+import AdderUtil from "../models/util";
 //components
 import DraggableDialog from "./MUI_DraggableDialog";
 import Designer from "./designer";
@@ -18,7 +19,7 @@ import SidebarSelectorVehicles from "./subcomponents/_sidebarSelectorVehicles";
 import IconControlGroup from "./subcomponents/_iconControlGroup";
 import OverlayControls from "./subcomponents/_overlayControls";
 import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
-import OverlayControlsUpperRight from "./subcomponents/_overlayControlsUpperRight";
+import OverlayControlsUpperLeft from "./subcomponents/_overlayControlsUpperLeft";
 import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
 import UITextInput from "./subcomponents/elements/UITextInput";
 //assets
@@ -33,10 +34,14 @@ import { Resizable, ResizableBox } from "react-resizable";
 //css
 import "./minimum.css";
 import "./Main.css";
+///////////////
+import * as GUI from "babylonjs-gui";
+import AdderGuiUtility from "../models/adderGuiUtility";
 
 let scope;
 const UIGridList = K.UIGridList;
 //region: Render Methods
+let util = new AdderUtil();
 
 class Main extends React.Component {
   constructor(props) {
@@ -54,15 +59,15 @@ class Main extends React.Component {
       camera_target: new BABYLON.Vector3(2, 0, 2),
       camera_target_y: 10,
       images: [],
-      texture_images: [],
+      _images: [],
       adderSceneWrapper: {},
       selected_mesh_id: "",
       meta_data: {},
       startEditing: false,
       finishedEditing: true,
       editing_mesh_id: "empty mesh",
-      editing_mesh_initial_load: false,
-      last_dataURL: "empty dataURL",
+      editing_mesh_initial_load: true,
+      last_imgId: null,
       selected_ad_type: -1,
       hoodMeshId: null,
       leftMeshId: null,
@@ -71,6 +76,7 @@ class Main extends React.Component {
       trunkMeshId: null,
       sign1MeshId: null,
       sign2MeshId: null,
+      isRaining: false,
       userSession: {
         userInfo: [],
         userModel: {
@@ -80,22 +86,18 @@ class Main extends React.Component {
         designs: [],
         designModel: {
           designName: "",
-          adTypeFilepath: "",
           environment: "",
           environment_type: "",
           environmentFilepath:
             "InDevelopmentAddDataForEnvironmemntNameOrREmove....",
-          meshes: [],
-          screenShots: [],
-          ui_selections: {},
-          ui_status: {},
-          action: ""
+          screenShots: []
         }
       },
       tileData: [],
       userAction: {
         deleteSure: false
       },
+      userAssets: [],
       userModels: [],
       actions: [],
       undos: [],
@@ -113,13 +115,46 @@ class Main extends React.Component {
     this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
     this.imageEditorClose = this.imageEditorClose.bind(this);
-    {
-      /**
-  this.cameraTargetY_up = this.cameraTargetY_up.bind(this);
-    this.cameraTargetY_down = this.cameraTargetY_down.bind(this);
-  */
-    }
+    this.changeEnvironment = this.changeEnvironment.bind(this);
+    this.environment_Rain = this.environment_Rain.bind(this);
+    this.environment_Smoke = this.environment_Smoke.bind(this);
+    /**
+      this.cameraTargetY_up = this.cameraTargetY_up.bind(this);
+        this.cameraTargetY_down = this.cameraTargetY_down.bind(this);
+      */
   }
+
+  //Environment
+  changeEnvironment = args => {
+    var environment_type = null;
+    switch (args.selectedOption) {
+      case "location_city":
+        console.log("changeEnvironment = (args) CITY:", args);
+        environment_type = "CITY";
+
+        break;
+      case "landscape":
+        console.log("changeEnvironment = (args) COUNTRY:", args);
+        environment_type = "COUNTRY";
+        break;
+      default:
+        break;
+    }
+    console.log("environment type:", environment_type);
+    console.log("STATE:", scope.state.environment_type);
+    console.log("LOCAL:", environment_type);
+    if (scope.state.environment_type !== environment_type) {
+      //NEED TO REMOVE PREVIOUS ENVIRONMENT...
+      scope.resetForEnvironmentSceneChange();
+      //SETUP NEW ENVIRONMENT...
+      scope.setUp(environment_type);
+      scope.setState({
+        environment_type: environment_type
+      });
+    }
+
+    //remove environment type if changed. compare to a state variable ?
+  };
   // resizable functions
 
   onClick = () => {
@@ -142,16 +177,11 @@ class Main extends React.Component {
         designs: [],
         designModel: {
           designName: "Brand New Design Name",
-          adTypeFilepath: "",
           environment: "",
           environment_type: "",
           environmentFilepath:
             "InDevelopmentAddDataForEnvironmemntNameOrREmove....",
-          meshes: [],
-          screenShots: [],
-          ui_selections: {},
-          ui_status: {},
-          action: ""
+          screenShots: []
         }
       }
     });
@@ -167,50 +197,41 @@ class Main extends React.Component {
 - redo_ApplyTextureToMesh
 - undo_UITextInput
 - redo_UITextInput
-- reset_InsertIntoRedo
-- reset_InsertIntoActions
+ //removed by util 
+- // removed by util ... reset_InsertIntoActions 
 */
 
   iconUndo() {
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    if (old_actions.length > 0) {
-      let lastIndex = old_actions.length - 1;
-      let lastAction = {};
-      for (let i in old_actions) {
-        if (i == lastIndex) {
-          lastAction = old_actions[i];
-        }
+    let lastAction = util.store("get_last", K.ACTIONS_ARRAY); //1 replace 12 lines
+    //if we popped off here instead of "get_last" then we could eliminate a pop for each switch statement.
+
+    if (lastAction !== null && typeof lastAction !== "undefined") {
+      switch (lastAction.action) {
+        case "change_name":
+          scope.undo_UITextInput(lastAction);
+          break;
+        case "applyTextureToMesh":
+          scope.undo_ApplyTextureToMesh(lastAction);
+          break;
+        case "screenshot":
+          //scope.undo_screenshot(lastAction);
+          break;
+        case "change asset":
+          scope.undo_asset(lastAction);
+          break;
+        default:
+          console.log("no match for action: ", lastAction.action);
+          break;
       }
-      if (lastAction !== null && typeof lastAction !== "undefined") {
-        switch (lastAction.action) {
-          case "change_name":
-            scope.undo_UITextInput(lastAction);
-            break;
-          case "applyTextureToMesh":
-            scope.undo_ApplyTextureToMesh(lastAction);
-            break;
-          case "screenshot":
-            //scope.undo_screenshot(lastAction);
-            break;
-          case "change asset":
-            scope.undo_asset(lastAction);
-            break;
-          default:
-            console.log("no match for action: ", lastAction.action);
-            break;
-        }
-      } else {
-        console.log("welp...? something not defined.");
-      }
+    } else {
+      console.log("welp...? something not defined.");
     }
   }
+
   iconRedo(args) {
-    // HERE we take pop the last item off the  'redo_actions_array', re-apply it with the appropriate measure.
-    let redo_actions_array =
-      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
+    let redo_actions_array = util.store("get", K.REDOS_ARRAY); // 1 replace 2
     if (redo_actions_array.length > 0) {
       let lastRedoAction = redo_actions_array.pop();
-      //reapply the last RedoAction
       switch (lastRedoAction.action) {
         case "change_name":
           scope.redo_UITextInput(lastRedoAction);
@@ -228,125 +249,78 @@ class Main extends React.Component {
           console.log("no match for action: ", lastRedoAction.action);
           break;
       }
-
-      //re-save redo_actions_array misnus the popped action.!
-      localStorage.setItem(
-        "redo_actions_array",
-        JSON.stringify(redo_actions_array)
-      );
-      // put the last redo action into the actions array.....
+      util.store("set", K.REDOS_ARRAY, redo_actions_array); //1 replaces 4
     } else {
       console.log("there  are no more actions to be undone.");
     }
   }
   undo_screenshot(args) {
-    // args.from !== "empty dataURL" &&
+    // args.from !== null &&
     if (args.from !== "" && typeof args.from != "undefined") {
       const array_image_models = scope.state.images.slice();
       var popped_image_model = array_image_models.pop();
-      this.reset_InsertIntoRedo(popped_image_model);
+      util.store("append", K.REDOS_ARRAY, popped_image_model);
       scope.setState(prevState => ({
         ...prevState,
         images: array_image_models
       }));
-      /*
-      let old_action_arrays =
-        JSON.parse(localStorage.getItem("actions_array")) || [];
-      if (old_action_arrays.length > 0) {
-        
-        old_action_arrays.pop();
-        localStorage.setItem(
-          "actions_array",
-          JSON.stringify(old_action_arrays)
-        );
-        // remove from the 'tileData'.
-        const currentTileDataArray = scope.state.tileData.slice();
-        currentTileDataArray.pop();
-        scope.setState(prevState => ({
-          ...prevState,
-          tileData: currentTileDataArray
-        }));
-      } else {
-        // nothing to remove
-        console.log(
-          "no more actions to remove from within the screenshots undo code. "
-        );
-      }
-      */
     }
   }
 
-  undo_ApplyTextureToMesh(args) {
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    if (old_actions.length > 0) {
-      let poppedAction = scope.popOffAction();
+  getDataURLFromImgId = imgId => {
+    console.log("Main: getDataURLFromImgId() imgId:", imgId);
+    let arr = scope.state._images;
+    let dataURL = null;
+    for (let img of arr) {
+      if (img.uuid === imgId) {
+        dataURL = img.dataURL;
+      }
+    }
+    return dataURL;
+  };
 
-      console.log("poppedAction:", poppedAction);
-      console.log("typeof poppedAction:", typeof poppedAction);
-      // I think there are three types of vars in the from field. [ text, dataURL, and assetObject ]
-      // may need to add 'empty asset' to the condition
-      if (poppedAction.from != "empty dataURL") {
+  undo_ApplyTextureToMesh(args) {
+    console.log("Main: undo_ApplyTextureToMesh(): args:", args);
+    let old_actions = util.store("get", K.ACTIONS_ARRAY);
+    if (old_actions.length > 0) {
+      let poppedAction = scope.popActionsPushRedos(); //check out popActionsPushRedos
+      console.log("compare args to poppedAction:", poppedAction);
+      //HERE, convert poppedAction.from FROM image id to image URL
+      let newDataURL = scope.getDataURLFromImgId(poppedAction.from);
+
+      if (poppedAction.from != null) {
         this.state.adderSceneWrapper.applyTextureToMesh(
           poppedAction.id,
-          poppedAction.from
+          newDataURL
         );
       } else {
-        console.log(
-          "perform undo texture...but back to the original texture  HOW TO RESTORE ORIGINAL TEXTURE ? "
-        );
-        console.log(
-          `APPLY empty dataURL blank: ie: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw== 
-           OR 
-           data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw== 
-           OR data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/1+yHgAHtAKYD9BncgAAAABJRU5ErkJggg==
-           OR WHITE data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=
-           `
-        );
+        // `APPLY empty dataURL blank: ie: data:image/gif;base64,iVBORw0KGgo...`
         this.state.adderSceneWrapper.applyTextureToMesh(
           poppedAction.id,
           "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII="
         );
       }
-    } else {
-      //nothing in there
     }
   }
   redo_ApplyTextureToMesh(args) {
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    old_actions.push(args);
-    localStorage.setItem("actions_array", JSON.stringify(old_actions));
-    this.state.adderSceneWrapper.applyTextureToMesh(args.id, args.to);
+    util.store("append", K.ACTIONS_ARRAY, args); //1 replaces 3
+    let newDataURL = scope.getDataURLFromImgId(args.to);
+    this.state.adderSceneWrapper.applyTextureToMesh(args.id, newDataURL);
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////
 
   undo_asset(args) {
     console.log("undo_Asset args:", args);
-    // pop off the 'TO' asset , move it into the redo array
-    //see the delete function for reference.
-    let poppedAction = scope.popOffAction(); // (?) is this getting saved into the 'redo' array every time ?
-
+    let poppedAction = scope.popActionsPushRedos();
     let asw = scope.state.adderSceneWrapper;
     asw.disposeOfMeshesForModel(args.id);
-    scope.setState({ selected_ad_type: -1 }); // (?) can this value refresh the selects in Designer ?
-    // TODO: reset the selects in Designer ?
+    scope.setState({ selected_ad_type: -1 });
   }
-  // LEFT OFF HERE: Thur. 9-19-2019
-  // trying to redo the model/assets almost works but they get out of sync somehow...
-  // *porsche is not getting added back to the actions array the 2nd redo doesn't put the object back into actions array.
 
   redo_asset(args) {
     console.log("... redo_Asset args:", args);
     //pop off redo, push to actions
-    let poppedRedo = scope.popOffRedo();
-    //should handle pushing back into actions as well...
-    // so what will load it onto the canvas
-    //console.log("reload with args:", args);
-    //adderSceneWrapper
-    //console.log("do we have a scene wrapper....");
-    //console.log(scope);
+    let poppedRedo = scope.popRedosPushActions();
     let asw = scope.getAdderSceneWrapper();
-    //console.log("asw:", asw);
-    //asw.getUUID();
     let adderAsset = new AdderAsset(
       args.to.dir,
       args.to.filename,
@@ -357,92 +331,62 @@ class Main extends React.Component {
       args.to.behavior,
       asw
     );
-    // TODO:
-    // 1)
+
     scope.loadScene(adderAsset);
-    // 2)  define which meshes will be selectable. for the UI buttons
     scope.defineSelectableMeshesForAdderAsset(adderAsset);
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////
-  popOffAction() {
-    //handles popping off actions array and pushing back into redo array
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    let poppedAction = old_actions.pop();
-    console.log(
-      "looking for popped action type of action:",
-      poppedAction.action
-    );
-    this.reset_InsertIntoRedo(poppedAction);
-    localStorage.setItem("actions_array", JSON.stringify(old_actions));
+  popActionsPushRedos() {
+    let poppedAction = util.store("pop", K.ACTIONS_ARRAY); //1 line removes 3
+    util.store("append", K.REDOS_ARRAY, poppedAction);
     return poppedAction;
   }
-  popOffRedo() {
-    console.log("...popOffRedo() ");
-    //todo:
-    let old_redos =
-      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
-    console.log("# of redos:", old_redos.length);
-    let poppedRedo = old_redos.pop();
-    console.log("The popped redo:", poppedRedo);
-    this.reset_InsertIntoActions(poppedRedo);
-    localStorage.setItem("redo_actions_array", JSON.stringify(old_redos));
+  popRedosPushActions() {
+    let poppedRedo = util.store("pop", K.REDOS_ARRAY); // 2 lines replace 7
+    util.store("append", K.ACTIONS_ARRAY, poppedRedo);
     return poppedRedo;
   }
   undo_UITextInput(args) {
-    let poppedAction = scope.popOffAction();
-    scope.setState(prevState => ({
-      ...prevState,
-      userSession: {
-        ...prevState.userSession,
-        designModel: {
-          ...prevState.userSession.designModel,
-          designName: poppedAction.from
-        }
-      }
-    }));
+    let poppedAction = scope.popActionsPushRedos();
+    scope.setState_designName(poppedAction.from, scope.callback_setState);
   }
   redo_UITextInput(args) {
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    old_actions.push(args);
-    localStorage.setItem("actions_array", JSON.stringify(old_actions));
-    scope.setState(prevState => ({
-      ...prevState,
-      userSession: {
-        ...prevState.userSession,
-        designModel: {
-          ...prevState.userSession.designModel,
-          designName: args.to
+    util.store("append", K.ACTIONS_ARRAY, args);
+    scope.setState_designName(args.to, scope.callback_setState);
+  }
+  //////////////////////////////////////////////////////////////////
+  //setState_var(x)
+  // designName, images,
+  setState_designName = (arg, callback) => {
+    scope.setState(
+      prevState => ({
+        ...prevState,
+        userSession: {
+          ...prevState.userSession,
+          designModel: {
+            ...prevState.userSession.designModel,
+            designName: arg
+          }
+        }
+      }),
+      () => {
+        if (typeof callback === "function") {
+          callback();
         }
       }
-    }));
+    );
+  };
+  callback_setState(args) {
+    console.log("callback_setState:args:", args);
   }
-  reset_InsertIntoRedo(args) {
-    let currentRedos =
-      JSON.parse(localStorage.getItem("redo_actions_array")) || [];
-    currentRedos.push(args);
-    localStorage.setItem("redo_actions_array", JSON.stringify(currentRedos));
-  }
-
-  reset_InsertIntoActions(args) {
-    let currentActions =
-      JSON.parse(localStorage.getItem("actions_array")) || [];
-    currentActions.push(args);
-    localStorage.setItem("actions_array", JSON.stringify(currentActions));
-  }
-  //////////////////////////   end undos and redos
+  ///////////////////////////////////////////////////////////////////////////
   save_UIAction(_id, _action, _to, _from) {
     let action_object = {};
     action_object.id = _id;
     action_object.action = _action;
     action_object.to = _to;
     action_object.from = _from;
-    let old_actions = JSON.parse(localStorage.getItem("actions_array")) || [];
-    //push to local storage:
-    old_actions.push(action_object);
-    localStorage.setItem("actions_array", JSON.stringify(old_actions));
-
-    //if _action == "" THEN save mesh
+    util.store("append", K.ACTIONS_ARRAY, action_object);
   }
 
   subCallback(args) {
@@ -453,17 +397,27 @@ class Main extends React.Component {
     return this.state.adderSceneWrapper;
   }
 
-  setUp() {
+  setUp(environment) {
+    //NEED TO REMOVE PREVIOUS ENVIRONMENT...
+
     let adderMeta = new AdderMeta(this.state.adderSceneWrapper);
-    adderMeta.getEnvironment();
+    adderMeta.getEnvironment(environment); // could call with arg ie. 'environment1', 'environment2' ,
     let scene = this.state.scene;
     let adderSkybox = new AdderSkyBox(scene, "countrybox", 1000.0);
     adderSkybox.getSkybox();
-  }
-  saveScreenshot() {
-    let design_obj = this.state.userSession.designModel;
 
-    //const obj = {'design': design_obj};
+    // let arrayOfModels = this.state.adderSceneWrapper.getModels();
+    // console.log("An array of Models...look for environment related models.");
+    // console.log(arrayOfModels);
+    // for (var i = 0; i < 5; i++) {
+    //   console.log(arrayOfModels[i]);
+    // }
+  }
+
+  saveScreenshot() {
+    /*
+    OUT OF DATE 
+    let design_obj = this.state.userSession.designModel;
     const newDesignsArray = this.state.userSession.designs.slice();
     newDesignsArray.push(design_obj); // Push the object
     this.setState(
@@ -475,42 +429,16 @@ class Main extends React.Component {
         }
       }),
       () => {
-        //note: saves the entire 'userSession'
-        let oldDesigns = JSON.parse(localStorage.getItem("designsArray")) || [];
         let newDesign = this.state.userSession.designModel;
-        //push to local storage:
-        oldDesigns.push(newDesign);
-        localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
+        util.store("append", "designsArray", newDesign);
       }
     );
+    */
   }
 
   sidebarButtonClickAlt(args) {
-    // console.log("Main:sidebarButtonClickAlt(args):", args);
     //Purpose: save new mesh to array of meshes in state
-
-    const obj = { mesh_name: args.name };
-    const newArray = this.state.userSession.designModel.meshes.slice(); // Create a copy
-    newArray.push(obj);
-
-    this.setState(
-      prevState => ({
-        ...prevState,
-        userSession: {
-          ...prevState.userSession,
-          designModel: {
-            ...prevState.userSession.designModel,
-            meshes: newArray,
-            action: "sidebarButtonClickAlt"
-          }
-        }
-      }),
-      () => {
-        //new_actions_array;
-        // ALL THIS IS , IS the selection of a mesh and the opening of the image editor , no real change happends.
-      }
-    );
-
+    // I do not need to save meshes in this manner anymore.
     this.windowCallbackPickable(args.name, "sidebarButtonClickAlt");
   }
 
@@ -521,31 +449,42 @@ class Main extends React.Component {
     });
   };
   imageEditorCallback = dataURL => {
-    console.log("image editor callback ...");
+    console.log("image editor callback ...with dataURL:", dataURL);
     this.setState(
       {
         startEditing: false,
-        // last_dataURL: dataURL,
         finishedEditing: true
-        //meshPicked: false
       },
       () => {
-        //need to make sure modal is set OFF in state , no async latency still does it.
-        // console.log(
-        //   "Main:imageEditorCallback():editing_mesh_id:",
-        //   this.state.editing_mesh_id
-        // );
+        let _uuid = util.getUUID();
+        let _img_model = {};
+        //create and save an img and id key value pair
+        _img_model.uuid = _uuid;
+        _img_model.dataURL = dataURL;
 
-        let texture_image_model = {};
-        texture_image_model.id = this.state.editing_mesh_id;
-        texture_image_model.dataURL = dataURL;
+        const array_img_models = scope.state._images.slice();
+        //set defaults
+        var notADuplicate = true;
+        var duplicate_id = null;
+        //LOOP to prevent duplicates
+        for (let _img of array_img_models) {
+          //then compare dataURL with given dataURL ...if dupe... notADuplicate = false;
+          if (_img.dataURL === dataURL) {
+            notADuplicate = false;
+            duplicate_id = _img.uuid;
+          }
+        }
+        if (notADuplicate) {
+          _img_model.uuid = _uuid;
+        } else {
+          _img_model.uuid = duplicate_id;
+        }
 
-        const array_texture_image_models = scope.state.texture_images.slice();
-        // console.log("texture_image_model:", texture_image_model);
-        array_texture_image_models.push(texture_image_model);
+        /// ...
+        array_img_models.push(_img_model);
         scope.setState(prevState => ({
           ...prevState,
-          texture_images: array_texture_image_models
+          _images: array_img_models
         }));
 
         this.state.adderSceneWrapper.applyTextureToMesh(
@@ -555,44 +494,78 @@ class Main extends React.Component {
         // ISSUE: this.state.last_dataURL in save_UIAction parameters. In the case of first adding a texture to an asset, it really did NOT have a 'from' texture.
         // There may need to be a condition to check for this. ( maybe? this.state.editing_mesh_id needs a sister variable for hasTexture or initialLoad ...)
         // OR IF editing_mesh_id === "empty mesh"
+        //TODO: redo/undo image out od sync ...
+        //and flag should get set to true when ever an asset is added to the screen. editing_mesh_initial_load
 
         if (this.state.editing_mesh_initial_load) {
           scope.save_UIAction(
             this.state.editing_mesh_id,
             "applyTextureToMesh",
-            dataURL,
-            "empty dataURL"
+            _img_model.uuid,
+            null
           );
+          scope.setState({
+            last_imgId: _img_model.uuid,
+            editing_mesh_initial_load: false
+          });
         } else {
           scope.save_UIAction(
             this.state.editing_mesh_id,
             "applyTextureToMesh",
-            dataURL,
-            this.state.last_dataURL
+            _img_model.uuid,
+            this.state.last_imgId
           );
+          scope.setState({
+            last_imgId: _img_model.uuid,
+            editing_mesh_initial_load: false
+          });
         }
-
-        scope.setState({
-          last_dataURL: dataURL,
-          editing_mesh_initial_load: false
-        });
       }
     );
   };
 
   windowCallbackPickable(mesh_id, caller) {
+    console.log("WINDOW CALLBACK PICKABLE: ");
     console.log("mesh_id:", mesh_id);
+    console.log("caller:", caller);
+    // this.getModelForMeshId
+    let asw = this.state.adderSceneWrapper;
+    //use asw to
+    let model = asw.getModelForMeshId(mesh_id);
+    let position = model.getPosition();
+    console.log("position of model:", position);
+
+    if (position instanceof BABYLON.Vector3) {
+      console.log("is vector 3");
+    } else {
+      console.log("is NOT a vector 3");
+    }
+
+    //get camera and change setTarget to this position.
+    // position IS a BABYLON.Vector3 instantiation AND  this.state.camera IS the camera...
+    // BUT using the setTarget method of camera makes most of the scene disappear.
+    /*  
+// TRYING TO CHANGE TARGET OF CAMERA TO SELECTED MODEL:
+    let camera_new = this.state.camera;
+    console.log("camera_new :", camera_new);
+    camera_new.setTarget(position);
+    camera_new.attachControl(this.state.canvas, true);
+    this.setState({
+      camera: camera_new
+    });
+*/
+
+    // HOW TO define when an action is the frist time a model is selected to get a texture.??? Can I use the mesh_id to check somehow?
+
     if (!this.state.startEditing) {
       this.setState(
         {
           startEditing: true,
           editing_mesh_id: mesh_id,
-          editing_mesh_initial_load: true,
           finishedEditing: false
-          //meshPicked: false
         },
         () => {
-          //console.log("editing mesh id:", mesh_id);
+          console.log("editing mesh id:", mesh_id);
         }
       );
     } else {
@@ -613,11 +586,14 @@ class Main extends React.Component {
     if (!(adderAsset instanceof AdderAsset)) {
       // console.log("NOT AN ADDER ASSET yet....");
     } else {
-      //HERE : we would save the 'adderAsset' that just got added to the canvas.
-      // if(this.state.last_adderAssetObject != "empty asset"){
-
-      // }
       // save_UIAction(_id, _action, _to, _from)
+      //save each asset into an array:
+      let currentAssets = scope.state.userAssets;
+      currentAssets.push(adderAsset);
+      scope.setState({
+        userAssets: currentAssets
+      });
+
       scope.save_UIAction(
         adderAsset.getFilepath(),
         "change asset",
@@ -628,10 +604,8 @@ class Main extends React.Component {
       scope.setState({
         last_adderAssetObject: adderAssetObject
       });
-      // TODO:
-      // 1)
       scope.loadScene(adderAsset);
-      // 2)  define which meshes will be selectable. for the UI buttons
+      console.log("callback_Designer:adderAsset:", adderAsset);
       scope.defineSelectableMeshesForAdderAsset(adderAsset);
     }
   }
@@ -641,88 +615,97 @@ class Main extends React.Component {
     adderLoader.addSingleModel(adderAsset);
   };
   defineSelectableMeshesForAdderAsset(adderAsset) {
+    console.log(
+      "defineSelectableMeshesForAdderAsset(adderAsset):adderAsset",
+      adderAsset
+    );
     let assetData = adderAsset.getBehavior();
+    console.log("assetData:", assetData);
     //strategy:SELECT:parameters:pickableMeshes
-    let pickableMeshes = assetData[1]["parameters"]["pickableMeshes"];
+    //PROBLEM: HERE the index 2 is hard codeded. Previously it was one which meant strategy select, but after adding another strategy, the index got moved.
+    //THis could be very problematic.
+    //LOOP TO CHECK FOR DIFFERENT STRATEGIES applied to meta_data.
+    for (let i in assetData) {
+      //CHECK WHICH STRATEGY WE ARE USING:
+      if (assetData[i].strategy === "select") {
+        let pickableMeshes = assetData[i]["parameters"]["pickableMeshes"];
 
-    //USAGE: Sidebar-Selection
-    // let selectableMeshes = [];
-    let hoodMeshId = null,
-      leftMeshId = null,
-      roofMeshId = null,
-      rightMeshId = null,
-      trunkMeshId = null;
+        //USAGE: Sidebar-Selection
+        // let selectableMeshes = [];
+        let hoodMeshId = null,
+          leftMeshId = null,
+          roofMeshId = null,
+          rightMeshId = null,
+          trunkMeshId = null;
 
-    let sign1MeshId = null,
-      sign2MeshId = null;
+        let sign1MeshId = null,
+          sign2MeshId = null;
+        //console.log("PICKABLE MESHES: ", pickableMeshes);
+        for (let i in pickableMeshes) {
+          let pickableMesh = pickableMeshes[i];
+          let splitData = pickableMesh.split("_");
 
-    for (let i in pickableMeshes) {
-      let pickableMesh = pickableMeshes[i];
-      let splitData = pickableMesh.split("_");
+          // ["billboard", "2sides", "angled", "sign", "1"]
+          //     vs
+          // ["vehicle", "2door", "sportscar", "leftside", "medium"]
 
-      // ["billboard", "2sides", "angled", "sign", "1"]
-      //     vs
-      // ["vehicle", "2door", "sportscar", "leftside", "medium"]
+          if (splitData[0] === "vehicle") {
+            switch (splitData[3]) {
+              case "leftside":
+                leftMeshId = pickableMesh;
+                break;
+              case "rightside":
+                rightMeshId = pickableMesh;
+                break;
+              case "hood":
+                hoodMeshId = pickableMesh;
+                break;
+              case "roof":
+                roofMeshId = pickableMesh;
+                break;
+              case "trunk":
+                trunkMeshId = pickableMesh;
+                break;
 
-      if (splitData[0] === "vehicle") {
-        switch (splitData[3]) {
-          case "leftside":
-            leftMeshId = pickableMesh;
-            break;
-          case "rightside":
-            rightMeshId = pickableMesh;
-            break;
-          case "hood":
-            hoodMeshId = pickableMesh;
-            break;
-          case "roof":
-            roofMeshId = pickableMesh;
-            break;
-          case "trunk":
-            trunkMeshId = pickableMesh;
-            break;
-
-          default:
-            break;
-        }
-      }
-      if (splitData[0] === "billboard") {
-        if (splitData[1] === "2sides") {
-          if (splitData[2] === "angled") {
-            if (splitData[3] === "sign") {
-              switch (splitData[4]) {
-                case "1":
-                  sign1MeshId = pickableMesh;
-                  break;
-                case "2":
-                  sign2MeshId = pickableMesh;
-                  break;
-                default:
-                  break;
+              default:
+                break;
+            }
+          }
+          if (splitData[0] === "billboard") {
+            if (splitData[1] === "2sides") {
+              if (splitData[2] === "angled") {
+                if (splitData[3] === "sign") {
+                  //console.log("switch(splitData):pickableMesh:", pickableMesh);
+                  switch (splitData[4]) {
+                    case "1":
+                      sign1MeshId = pickableMesh;
+                      break;
+                    case "2":
+                      sign2MeshId = pickableMesh;
+                      break;
+                    default:
+                      break;
+                  }
+                }
               }
             }
           }
         }
+        scope.setState({
+          hoodMeshId: hoodMeshId,
+          leftMeshId: leftMeshId,
+          roofMeshId: roofMeshId,
+          rightMeshId: rightMeshId,
+          trunkMeshId: trunkMeshId,
+          sign1MeshId: sign1MeshId,
+          sign2MeshId: sign2MeshId
+        });
       }
     }
-    scope.setState({
-      hoodMeshId: hoodMeshId,
-      leftMeshId: leftMeshId,
-      roofMeshId: roofMeshId,
-      rightMeshId: rightMeshId,
-      trunkMeshId: trunkMeshId,
-      sign1MeshId: sign1MeshId,
-      sign2MeshId: sign2MeshId
-    });
+    //----
   }
   callback_withModelInfo(info) {
-    //Lets me 'name' the 'model' being used by it's 'filepath' so it can be referenced when deleting a design.
-    // SWAP OUT FOR ARRAY: ====>>>  scope.setState({ modelName: info.filepath });
-    //TODO: BUG: since only the last model was getting deleted, I should create a list of all models , then loop through them
-    // when time to delete.
-    // OR get all models from the asw adderScreenWrapper (x: that's really everything not just user models.)
-    //building array in state
-
+    //"userModels" define the 3D models that were added to the scene by the user.
     //1) create object to push to the existing array
     let data_model = { modelName: info.filepath };
     //2) get the existing array
@@ -744,7 +727,8 @@ class Main extends React.Component {
     let that = this;
 
     function addScreenshot(src) {
-      console.log("addScreenShot(src) src:", src);
+      // console.log("addScreenShot(src) src:", src);
+      //TODO: left off here : reconsider how screen shots are getting saved
       let image_uid = "img_" + Date.now();
 
       let image_model = {
@@ -757,35 +741,6 @@ class Main extends React.Component {
       };
 
       const array_image_models = that.state.images.slice();
-
-      console.log("array of images from state:");
-      console.log("array_image_models:", array_image_models);
-      //  IF array_image_models.length > 0  DO STUFF    ELSE  do NOT UNDO.
-      console.log("array_image_models length");
-      console.log(array_image_models.length);
-      /*
-      //This code interferes with the way the Undo Redo functionality is currently working..... 
-      if (array_image_models.length > 0) {
-        let lastIndex = array_image_models.length - 1;
-        let from_Screenshot = array_image_models[lastIndex];
-
-        console.log("from_Screenshot:", from_Screenshot);
-        scope.save_UIAction(
-          image_model.id,
-          "screenshot",
-          image_model,
-          from_Screenshot.id
-        );
-      } else {
-        scope.save_UIAction(
-          image_model.id,
-          "screenshot",
-          image_model,
-          "empty screenshot"
-        );
-      }
-      */
-      console.log("image_model:", image_model);
       array_image_models.push(image_model);
       that.setState(
         prevState => ({
@@ -798,24 +753,16 @@ class Main extends React.Component {
           const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
           array_image_models.push(obj);
 
-          that.setState(
-            prevState => ({
-              ...prevState,
-              userSession: {
-                ...prevState.userSession,
-                designModel: {
-                  ...prevState.userSession.designModel,
-                  action: "screenshot",
-                  screenShots: array_image_models
-                }
+          that.setState(prevState => ({
+            ...prevState,
+            userSession: {
+              ...prevState.userSession,
+              designModel: {
+                ...prevState.userSession.designModel,
+                screenShots: array_image_models
               }
-            }),
-            () => {
-              //SAVE CHANGE ACTION
-              //======>>>>>> OLD WAY   that.saveScreenshot();
-              // that.save_UIAction();
             }
-          );
+          }));
 
           // we need to get the current array of tileData  push to copy of it   and redefine it
           that.setState(prevState => ({
@@ -846,9 +793,7 @@ class Main extends React.Component {
         }
       );
     }
-    {
-      /**  { width: 274, height: 222 }, */
-    }
+
     BABYLON.Tools.CreateScreenshot(
       engine,
       camera,
@@ -862,13 +807,24 @@ class Main extends React.Component {
     );
   } //
   componentDidMount() {
-    localStorage.removeItem("actions_array");
-    localStorage.removeItem("redo_actions_array");
+    util.store("remove", K.ACTIONS_ARRAY);
+    util.store("remove", K.REDOS_ARRAY);
+    //----------------------------------------------
+    // in componentDidMount
+
+    var button = document.getElementById("btn-download");
+    this.setState({
+      downloadButton: button
+    });
+
+    //---------------------------------------------------
 
     let scope = this;
-
     let canvas = document.getElementById("adder_3dTool_canvas");
-
+    //var canvas = document.getElementById("gui_canvas_container");
+    this.setState({
+      canvas: canvas
+    });
     let engine = new BABYLON.Engine(canvas, true, {
       preserveDrawingBuffer: true,
       stencil: true
@@ -879,6 +835,7 @@ class Main extends React.Component {
       let scene = new BABYLON.Scene(engine);
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
+
       //build the camera.
       const cameraOptions = {
         lowerAlphaLimit: -0.2,
@@ -943,15 +900,29 @@ class Main extends React.Component {
 
     let scene = createScene(scope);
     // this.props.setScene(scene);
-    let adderSceneWrapper = new AdderSceneWrapper(scene);
+
+    //set state default environment type...
+    let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    let adderSceneWrapper = new AdderSceneWrapper(scene, [], advancedTexture);
     adderSceneWrapper.getUUID();
+
+    /*  ADDER GUI UTILITY: (should advancedTexture be a property in AdderSceneWrapper constructor ? )
+    let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    let adderGuiUtility = new AdderGuiUtility(advancedTexture);
+    let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
+    console.log("created grid: ", grid);
+    //might need to add the advanced texture to the adderSceneWrapper 
+    //create a control:  let control = adderGuiUtility.controlGroupSlider(mesh)
+*/
+
     this.setState(
       {
         scene: scene,
-        adderSceneWrapper: adderSceneWrapper
+        adderSceneWrapper: adderSceneWrapper,
+        environment_type: "CITY"
       },
       () => {
-        scope.setUp();
+        scope.setUp("CITY");
       }
     );
     scene.autoClear = true;
@@ -976,34 +947,24 @@ class Main extends React.Component {
     });
 
     window.addEventListener("click", function(e) {
-      ///////////////////////////////////// have to recalculate because on component did mount was inaccurate.
-
       if (canvasClick) {
-        //ROOT PROBLEM: all clicks outside of the canvasregister as the 'last click' made inside the canvas.
-        // Is a canvas click, do work for inside babylonjs
+        //ROOT PROBLEM: all clicks outside of the canvas, were registering as the 'last click' made inside the canvas.
+        //That's why this condition was created.
 
-        if (e.target.innerHTML == "Apply Image") {
-          console.log("CLICK: HARD STOP !.. applied image.");
+        if (e.target.innerHTML === "Apply Image") {
           scope.setState({
             startEditing: false,
             finishedEditing: true
           });
         } else {
           //should only detect meshes where  isPickable = true;
-          console.log("CLICK: check to see if mesh or not");
           let pickResult = scene.pick(scene.pointerX, scene.pointerY);
-          // console.log("scene point x:", scene.pointerX);
-          // console.log("scene pointer y: ", scene.pointerY);
           if (pickResult.pickedMesh === null) {
-            console.log("CLICK: not a mesh ");
-            //return false;
             scope.setState({
               startEditing: false,
               finishedEditing: true
             });
           } else {
-            console.log("pickResult.pickedMesh:", pickResult.pickedMesh);
-            console.log("CLICK:  was a mesh refer to windowCallbackPickable ");
             scope.windowCallbackPickable(
               pickResult.pickedMesh.name,
               "eventListener"
@@ -1013,14 +974,15 @@ class Main extends React.Component {
         //THEN RESET canvas click value back to False
         canvasClick = false;
       } else {
-        //Is NOT a canvas click , do not do work for inside of babylonjs scene canvas.
+        //Is NOT a canvas click , do not do any work  'inside' of babylonjs scene canvas.
       }
-      ///////////////////////////////////////////
     });
-  } //
+  }
 
   callback_UITextInput(args) {
+    //-
     let oldName = scope.state.userSession.designModel.designName;
+    scope.setState_designName(args.value, scope.callback_setState_UITextInput);
     scope.setState(
       prevState => ({
         ...prevState,
@@ -1028,17 +990,12 @@ class Main extends React.Component {
           ...prevState.userSession,
           designModel: {
             ...prevState.userSession.designModel,
-            designName: args.value,
-            action: "design_name"
+            designName: args.value
           }
         }
       }),
       () => {
         //SAVE CHANGE ACTION
-        console.log(
-          "Main:callback_UITextInput() chaning the design name with scope.save_UIAtion() "
-        );
-
         let newName = scope.state.userSession.designModel.designName;
         scope.save_UIAction("id_null", "change_name", newName, oldName);
       }
@@ -1047,9 +1004,6 @@ class Main extends React.Component {
   }
 
   iconDelete() {
-    console.log("iconDelete");
-    //TODO:
-    // NEED TO DELETE PAST ACTIONS AS WELL ...
     /**
      *  - are you sure? MUI_ALertDialog
      */
@@ -1057,105 +1011,156 @@ class Main extends React.Component {
       "#deleteAreYouSure button"
     );
     buttonAreYouSureDelete.click();
-    //which points to callback_Yes() --> callback_DeleteYes() --> resetForDelete()
+    //THIS points to callback_Yes() --> callback_DeleteYes() --> resetForDelete()
   }
 
   resetForDelete() {
     //1 clear screenshots
     scope.setState({ tileData: [] });
     //2 clear non-saved local storage
-    localStorage.removeItem("designsArray");
+    util.store("remove", "designsArray");
     //3
     //dispose of meshes
-    //BUG:TODO: This is only getting the 'last' model that was created.
-    let stateModelName = scope.state.modelName;
+    // let stateModelName = scope.state.modelName;
     let asw = scope.state.adderSceneWrapper;
-    //TODO: get ALL models that have been added to the scene from asw.
-    //let modelsArray = asw.getModels();
     let modelsArray = scope.state.userModels;
     for (let mx of modelsArray) {
-      console.log("mx:", mx);
-      //THIS IS "ALL" of the models , not just the 'added' models by the "User".
-      asw.disposeOfMeshesForModel(mx.modelName); // (previously was:) asw.disposeOfMeshesForModel(stateModelName);
+      asw.disposeOfMeshesForModel(mx.modelName);
     }
-
-    // asw.disposeOfMeshesForModel(stateModelName);
     //4 remove UI settings ie. design name and design selections.
     scope.setState({ selected_ad_type: -1 });
     //5 design name
     scope.resetUserSession();
-    //*!* TODO: still need the selects to refresh and the design name to refresh.
-    //TODO: remove actions_array from localStorage
-    window.localStorage.removeItem("actions_array");
-    window.localStorage.removeItem("redo_actions_array");
+
+    util.store("remove", K.ACTIONS_ARRAY);
+    util.store("remove", K.REDOS_ARRAY);
+  }
+
+  resetForEnvironmentSceneChange() {
+    console.log("Main: resetForEnvironmentSceneChange():");
+    //use asw
+    let asw = scope.state.adderSceneWrapper;
+    //get all models(*except for user models*)
+    let userModels = scope.state.userModels;
+    //not sending userAssets: was
+    //==>> let userAssets = scope.state.userAssets;
+    //may not need to pass userAssets along.
+    //PROBLEM HERE : is losing the textures previously applied to the meshes of that model.
+    // how to handle that?  or is there a way to do this with out first deleting the user models.?
+
+    asw.removeEnvironmentModels(userModels);
+    /*
+   to reload user models if necessary: 
+   for (let ua of userAssets) {
+      scope.loadScene(ua);
+      scope.defineSelectableMeshesForAdderAsset(ua);
+    }*/
   }
 
   callback_DeleteYes() {
-    scope.setState(
-      prevState => ({
-        ...prevState,
-        userAction: {
-          ...prevState.userAction,
-          deleteSure: true
-        }
-      }),
-      () => {
-        //SAVE CHANGE ACTION
-        //  scope.save_UIAction();
-        scope.resetForDelete();
-      }
-    );
+    scope.setState_deleteSure(true, scope.resetForDelete);
   }
   callback_DeleteNo() {
+    scope.setState_deleteSure(false);
+  }
+  setState_deleteSure(args, callback) {
     scope.setState(
       prevState => ({
         ...prevState,
         userAction: {
           ...prevState.userAction,
-          deleteSure: false
+          deleteSure: args
         }
       }),
       () => {
-        //SAVE CHANGE ACTION
-        // scope.save_UIAction();
+        if (typeof callback == "function") {
+          callback();
+        }
       }
     );
   }
 
+  environment_Rain(action) {
+    let scene = scope.state.scene;
+    if (action === "start") {
+      BABYLON.ParticleHelper.CreateAsync("rain", scene, false).then(set => {
+        set.start();
+      });
+    } else if (action === "stop") {
+      BABYLON.ParticleHelper.CreateAsync("rain", scene, false).then(set => {
+        // set.dispose();
+      });
+    }
+  }
+  environment_Smoke() {
+    let scene = scope.state.scene;
+    BABYLON.ParticleHelper.CreateAsync("smoke", scene).then(set => {
+      set.start();
+    });
+  }
+  //iconDownload or iconSave_Alt
   iconSave_Alt() {
     console.log("iconSave_Alt");
+    // here , was downloading the main canvas snapshot I think.
+    // now wondering if it should be all of the saved designs.
+    // how should we handle all the saved designs, should we only allow one at a time for simplicities sake.
+    // we could make it so they could upload a previously saved design ?
+    let canvas = scope.state.canvas;
+    let dataURL = canvas.toDataURL("image/png");
+    let button = scope.state.downloadButton;
+    button.href = dataURL;
+    //TODO: save this to the user session as well.
+    button.click();
   }
 
   iconShare() {
     console.log("iconShare");
+    //let util = new AdderUtil();
+    util.localStorageSpace();
+    let _uuid = util.getUUID();
+    console.log(_uuid);
+    let type = "remove";
+    let item = "util_array";
+    let json = { sam: "hill" };
+
+    let result = util.store(type, item, json);
+    console.log("result:", result);
+    if (scope.state.isRaining) {
+      scope.environment_Rain("stop");
+      scope.setState({
+        isRaining: false
+      });
+    } else {
+      scope.environment_Rain("start");
+      scope.setState({
+        isRaining: true
+      });
+    }
+
+    // scope.environment_Rain();
+    //scope.environment_Smoke();
   }
 
-  iconSave_v2(newDesignsArray) {
+  iconSave(newDesignsArray) {
     scope.setState(
       prevState => ({
         ...prevState,
         userSession: {
           ...prevState.userSession,
-          designs: newDesignsArray,
+
           savedDesigns: newDesignsArray
         }
       }),
       () => {
         //note: saves the entire 'userSession'
-        let oldDesigns = JSON.parse(localStorage.getItem("designsArray")) || [];
-        let oldSavedDesigns =
-          JSON.parse(localStorage.getItem("savedDesignsArray")) || [];
         let newDesign = scope.state.userSession.designModel;
         newDesign.image = scope.state.images;
-        newDesign.texture_images = scope.state.texture_images;
-        //loop through OR  push to local storage:
-        oldDesigns.push(newDesign);
-        oldSavedDesigns.push(newDesign);
-        localStorage.setItem("designsArray", JSON.stringify(oldDesigns));
-        localStorage.setItem(
-          "savedDesignsArray",
-          JSON.stringify(oldSavedDesigns)
-        );
+
+        //MAY NEED TO APPEND ACTIONS ARRAY TO THE newDESIGN
+        let actions = util.store("get", K.ACTIONS_ARRAY);
+        newDesign.actions = actions;
+
+        util.store("append", K.SAVED_DESIGNS_ARRAY, newDesign); //2 lines replace about 10
       }
     );
   }
@@ -1174,6 +1179,7 @@ class Main extends React.Component {
     console.log("down...");
   }
 */
+
   render() {
     return (
       <Grid container>
@@ -1198,6 +1204,7 @@ class Main extends React.Component {
             <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={1} id="LogoContainer"></Grid>
             <Grid item sm={2} xs={12} id="LogoContainer">
+              {/**
               <Grid
                 container
                 style={{
@@ -1211,6 +1218,7 @@ class Main extends React.Component {
                 }}
               >
                 <Grid item xs={3}>
+                
                   <img
                     src={UserImage}
                     className="UserImage"
@@ -1222,6 +1230,7 @@ class Main extends React.Component {
                   <p className="user-name">Ed Jellico</p>
                 </Grid>
               </Grid>
+              */}
             </Grid>
             <Grid item xs={1} id="LogoContainer"></Grid>
           </Grid>
@@ -1233,19 +1242,20 @@ class Main extends React.Component {
                   className="adder-3dTool-canvas"
                   style={{ boxShadow: "5px 5px 8px #2f2f2f" }}
                 />
-                <OverlayControlsUpperRight
+                <OverlayControlsUpperLeft
                   callback={this.subCallback}
+                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
                   data={{ key: "value" }}
-                ></OverlayControlsUpperRight>
+                ></OverlayControlsUpperLeft>
+                {/** <OverlayControls
+                  callback={this.subCallback}
+                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
+                  data={{ key: "value" }}
+                ></OverlayControls> 
+                */}
 
-                <OverlayControls
-                  callback={this.subCallback}
-                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
-                  data={{ key: "value" }}
-                ></OverlayControls>
                 <OverlayControlsRight
-                  callback={this.subCallback}
-                  callback_ScreenShotButtonPress={this.screenshotButtonPress}
+                  callback={this.changeEnvironment}
                   data={{ key: "value" }}
                 ></OverlayControlsRight>
               </div>
@@ -1261,7 +1271,6 @@ class Main extends React.Component {
               >
                 <IconControlGroup
                   callback_Save={this.iconSave}
-                  callback_Save_v2={this.iconSave_v2}
                   callback_Delete={this.iconDelete}
                   callback_Redo={this.iconRedo}
                   callback_Save_Alt={this.iconSave_Alt}
@@ -1429,6 +1438,17 @@ class Main extends React.Component {
           callback_Yes={this.callback_DeleteYes}
           callback_No={this.callback_DeleteNo}
         ></MUIAlertDialog>
+        <a
+          href="#"
+          className="button"
+          id="btn-download"
+          download="my-file-name.png"
+          style={{
+            opacity: "0"
+          }}
+        >
+          Download
+        </a>
         {/**
           <button onClick={this.cameraTargetY_up}>+</button>
         <button onClick={this.cameraTargetY_down}>-</button>

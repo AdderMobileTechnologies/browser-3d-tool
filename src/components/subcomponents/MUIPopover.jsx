@@ -2,7 +2,7 @@ import React from "react";
 //import { makeStyles } from '@material-ui/core/styles';
 import Popover from "@material-ui/core/Popover";
 //import Typography from '@material-ui/core/Typography';
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 
 import UIButton from "./elements/UIButton";
 //import MUI_IconButtons from './MUI_IconButtons'
@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 */
+
 export default function SimplePopover(props) {
   // const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,7 +34,8 @@ export default function SimplePopover(props) {
       data.selectedOption = textValue;
       // props.callback(data);
       // props.callback();
-      console.log("data:", data);
+      // console.log("data:", data);
+      props.callback(data);
     }
   }
 
@@ -47,6 +49,7 @@ export default function SimplePopover(props) {
         variant="contained"
         onClick={handleClick}
         iconName="faBinoculars"
+        classNames="  overlay-button"
       ></UIButton>
 
       <Popover
@@ -68,14 +71,14 @@ export default function SimplePopover(props) {
           buttonText="landscape"
           onClick={handleClose}
           iconName="landscape"
-          classNames="icon_btn "
+          classNames="  overlay-button"
         ></UIButton>
         <UIButton
           title="city"
           buttonText="city"
           onClick={handleClose}
           iconName="location_city"
-          classNames="icon_btn "
+          classNames="  overlay-button"
         ></UIButton>
 
         {/**  <MUI_IconButtons></MUI_IconButtons>*/}

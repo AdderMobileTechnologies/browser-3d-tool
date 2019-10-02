@@ -5,7 +5,7 @@
  */
 //import { Scene } from "babylonjs";
 import React from "react";
-import AdderLoader from "../models/adderLoader";
+//import AdderLoader from "../models/adderLoader";
 import UISelect from "./subcomponents/elements/UISelect";
 import * as K from "../constants";
 import axios from "axios";
@@ -33,11 +33,12 @@ class Designer extends React.Component {
     scope = this;
     this.getAdderSceneWrapper = props.getAdderSceneWrapper;
     this.detail_callback = this.detail_callback.bind(this);
-    this.resetDesign = this.resetDesign.bind(this);
+    this.reset_adType = this.reset_adType.bind(this);
+    this.reset_subType = this.reset_subType.bind(this);
     this.continue_adType_callback = this.continue_adType_callback.bind(this);
   }
 
-  async resetDesign(data) {
+  async reset_adType(data) {
     await this.setState(
       {
         isOnSubType: false,
@@ -52,7 +53,7 @@ class Designer extends React.Component {
     );
   }
 
-  //resetDesign needed to be an async await.
+  //reset_adType needed to be an async await.
 
   continue_adType_callback = data => {
     //console.log("async await callback ....");
@@ -84,10 +85,23 @@ class Designer extends React.Component {
     // console.log("adType_callback data:", data);
     this.props.callback("-1");
     console.log("designer: adType_callback(): data:", data);
-    this.resetDesign(data);
+    this.reset_adType(data);
   };
-  subType_callback = data => {
-    // console.log("subType_callback data:", data);
+  //-----------------------------------------------
+  async reset_subType(data) {
+    await this.setState(
+      {
+        isOnDetail: false,
+        detail_options: [],
+        gotDesignMeta: false
+      },
+      () => {
+        scope.continue_subType_callback(data);
+      }
+    );
+  }
+  continue_subType_callback = data => {
+    //console.log("async await callback ....");
     if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
@@ -111,11 +125,16 @@ class Designer extends React.Component {
       });
     }
   };
+  subType_callback = data => {
+    console.log("subType_callback data:", data);
+    //try resetSubType(data)
+    this.reset_subType(data);
+  };
   detail_callback = data => {
     // console.log("detail_callback data:", data);
     if (data.selectedOption !== "-1") {
       //could just return the data here
-
+      //console.log("==>> designer:jsx: detail_callback() : data:", data);
       let assetSelected = data.selectedOption;
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
@@ -123,6 +142,12 @@ class Designer extends React.Component {
 
       //console.log("assetSelected:", assetSelected);
       //send data to parent to name the 'model' after it's filepath property in the assetData.
+
+      console.log(
+        "==>> designer:jsx: detail_callback() : assetData:",
+        assetData
+      );
+
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();

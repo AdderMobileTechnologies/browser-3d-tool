@@ -32,6 +32,8 @@
     display: none;
 }
 
+/*This is for the MUI Draggable Dialog*/
+
 /* ORIGINAL MIN CSS BELOW HERE */
 
 /*
@@ -64,14 +66,17 @@
     height: auto;
 }
 
-.gui-overlay-upper-right {
+.MuiAvatar-root {
+    xxxborder: dotted 1px blue;
+}
+
+.gui-overlay-upper-left {
     position: absolute;
     top: 1%;
     left: 5px;
-    background-color: #eee;
+    background-color: none !important;
+    background: none !important;
     width: 45px;
-    border-radius: 16px;
-    text-align: center;
 }
 
 .gui-overlay {
@@ -97,11 +102,24 @@
 .gui-overlay-right {
     position: absolute;
     top: 85%;
-    right: 50px;
-    background-color: #eee;
-    width: 45px;
-    border-radius: 30px;
-    text-align: center;
+    right: 60px;
+    background-color: none;
+    background: none;
+    width: 1px;
+}
+
+#simple-popover .MuiPaper-root {
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 2px 2px 20px #555;
+}
+
+#simple-popover .MuiPaper-root input {
+    margin: 3px;
+}
+
+.MuiGrid-item input {
+    xxxborder: dotted red 1px;
+    margin: 2px;
 }
 
 /* 4) Sidebar           */
@@ -152,8 +170,20 @@
     border: solid 1px #eee;
     padding: 2px;
     background-color: #eee;
-    margin: 1px;
+    margin-right: 1px;
     transform: scale(0.8);
+    xxborder: dotted red 1px;
+}
+
+button .icon_btn .overlay_button {
+    background: none;
+    background-color: none;
+}
+
+.overlay-button {
+    border-radius: 16px !important;
+    border: none !important;
+    background: none !important;
 }
 
 /* 6) Icon Grid         */
@@ -254,6 +284,7 @@ ul.MuiGridList-root li li img {
 
 .react-resizable {
     position: relative;
+    margin-left: 10px;
 }
 
 .react-resizable-handle {

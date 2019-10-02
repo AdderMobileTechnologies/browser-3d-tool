@@ -23,11 +23,7 @@ export default function IconControlGroup(props) {
         console.log(envData);
         alert("DESIGN: NEED DEFAULT ENVIRONMENT INFO !");
       } else {
-        if (_designModel.meshes.length <= 0) {
-          alert(
-            "DESIGN: NO MESH CHANGES HAVE BEEN MADE...no significant design changes.!"
-          );
-        }
+        // was checking for significant changes to the design here with 'meshes' array in state under designModel.
         let design_obj = _designModel;
 
         design_obj.actions = design_actions;
@@ -36,7 +32,7 @@ export default function IconControlGroup(props) {
         //append a new one to it
         newDesignsArray.push(design_obj);
         //send new array back to be added to the state
-        props.callback_Save_v2(newDesignsArray);
+        props.callback_Save(newDesignsArray);
       }
     } else {
       alert("DESIGN: Your Design Needs a Name.");
@@ -53,19 +49,19 @@ export default function IconControlGroup(props) {
       style={{ paddingTop: "0px" }}
     >
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
             onClick={handleSaveClick}
             iconName="save"
-            callback_Save_v2={props.iconSave_v2}
+            callback_Save={props.iconSave}
             // classNames="icon_btn "
             style={{ backgroundColor: "#afafaf" }}
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
@@ -74,7 +70,7 @@ export default function IconControlGroup(props) {
             classNames="icon_btn "
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
@@ -87,7 +83,7 @@ export default function IconControlGroup(props) {
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
@@ -96,7 +92,7 @@ export default function IconControlGroup(props) {
             classNames="icon_btn "
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
@@ -105,7 +101,7 @@ export default function IconControlGroup(props) {
             classNames="icon_btn "
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={2}>
           <UIButton
             title=""
             buttonText=""
