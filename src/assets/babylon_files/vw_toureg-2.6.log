@@ -34,10 +34,8 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		num colors         :  0
 		num indices        :  45696
 	processing begun of mesh:  vehicle_4door_stationwagon_rightside_small
-		registered as also a user of material:  carpaint1
-		processing begun of Standard material:  Material.007
-			WARNING: Material has un-assigned image texture:  "Texture.002" ignored
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#2
+		processing begun of Standard material:  Material.010
+			WARNING: Material has un-assigned image texture:  "Texture.009" ignored
 		num positions      :  8618
 		num normals        :  8618
 		num uvs            :  17236
@@ -47,7 +45,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  vehicle_4door_stationwagon_rightside_large
 		registered as also a user of material:  carpaint1
 		processing begun of Standard material:  Material.005
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#3
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#2
 		num positions      :  8617
 		num normals        :  8617
 		num uvs            :  17234
@@ -62,13 +60,14 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  7341
-	processing begun of mesh:  vehicle_4door_stationwagon_roof
+	processing begun of mesh:  vehicle_4door_stationwagon_roof_medium
 		registered as also a user of material:  carpaint1
 		processing begun of Standard material:  Material.008
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#4
-		num positions      :  6654
-		num normals        :  6654
-		num uvs            :  13308
+			WARNING: Material has un-assigned image texture:  "Texture.008" ignored
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#3
+		num positions      :  2045
+		num normals        :  2045
+		num uvs            :  4090
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  11592
@@ -76,33 +75,29 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		registered as also a user of material:  carpaint1
 		processing begun of Standard material:  Material.006
 			WARNING: Material has un-assigned image texture:  "Texture.004" ignored
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#5
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#4
 		num positions      :  8618
 		num normals        :  8618
 		num uvs            :  17236
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  46983
-	processing begun of mesh:  vehicle_4door_stationwagon_rearside_medium
-		registered as also a user of material:  carpaint1
-		processing begun of Standard material:  Material.004
-			WARNING: Material has un-assigned image texture:  "Texture.001" ignored
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#6
-		num positions      :  6271
-		num normals        :  6271
-		num uvs            :  12542
+	processing begun of mesh:  vehicle_4door_stationwagon_trunk_medium
+		processing begun of Standard material:  Material.011
+			WARNING: Material has un-assigned image texture:  "Texture.010" ignored
+		num positions      :  1750
+		num normals        :  1750
+		num uvs            :  3500
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  9318
 		WARNING: # of 0 area faces found:  6
 	processing begun of mesh:  vehicle_4door_stationwagon_hood
-		registered as also a user of material:  carpaint1
-		processing begun of Standard material:  Material.009
-			WARNING: Material has un-assigned image texture:  "Texture.003" ignored
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#7
-		num positions      :  4553
-		num normals        :  4553
-		num uvs            :  9106
+		processing begun of Standard material:  Material.012
+			WARNING: Material has un-assigned image texture:  "Texture.011" ignored
+		num positions      :  1279
+		num normals        :  1279
+		num uvs            :  2558
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  7254
@@ -110,7 +105,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		registered as also a user of material:  carpaint1
 		processing begun of Standard material:  Material.003
 			WARNING: Material has un-assigned image texture:  "Texture.005" ignored
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#8
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#5
 		num positions      :  8435
 		num normals        :  8435
 		num uvs            :  16870
@@ -392,7 +387,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  Obj_775
 		processing begun of Standard material:  1___Default.002
 		processing begun of Standard material:  simple_metal_0_65.001
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#9
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#6
 		num positions      :  7479
 		num normals        :  7479
 		num uvs            :  14958
@@ -474,7 +469,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  diskz
 		registered as also a user of material:  1___Default.002
 		registered as also a user of material:  simple_metal_0_65.001
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#10
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#7
 		num positions      :  7479
 		num normals        :  7479
 		num uvs            :  14958
@@ -1109,7 +1104,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  Obj_771
 		registered as also a user of material:  1___Default.002
 		registered as also a user of material:  simple_metal_0_65.001
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#11
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#8
 		num positions      :  9833
 		num normals        :  9833
 		num uvs            :  19666
@@ -1135,7 +1130,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  Obj_688
 		registered as also a user of material:  1___Default.002
 		registered as also a user of material:  simple_metal_0_65.001
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#12
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#9
 		num positions      :  9840
 		num normals        :  9840
 		num uvs            :  19680
@@ -1689,7 +1684,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  Object11
 		registered as also a user of material:  1___Default.002
 		registered as also a user of material:  simple_metal_0_65.001
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#13
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#10
 		num positions      :  16887
 		num normals        :  16887
 		num uvs            :  33774
@@ -2051,7 +2046,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	processing begun of mesh:  window_head
 		processing begun of Standard material:  20___Default2
 		registered as also a user of material:  Windows
-		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#14
+		processing begun of multimaterial:  vw_toureg_2_6.Multimaterial#11
 		num positions      :  1305
 		num normals        :  1305
 		num uvs            :  2610
@@ -2067,6 +2062,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		num colors         :  0
 		num indices        :  36
 	processing begun of camera (UniversalCamera):  Camera
+	processing begun of light (HEMI):  Hemi
 	processing begun of light (HEMI):  Hemi.002
 	processing begun of light (HEMI):  Hemi.001
 	processing begun of light (SUN):  Sun
@@ -2074,4 +2070,4 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 33.4361 secs
+elapsed time:  0 min, 33.2899 secs

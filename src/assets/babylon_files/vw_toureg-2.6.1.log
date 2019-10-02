@@ -1,0 +1,2070 @@
+Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		export scope        :  ALL
+		inline textures     :  false
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory   :  C:\Users\Bayon\projects\3d-tool-v2\src\assets\babylon_files\
+	Python World class constructor completed
+	processing begun of mesh:  vehicle_4door_stationwagon_leftside_large
+		processing begun of Standard material:  carpaint1
+			WARNING: Material has un-assigned image texture:  "Texture" ignored
+		processing begun of Standard material:  Material.001
+			WARNING: Material has un-assigned image texture:  "Texture.007" ignored
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#0
+		num positions      :  8433
+		num normals        :  8433
+		num uvs            :  16866
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  45696
+	processing begun of mesh:  vehicle_4door_stationwagon_leftside_small
+		registered as also a user of material:  carpaint1
+		processing begun of Standard material:  Material.002
+			WARNING: Material has un-assigned image texture:  "Texture.006" ignored
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#1
+		num positions      :  8435
+		num normals        :  8435
+		num uvs            :  16870
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  45696
+	processing begun of mesh:  vehicle_4door_stationwagon_rightside_small
+		processing begun of Standard material:  Material.008
+			WARNING: Material has un-assigned image texture:  "Texture.008" ignored
+		num positions      :  8618
+		num normals        :  8618
+		num uvs            :  17236
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  46983
+	processing begun of mesh:  vehicle_4door_stationwagon_rightside_large
+		registered as also a user of material:  carpaint1
+		processing begun of Standard material:  Material.005
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#2
+		num positions      :  8617
+		num normals        :  8617
+		num uvs            :  17234
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  46983
+	processing begun of mesh:  Plane01.011
+		registered as also a user of material:  carpaint1
+		num positions      :  4942
+		num normals        :  4942
+		num uvs            :  9884
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7341
+	processing begun of mesh:  vehicle_4door_stationwagon_roof_medium
+		registered as also a user of material:  carpaint1
+		registered as also a user of material:  Material.008
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#3
+		num positions      :  2045
+		num normals        :  2045
+		num uvs            :  4090
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11592
+	processing begun of mesh:  vehicle_4door_stationwagon_rightside_medium
+		registered as also a user of material:  carpaint1
+		processing begun of Standard material:  Material.006
+			WARNING: Material has un-assigned image texture:  "Texture.004" ignored
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#4
+		num positions      :  8618
+		num normals        :  8618
+		num uvs            :  17236
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  46983
+	processing begun of mesh:  vehicle_4door_stationwagon_trunk_medium
+		registered as also a user of material:  Material.008
+		num positions      :  1750
+		num normals        :  1750
+		num uvs            :  3500
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9318
+		WARNING: # of 0 area faces found:  6
+	processing begun of mesh:  vehicle_4door_stationwagon_hood
+		registered as also a user of material:  Material.008
+		num positions      :  1279
+		num normals        :  1279
+		num uvs            :  2558
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7254
+	processing begun of mesh:  vehicle_4door_stationwagon_leftside_medium
+		registered as also a user of material:  carpaint1
+		processing begun of Standard material:  Material.003
+			WARNING: Material has un-assigned image texture:  "Texture.005" ignored
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#5
+		num positions      :  8435
+		num normals        :  8435
+		num uvs            :  16870
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  45696
+	processing begun of mesh:  Plane01.001
+		registered as also a user of material:  carpaint1
+		num positions      :  0
+		num normals        :  0
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  0
+	processing begun of mesh:  Box10
+		registered as also a user of material:  carpaint1
+		num positions      :  2016
+		num normals        :  2016
+		num uvs            :  4032
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2778
+	processing begun of mesh:  Obj_547
+		processing begun of Standard material:  simple_metal_0_90
+		num positions      :  279
+		num normals        :  279
+		num uvs            :  558
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  918
+	processing begun of mesh:  Object20
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1151
+		num normals        :  1151
+		num uvs            :  2302
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1533
+	processing begun of mesh:  Obj_493
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  110
+		num normals        :  110
+		num uvs            :  220
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  153
+	processing begun of mesh:  Obj_776
+		processing begun of Standard material:  black.002
+		num positions      :  484
+		num normals        :  484
+		num uvs            :  968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  540
+	processing begun of mesh:  Obj_550
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  157
+		num normals        :  157
+		num uvs            :  314
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  468
+	processing begun of mesh:  Obj_743
+		registered as also a user of material:  black.002
+		num positions      :  484
+		num normals        :  484
+		num uvs            :  968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  540
+	processing begun of mesh:  seat_front_05
+		processing begun of Standard material:  leather_40
+		num positions      :  6565
+		num normals        :  6565
+		num uvs            :  13130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  15414
+	processing begun of mesh:  Box201
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Speed_WIndow
+		processing begun of Standard material:  10___Default
+		num positions      :  24
+		num normals        :  24
+		num uvs            :  48
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  132
+	processing begun of mesh:  dvornik2
+		processing begun of Standard material:  carpaint2
+		num positions      :  1131
+		num normals        :  1131
+		num uvs            :  2262
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1416
+	processing begun of mesh:  far_zad01
+		processing begun of Standard material:  15___Default
+		num positions      :  1127
+		num normals        :  1127
+		num uvs            :  2254
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6246
+	processing begun of mesh:  Box196
+		processing begun of Standard material:  7___Default
+		num positions      :  208
+		num normals        :  208
+		num uvs            :  416
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Object189
+		processing begun of Standard material:  11___Default
+		num positions      :  17734
+		num normals        :  17734
+		num uvs            :  35468
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  48486
+	processing begun of mesh:  Obj_478
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  118
+		num normals        :  118
+		num uvs            :  236
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  159
+	processing begun of mesh:  18
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  673
+		num normals        :  673
+		num uvs            :  1346
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3198
+	processing begun of mesh:  BVM__black
+		registered as also a user of material:  black.002
+		num positions      :  429
+		num normals        :  429
+		num uvs            :  858
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1815
+	processing begun of mesh:  ChamferBox02
+		registered as also a user of material:  black.002
+		num positions      :  542
+		num normals        :  542
+		num uvs            :  1084
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  612
+	processing begun of mesh:  Obj_497
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  163
+		num normals        :  163
+		num uvs            :  326
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  204
+	processing begun of mesh:  Box197
+		registered as also a user of material:  7___Default
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Tube174
+		registered as also a user of material:  black.002
+		num positions      :  485
+		num normals        :  485
+		num uvs            :  970
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2160
+	processing begun of mesh:  Text01
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1539
+		num normals        :  1539
+		num uvs            :  3078
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1956
+	processing begun of mesh:  Obj_487
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  292
+		num normals        :  292
+		num uvs            :  584
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  366
+	processing begun of mesh:  Obj_689
+		registered as also a user of material:  black.002
+		num positions      :  484
+		num normals        :  484
+		num uvs            :  968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  540
+	processing begun of mesh:  Box32
+		registered as also a user of material:  7___Default
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Plane05
+		processing begun of Standard material:  6___Default
+		num positions      :  339
+		num normals        :  339
+		num uvs            :  678
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1584
+	processing begun of mesh:  pannel
+		registered as also a user of material:  leather_40
+		num positions      :  2982
+		num normals        :  2982
+		num uvs            :  5964
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6099
+	processing begun of mesh:  8
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2448
+		num normals        :  2448
+		num uvs            :  4896
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  Box210
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_541
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  272
+		num normals        :  272
+		num uvs            :  544
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  600
+	processing begun of mesh:  Cylinder01
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2087
+		num normals        :  2087
+		num uvs            :  4174
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2976
+	processing begun of mesh:  Obj_549
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  396
+		num normals        :  396
+		num uvs            :  792
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  918
+	processing begun of mesh:  29
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2448
+		num normals        :  2448
+		num uvs            :  4896
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  Obj_775
+		processing begun of Standard material:  1___Default.002
+		processing begun of Standard material:  simple_metal_0_65.001
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#6
+		num positions      :  7479
+		num normals        :  7479
+		num uvs            :  14958
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36150
+	processing begun of mesh:  Object145
+		processing begun of Standard material:  Glass_Car_Reflector
+		num positions      :  1007
+		num normals        :  1007
+		num uvs            :  2014
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3024
+	processing begun of mesh:  Box194
+		registered as also a user of material:  7___Default
+		num positions      :  210
+		num normals        :  210
+		num uvs            :  420
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  disc_brake01
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  243
+		num normals        :  243
+		num uvs            :  486
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1446
+	processing begun of mesh:  7
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2467
+		num normals        :  2467
+		num uvs            :  4934
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  20
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2686
+		num normals        :  2686
+		num uvs            :  5372
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3390
+	processing begun of mesh:  9
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  554
+		num normals        :  554
+		num uvs            :  1108
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2532
+	processing begun of mesh:  17
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  576
+		num normals        :  576
+		num uvs            :  1152
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2703
+	processing begun of mesh:  Plane01
+		registered as also a user of material:  carpaint1
+		num positions      :  141
+		num normals        :  141
+		num uvs            :  282
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  204
+	processing begun of mesh:  Obj_527
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  3855
+		num normals        :  3855
+		num uvs            :  7710
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9222
+	processing begun of mesh:  diskz
+		registered as also a user of material:  1___Default.002
+		registered as also a user of material:  simple_metal_0_65.001
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#7
+		num positions      :  7479
+		num normals        :  7479
+		num uvs            :  14958
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36150
+	processing begun of mesh:  Box190
+		registered as also a user of material:  7___Default
+		num positions      :  208
+		num normals        :  208
+		num uvs            :  416
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Cylinde9
+		registered as also a user of material:  leather_40
+		num positions      :  92
+		num normals        :  92
+		num uvs            :  184
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  138
+	processing begun of mesh:  Obj_484
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  115
+		num normals        :  115
+		num uvs            :  230
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  159
+	processing begun of mesh:  16
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1675
+		num normals        :  1675
+		num uvs            :  3350
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2103
+	processing begun of mesh:  BVM_01
+		registered as also a user of material:  carpaint1
+		num positions      :  4892
+		num normals        :  4892
+		num uvs            :  9784
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6207
+	processing begun of mesh:  6
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2586
+		num normals        :  2586
+		num uvs            :  5172
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3255
+	processing begun of mesh:  Line113
+		registered as also a user of material:  black.002
+		num positions      :  19414
+		num normals        :  19414
+		num uvs            :  38828
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  23232
+	processing begun of mesh:  Obj_530
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  240
+		num normals        :  240
+		num uvs            :  480
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  573
+	processing begun of mesh:  disc_brake_black06
+		registered as also a user of material:  black.002
+		num positions      :  2931
+		num normals        :  2931
+		num uvs            :  5862
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3600
+	processing begun of mesh:  disc_brake04
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  243
+		num normals        :  243
+		num uvs            :  486
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1446
+	processing begun of mesh:  Obj_548
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  306
+		num normals        :  306
+		num uvs            :  612
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  780
+	processing begun of mesh:  Box11
+		registered as also a user of material:  carpaint1
+		num positions      :  1983
+		num normals        :  1983
+		num uvs            :  3966
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2778
+	processing begun of mesh:  Cylinder21
+		registered as also a user of material:  leather_40
+		num positions      :  1044
+		num normals        :  1044
+		num uvs            :  2088
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3240
+	processing begun of mesh:  27
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2586
+		num normals        :  2586
+		num uvs            :  5172
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3255
+	processing begun of mesh:  Object184
+		registered as also a user of material:  leather_40
+		num positions      :  1223
+		num normals        :  1223
+		num uvs            :  2446
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2892
+	processing begun of mesh:  ChamferBox01
+		registered as also a user of material:  black.002
+		num positions      :  553
+		num normals        :  553
+		num uvs            :  1106
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  612
+	processing begun of mesh:  stoiki_4ern03
+		registered as also a user of material:  leather_40
+		num positions      :  275
+		num normals        :  275
+		num uvs            :  550
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  486
+	processing begun of mesh:  Box203
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Box09
+		registered as also a user of material:  carpaint2
+		num positions      :  2474
+		num normals        :  2474
+		num uvs            :  4948
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3390
+	processing begun of mesh:  Box191
+		registered as also a user of material:  7___Default
+		num positions      :  211
+		num normals        :  211
+		num uvs            :  422
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  light_back_inside
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  3311
+		num normals        :  3311
+		num uvs            :  6622
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4497
+	processing begun of mesh:  Obj_544
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  191
+		num normals        :  191
+		num uvs            :  382
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  468
+	processing begun of mesh:  seat_front_03
+		registered as also a user of material:  leather_40
+		num positions      :  6565
+		num normals        :  6565
+		num uvs            :  13130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  15414
+	processing begun of mesh:  Plane14
+		registered as also a user of material:  black.002
+		num positions      :  2283
+		num normals        :  2283
+		num uvs            :  4566
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  5664
+	processing begun of mesh:  Cylinder09
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2542
+		num normals        :  2542
+		num uvs            :  5084
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3306
+	processing begun of mesh:  Object42
+		registered as also a user of material:  15___Default
+		num positions      :  285
+		num normals        :  285
+		num uvs            :  570
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  672
+	processing begun of mesh:  stoiki_4ern02
+		registered as also a user of material:  black.002
+		num positions      :  1013
+		num normals        :  1013
+		num uvs            :  2026
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1383
+	processing begun of mesh:  Cylinder626
+		registered as also a user of material:  black.002
+		num positions      :  532
+		num normals        :  532
+		num uvs            :  1064
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  648
+	processing begun of mesh:  Line023
+		registered as also a user of material:  leather_40
+		num positions      :  1285
+		num normals        :  1285
+		num uvs            :  2570
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3201
+	processing begun of mesh:  Box205
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Computer
+		processing begun of Standard material:  4___Default
+		num positions      :  49
+		num normals        :  49
+		num uvs            :  98
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  237
+	processing begun of mesh:  10
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2686
+		num normals        :  2686
+		num uvs            :  5372
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3390
+	processing begun of mesh:  Box02
+		registered as also a user of material:  carpaint1
+		num positions      :  2459
+		num normals        :  2459
+		num uvs            :  4918
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3426
+	processing begun of mesh:  Object175
+		registered as also a user of material:  carpaint2
+		num positions      :  22018
+		num normals        :  22018
+		num uvs            :  44036
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  33678
+	processing begun of mesh:  Box199
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  light_back_cil_2
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2757
+		num normals        :  2757
+		num uvs            :  5514
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3534
+	processing begun of mesh:  Plane13
+		registered as also a user of material:  black.002
+		num positions      :  1382
+		num normals        :  1382
+		num uvs            :  2764
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4218
+	processing begun of mesh:  Obj_483
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  73
+		num normals        :  73
+		num uvs            :  146
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  102
+	processing begun of mesh:  Tube02
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  1874
+		num normals        :  1874
+		num uvs            :  3748
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2160
+	processing begun of mesh:  Box3
+		registered as also a user of material:  leather_40
+		num positions      :  1983
+		num normals        :  1983
+		num uvs            :  3966
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6060
+	processing begun of mesh:  light_back
+		registered as also a user of material:  15___Default
+		num positions      :  1087
+		num normals        :  1087
+		num uvs            :  2174
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6009
+	processing begun of mesh:  11
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  687
+		num normals        :  687
+		num uvs            :  1374
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Plane02
+		registered as also a user of material:  black.002
+		num positions      :  2283
+		num normals        :  2283
+		num uvs            :  4566
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  5664
+	processing begun of mesh:  Object18
+		registered as also a user of material:  carpaint1
+		num positions      :  8101
+		num normals        :  8101
+		num uvs            :  16202
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  12006
+		WARNING: # of 0 area faces found:  3
+	processing begun of mesh:  Object170
+		processing begun of Standard material:  simple_metal_0_94
+		num positions      :  223
+		num normals        :  223
+		num uvs            :  446
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1236
+	processing begun of mesh:  Obj_496
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  40
+		num normals        :  40
+		num uvs            :  80
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  48
+	processing begun of mesh:  24
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  1568
+		num normals        :  1568
+		num uvs            :  3136
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Clipper05
+		processing begun of Standard material:  carpaint_02
+		num positions      :  3213
+		num normals        :  3213
+		num uvs            :  6426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4005
+	processing begun of mesh:  Object168
+		registered as also a user of material:  carpaint1
+		num positions      :  2119
+		num normals        :  2119
+		num uvs            :  4238
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3168
+	processing begun of mesh:  14
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  687
+		num normals        :  687
+		num uvs            :  1374
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Box31
+		registered as also a user of material:  7___Default
+		num positions      :  214
+		num normals        :  214
+		num uvs            :  428
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  light_back_cil_inside_2
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1402
+		num normals        :  1402
+		num uvs            :  2804
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1665
+	processing begun of mesh:  Object166
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1163
+		num normals        :  1163
+		num uvs            :  2326
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1554
+	processing begun of mesh:  Object04
+		registered as also a user of material:  leather_40
+		num positions      :  1159
+		num normals        :  1159
+		num uvs            :  2318
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2682
+	processing begun of mesh:  Obj_489
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  245
+		num normals        :  245
+		num uvs            :  490
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  312
+	processing begun of mesh:  BVM__Turner_inside
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  4879
+		num normals        :  4879
+		num uvs            :  9758
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6255
+	processing begun of mesh:  BVM_
+		registered as also a user of material:  carpaint1
+		num positions      :  4920
+		num normals        :  4920
+		num uvs            :  9840
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6225
+	processing begun of mesh:  window_back
+		processing begun of Standard material:  Windows
+		num positions      :  6378
+		num normals        :  6378
+		num uvs            :  12756
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  19200
+	processing begun of mesh:  Object190
+		registered as also a user of material:  11___Default
+		num positions      :  17857
+		num normals        :  17857
+		num uvs            :  35714
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  48486
+	processing begun of mesh:  Obj_100
+		registered as also a user of material:  1___Default.002
+		num positions      :  375
+		num normals        :  375
+		num uvs            :  750
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1884
+	processing begun of mesh:  Box1471
+		registered as also a user of material:  carpaint1
+		num positions      :  2003
+		num normals        :  2003
+		num uvs            :  4006
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2778
+	processing begun of mesh:  Obj_494
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  108
+		num normals        :  108
+		num uvs            :  216
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  150
+	processing begun of mesh:  Box195
+		registered as also a user of material:  7___Default
+		num positions      :  210
+		num normals        :  210
+		num uvs            :  420
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Object159
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2375
+		num normals        :  2375
+		num uvs            :  4750
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3201
+	processing begun of mesh:  Obj_481
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  118
+		num normals        :  118
+		num uvs            :  236
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  159
+	processing begun of mesh:  Obj_545
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  407
+		num normals        :  407
+		num uvs            :  814
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1092
+	processing begun of mesh:  Line12
+		registered as also a user of material:  black.002
+		num positions      :  9668
+		num normals        :  9668
+		num uvs            :  19336
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11616
+	processing begun of mesh:  Obj_543
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  188
+		num normals        :  188
+		num uvs            :  376
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  600
+	processing begun of mesh:  Obj_687
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  6090
+		num normals        :  6090
+		num uvs            :  12180
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7749
+	processing begun of mesh:  Box207
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Box1470
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  419
+		num normals        :  419
+		num uvs            :  838
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1392
+	processing begun of mesh:  Clipper11
+		registered as also a user of material:  carpaint_02
+		num positions      :  3213
+		num normals        :  3213
+		num uvs            :  6426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4005
+	processing begun of mesh:  Object01
+		registered as also a user of material:  11___Default
+		num positions      :  17734
+		num normals        :  17734
+		num uvs            :  35468
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  48486
+	processing begun of mesh:  Cylinder043
+		registered as also a user of material:  leather_40
+		num positions      :  857
+		num normals        :  857
+		num uvs            :  1714
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3360
+	processing begun of mesh:  stoiki_4ern01
+		registered as also a user of material:  black.002
+		num positions      :  1031
+		num normals        :  1031
+		num uvs            :  2062
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1413
+	processing begun of mesh:  Obj_536
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  188
+		num normals        :  188
+		num uvs            :  376
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  600
+	processing begun of mesh:  25
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  1565
+		num normals        :  1565
+		num uvs            :  3130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Clipper07
+		registered as also a user of material:  carpaint_02
+		num positions      :  3213
+		num normals        :  3213
+		num uvs            :  6426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4005
+	processing begun of mesh:  Obj_771
+		registered as also a user of material:  1___Default.002
+		registered as also a user of material:  simple_metal_0_65.001
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#8
+		num positions      :  9833
+		num normals        :  9833
+		num uvs            :  19666
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36150
+	processing begun of mesh:  23
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  1563
+		num normals        :  1563
+		num uvs            :  3126
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Cylinder625
+		registered as also a user of material:  leather_40
+		num positions      :  857
+		num normals        :  857
+		num uvs            :  1714
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3360
+	processing begun of mesh:  Obj_688
+		registered as also a user of material:  1___Default.002
+		registered as also a user of material:  simple_metal_0_65.001
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#9
+		num positions      :  9840
+		num normals        :  9840
+		num uvs            :  19680
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36150
+	processing begun of mesh:  Object174
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1052
+		num normals        :  1052
+		num uvs            :  2104
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1548
+	processing begun of mesh:  interior_pannel_lower
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  1484
+		num normals        :  1484
+		num uvs            :  2968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1779
+	processing begun of mesh:  19
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  641
+		num normals        :  641
+		num uvs            :  1282
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3075
+	processing begun of mesh:  Obj_534
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  213
+		num normals        :  213
+		num uvs            :  426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  468
+	processing begun of mesh:  2
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  576
+		num normals        :  576
+		num uvs            :  1152
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2703
+	processing begun of mesh:  window_side
+		registered as also a user of material:  Windows
+		num positions      :  403
+		num normals        :  403
+		num uvs            :  806
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  537
+	processing begun of mesh:  Clipper02
+		registered as also a user of material:  carpaint_02
+		num positions      :  3213
+		num normals        :  3213
+		num uvs            :  6426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4005
+	processing begun of mesh:  1
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1675
+		num normals        :  1675
+		num uvs            :  3350
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2103
+	processing begun of mesh:  disc_brake06
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  243
+		num normals        :  243
+		num uvs            :  486
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1446
+	processing begun of mesh:  Object06
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2196
+		num normals        :  2196
+		num uvs            :  4392
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  chrome_obod01
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  6912
+		num normals        :  6912
+		num uvs            :  13824
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9138
+	processing begun of mesh:  chrome_obod
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  4914
+		num normals        :  4914
+		num uvs            :  9828
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6444
+	processing begun of mesh:  seat_front_04
+		registered as also a user of material:  leather_40
+		num positions      :  6565
+		num normals        :  6565
+		num uvs            :  13130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  15414
+	processing begun of mesh:  disc_brake_black08
+		registered as also a user of material:  black.002
+		num positions      :  2931
+		num normals        :  2931
+		num uvs            :  5862
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3600
+	processing begun of mesh:  Plane
+		processing begun of Standard material:  7975c9
+		num positions      :  4
+		num normals        :  4
+		num uvs            :  8
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6
+	processing begun of mesh:  Obj_475
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  746
+		num normals        :  746
+		num uvs            :  1492
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  849
+	processing begun of mesh:  Obj_608
+		registered as also a user of material:  black.002
+		num positions      :  484
+		num normals        :  484
+		num uvs            :  968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  540
+	processing begun of mesh:  Object16
+		registered as also a user of material:  carpaint2
+		num positions      :  4671
+		num normals        :  4671
+		num uvs            :  9342
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7374
+	processing begun of mesh:  Box206
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  BVM__Mirror01
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  517
+		num normals        :  517
+		num uvs            :  1034
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1155
+	processing begun of mesh:  Obj_480
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  237
+		num normals        :  237
+		num uvs            :  474
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  318
+	processing begun of mesh:  Cylinder10
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2179
+		num normals        :  2179
+		num uvs            :  4358
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2838
+	processing begun of mesh:  BVM__Turner_inside01
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  4763
+		num normals        :  4763
+		num uvs            :  9526
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6138
+	processing begun of mesh:  Object10
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1112
+		num normals        :  1112
+		num uvs            :  2224
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1743
+	processing begun of mesh:  Object164
+		registered as also a user of material:  15___Default
+		num positions      :  285
+		num normals        :  285
+		num uvs            :  570
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  672
+	processing begun of mesh:  Obj_529
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  215
+		num normals        :  215
+		num uvs            :  430
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  465
+	processing begun of mesh:  Obj_533
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  303
+		num normals        :  303
+		num uvs            :  606
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  936
+	processing begun of mesh:  Obj_492
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  41
+		num normals        :  41
+		num uvs            :  82
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  51
+	processing begun of mesh:  Obj_777
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  6090
+		num normals        :  6090
+		num uvs            :  12180
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7749
+	processing begun of mesh:  Obj_488
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  155
+		num normals        :  155
+		num uvs            :  310
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  201
+	processing begun of mesh:  Obj_477
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  155
+		num normals        :  155
+		num uvs            :  310
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  192
+	processing begun of mesh:  Obj_526
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  553
+		num normals        :  553
+		num uvs            :  1106
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1227
+	processing begun of mesh:  Obj_486
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  286
+		num normals        :  286
+		num uvs            :  572
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  369
+	processing begun of mesh:  4ern_obod01
+		registered as also a user of material:  black.002
+		num positions      :  3202
+		num normals        :  3202
+		num uvs            :  6404
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4416
+	processing begun of mesh:  13
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  687
+		num normals        :  687
+		num uvs            :  1374
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Obj_528
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  429
+		num normals        :  429
+		num uvs            :  858
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1092
+	processing begun of mesh:  Box06
+		registered as also a user of material:  4___Default
+		num positions      :  31
+		num normals        :  31
+		num uvs            :  62
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Obj_491
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  159
+		num normals        :  159
+		num uvs            :  318
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  204
+	processing begun of mesh:  4ern_obod
+		registered as also a user of material:  black.002
+		num positions      :  3174
+		num normals        :  3174
+		num uvs            :  6348
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4416
+	processing begun of mesh:  30
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  554
+		num normals        :  554
+		num uvs            :  1108
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2532
+	processing begun of mesh:  Obj_482
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  194
+		num normals        :  194
+		num uvs            :  388
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  261
+	processing begun of mesh:  Obj_532
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  182
+		num normals        :  182
+		num uvs            :  364
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  468
+	processing begun of mesh:  disc_brake09
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  243
+		num normals        :  243
+		num uvs            :  486
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1446
+	processing begun of mesh:  Box05
+		registered as also a user of material:  7___Default
+		num positions      :  210
+		num normals        :  210
+		num uvs            :  420
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_772
+		registered as also a user of material:  black.002
+		num positions      :  484
+		num normals        :  484
+		num uvs            :  968
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  540
+	processing begun of mesh:  Object13
+		registered as also a user of material:  simple_metal_0_94
+		num positions      :  185
+		num normals        :  185
+		num uvs            :  370
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1008
+	processing begun of mesh:  26
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2693
+		num normals        :  2693
+		num uvs            :  5386
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3390
+	processing begun of mesh:  4
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  641
+		num normals        :  641
+		num uvs            :  1282
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3075
+	processing begun of mesh:  Object08
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  3155
+		num normals        :  3155
+		num uvs            :  6310
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4374
+	processing begun of mesh:  disc_brake_black04
+		registered as also a user of material:  black.002
+		num positions      :  2931
+		num normals        :  2931
+		num uvs            :  5862
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3600
+	processing begun of mesh:  Box193
+		registered as also a user of material:  7___Default
+		num positions      :  208
+		num normals        :  208
+		num uvs            :  416
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_540
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  195
+		num normals        :  195
+		num uvs            :  390
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  450
+	processing begun of mesh:  3
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  673
+		num normals        :  673
+		num uvs            :  1346
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3198
+	processing begun of mesh:  disc_brake10
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  243
+		num normals        :  243
+		num uvs            :  486
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1446
+	processing begun of mesh:  BVM__black01
+		registered as also a user of material:  black.002
+		num positions      :  607
+		num normals        :  607
+		num uvs            :  1214
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1815
+	processing begun of mesh:  interior_speed_h
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  4412
+		num normals        :  4412
+		num uvs            :  8824
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6414
+	processing begun of mesh:  chrome_far08
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1382
+		num normals        :  1382
+		num uvs            :  2764
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1638
+	processing begun of mesh:  Box200
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  stoiki_4ern
+		registered as also a user of material:  leather_40
+		num positions      :  313
+		num normals        :  313
+		num uvs            :  626
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  486
+	processing begun of mesh:  Obj_485
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  201
+		num normals        :  201
+		num uvs            :  402
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  255
+	processing begun of mesh:  22
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  1572
+		num normals        :  1572
+		num uvs            :  3144
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Object22
+		registered as also a user of material:  black.002
+		num positions      :  258
+		num normals        :  258
+		num uvs            :  516
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  576
+	processing begun of mesh:  Box04
+		registered as also a user of material:  7___Default
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  156
+	processing begun of mesh:  Obj_490
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  232
+		num normals        :  232
+		num uvs            :  464
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  312
+	processing begun of mesh:  Obj_538
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  65
+		num normals        :  65
+		num uvs            :  130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  150
+	processing begun of mesh:  21
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  1549
+		num normals        :  1549
+		num uvs            :  3098
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Object185
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  533
+		num normals        :  533
+		num uvs            :  1066
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3024
+	processing begun of mesh:  seat_front_06
+		registered as also a user of material:  leather_40
+		num positions      :  6565
+		num normals        :  6565
+		num uvs            :  13130
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  15414
+	processing begun of mesh:  Object11
+		registered as also a user of material:  1___Default.002
+		registered as also a user of material:  simple_metal_0_65.001
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#10
+		num positions      :  16887
+		num normals        :  16887
+		num uvs            :  33774
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  24156
+	processing begun of mesh:  Box209
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  12
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  687
+		num normals        :  687
+		num uvs            :  1374
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Obj_102
+		registered as also a user of material:  1___Default.002
+		num positions      :  655
+		num normals        :  655
+		num uvs            :  1310
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3393
+	processing begun of mesh:  Obj_546
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1039
+		num normals        :  1039
+		num uvs            :  2078
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2502
+	processing begun of mesh:  Line13
+		registered as also a user of material:  black.002
+		num positions      :  9668
+		num normals        :  9668
+		num uvs            :  19336
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11616
+	processing begun of mesh:  Plane03
+		registered as also a user of material:  black.002
+		num positions      :  866
+		num normals        :  866
+		num uvs            :  1732
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  5013
+	processing begun of mesh:  Object187
+		registered as also a user of material:  11___Default
+		num positions      :  17857
+		num normals        :  17857
+		num uvs            :  35714
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  48486
+	processing begun of mesh:  light_back_cil_1
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2968
+		num normals        :  2968
+		num uvs            :  5936
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3870
+	processing begun of mesh:  Obj_476
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  130
+		num normals        :  130
+		num uvs            :  260
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  156
+	processing begun of mesh:  Obj_774
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  6090
+		num normals        :  6090
+		num uvs            :  12180
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7749
+	processing begun of mesh:  Obj_535
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  103
+		num normals        :  103
+		num uvs            :  206
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  312
+	processing begun of mesh:  rudder
+		registered as also a user of material:  leather_40
+		num positions      :  3866
+		num normals        :  3866
+		num uvs            :  7732
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9687
+	processing begun of mesh:  BVM__Turner01
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  649
+		num normals        :  649
+		num uvs            :  1298
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1866
+	processing begun of mesh:  Box198
+		registered as also a user of material:  7___Default
+		num positions      :  208
+		num normals        :  208
+		num uvs            :  416
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Cylinder07
+		registered as also a user of material:  black.002
+		num positions      :  533
+		num normals        :  533
+		num uvs            :  1066
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  648
+	processing begun of mesh:  Text02
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1189
+		num normals        :  1189
+		num uvs            :  2378
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1566
+	processing begun of mesh:  light_back_cil_inside_1
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1367
+		num normals        :  1367
+		num uvs            :  2734
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1620
+	processing begun of mesh:  15
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  687
+		num normals        :  687
+		num uvs            :  1374
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3612
+	processing begun of mesh:  Obj_500
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2400
+		num normals        :  2400
+		num uvs            :  4800
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3132
+	processing begun of mesh:  Object179
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1149
+		num normals        :  1149
+		num uvs            :  2298
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1785
+	processing begun of mesh:  chrome_far07
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  1151
+		num normals        :  1151
+		num uvs            :  2302
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1377
+	processing begun of mesh:  disc_brake_black09
+		registered as also a user of material:  black.002
+		num positions      :  2931
+		num normals        :  2931
+		num uvs            :  5862
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3600
+	processing begun of mesh:  Box202
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  BVM__Turner
+		registered as also a user of material:  Glass_Car_Reflector
+		num positions      :  375
+		num normals        :  375
+		num uvs            :  750
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1866
+	processing begun of mesh:  Obj_495
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  162
+		num normals        :  162
+		num uvs            :  324
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  201
+	processing begun of mesh:  Obj_539
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  204
+		num normals        :  204
+		num uvs            :  408
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  450
+	processing begun of mesh:  Clipper10
+		registered as also a user of material:  carpaint_02
+		num positions      :  3213
+		num normals        :  3213
+		num uvs            :  6426
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4005
+	processing begun of mesh:  Obj_542
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  64
+		num normals        :  64
+		num uvs            :  128
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  150
+	processing begun of mesh:  Box208
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_479
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  129
+		num normals        :  129
+		num uvs            :  258
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  159
+	processing begun of mesh:  5
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2693
+		num normals        :  2693
+		num uvs            :  5386
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3390
+	processing begun of mesh:  Box204
+		registered as also a user of material:  black.002
+		num positions      :  212
+		num normals        :  212
+		num uvs            :  424
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_531
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  188
+		num normals        :  188
+		num uvs            :  376
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  600
+	processing begun of mesh:  BVM__Mirror
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  242
+		num normals        :  242
+		num uvs            :  484
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1155
+	processing begun of mesh:  Obj_498
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  353
+		num normals        :  353
+		num uvs            :  706
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  417
+	processing begun of mesh:  Tube173
+		registered as also a user of material:  leather_40
+		num positions      :  824
+		num normals        :  824
+		num uvs            :  1648
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2160
+	processing begun of mesh:  window_side_1
+		registered as also a user of material:  Windows
+		num positions      :  265
+		num normals        :  265
+		num uvs            :  530
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  360
+	processing begun of mesh:  28
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  2467
+		num normals        :  2467
+		num uvs            :  4934
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  Obj_778
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  6090
+		num normals        :  6090
+		num uvs            :  12180
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7749
+	processing begun of mesh:  Box12
+		registered as also a user of material:  simple_metal_0_65.001
+		num positions      :  10979
+		num normals        :  10979
+		num uvs            :  21958
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  15255
+	processing begun of mesh:  Box192
+		registered as also a user of material:  7___Default
+		num positions      :  210
+		num normals        :  210
+		num uvs            :  420
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  528
+	processing begun of mesh:  Obj_537
+		registered as also a user of material:  simple_metal_0_90
+		num positions      :  291
+		num normals        :  291
+		num uvs            :  582
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  750
+	processing begun of mesh:  dvornik05
+		registered as also a user of material:  carpaint2
+		num positions      :  715
+		num normals        :  715
+		num uvs            :  1430
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  948
+	processing begun of mesh:  Object167
+		registered as also a user of material:  carpaint2
+		num positions      :  2305
+		num normals        :  2305
+		num uvs            :  4610
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3333
+	processing begun of mesh:  window_head
+		processing begun of Standard material:  20___Default2
+		registered as also a user of material:  Windows
+		processing begun of multimaterial:  vw_toureg_2_6_1.Multimaterial#11
+		num positions      :  1305
+		num normals        :  1305
+		num uvs            :  2610
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  7488
+	processing begun of mesh:  Cube
+		processing begun of Standard material:  Material
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of camera (UniversalCamera):  Camera
+	processing begun of light (HEMI):  Hemi
+	processing begun of light (HEMI):  Hemi.002
+	processing begun of light (HEMI):  Hemi.001
+	processing begun of light (SUN):  Sun
+	processing begun of light (POINT):  Lamp
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========
+elapsed time:  0 min, 32.7941 secs

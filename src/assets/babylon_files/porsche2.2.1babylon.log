@@ -1,0 +1,620 @@
+Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		export scope        :  ALL
+		inline textures     :  false
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory   :  C:\Users\Bayon\projects\3d-tool-v2\src\assets\babylon_files\
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
+	processing begun of mesh:  vehicle_2door_sportscar_roof
+		processing begun of Standard material:  Material.006
+			Diffuse texture found "Texture.008"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: ''
+		num positions      :  5381
+		num normals        :  5381
+		num uvs            :  10762
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  31680
+	processing begun of mesh:  vehicle_2door_sportscar_hood
+		registered as also a user of material:  Material.006
+		num positions      :  3642
+		num normals        :  3642
+		num uvs            :  7284
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  21120
+	processing begun of mesh:  vehicle_2door_sportscar_rightside_medium
+		processing begun of Standard material:  paint
+			WARNING: Material has un-assigned image texture:  "Texture.003" ignored
+		processing begun of Standard material:  plastic
+		processing begun of Standard material:  window
+			WARNING: Material has un-assigned image texture:  "Texture.004" ignored
+		processing begun of Standard material:  silver
+		processing begun of Standard material:  full_black
+		processing begun of Standard material:  lights
+		processing begun of Standard material:  Material.003
+			WARNING: Material has un-assigned image texture:  "Texture.018" ignored
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#0
+		num positions      :  39453
+		num normals        :  39453
+		num uvs            :  78906
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  220800
+	processing begun of mesh:  vehicle_2door_sportscar_rightside_large
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		registered as also a user of material:  Material.003
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#1
+		num positions      :  39444
+		num normals        :  39444
+		num uvs            :  78888
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  220800
+	processing begun of mesh:  vehicle_2door_sportscar_rightside_small
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		registered as also a user of material:  Material.003
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#2
+		num positions      :  39459
+		num normals        :  39459
+		num uvs            :  78918
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  220800
+	processing begun of mesh:  vehicle_2door_sportscar_leftside_large
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		processing begun of Standard material:  Material.002
+			WARNING: Material has un-assigned image texture:  "Texture.016" ignored
+		processing begun of Standard material:  Material.015
+			WARNING: Material has un-assigned image texture:  "Texture.017" ignored
+		processing begun of Standard material:  Material.018
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#3
+		num positions      :  21052
+		num normals        :  21052
+		num uvs            :  42104
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  118272
+	processing begun of mesh:  vehicle_2door_sportscar_leftside_small
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		processing begun of Standard material:  Material.016
+			WARNING: Material has un-assigned image texture:  "Texture.016" ignored
+		processing begun of Standard material:  Material.017
+			Diffuse texture found "Texture.011"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#4
+		num positions      :  21077
+		num normals        :  21077
+		num uvs            :  42154
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  118272
+	processing begun of mesh:  interior_block
+		processing begun of Standard material:  Material.009
+			WARNING: Material has un-assigned image texture:  "Texture.012" ignored
+		num positions      :  12
+		num normals        :  12
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  60
+	processing begun of mesh:  bumper_front.015
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#5
+		num positions      :  2076
+		num normals        :  2076
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11136
+	processing begun of mesh:  bumper_front.014
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#6
+		num positions      :  250
+		num normals        :  250
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1296
+		WARNING: # of 0 area faces found:  8
+	processing begun of mesh:  bumper_front.013
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#7
+		num positions      :  250
+		num normals        :  250
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1296
+		WARNING: # of 0 area faces found:  16
+	processing begun of mesh:  bumper_front.012
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#8
+		num positions      :  728
+		num normals        :  728
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3744
+	processing begun of mesh:  bumper_front.011
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#9
+		num positions      :  1778
+		num normals        :  1778
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9840
+		WARNING: # of 0 area faces found:  120
+	processing begun of mesh:  bumper_front.010
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#10
+		num positions      :  1794
+		num normals        :  1794
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  10368
+	processing begun of mesh:  bumper_front.008
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#11
+		num positions      :  116
+		num normals        :  116
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  672
+	processing begun of mesh:  bumper_front.006
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#12
+		num positions      :  594
+		num normals        :  594
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  bumper_front.005
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#13
+		num positions      :  594
+		num normals        :  594
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  bumper_front.002
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#14
+		num positions      :  706
+		num normals        :  706
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3900
+	processing begun of mesh:  bumper_front.000
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#15
+		num positions      :  920
+		num normals        :  920
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  5280
+	processing begun of mesh:  vehicle_2door_sportscar_leftside_medium
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		registered as also a user of material:  Material.002
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#16
+		num positions      :  21080
+		num normals        :  21080
+		num uvs            :  42160
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  118272
+	processing begun of mesh:  DoorRightFront
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		registered as also a user of material:  Material.003
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#17
+		num positions      :  39459
+		num normals        :  39459
+		num uvs            :  78918
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  220800
+	processing begun of mesh:  OLDDoorLeftFront.011
+		registered as also a user of material:  Material.006
+		num positions      :  24045
+		num normals        :  24045
+		num uvs            :  48090
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  100368
+	processing begun of mesh:  OLDDoorLeftFront.010
+		processing begun of Standard material:  Material.007
+			WARNING: Material has un-assigned image texture:  "Texture.009" ignored
+		num positions      :  13893
+		num normals        :  13893
+		num uvs            :  27786
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  59520
+	processing begun of mesh:  Cube.002
+		registered as also a user of material:  full_black
+		num positions      :  642
+		num normals        :  642
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3648
+	processing begun of mesh:  boot.011
+		processing begun of Standard material:  coat
+			WARNING: Material has un-assigned image texture:  "Texture.007" ignored
+		processing begun of Standard material:  Material.005
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#18
+		num positions      :  91481
+		num normals        :  91481
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  532848
+		WARNING: # of 0 area faces found:  4
+	processing begun of mesh:  boot.010
+		registered as also a user of material:  plastic
+		num positions      :  26322
+		num normals        :  26322
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  152688
+	processing begun of mesh:  boot.009
+		registered as also a user of material:  silver
+		num positions      :  11160
+		num normals        :  11160
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  63168
+		WARNING: # of 0 area faces found:  4
+	processing begun of mesh:  Plane.006
+		processing begun of Standard material:  license
+		num positions      :  10
+		num normals        :  10
+		num uvs            :  20
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  24
+	processing begun of mesh:  Plane.005
+		registered as also a user of material:  license
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  16
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  18
+	processing begun of mesh:  boot.007
+		processing begun of Standard material:  logo
+		num positions      :  6
+		num normals        :  6
+		num uvs            :  12
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  12
+	processing begun of mesh:  window_rear.001
+		registered as also a user of material:  full_black
+		num positions      :  324
+		num normals        :  324
+		num uvs            :  648
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  720
+	processing begun of mesh:  boot.006
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#19
+		num positions      :  3208
+		num normals        :  3208
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  18432
+	processing begun of mesh:  Cylinder.001
+		registered as also a user of material:  silver
+		registered as also a user of material:  plastic
+		processing begun of Standard material:  rubber
+			WARNING: Material has un-assigned image texture:  "Texture" ignored
+			WARNING: Material has un-assigned image texture:  "Texture.001" ignored
+		processing begun of Standard material:  Material.001
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#20
+		num positions      :  36602
+		num normals        :  36602
+		num uvs            :  73204
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  158112
+	processing begun of mesh:  boot.004
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  silver
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#21
+		num positions      :  5868
+		num normals        :  5868
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  34176
+	processing begun of mesh:  boot.003
+		processing begun of Standard material:  tex_shiny
+			WARNING: Material has un-assigned image texture:  "Texture.002" ignored
+		num positions      :  297
+		num normals        :  297
+		num uvs            :  594
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  1536
+	processing begun of mesh:  Plane.001
+		registered as also a user of material:  tex_shiny
+		registered as also a user of material:  silver
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  full_black
+		registered as also a user of material:  lights
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#22
+		num positions      :  4939
+		num normals        :  4939
+		num uvs            :  9878
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  26496
+	processing begun of mesh:  boot.001
+		registered as also a user of material:  paint
+		processing begun of Standard material:  Material.004
+			WARNING: Material has un-assigned image texture:  "Texture.010" ignored
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#23
+		num positions      :  7751
+		num normals        :  7751
+		num uvs            :  15502
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  33840
+	processing begun of mesh:  bumper_front.003
+		registered as also a user of material:  paint
+		registered as also a user of material:  plastic
+		registered as also a user of material:  window
+		registered as also a user of material:  full_black
+		processing begun of Standard material:  glass
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#24
+		num positions      :  506
+		num normals        :  506
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2448
+	processing begun of mesh:  bumper_front.001
+		registered as also a user of material:  plastic
+		registered as also a user of material:  glass
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#25
+		num positions      :  3246
+		num normals        :  3246
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  17280
+	processing begun of mesh:  bumper_front.009
+		registered as also a user of material:  tex_shiny
+		num positions      :  634
+		num normals        :  634
+		num uvs            :  1268
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3120
+	processing begun of mesh:  bumper_front.007
+		registered as also a user of material:  glass
+		num positions      :  794
+		num normals        :  794
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4440
+	processing begun of mesh:  bumper_front.004
+		registered as also a user of material:  silver
+		registered as also a user of material:  lights
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#26
+		num positions      :  3098
+		num normals        :  3098
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  17640
+	processing begun of mesh:  Cube.001
+		registered as also a user of material:  plastic
+		num positions      :  4956
+		num normals        :  4956
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  27960
+	processing begun of mesh:  Sphere
+		registered as also a user of material:  paint
+		num positions      :  7938
+		num normals        :  7938
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  47616
+	processing begun of mesh:  Cylinder.000
+		registered as also a user of material:  silver
+		registered as also a user of material:  plastic
+		registered as also a user of material:  rubber
+		registered as also a user of material:  Material.001
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#27
+		num positions      :  36282
+		num normals        :  36282
+		num uvs            :  72564
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  156576
+	processing begun of mesh:  Cube
+		registered as also a user of material:  Material.001
+		num positions      :  1877
+		num normals        :  1877
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  9984
+	processing begun of mesh:  Cylinder.002
+		registered as also a user of material:  silver
+		registered as also a user of material:  plastic
+		registered as also a user of material:  rubber
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#28
+		num positions      :  16265
+		num normals        :  16265
+		num uvs            :  32530
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  68304
+	processing begun of mesh:  underbody
+		registered as also a user of material:  full_black
+		num positions      :  668
+		num normals        :  668
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  3312
+	processing begun of mesh:  boot
+		registered as also a user of material:  full_black
+		num positions      :  2310
+		num normals        :  2310
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  12864
+	processing begun of mesh:  Plane.004
+		registered as also a user of material:  paint
+		num positions      :  721
+		num normals        :  721
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  4032
+	processing begun of mesh:  Plane.003
+		registered as also a user of material:  paint
+		num positions      :  1954
+		num normals        :  1954
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11136
+	processing begun of mesh:  Plane.002
+		registered as also a user of material:  paint
+		num positions      :  1954
+		num normals        :  1954
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  11136
+	processing begun of mesh:  windshield
+		registered as also a user of material:  window
+		registered as also a user of material:  plastic
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#29
+		num positions      :  535
+		num normals        :  535
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2724
+	processing begun of mesh:  WindshieldRear
+		registered as also a user of material:  window
+		registered as also a user of material:  window
+		processing begun of multimaterial:  porsche2_2_1babylon.Multimaterial#30
+		num positions      :  531
+		num normals        :  531
+		num uvs            :  1062
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2640
+	processing begun of light (HEMI):  Hemi.011
+	processing begun of light (HEMI):  Hemi.010
+	processing begun of light (HEMI):  Hemi.009
+	processing begun of light (HEMI):  Hemi.008
+	processing begun of light (HEMI):  Hemi.007
+	processing begun of light (HEMI):  Hemi.006
+	processing begun of light (HEMI):  Hemi.005
+	processing begun of light (HEMI):  Hemi.004
+	processing begun of light (HEMI):  Hemi.003
+	processing begun of light (SUN):  Sun.001
+	processing begun of light (HEMI):  Hemi.002
+	processing begun of light (SUN):  Sun
+	processing begun of light (HEMI):  Hemi.001
+	processing begun of light (HEMI):  Hemi
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========
+elapsed time:  0 min, 53.3248 secs
