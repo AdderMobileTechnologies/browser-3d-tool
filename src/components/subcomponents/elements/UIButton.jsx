@@ -15,6 +15,7 @@ import CameraAlt from "@material-ui/icons/CameraAlt";
 import CropIcon from "@material-ui/icons/Crop";
 import FormatColorFill from "@material-ui/icons/FormatColorFill";
 import TextFields from "@material-ui/icons/TextFields";
+import MovieFilterIcon from "@material-ui/icons/MovieFilter";
 
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -133,8 +134,46 @@ class UIButton extends Component {
             }}
           >
             <button className={this.props.classNames} type="submit">
+              <Avatar style={{ backgroundColor: "green" }}>
+                <CameraAlt
+                  fontSize={"small"}
+                  style={{ backgroundColor: "green" }}
+                />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "____movie_filter":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              this.props.onClick();
+            }}
+          >
+            <button className={this.props.classNames} type="submit">
               <Avatar>
-                <CameraAlt fontSize={"small"} />
+                <MovieFilterIcon fontSize={"small"} />
+              </Avatar>
+            </button>
+          </form>
+        );
+      case "movie_filter":
+        return (
+          <form
+            onSubmit={formSubmitEvent => {
+              formSubmitEvent.preventDefault();
+              // this.props.onClick();
+            }}
+          >
+            <button
+              className={this.props.classNames}
+              type="submit"
+              onClick={this.props.onClick}
+              style={{ ...iconStyle.common }}
+            >
+              <Avatar style={{ backgroundColor: "green" }}>
+                <MovieFilterIcon style={{ backgroundColor: "green" }} />
               </Avatar>
             </button>
           </form>

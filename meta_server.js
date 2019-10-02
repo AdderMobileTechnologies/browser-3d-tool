@@ -67,9 +67,9 @@ app.get("/meta/design/", function(req, res) {
 });
 
 app.post("/email/send/", function(req, res) {
-  console.log("/email/send/");
+  //console.log("/email/send/");
   //console.log("req:", req);
-  console.log("req.body", req.body);
+  //console.log("req.body", req.body);
   //------------------------------------
   var transport = nodemailer.createTransport({
     host: "smtp.gmail.com",

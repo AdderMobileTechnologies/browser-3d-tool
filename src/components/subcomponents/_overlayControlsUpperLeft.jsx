@@ -1,6 +1,7 @@
 import React from "react";
 //import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
+import { green } from "@material-ui/core/colors";
 
 export default function OverlayControlsUpperRight(props) {
   // console.log("OverlayControls: props:", props);
@@ -15,8 +16,10 @@ export default function OverlayControlsUpperRight(props) {
           iconName="camera_alt"
           classNames="icon_btn overlay-button"
           style={{
-            background: "none !important",
-            backgroundColor: "none !important"
+            /* background: "none !important",
+            backgroundColor: "none !important"*/
+            backgroundColor: "green !important",
+            background: "green !important"
           }}
         ></UIButton>
         {/**

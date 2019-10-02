@@ -76,8 +76,8 @@ export default function EMailer(props) {
           id="email_to"
           type="text"
           name="to"
-          placeholder="b.forte@addermobile.com"
-          value="b.forte@addermobile.com"
+          placeholder="john.doe@anonymous.com"
+          value=""
         ></input>
         <input
           id="email_subject"
@@ -85,13 +85,8 @@ export default function EMailer(props) {
           name="email_subject"
           placeholder="email subject is ..."
         ></input>
-        {/** 
-        TODO: 
-        get a data url like the download button does.
-        save_UIAction put current canvas into a var so the latest can always be sent.
-        Then make sure this third input is getting added to the post parameters 
-        and handled in api. */}
         <input type="hidden" value={props.currentDataURL} />
+
         <button
           id="buttonLeft"
           name={props.data["key"]}
@@ -109,4 +104,14 @@ Almost there , only problem is that the last action applied to the image is miss
 missing the last angle of the camera as well ? 
 BUG: I do not like the fact that the page refreshes after sending the email. 
 at the very least it needs a dialog to alert the user to the fact.
+
+
+What needs to happen: 
+I would want the user to be able to send an email and keep everything as it already is , so the user can keep on working on it if they choose to. 
+If we have to we can store the actions temporarily and then rebuild the scene for them after they send the email and the page refreshes. 
+Also, clicking the share button makes the email form appear, it also sets the 'latest on screen design' to the dataURL for the email. 
+If it stays up for a while, and the user makes changes again before sending the email, the latest changes might not get added/updated to the dataURL.
+
+
+
  */
