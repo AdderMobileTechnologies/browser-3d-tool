@@ -23,15 +23,30 @@ Call This EMailer Like This:
 
 import * as K from "../../constants";
 import axios from "axios";
-
+import { tsConstructorType } from "@babel/types";
+// https://nodemailer.com/message/attachments/
 export default function EMailer(props) {
   console.log("THE EMailer: props:", props);
 
-  const sendEmail = () => {
+  const sendEmail = data => {
     let promise_designOptions = new Promise(function(resolve, reject) {
       const url = `${K.META_URL}/email/send`;
+
+      let params = {
+        from: "hardcoded-in-server",
+        to: data.email_to,
+        subject: data.email_subject,
+
+        html: `<h1>Adder 3dTool</h1><p>Visualize your advertisement.</p> `,
+        attachments: [
+          {
+            path: data.dataURL
+          }
+        ]
+      };
+
       axios
-        .post(url)
+        .post(url, params)
         .then(response => response.data)
         .then(data => {
           resolve(data);
@@ -43,70 +58,55 @@ export default function EMailer(props) {
   };
 
   const handleEMailerClick = e => {
-    console.log("handleEMailerClick .....");
-    console.log("e.target.id = ", e.target.id);
-    console.log("e.target.name =", e.target.name);
-    console.log("props sent in during constructor:", props);
-    let returnData = { id: e.target.id, name: e.target.name };
-    sendEmail();
+    let returnData = {
+      id: e.target.id,
+      email_to: e.target.parentNode[0].value,
+      email_subject: e.target.parentNode[1].value,
+      dataURL: e.target.parentNode[2].value
+    };
+    sendEmail(returnData);
+    console.log(returnData);
     props.callback(returnData);
   };
 
   return (
     <div>
-      <button
-        id="buttonLeft"
-        name={props.data["key"]}
-        onClick={handleEMailerClick}
-      >
-        Click
-      </button>
+      <form id="EMAIL_FORM">
+        <input
+          id="email_to"
+          type="text"
+          name="to"
+          placeholder="b.forte@addermobile.com"
+          value="b.forte@addermobile.com"
+        ></input>
+        <input
+          id="email_subject"
+          type="text"
+          name="email_subject"
+          placeholder="email subject is ..."
+        ></input>
+        {/** 
+        TODO: 
+        get a data url like the download button does.
+        save_UIAction put current canvas into a var so the latest can always be sent.
+        Then make sure this third input is getting added to the post parameters 
+        and handled in api. */}
+        <input type="hidden" value={props.currentDataURL} />
+        <button
+          id="buttonLeft"
+          name={props.data["key"]}
+          onClick={handleEMailerClick}
+        >
+          Click
+        </button>
+      </form>
     </div>
   );
 }
+
 /*
- let url = process.env.PORTAL_API_HOST + '/auth/email-verification/' + res.locals.verificationToken;
-    let mailOptions = {
-        from: 'Do Not Reply <no-reply@addermobile.com>',
-        to: res.locals.email,
-        subject: 'Adder Account Verification.',
-        html: 'Please click the following link to confirm your account: </p><p>' + url + '</p>',
-        text: 'Please confirm your account by clicking the following link: ' + url
-    };
-    const nodemailerOptions = {
-        host: process.env.NODEMAILER_SMTP_HOST,
-        port: Number(process.env.NODEMAILER_SMTP_PORT),
-        secure: true,
-        auth: {
-            user: process.env.NODEMAILER_USER,
-            pass: process.env.NODEMAILER_PASS
-        }
-    };
-
-    res.locals.logger.debug("In _flowUserDoesNotExist(), before nodemailer send, res.locals.requestWasCancelled:" +
-        " " + res.locals.requestWasCancelled);
-    if(res.locals.requestWasCancelled) {
-        return next("CONNECTION_CLOSED");
-    }
-    let transporter = nodemailer.createTransport(nodemailerOptions);
-    let transporterPromise = new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-                return reject(err);
-            }
-
-            return resolve(info);
-        });
-    });
-
-    try {
-        res.locals.logger.info("Sending verification email.");
-        await transporterPromise;
-        res.locals.logger.info("Successfully sent verification email!");
-    } catch(err) {
-        res.locals.logger.error("An error occurred while waiting for verification email to send! Error was: " + JSON.stringify(err, null, 4));
-        res.locals.code = 500;
-        res.locals.response = {};
-        return next("NODEMAILER_TRANSPORT_FAILURE");
-    }
-    */
+Almost there , only problem is that the last action applied to the image is missing from the dataURL.....? 
+missing the last angle of the camera as well ? 
+BUG: I do not like the fact that the page refreshes after sending the email. 
+at the very least it needs a dialog to alert the user to the fact.
+ */

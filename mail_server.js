@@ -12,7 +12,7 @@ var transport = nodemailer.createTransport({
 var mailOptions = {
   from: "from@example.com",
   to: "b.forte@addermobile.com",
-  subject: "Test Nodemailer with Mailtrap",
+  subject: "Wrap Plug Image",
 
   html: "<h1>Attachments</h1>",
   attachments: [

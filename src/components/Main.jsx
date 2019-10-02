@@ -382,6 +382,7 @@ class Main extends React.Component {
     console.log("callback_setState:args:", args);
   }
   ///////////////////////////////////////////////////////////////////////////
+
   save_UIAction(_id, _action, _to, _from) {
     let action_object = {};
     action_object.id = _id;
@@ -389,6 +390,15 @@ class Main extends React.Component {
     action_object.to = _to;
     action_object.from = _from;
     util.store("append", K.ACTIONS_ARRAY, action_object);
+    // //------------
+    // //could the let constants get in the way ?
+    // var canvas = scope.state.canvas;
+    // var dataURL = canvas.toDataURL("image/png");
+    // scope.setState({
+    //   currentDataURL: dataURL
+    // });
+    // console.log("update the image RIGHT? ");
+    // //----------
   }
 
   subCallback(args) {
@@ -1138,6 +1148,16 @@ class Main extends React.Component {
         isRaining: true
       });
     }
+    //------------
+    //could the let constants get in the way ?
+    var canvas = scope.state.canvas;
+    var dataURL = canvas.toDataURL("image/png");
+    scope.setState({
+      isReadyToEmail: true,
+      currentDataURL: dataURL
+    });
+    console.log("update the image RIGHT? ");
+    //----------
 
     // scope.environment_Rain();
     //scope.environment_Smoke();
@@ -1427,18 +1447,21 @@ class Main extends React.Component {
             </Grid>
           </Grid>
         </Grid>
+        {this.state.isReadyToEmail && (
+          <Grid container>
+            <Grid item xs={12}>
+              <EMailer
+                callback={this.subCallback}
+                data={{ key: "value" }}
+                currentDataURL={this.state.currentDataURL}
+              ></EMailer>
+            </Grid>
+            <Grid item xs={12}>
+              <div style={{ height: "100px", width: "100%" }}></div>
+            </Grid>
+          </Grid>
+        )}
 
-        <Grid container>
-          <Grid item xs={12}>
-            <EMailer
-              callback={this.subCallback}
-              data={{ key: "value" }}
-            ></EMailer>
-          </Grid>
-          <Grid item xs={12}>
-            <div style={{ height: "100px", width: "100%" }}></div>
-          </Grid>
-        </Grid>
         {/**   DEV : commented out while trying to debug issue with modal opening twice, 
         // HOWEVER: this is an important component of the "DELETE" design process.....
         //commenting it out did not solve the problem  */}

@@ -6,6 +6,22 @@ var nodemailer = require("nodemailer");
 
 app.use(cors());
 
+var bodyParser = require("body-parser");
+//body-parser parameters to allow larger files:
+// bodyParser = {
+//   json: { limit: "50mb", extended: true },
+//   urlencoded: { limit: "10mb", extended: true }
+// };
+
+app.use(bodyParser.json({ limit: "50mb", extended: true })); // to support JSON-encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+    limit: "50mb"
+  })
+);
+
 app.get("/", function(req, res) {
   res.send("meta server reached.");
 });
@@ -52,7 +68,8 @@ app.get("/meta/design/", function(req, res) {
 
 app.post("/email/send/", function(req, res) {
   console.log("/email/send/");
-  console.log("req:", req);
+  //console.log("req:", req);
+  console.log("req.body", req.body);
   //------------------------------------
   var transport = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -64,22 +81,11 @@ app.post("/email/send/", function(req, res) {
   });
 
   var mailOptions = {
-    from: "from@example.com",
-    to: "b.forte@addermobile.com",
-    subject: "Wrap Plug Image",
-
-    html: "<h1>Attachments</h1>",
-    attachments: [
-      {
-        // utf-8 string as an attachment
-        filename: "mail_test.txt",
-        content: "Attachments"
-      },
-      {
-        filename: "logo",
-        path: "public/logo512.png"
-      }
-    ]
+    from: req.body.from,
+    to: req.body.to,
+    subject: req.body.subject,
+    html: req.body.html,
+    attachments: req.body.attachments
   };
 
   transport.sendMail(mailOptions, (error, info) => {
