@@ -11,7 +11,7 @@
                             "name": "Sports Car",
                             "dir": "porsche",
                             "filename": "porsche2.2",
-                            "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon",
                             "position": {
                                 "x": "12",
                                 "y": ".80",
@@ -39,15 +39,23 @@
                                         "z": "0"
                                     }
                                 },
+                                  {
+                                    "strategy": "gui",
+                                    "parameters": {
+                                        "x": "0",
+                                        "y": "0",
+                                        "z": "0"
+                                    }
+                                },
                                 {
                                     "strategy": "select",
                                     "parameters": {
                                           "pickableMeshes":[
                                              "vehicle_2door_sportscar_leftside_medium",
                                               "vehicle_2door_sportscar_rightside_medium",
-                                               "vehicle_2door_sportscar_hood_medium",
-                                                "vehicle_2door_sportscar_roof_medium",
-                                                 "vehicle_2door_sportscar_trunk_medium"
+                                               "vehicle_2door_sportscar_hood",
+                                                "vehicle_2door_sportscar_roof",
+                                                 "vehicle_2door_sportscar_trunk"
                                             ]
                                        
                                     }
@@ -60,7 +68,8 @@
                                              "vehicle_2door_sportscar_leftside_small",
                                               "vehicle_2door_sportscar_rightside_large",
                                              "vehicle_2door_sportscar_rightside_small",
-                                             "vehicle_2door_sportscar_right_front_door"]
+                                             "vehicle_2door_sportscar_right_front_door",
+                                             "DoorRightFront"]
                                        
                                     }
                                 }
@@ -74,7 +83,7 @@
                        {
                             "uuid": "4door_001",
                             "name": "Station Wagon",
-                            "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon",
                             "dir": "vw_toureg",
                             "filename": "vw_toureg-2.5",
                             "position": {
@@ -105,14 +114,23 @@
                                     }
                                 },
                                 {
+                                    "strategy": "gui",
+                                    "parameters": {
+                                        "x": "0",
+                                        "y": "0",
+                                        "z": "0"
+                                    }
+                                },
+                                {
                                     "strategy": "select",
                                      "parameters": {
                                          "pickableMeshes":[
                                              "vehicle_4door_stationwagon_leftside_medium",
                                               "vehicle_4door_stationwagon_rightside_medium",
-                                               "vehicle_4door_stationwagon_hood_medium",
+                                               "vehicle_4door_stationwagon_hood",
                                                 "vehicle_4door_stationwagon_roof_medium",
-                                                 "vehicle_4door_stationwagon_trunk_medium"
+                                                 "vehicle_4door_stationwagon_trunk_medium",
+                                                 "vehicle_4door_stationwagon_rearside_medium"
                                              ]
                                        
                                     }
@@ -195,9 +213,9 @@
                             "filename": "Billboard.v1.1",
                             "filepath": "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon",
                             "position": {
-                                "x": "8",
+                                "x": "-5",
                                 "y": "0",
-                                "z": "11"
+                                "z": "8"
                             },
                             "rotation": {
                                 "axis": {
@@ -205,7 +223,7 @@
                                     "y": "1",
                                     "z": "0"
                                 },
-                                "angle": "25"
+                                "angle": "90"
                             },
                             "scaling": {
                                 "x": "1",
@@ -215,6 +233,14 @@
                             "behavior": [
                                 {
                                     "strategy": "scale",
+                                    "parameters": {
+                                        "x": "0",
+                                        "y": "0",
+                                        "z": "0"
+                                    }
+                                },
+                                  {
+                                    "strategy": "gui",
                                     "parameters": {
                                         "x": "0",
                                         "y": "0",
