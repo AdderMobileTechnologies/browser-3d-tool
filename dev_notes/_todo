@@ -837,7 +837,7 @@ tv-white-noise...
  sudo mv porsche2.2.1.babylon /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon
                               /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar
 
-
+// =====   EMAIL FUNCTIONALITY ===============================================================================
 NODEMAILER_SMTP_HOST=smtp.gmail.com
 NODEMAILER_SMTP_PORT=465
 NODEMAILER_USER=no-reply@addermobile.com
@@ -845,3 +845,17 @@ NODEMAILER_PASS=Sharedacces$1
 
 in web-api, under routes/v2/auth/register/driverMiddleware, line 153 has an example of how to use it
 
+https://www.npmjs.com/package/nodemailer
+
+WITH ATTACHMENTS: 
+https://blog.mailtrap.io/sending-emails-with-nodemailer/
+
+==========================================================================================================
+1) created example mail_server.js and tested 100% 
+2) create a subcomponent to gather email info.
+  - use web_api code to make a version of the call to mail_server.js 
+  - parameters: to, from , subject, html , attachments : [{filename:"",path:""}]
+
+  - adapt meta_server.js to handle this email function. 
+  - find and example calling meta server 
+  

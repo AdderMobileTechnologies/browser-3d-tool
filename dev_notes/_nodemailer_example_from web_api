@@ -1,0 +1,46 @@
+
+    let url = process.env.PORTAL_API_HOST + '/auth/email-verification/' + res.locals.verificationToken;
+    let mailOptions = {
+        from: 'Do Not Reply <no-reply@addermobile.com>',
+        to: res.locals.email,
+        subject: 'Adder Account Verification.',
+        html: 'Please click the following link to confirm your account: </p><p>' + url + '</p>',
+        text: 'Please confirm your account by clicking the following link: ' + url
+    };
+    const nodemailerOptions = {
+        host: process.env.NODEMAILER_SMTP_HOST,
+        port: Number(process.env.NODEMAILER_SMTP_PORT),
+        secure: true,
+        auth: {
+            user: process.env.NODEMAILER_USER,
+            pass: process.env.NODEMAILER_PASS
+        }
+    };
+
+    res.locals.logger.debug("In _flowUserDoesNotExist(), before nodemailer send, res.locals.requestWasCancelled:" +
+        " " + res.locals.requestWasCancelled);
+    if(res.locals.requestWasCancelled) {
+        return next("CONNECTION_CLOSED");
+    }
+    let transporter = nodemailer.createTransport(nodemailerOptions);
+    let transporterPromise = new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                return reject(err);
+            }
+
+            return resolve(info);
+        });
+    });
+
+    try {
+        res.locals.logger.info("Sending verification email.");
+        await transporterPromise;
+        res.locals.logger.info("Successfully sent verification email!");
+    } catch(err) {
+        res.locals.logger.error("An error occurred while waiting for verification email to send! Error was: " + JSON.stringify(err, null, 4));
+        res.locals.code = 500;
+        res.locals.response = {};
+        return next("NODEMAILER_TRANSPORT_FAILURE");
+    }
+    //endregion

@@ -22,6 +22,7 @@ import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
 import OverlayControlsUpperLeft from "./subcomponents/_overlayControlsUpperLeft";
 import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
 import UITextInput from "./subcomponents/elements/UITextInput";
+import EMailer from "./subcomponents/_emailer";
 //assets
 import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
 import UserImage from "../assets/Adder_3D_Tool2/contact_photo.png";
@@ -34,6 +35,7 @@ import { Resizable, ResizableBox } from "react-resizable";
 //css
 import "./minimum.css";
 import "./Main.css";
+
 ///////////////
 import * as GUI from "babylonjs-gui";
 import AdderGuiUtility from "../models/adderGuiUtility";
@@ -1427,6 +1429,12 @@ class Main extends React.Component {
         </Grid>
 
         <Grid container>
+          <Grid item xs={12}>
+            <EMailer
+              callback={this.subCallback}
+              data={{ key: "value" }}
+            ></EMailer>
+          </Grid>
           <Grid item xs={12}>
             <div style={{ height: "100px", width: "100%" }}></div>
           </Grid>
