@@ -881,11 +881,43 @@ Wed. 10-02-2019
 - added in basic ability to send emails via the meta_server with nodemailer.
 - added the ability to email the lastest image on the screen as an attachment 
 - add the movie scene icon to replace the binoculars.
+- working on code to pull down a saved design and redisplay it
 
 
 - run through the actions like a 'redo' 
 - downloadSavedDesign
+- totalRedo()
 
 ISSUES: 
   - still having issues with an image related to the porsche I think, trying to get loaded over and over.
-  - also uploading the dataURL didn't give me something I could look at on the server side, I think the json stringify messed. 
+  - also uploading the dataURL didn't give me something I could look at on the server side, I think
+   the json stringify messed. 
+
+Environment Variables:
+ https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
+ dot-env 
+ .env 
+ cons API = "http://foo.com"
+ config.js 
+  export module {
+
+    init dotenv....
+
+    API = process.env.API
+  }
+  //-----
+  1st ADD .nv to your .gitignore and COMMIT 
+  2nd THEN add the .env file 
+  npm install dotenv
+
+  // config.js
+const dotenv = require('dotenv');
+dotenv.config();
+module.exports = {
+  endpoint: process.env.API_URL,
+  masterKey: process.env.API_KEY,
+  port: process.env.PORT
+};
+// server.js
+const { port } = require('./config');
+console.log(`Your port is ${port}`); // 8626
