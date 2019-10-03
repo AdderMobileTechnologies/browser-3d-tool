@@ -20,6 +20,7 @@ let scope;
 class Designer extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       adderSceneWrapper: {},
       isOnAdType: false,
@@ -36,6 +37,8 @@ class Designer extends React.Component {
     this.reset_adType = this.reset_adType.bind(this);
     this.reset_subType = this.reset_subType.bind(this);
     this.continue_adType_callback = this.continue_adType_callback.bind(this);
+    this.triggerChange = this.triggerChange.bind(this);
+    props.register(this.triggerChange);
   }
 
   async reset_adType(data) {
@@ -52,11 +55,49 @@ class Designer extends React.Component {
       }
     );
   }
+  selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+  }
+  triggerChange(data) {
+    console.log("designer.jsx-> triggerChange() args:", data);
+    //this.selectElement("ad_type", 1);
+    // this.selectElement(data.id, data.value);
+    console.log("___data:", data);
+    switch (data.id) {
+      case "ad_type":
+        console.log(data.id + " id selected....");
+        this.selectElement(data.id, data.selectedValue);
+        console.log("this.state:", this.state);
+        //NOPE:  this.reset_adType(data); errpr: can not read children of undefined .
+        /* this.setState({
+          isOnSubType: true
+        });*/
+        /// this.reMount(data); // like componentDidMount goes and gets the meta data....for designs
+        // ASYNC ISSUE: this.adType_callback(data);
 
+        break;
+      case "sub_type":
+        console.log(data.id + " id selected....");
+        break;
+      case "detail_type":
+        console.log(data.id + " id selected....");
+        break;
+      default:
+        break;
+    }
+  }
+
+  // callbackReMount(data, scope) {
+  //   scope.adType_callback(data);
+  // }
   //reset_adType needed to be an async await.
 
   continue_adType_callback = data => {
     //console.log("async await callback ....");
+    console.log("continue_adType_callback: data:", data);
+    console.log("this.state:", this.state);
+
     if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
@@ -139,6 +180,7 @@ class Designer extends React.Component {
       console.log("this.state.designChoiceMeta:", this.state.designChoiceMeta);
 
       let assetSelected = data.selectedOption;
+      //creating the assetData with the selections made by pulling them from the designChoiceMeta
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption
       ].children[this.state.subTypeSelectedOption].children[assetSelected];
@@ -235,6 +277,55 @@ class Designer extends React.Component {
       });
     }
   }
+
+  // reMount(data) {
+  //   let scope = this;
+  //   let passingData = data;
+  //   this.setState({
+  //     adderSceneWrapper: this.getAdderSceneWrapper()
+  //   });
+  //   //perform call to meta server for 'ad type' data.
+  //   let promise_designChoices = new Promise(function(resolve, reject) {
+  //     const url = `${K.META_URL}/meta/design`;
+  //     axios
+  //       .get(url)
+  //       .then(response => response.data)
+  //       .then(data => {
+  //         resolve(data);
+  //       });
+  //   });
+  //   promise_designChoices.then(function(value) {
+  //     promise_designChoices_callback(value);
+  //     //save meta data for later referencing
+  //     scope.setState({
+  //       designChoiceMeta: value
+  //     });
+  //   });
+  //   function promise_designChoices_callback(value) {
+  //     //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
+  //     let array = [];
+  //     let element = {};
+
+  //     element = { name: `select`, id: -1 };
+  //     array.push(element);
+
+  //     for (let i in value.children) {
+  //       let ad_type = value.children[i].ad_type;
+  //       element = { name: `${ad_type}`, id: i };
+  //       array.push(element);
+  //     }
+  //     scope.setState(
+  //       {
+  //         isOnAdType: true,
+  //         adType_options: array
+  //       },
+  //       () => {
+  //         console.log("reMount....after async:");
+  //        // scope.callbackReMount(passingData, scope);
+  //       }
+  //     );
+  //   }
+  // }
   render() {
     return (
       <div className="designer">

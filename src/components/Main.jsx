@@ -135,8 +135,19 @@ class Main extends React.Component {
         callback_withModelInfo={this.callback_withModelInfo}
       ></Designer>
     );*/
+    this.register = this.register.bind(this); //extra
   }
-
+  register(triggerChange) {
+    console.log("Main(): register(triggerChange):");
+    this.triggerChange = triggerChange;
+  }
+  revertChild(data) {
+    console.log("revertChild....data:", data);
+    this.triggerChange(data);
+  }
+  componentWillUnmount() {
+    this.triggerChange = null;
+  }
   //Environment
   changeEnvironment = args => {
     var environment_type = null;
@@ -1391,10 +1402,12 @@ class Main extends React.Component {
     *! would need to ad an ID to the UISelect object.
 
     */
-    this.selectElement("ad_type", 1);
-    console.log("Designer.props:");
 
-    console.log(this.designer);
+    console.log("Designer.props:");
+    //"ad_type", 1
+    let revertData = { id: "ad_type", selectedValue: 0 };
+    this.revertChild(revertData);
+
     // NOPE: this.designer.setState({ funk: "foo" }); // not a method
     // NOPE:  this.designer.props.jack = "foo"; //not extensible
     ///console.log(designer.props);
@@ -1407,10 +1420,6 @@ class Main extends React.Component {
     //problem: This does not update the selects to be present.
     // would need to set variables in the state of the child component designer...ie. this.state.isOnSubType
     //this.selectElement("sub_type", 1);
-  }
-  selectElement(id, valueToSelect) {
-    let element = document.getElementById(id);
-    element.value = valueToSelect;
   }
 
   _applyTextureToMesh(data, images) {
@@ -1647,6 +1656,7 @@ class Main extends React.Component {
                     adderSceneWrapper={this.state.adderSceneWrapper}
                     callback={this.callback_Designer}
                     callback_withModelInfo={this.callback_withModelInfo}
+                    register={this.register}
                   ></Designer>
                   {/**  */}
 
