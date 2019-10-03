@@ -26,6 +26,7 @@ class UISelect extends Component {
 
     return (
       <select
+        id={this.props.id}
         className="ui-select"
         value={this.props.value}
         onChange={this.handleChange}

@@ -135,6 +135,9 @@ class Designer extends React.Component {
     if (data.selectedOption !== "-1") {
       //could just return the data here
       //console.log("==>> designer:jsx: detail_callback() : data:", data);
+      console.log("designer.jsx : detail_callback()");
+      console.log("this.state.designChoiceMeta:", this.state.designChoiceMeta);
+
       let assetSelected = data.selectedOption;
       let assetData = this.state.designChoiceMeta.children[
         this.state.adTypeSelectedOption

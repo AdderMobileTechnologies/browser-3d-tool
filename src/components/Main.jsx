@@ -125,6 +125,16 @@ class Main extends React.Component {
       this.cameraTargetY_up = this.cameraTargetY_up.bind(this);
         this.cameraTargetY_down = this.cameraTargetY_down.bind(this);
       */
+    /*
+    this.designer = (
+      <Designer
+        scene={this.state.scene}
+        getAdderSceneWrapper={this.getAdderSceneWrapper}
+        adderSceneWrapper={this.state.adderSceneWrapper}
+        callback={this.callback_Designer}
+        callback_withModelInfo={this.callback_withModelInfo}
+      ></Designer>
+    );*/
   }
 
   //Environment
@@ -670,6 +680,10 @@ class Main extends React.Component {
   }
   // To hide or show the appropriate sidebar image and controls
   callback_Designer(args = null, adderAsset = null, adderAssetObject = null) {
+    console.log("Main:callback_Designer():args:", args);
+    console.log("adderAsset:", adderAsset);
+    console.log("adderAssetObject:", adderAssetObject);
+
     if (args === "-1") {
       scope.setState({ selected_ad_type: "-1" }); // reset ad type
     }
@@ -1349,10 +1363,56 @@ class Main extends React.Component {
   }
   _changeName(data) {
     console.log("_changeName():data", data);
+    //TODO: take this value and apply it to the DOM element and check the blur method related to it...
   }
   _changeAsset(data) {
     console.log("_changeAsset():data", data);
+    //TODO: here we need to pull down the asset via meta data ... or something....
+    //should mirror functionality of this: callback_Designer(args = null, adderAsset = null, adderAssetObject = null)
+    // in the Desiger file in the componentDidMount the code calls the meta server for all the design meta , saves it to state,
+    // then runs a function to set state for ...  isOnAdType,  adType_options
+    //(?) could I automate the dom steps instead?
+
+    /*
+    automate selections:  EXAMPLE: 
+    <select id="leaveCode" name="leaveCode">
+      <option value="10">Annual Leave</option>
+      <option value="11">Medical Leave</option>
+      <option value="14">Long Service</option>
+      <option value="17">Leave Without Pay</option>
+    </select>
+    selectElement('leaveCode', '11')
+
+    function selectElement(id, valueToSelect) {    
+        let element = document.getElementById(id);
+        element.value = valueToSelect;
+    }
+
+    *! would need to ad an ID to the UISelect object.
+
+    */
+    this.selectElement("ad_type", 1);
+    console.log("Designer.props:");
+
+    console.log(this.designer);
+    // NOPE: this.designer.setState({ funk: "foo" }); // not a method
+    // NOPE:  this.designer.props.jack = "foo"; //not extensible
+    ///console.log(designer.props);
+    //----------------------------------------------------------------
+    //console.log("try and see children components:");
+    // (?) https://frontarm.com/james-k-nelson/passing-data-props-children/
+    // let childArray = React.Children.toArray();
+    // console.log("childArray:", childArray);
+    //------------------------------------------------------------------
+    //problem: This does not update the selects to be present.
+    // would need to set variables in the state of the child component designer...ie. this.state.isOnSubType
+    //this.selectElement("sub_type", 1);
   }
+  selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+  }
+
   _applyTextureToMesh(data, images) {
     //'id' of the model, and 'to' to use as the uuid to get the dataURL from 'design.images'
     // console.log("_applyTextureToMesh():data", data);
@@ -1579,6 +1639,8 @@ class Main extends React.Component {
                     callback={this.callback_UITextInput}
                     placeholder="Enter Design Name"
                   />
+                  {/* this.designer  */}
+
                   <Designer
                     scene={this.state.scene}
                     getAdderSceneWrapper={this.getAdderSceneWrapper}
@@ -1586,6 +1648,7 @@ class Main extends React.Component {
                     callback={this.callback_Designer}
                     callback_withModelInfo={this.callback_withModelInfo}
                   ></Designer>
+                  {/**  */}
 
                   {this.state.selected_ad_type === "0" && (
                     <p className="sidebar-call-to-action">
