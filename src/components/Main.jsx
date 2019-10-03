@@ -906,6 +906,9 @@ class Main extends React.Component {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
     //----------------------------------------------
+    const url = `${K.META_URL}/design/get`;
+    console.log(" const url = `${K.META_URL}/design/get`;", url);
+    //====>
     this.downloadSavedDesign();
     // in componentDidMount
 

@@ -7,6 +7,15 @@ var nodemailer = require("nodemailer");
 app.use(cors());
 
 var bodyParser = require("body-parser");
+// server.js
+const {
+  NODEMAILER_SMTP_HOST,
+  NODEMAILER_SMTP_PORT,
+  NODEMAILER_USER,
+  NODEMAILER_PASS
+} = require("./config");
+console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
+
 //body-parser parameters to allow larger files:
 // bodyParser = {
 //   json: { limit: "50mb", extended: true },
@@ -72,11 +81,11 @@ app.post("/email/send/", function(req, res) {
   //console.log("req.body", req.body);
   //------------------------------------
   var transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
+    host: NODEMAILER_SMTP_HOST,
+    port: NODEMAILER_SMTP_PORT,
     auth: {
-      user: "no-reply@addermobile.com",
-      pass: "Sharedacces$1"
+      user: NODEMAILER_USER,
+      pass: NODEMAILER_PASS
     }
   });
 

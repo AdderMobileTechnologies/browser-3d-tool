@@ -893,6 +893,9 @@ ISSUES:
   - also uploading the dataURL didn't give me something I could look at on the server side, I think
    the json stringify messed. 
 
+
+Thur 10-03-2019
+
 Environment Variables:
  https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
  dot-env 
@@ -921,3 +924,4 @@ module.exports = {
 // server.js
 const { port } = require('./config');
 console.log(`Your port is ${port}`); // 8626
+////////////////////////////////////////////////////////////
