@@ -7,12 +7,14 @@ var nodemailer = require("nodemailer");
 app.use(cors());
 
 var bodyParser = require("body-parser");
-// server.js
+
 const {
   NODEMAILER_SMTP_HOST,
   NODEMAILER_SMTP_PORT,
   NODEMAILER_USER,
-  NODEMAILER_PASS
+  NODEMAILER_PASS,
+  META_URL,
+  API_URL
 } = require("./config");
 console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
 
@@ -103,12 +105,7 @@ app.post("/email/send/", function(req, res) {
     }
     console.log("Email sent: " + info.response);
   });
-  /*
-  NODEMAILER_SMTP_HOST=smtp.gmail.com
-  NODEMAILER_SMTP_PORT=465
-  NODEMAILER_USER=no-reply@addermobile.com
-  NODEMAILER_PASS=Sharedacces$1
-  */
+
   //------------------------------------
 });
 app.post("/design/save/", function(req, res) {
