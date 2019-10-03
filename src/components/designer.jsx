@@ -57,40 +57,99 @@ class Designer extends React.Component {
     );
   }
   selectElement(id, valueToSelect) {
+    console.log("selectElement(id, valueToSelect)");
+    console.log("id:", id);
+    console.log("valueToSelect", valueToSelect);
     let element = document.getElementById(id);
     element.value = valueToSelect;
   }
   triggerChange(data) {
+    //method (?) really only need methods that related to the designer file specifically
+    // -ie. handleSelection
+    // -ie. loadAsset
+    // -ie. applyTestureToMesh
+    // -ie. other
+    /*
+    ad_type 
+     0 = vehicle, 
+         sub_type 
+            0 = 2Door, 
+                 detail 
+                    0 = sportscar
+            1 = 4Door 
+                  detail
+                    0 = stationwagon 
+     1 = billboard
+         sub_type 
+            0 = one-sided,
+            1 = two-sided  
+                 detail 
+                    0 = parallel
+                    1 = angled
+
+    */
     console.log("designer.jsx-> triggerChange() args:", data);
     //this.selectElement("ad_type", 1);
     // this.selectElement(data.id, data.value);
     console.log("___data:", data);
-    switch (data.id) {
-      case "ad_type":
-        console.log(data.id + " id selected....");
-        this.selectElement(data.id, data.selectedOption);
-        console.log("this.state:", this.state);
-        //NOPE:  this.reset_adType(data); errpr: can not read children of undefined .
-        /* this.setState({
-          isOnSubType: true
-        }); */
-        /// this.reMount(data); // like componentDidMount goes and gets the meta data....for designs
-        // ASYNC ISSUE: this.adType_callback(data);
-        // NOPE: this.reloadDesignChoiceMeta(); // ERROR: Cannot read property 'children' of undefined ...  continue_adType_callback
-        scope.reloadDesignChoiceMeta(data);
-        // this.adType_callback(data); //ERROR: Cannot read property 'children' of undefined inside ... continue_adType_callback
-        //somehow the desginChoiceMeta is undefined.
 
-        break;
-      case "sub_type":
-        console.log(data.id + " id selected....");
-        break;
-      case "detail_type":
-        console.log(data.id + " id selected....");
-        break;
-      default:
-        break;
+    /*
+    id = 'ad_type', 'sub_type', or 'detail' 
+    this.selectElement(data.id, data.selectedOption);
+    scope.reloadDesignChoiceMeta(data);
+    */
+
+    //FIRST IS AD_TYPE
+    var actionData = {};
+    actionData.id = "ad_type";
+    if (data.ad_type === "vehicle") {
+      actionData.selectedOption = 0;
+    } else if (data.ad_type === "billboard") {
+      actionData.selectedOption = 1;
     }
+    this.selectElement(actionData.id, actionData.selectedOption);
+    scope.reloadDesignChoiceMeta(actionData);
+    //SECOND is SUB_TYPE
+    var subActionData = {};
+    subActionData.id = "sub_type";
+    var number = null;
+    if (data.sub_type === "2door") {
+      number = 0;
+    } else if (data.sub_type === "4door") {
+      number = 1;
+    }
+    subActionData.selectedOption = number;
+    //this fires before the second select has been created .....
+    //force delay for async reasons
+    let that = this;
+    setTimeout(function() {
+      console.log("subActionData:: ", subActionData);
+      that.selectElement(subActionData.id, subActionData.selectedOption);
+      that.setState({
+        isOnDetailType: true
+      });
+      //scope.reloadDesignChoiceMeta(subActionData);
+      // scope.reloadDesignChoiceMeta(subActionData); //maybe not necessary for any but top level ad_type.
+    }, 1000);
+    //THIRD is detail
+    var detailActionData = {};
+    detailActionData.id = "detail";
+    var number = null;
+    if (data.detail === "sportscar") {
+      number = 0;
+    } else if (data.detail === "sportscar2") {
+      number = 1;
+    }
+    detailActionData.selectedOption = number;
+    //this fires before the second select has been created .....
+    //force delay for async reasons
+    let that2 = this;
+    setTimeout(function() {
+      console.log("detailActionData:: ", detailActionData);
+      that2.selectElement(detailActionData.id, detailActionData.selectedOption);
+    }, 5000);
+
+    //error: Cannot read property 'children' of undefined  designer.jsx 223
   }
   reloadDesignChoiceMeta(data) {
     console.log(
@@ -125,6 +184,10 @@ class Designer extends React.Component {
     });
     function promise_designChoices_callback2(value) {
       //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
+      console.log(
+        "create the options for the select in promise_designChoices_callback2:value:",
+        value
+      );
       let array = [];
       let element = {};
 
@@ -147,6 +210,7 @@ class Designer extends React.Component {
       );
     }
   }
+
   // callbackReMount(data, scope) {
   //   scope.adType_callback(data);
   // }
@@ -165,11 +229,12 @@ class Designer extends React.Component {
       array.push(element);
 
       var adTypeSelectedOption = data.selectedOption;
-      if (adTypeSelectedOption == "undefined") {
+      /* if (adTypeSelectedOption == "undefined") {
         console.log("ALTERNATIVE ASSIGNMENT: ");
         adTypeSelectedOption = data.selectedOption;
       }
-      adTypeSelectedOption = data.selectedOption;
+      adTypeSelectedOption = data.selectedOption;*/
+
       console.log("this:", this);
       console.log("scope:", scope);
       console.log("scope.state:", scope.state);
@@ -224,7 +289,8 @@ class Designer extends React.Component {
     );
   }
   continue_subType_callback = data => {
-    //console.log("async await callback ....");
+    console.log("is this gettting called: continue_subType_callback ");
+    console.log("async await callback ....");
     if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};

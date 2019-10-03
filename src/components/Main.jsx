@@ -142,8 +142,10 @@ class Main extends React.Component {
     this.triggerChange = triggerChange;
   }
   revertChild(data) {
+    //method : ad_type, sub_type, detail
     console.log("revertChild....data:", data);
-    this.triggerChange(data);
+    // 10-03-2019:
+    //====>>>> LEFT OFF HERE: this triggers the code to reload the UI settings for the selects ... this.triggerChange(data);
   }
   componentWillUnmount() {
     this.triggerChange = null;
@@ -1347,6 +1349,13 @@ class Main extends React.Component {
     });
   }
   massageDesign() {
+    /*
+    Because of the nature of a series of async functions that are involved in updating the 'designer' selects, it might be better to gather all 
+    the action steps and pass them along the entire process. Rather than a per action basis. However they all have to happen in order.
+
+
+
+    */
     let temp_design = util.store("get", "temp");
     console.log("massageDesign(): temp_design:", temp_design);
     // console.log(temp_design[0].designName);
@@ -1354,8 +1363,6 @@ class Main extends React.Component {
     let images = temp_design[0].images;
     console.log(actions);
     for (let action of actions) {
-      // console.log("action:", action);
-      //console.log(action.action);
       //switch based on action.action -> apply appropriate method to re-install the design.
       switch (action.action) {
         case "change_name":
@@ -1384,42 +1391,58 @@ class Main extends React.Component {
     // then runs a function to set state for ...  isOnAdType,  adType_options
     //(?) could I automate the dom steps instead?
 
+    let arrFromStr = data.split("/");
+    console.log("arrFromStr:", arrFromStr);
     /*
-    automate selections:  EXAMPLE: 
-    <select id="leaveCode" name="leaveCode">
-      <option value="10">Annual Leave</option>
-      <option value="11">Medical Leave</option>
-      <option value="14">Long Service</option>
-      <option value="17">Leave Without Pay</option>
-    </select>
-    selectElement('leaveCode', '11')
-
-    function selectElement(id, valueToSelect) {    
-        let element = document.getElementById(id);
-        element.value = valueToSelect;
-    }
-
-    *! would need to ad an ID to the UISelect object.
+    ad_type 
+     0 = vehicle, 
+         sub_type 
+            0 = 2Door, 
+                 detail 
+                    0 = sportscar
+            1 = 4Door 
+                  detail
+                    0 = stationwagon 
+     1 = billboard
+         sub_type 
+            0 = one-sided,
+            1 = two-sided  
+                 detail 
+                    0 = parallel
+                    1 = angled
 
     */
+    var resetData = {};
+    resetData.ad_type = arrFromStr[1];
+    resetData.sub_type = arrFromStr[3];
+    resetData.detail = arrFromStr[5];
+    resetData.filename = arrFromStr[6];
 
+    console.log("resetData:", resetData);
+    this.revertChild(resetData);
+    /*
     console.log("Designer.props:");
     //"ad_type", 1
-    let revertData = { id: "ad_type", selectedOption: 0 };
-    this.revertChild(revertData);
-
-    // NOPE: this.designer.setState({ funk: "foo" }); // not a method
-    // NOPE:  this.designer.props.jack = "foo"; //not extensible
-    ///console.log(designer.props);
-    //----------------------------------------------------------------
-    //console.log("try and see children components:");
-    // (?) https://frontarm.com/james-k-nelson/passing-data-props-children/
-    // let childArray = React.Children.toArray();
-    // console.log("childArray:", childArray);
-    //------------------------------------------------------------------
-    //problem: This does not update the selects to be present.
-    // would need to set variables in the state of the child component designer...ie. this.state.isOnSubType
-    //this.selectElement("sub_type", 1);
+    // HERE we have to use the model Id to define which ad_type we have....which is messy.
+    var selectedOption = null;
+    if (
+      data ===
+      "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon"
+    ) {
+      selectedOption = 1;
+    } else if (
+      data ===
+      "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon"
+    ) {
+      selectedOption = 0;
+    }
+    // This sets the selects appropriately for the top level of ad_type ( still need to load the model. and then set the next select...etc.)
+    let revertData1 = { id: "ad_type", selectedOption: selectedOption };
+    this.revertChild(revertData1);
+    //now I need to load the asset, but I can not until the sub_type and detail have been defined.
+    // let revertData2 = { id: "sub_type", selectedOption: selectedOption };
+    // this.revertChild(revertData);
+    */
   }
 
   _applyTextureToMesh(data, images) {
