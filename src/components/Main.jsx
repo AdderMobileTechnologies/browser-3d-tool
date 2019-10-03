@@ -1405,7 +1405,7 @@ class Main extends React.Component {
 
     console.log("Designer.props:");
     //"ad_type", 1
-    let revertData = { id: "ad_type", selectedValue: 0 };
+    let revertData = { id: "ad_type", selectedOption: 0 };
     this.revertChild(revertData);
 
     // NOPE: this.designer.setState({ funk: "foo" }); // not a method
@@ -1429,9 +1429,9 @@ class Main extends React.Component {
       return el.uuid === data.to;
     });
     let imageToReApply = newArray[0].dataURL;
-    console.log("apply this image to that id.");
-    console.log("dataURL:", imageToReApply);
-    console.log("model id:", data.id);
+    //console.log("apply this image to that id.");
+    //console.log("dataURL:", imageToReApply);
+    //console.log("model id:", data.id);
   }
 
   /*

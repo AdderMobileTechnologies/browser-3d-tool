@@ -29,7 +29,8 @@ class Designer extends React.Component {
       subType_options: [],
       isOnDetail: false,
       detail_options: [],
-      gotDesignMeta: false
+      gotDesignMeta: false,
+      designChoiceMeta: {}
     };
     scope = this;
     this.getAdderSceneWrapper = props.getAdderSceneWrapper;
@@ -67,14 +68,18 @@ class Designer extends React.Component {
     switch (data.id) {
       case "ad_type":
         console.log(data.id + " id selected....");
-        this.selectElement(data.id, data.selectedValue);
+        this.selectElement(data.id, data.selectedOption);
         console.log("this.state:", this.state);
         //NOPE:  this.reset_adType(data); errpr: can not read children of undefined .
         /* this.setState({
           isOnSubType: true
-        });*/
+        }); */
         /// this.reMount(data); // like componentDidMount goes and gets the meta data....for designs
         // ASYNC ISSUE: this.adType_callback(data);
+        // NOPE: this.reloadDesignChoiceMeta(); // ERROR: Cannot read property 'children' of undefined ...  continue_adType_callback
+        scope.reloadDesignChoiceMeta(data);
+        // this.adType_callback(data); //ERROR: Cannot read property 'children' of undefined inside ... continue_adType_callback
+        //somehow the desginChoiceMeta is undefined.
 
         break;
       case "sub_type":
@@ -87,7 +92,61 @@ class Designer extends React.Component {
         break;
     }
   }
+  reloadDesignChoiceMeta(data) {
+    console.log(
+      "reloadDesginChoiceMeta............................................."
+    );
+    let scope = this;
+    this.setState({
+      adderSceneWrapper: this.getAdderSceneWrapper()
+    });
+    //perform call to meta server for 'ad type' data.
+    let promise_designChoices2 = new Promise(function(resolve, reject) {
+      const url = `${K.META_URL}/meta/design`;
+      axios
+        .get(url)
+        .then(response => response.data)
+        .then(data => {
+          resolve(data);
+        });
+    });
+    promise_designChoices2.then(function(value) {
+      promise_designChoices_callback2(value);
+      //save meta data for later referencing
+      scope.setState(
+        {
+          designChoiceMeta: value
+        },
+        () => {
+          console.log("(A1)reloadDesignChoiceMeta async complete.....");
+          scope.adType_callback(data);
+        }
+      );
+    });
+    function promise_designChoices_callback2(value) {
+      //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
+      let array = [];
+      let element = {};
 
+      element = { name: `select`, id: -1 };
+      array.push(element);
+
+      for (let i in value.children) {
+        let ad_type = value.children[i].ad_type;
+        element = { name: `${ad_type}`, id: i };
+        array.push(element);
+      }
+      scope.setState(
+        {
+          isOnAdType: true,
+          adType_options: array
+        },
+        () => {
+          console.log("(A2)reloadDesignChoiceMeta async complete.....");
+        }
+      );
+    }
+  }
   // callbackReMount(data, scope) {
   //   scope.adType_callback(data);
   // }
@@ -95,7 +154,7 @@ class Designer extends React.Component {
 
   continue_adType_callback = data => {
     //console.log("async await callback ....");
-    console.log("continue_adType_callback: data:", data);
+    console.log("(B)continue_adType_callback: data:", data);
     console.log("this.state:", this.state);
 
     if (data.selectedOption !== "-1") {
@@ -105,10 +164,33 @@ class Designer extends React.Component {
       element = { name: `select`, id: -1 };
       array.push(element);
 
-      let adTypeSelectedOption = data.selectedOption;
-      let subTypeData = this.state.designChoiceMeta.children[
-        adTypeSelectedOption
-      ].children;
+      var adTypeSelectedOption = data.selectedOption;
+      if (adTypeSelectedOption == "undefined") {
+        console.log("ALTERNATIVE ASSIGNMENT: ");
+        adTypeSelectedOption = data.selectedOption;
+      }
+      adTypeSelectedOption = data.selectedOption;
+      console.log("this:", this);
+      console.log("scope:", scope);
+      console.log("scope.state:", scope.state);
+      console.log("adTypeSelectedOption:", adTypeSelectedOption);
+      console.log(
+        "scope.state.designChoiceMeta:",
+        scope.state.designChoiceMeta
+      );
+      console.log(
+        "scope.state.designChoiceMeta.children:",
+        scope.state.designChoiceMeta.children
+      );
+      console.log("adTypeSelectedOption:", adTypeSelectedOption);
+      console.log(
+        "scope.state.designChoiceMeta.children[adTypeSelectedOption]:",
+        scope.state.designChoiceMeta.children[adTypeSelectedOption]
+      );
+
+      console.log("-------------------------");
+      let subTypeData =
+        scope.state.designChoiceMeta.children[adTypeSelectedOption].children;
       for (let i in subTypeData) {
         let sub_type = subTypeData[i].sub_type;
         element = { name: `${sub_type}`, id: i };
