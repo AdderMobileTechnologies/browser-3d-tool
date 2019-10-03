@@ -219,7 +219,7 @@ class Main extends React.Component {
         case "screenshot":
           //scope.undo_screenshot(lastAction);
           break;
-        case "change asset":
+        case "change_asset":
           scope.undo_asset(lastAction);
           break;
         default:
@@ -245,7 +245,7 @@ class Main extends React.Component {
         case "screenshot":
           // scope.undo_screenshot(lastAction);
           break;
-        case "change asset":
+        case "change_asset":
           scope.redo_asset(lastRedoAction);
           break;
         default:
@@ -380,7 +380,7 @@ class Main extends React.Component {
           case "screenshot":
             // scope.undo_screenshot(lastAction);
             break;
-          case "change asset":
+          case "change_asset":
             scope.redo_asset(act.action);
             /* THROWS ERROR: 
             cannot read property 'dir' of undefined...
@@ -405,7 +405,7 @@ class Main extends React.Component {
         case "screenshot":
           // scope.undo_screenshot(lastAction);
           break;
-        case "change asset":
+        case "change_asset":
           scope.redo_asset(lastRedoAction);
           break;
         default:
@@ -427,7 +427,7 @@ class Main extends React.Component {
         case "screenshot":
           // scope.undo_screenshot(lastAction);
           break;
-        case "change asset":
+        case "change_asset":
           scope.redo_asset(lastRedoAction);
           break;
         default:
@@ -692,7 +692,7 @@ class Main extends React.Component {
 
       scope.save_UIAction(
         adderAsset.getFilepath(),
-        "change asset",
+        "change_asset",
         adderAssetObject,
         scope.state.last_adderAssetObject
       );
@@ -1314,7 +1314,55 @@ class Main extends React.Component {
       console.log("value in promise response:", value);
       util.store("set", "temp", value);
       //=====>>>> LEFT OFF HERE 10-02-2019 trying to load Saved Design....===> scope.totalRedo();
+      if (value.data !== "empty") {
+        scope.massageDesign();
+      } else {
+        console.log("design is currently empty.");
+      }
     });
+  }
+  massageDesign() {
+    let temp_design = util.store("get", "temp");
+    console.log("massageDesign(): temp_design:", temp_design);
+    // console.log(temp_design[0].designName);
+    let actions = temp_design[0].actions;
+    let images = temp_design[0].images;
+    console.log(actions);
+    for (let action of actions) {
+      // console.log("action:", action);
+      //console.log(action.action);
+      //switch based on action.action -> apply appropriate method to re-install the design.
+      switch (action.action) {
+        case "change_name":
+          this._changeName(action.to);
+          break;
+        case "change_asset":
+          this._changeAsset(action.id);
+          break;
+        case "applyTextureToMesh":
+          this._applyTextureToMesh(action, images); // will need to use both id and to. 'id' of the model, and 'to' to use as the uuid to get the dataURL from 'design.images'
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  _changeName(data) {
+    console.log("_changeName():data", data);
+  }
+  _changeAsset(data) {
+    console.log("_changeAsset():data", data);
+  }
+  _applyTextureToMesh(data, images) {
+    //'id' of the model, and 'to' to use as the uuid to get the dataURL from 'design.images'
+    // console.log("_applyTextureToMesh():data", data);
+    var newArray = images.filter(function(el) {
+      return el.uuid === data.to;
+    });
+    let imageToReApply = newArray[0].dataURL;
+    console.log("apply this image to that id.");
+    console.log("dataURL:", imageToReApply);
+    console.log("model id:", data.id);
   }
 
   /*

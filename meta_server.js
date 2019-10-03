@@ -123,7 +123,14 @@ app.get("/design/get/", function(req, res) {
   console.log("get: /design/get/");
   fs.readFile("SavedDesignActions.js", "utf8", function(err, data) {
     if (err) throw err;
-    res.send(JSON.parse(data));
+    console.log("data:", data);
+    console.log("type of data:", typeof data);
+    if (data === "") {
+      data = `{ foo: "bar" }`;
+      res.send({ data: "empty" });
+    } else {
+      res.send(JSON.parse(data));
+    }
   });
 });
 app.listen(8001, function() {
