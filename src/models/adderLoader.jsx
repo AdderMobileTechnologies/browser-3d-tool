@@ -49,7 +49,10 @@ class AdderLoader {
       let sceneFileName = adderModel.getModelFile();
       let onProgress = null;
       let pluginExtension = null;
-
+      console.log("sceneFileName:", sceneFileName);
+      if (sceneFileName === "" || sceneFileName === "undefined") {
+        console.log(" ------   NULL scene File ---------------");
+      }
       let scene = adderSceneWrapper.getScene();
       let result = await BABYLON.SceneLoader.ImportMeshAsync(
         meshNames,

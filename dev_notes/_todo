@@ -925,3 +925,15 @@ module.exports = {
 const { port } = require('./config');
 console.log(`Your port is ${port}`); // 8626
 ////////////////////////////////////////////////////////////
+
+Frid: 
+
+adderGuiUtility.js model is where the rotation slider code is. 
+0 - 1 - 2 
+
+ carMeshSelectorTransparent
+
+ Continous Download when on Porsche .
+ does NOT happen the first time around after the manifest has been incremented. 
+ I just removed a non existent img that was attached to a texture. 
+ 

@@ -13,9 +13,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
 	processing begun of mesh:  vehicle_2door_sportscar_trunk
 		processing begun of Standard material:  Material.006
-			Diffuse texture found "Kd"
-				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
-	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_tool\\blender_models\\porsche-911-carrera-4s\\c4d13e1ef5c20e49d7206aefff123f19--no-signal-tv-white-noise.jpg'
+			WARNING: Material has un-assigned image texture:  "Kd" ignored
 		processing begun of Standard material:  paint
 			WARNING: Material has un-assigned image texture:  "Texture.003" ignored
 		processing begun of Standard material:  Material.004
@@ -123,9 +121,7 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 		processing begun of Standard material:  Material.016
 			WARNING: Material has un-assigned image texture:  "Texture.016" ignored
 		processing begun of Standard material:  Material.017
-			Diffuse texture found "Texture.011"
-				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
-	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: ''
+			WARNING: Material has un-assigned image texture:  "Texture.011" ignored
 		processing begun of multimaterial:  porsche2_2_1.Multimaterial#5
 		num positions      :  21077
 		num normals        :  21077
@@ -624,4 +620,4 @@ Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 52.3258 secs
+elapsed time:  0 min, 51.2361 secs

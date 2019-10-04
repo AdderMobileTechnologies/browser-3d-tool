@@ -89,12 +89,16 @@ class AdderGuiUtility {
     slider.width = "100px";
     slider.metadata = 0;
     slider.onValueChangedObservable.add(function(value) {
+      // console.log("value:", value);
+      // console.log("slider.metadata:", slider.metadata);
       if (mesh) {
         //compare for direction:
         if (value > slider.metadata) {
-          mesh.rotation.y = value * 0.1;
+          mesh.rotation.y = parseFloat(value * 0.1).toFixed(2);
+          // console.log("+++++:", mesh.rotation.y);
         } else {
-          mesh.rotation.y = -(value * 0.1);
+          mesh.rotation.y = parseFloat(-(value * 0.1)).toFixed(2);
+          //console.log("-----:", mesh.rotation.y);
         }
       }
       //using the metadata property to store the previous slider value for comparison when sliding left or right.
@@ -107,3 +111,45 @@ class AdderGuiUtility {
   };
 }
 export default AdderGuiUtility;
+
+/*
+  /* ORIGINAL: 
+        if (value > slider.metadata) {
+          mesh.rotation.y = value * 0.1;
+        } else {
+          mesh.rotation.y = -(value * 0.1);
+        }
+        */
+/*
+       //attempt #1 
+        // Alternative:  may need to be converted to radians:
+        if (value > 1) {
+          //2 - sliderValue * 360
+          let meshRotationValue = (2 - value) * 360 * (Math.PI / 180);
+          mesh.rotation.y = meshRotationValue;
+          console.log("meshRotationValue:", meshRotationValue);
+        }
+        if (value < 1) {
+          // sliderValue * -360
+          let meshRotationValueLess = value * -360 * (Math.PI / 180) ;
+          mesh.rotation.y = meshRotationValueLess;
+          console.log("meshRotationValueLess:", meshRotationValueLess);
+        }
+        if (value === 0 || value === 1 || value === 2) {
+          //slider valu e = 0
+          mesh.rotation.y = 0;
+        }
+        //end #1
+        */
+
+/*
+        
+IF 2 = 360 and 1 = 0 and 0 = -360
+
+
+
+
+
+
+
+        */
