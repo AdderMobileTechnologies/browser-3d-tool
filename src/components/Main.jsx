@@ -25,7 +25,8 @@ import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
 import UITextInput from "./subcomponents/elements/UITextInput";
 import EMailer from "./subcomponents/_emailer";
 //assets
-import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
+//import AdderLogoAndName from "../assets/Adder_3D_Tool2/AdderLogoTransparent.png";
+import AdderLogoAndName from "../assets/adder-logos_angled_work.png";
 import UserImage from "../assets/Adder_3D_Tool2/contact_photo.png";
 
 //third party
@@ -1496,7 +1497,7 @@ class Main extends React.Component {
             id="Header"
             style={{ marginTop: "10px" }}
           >
-            <Grid item sm={4} xs={12} id="LogoContainer">
+            <Grid item sm={2} xs={12} id="LogoContainer">
               <img
                 src={AdderLogoAndName}
                 style={{ height: "auto", width: "100%" }}
@@ -1505,6 +1506,7 @@ class Main extends React.Component {
                 alt="Adder Logo"
               />
             </Grid>
+            <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={2} id="LogoContainer"></Grid>
             <Grid item xs={1} id="LogoContainer"></Grid>

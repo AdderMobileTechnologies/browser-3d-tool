@@ -22,7 +22,7 @@ export default function OverlayControlsUpperRight(props) {
             background: "green !important"
           }}
         ></UIButton>
-        {/** RAIN ICON IS CRAP :
+
         <UIButton
           title="Weather"
           buttonText="weather"
@@ -34,7 +34,7 @@ export default function OverlayControlsUpperRight(props) {
             background: "green !important"
           }}
         ></UIButton>
-           */}
+        {/** RAIN ICON IS CRAP : */}
         {/**
 
         <UIButton

@@ -1,0 +1,117 @@
+Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		export scope        :  ALL
+		inline textures     :  false
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory   :  C:\Users\Bayon\projects\3d-tool-v2\src\assets\babylon_files\
+	Python World class constructor completed
+	processing begun of mesh:  Object01_Untitled.038
+		processing begun of Standard material:  13_-_Default.043
+			Diffuse texture found "Kd.013"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\blinds.jpg'
+		num positions      :  3776
+		num normals        :  3776
+		num uvs            :  7552
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6810
+	processing begun of mesh:  KC9BG17_Untitled.042
+		processing begun of Standard material:  Material_#25.012
+		processing begun of Standard material:  Material_#58.002
+		processing begun of Standard material:  03_-_Default.082
+			Diffuse texture found "Kd.008"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\windowspalette2.jpg'
+		processing begun of Standard material:  09_-_Default.016
+			Diffuse texture found "Kd.011"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\rooftop4.jpg'
+		processing begun of Standard material:  01_-_Default.063
+			Diffuse texture found "Kd.002"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\concrete.jpg'
+		processing begun of Standard material:  03_-_Default.062
+			Diffuse texture found "Kd.007"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\streetmisc.jpg'
+		processing begun of Standard material:  01_-_Default.031
+			Diffuse texture found "Kd.001"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\Roofmisc.jpg'
+		processing begun of Standard material:  13_-_Default.036
+			Diffuse texture found "Kd.012"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\rooftop2.jpg'
+		processing begun of Standard material:  07_-_Default.072
+			Diffuse texture found "Kd.009"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\MetalChrome.jpg'
+		processing begun of Standard material:  01_-_Default.268
+			Diffuse texture found "Kd.004"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\MetalChrome.jpg'
+		processing begun of Standard material:  01_-_Default.150
+			Diffuse texture found "Kd.003"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\Roofmisc.jpg'
+		processing begun of Standard material:  02_-_Default.070
+			Diffuse texture found "Kd.006"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\Plastic_Black.jpg'
+		processing begun of Standard material:  08_-_Default.030
+			Diffuse texture found "Kd.010"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\commercials.jpg'
+		processing begun of Standard material:  14_-_Default.016
+			Diffuse texture found "Kd.014"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\commercials.jpg'
+		processing begun of Standard material:  01_-_Default.017
+			Diffuse texture found "Kd"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\Roofmisc.jpg'
+		processing begun of Standard material:  02_-_Default.048
+			Diffuse texture found "Kd.005"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\Delivery\\\\metaldark.jpg'
+		processing begun of Standard material:  15_-_Default.039
+			Diffuse texture found "Kd.015"
+				Image texture found, type:  diffuseTexture, mapped using: "UVMap"
+	WARNING: Error encountered processing image file:  , Error:  [Errno 2] No such file or directory: 'C:\\Users\\Bayon\\projects\\adder_creative_resources\\blender_models\\CITY_FBX_KC9\\..\\..\\..\\..\\..\\..\\office.jpg'
+		processing begun of Standard material:  Material.001
+		processing begun of multimaterial:  skyscraper_2_1.Multimaterial#0
+		num positions      :  153434
+		num normals        :  153434
+		num uvs            :  306868
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  223836
+	processing begun of mesh:  GlassKC9BG17_Untitled
+		processing begun of Standard material:  Glass18reflection
+		num positions      :  1088
+		num normals        :  1088
+		num uvs            :  2176
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  2208
+	processing begun of mesh:  Object02_Untitled.097
+		registered as also a user of material:  13_-_Default.043
+		num positions      :  260
+		num normals        :  260
+		num uvs            :  520
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  456
+	processing begun of camera (UniversalCamera):  Camera
+	processing begun of light (HEMI):  Hemi
+	processing begun of light (POINT):  Lamp
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========
+elapsed time:  0 min, 8.1663 secs

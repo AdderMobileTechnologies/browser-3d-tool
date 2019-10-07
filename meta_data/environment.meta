@@ -670,6 +670,93 @@
                             }
                         }
                     ]
+        } , {
+
+            "name": "skyscraper_2",
+            "filepath": "CITY/skyscraper_2.0.babylon",
+            "dir": "CITY",
+            "filename": "skyscraper_2.0",
+            "position": {
+                "x": "18",
+                "y": "0",
+                "z": "-140"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "skyscraper_2.0",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }
+        , {
+
+            "name": "skyscraper_2.1",
+            "filepath": "CITY/skyscraper_2.1.babylon",
+            "dir": "CITY",
+            "filename": "skyscraper_2.1",
+            "position": {
+                "x": "-65",
+                "y": "0",
+                "z": "75"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "skyscraper_2.1",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
         }
         , {
 
