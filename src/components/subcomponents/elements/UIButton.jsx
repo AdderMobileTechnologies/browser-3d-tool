@@ -8,6 +8,8 @@ import IconShare from "./../../../assets/icons/shareTransparent.png";
 import IconUndo from "./../../../assets/icons/undoTransparent.png";
 import Landscape from "./../../../assets/icons/landscape_2x.png";
 import Location_City from "./../../../assets/icons/location_city_2x.png";
+// Weather_Icons_1B-03.png
+import Rain from "./../../../assets/icons/Weather_Icons_1B-03.png";
 
 // Old Material UI Stuff
 import Avatar from "@material-ui/core/Avatar";
@@ -125,6 +127,19 @@ class UIButton extends Component {
             style={{ ...iconStyle.small }}
           />
         );
+      case "rain":
+        alt = "rain";
+        src = Rain;
+        // break;
+        return (
+          <input
+            type={"image"}
+            onClick={this.props.onClick}
+            alt={alt}
+            src={src}
+            style={{ ...iconStyle.small }}
+          />
+        );
       case "camera_alt":
         return (
           <form
@@ -226,6 +241,7 @@ class UIButton extends Component {
             </button>
           </form>
         );
+
       case "faCrop":
         return (
           <form

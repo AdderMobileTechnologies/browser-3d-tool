@@ -955,21 +955,25 @@ Added SavedDesignActions.js to .gitignore
  but I had issues trying to get it set up. There is some chatter about it on stackoverview.  
 
  Mon 10-07-2019:
- - brighten toast icons 
+ -# brighten toast icons 
     - no luck changing the 'svgs' 
     - was able to add contrast with darker bg color and lighter border.
  - more models
     - one sided  billboard 
     - parallel billboard
+    - environment models ( ie. individuals from the city scape original?)
  - weather button for particles 
   - 1 just pick a weather icon I guess.
  - constrain or extend scene ? 
     -1 
-    -2 add more city blocks 
+    -2 add more city blocks(?) 
  - udate adder logo  - 
     - 1 
     - 2 
 
+ - fix email input box issue
 
 
-
+----- DID: 
+"increase the contrats in  image editor icons with darker bg color and a light border, was unable to effect the svg icons themselves."
+ 

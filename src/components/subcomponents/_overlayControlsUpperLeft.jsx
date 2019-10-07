@@ -22,6 +22,20 @@ export default function OverlayControlsUpperRight(props) {
             background: "green !important"
           }}
         ></UIButton>
+        {/** RAIN ICON IS CRAP :
+        <UIButton
+            title="Weather"
+            buttonText="weather"
+            onClick={props.callback_ScreenShotButtonPress}
+            iconName="rain"
+            classNames="icon_btn overlay-button"
+            style={{
+              
+              backgroundColor: "green !important",
+              background: "green !important"
+            }}
+          ></UIButton>
+        */}
         {/**
 
         <UIButton
