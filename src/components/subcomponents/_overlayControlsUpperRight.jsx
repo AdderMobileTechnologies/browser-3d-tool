@@ -1,7 +1,7 @@
 import React from "react";
 //import Grid from "@material-ui/core/Grid"; //
 import UIButton from "./elements/UIButton";
-
+import MUIPopover from "./MUIPopover";
 export default function OverlayControlsUpperRight(props) {
   // console.log("OverlayControls: props:", props);
 
@@ -9,13 +9,17 @@ export default function OverlayControlsUpperRight(props) {
     <div>
       <div className="gui-overlay-upper-right">
         <UIButton
-          title="Screen Shot"
-          buttonText="Save Image"
-          onClick={props.callback_ScreenShotButtonPress}
-          iconName="faLock"
-          classNames="icon_btn "
+          title="Weather"
+          buttonText="weather"
+          onClick={props.iconRain}
+          iconName="rain"
+          classNames="icon_btn overlay-button"
+          style={{
+            backgroundColor: "green !important",
+            background: "green !important"
+          }}
         ></UIButton>
-
+        ;
         {/**
                 <UIButton
                   title="Crop Image"

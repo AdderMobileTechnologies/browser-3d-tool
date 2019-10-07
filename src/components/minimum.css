@@ -108,6 +108,24 @@
     width: 1px;
 }
 
+.gui-overlay-upper-right {
+    position: absolute;
+    top: 5%;
+    right: 120px;
+    background-color: none;
+    background: none;
+    width: 1px;
+}
+
+.gui-overlay-mui-popover {
+    position: absolute;
+    top: 5%;
+    right: 60px;
+    background-color: none;
+    background: none;
+    width: 1px;
+}
+
 #simple-popover .MuiPaper-root {
     background-color: rgba(0, 0, 0, .5);
     box-shadow: 2px 2px 20px #555;

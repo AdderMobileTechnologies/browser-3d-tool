@@ -9,7 +9,7 @@ import IconUndo from "./../../../assets/icons/undoTransparent.png";
 import Landscape from "./../../../assets/icons/landscape_2x.png";
 import Location_City from "./../../../assets/icons/location_city_2x.png";
 // Weather_Icons_1B-03.png
-import Rain from "./../../../assets/icons/Weather_Icons_1B-03.png";
+import Rain from "./../../../assets/icons/Component 22 – 1.png";
 
 // Old Material UI Stuff
 import Avatar from "@material-ui/core/Avatar";

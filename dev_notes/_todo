@@ -988,6 +988,7 @@ Added SavedDesignActions.js to .gitignore
                   went into blender searched for the mesh KC9BG19_Untitled.071 and found that it was attached to modern.jpg which,
                   was throwing a can not find error in the console. And I removed it from the texture definition.
                   did a new babylon export.
+            * went back and removed modern.jpg from one and applied a default texture...still some missing textures but less obvious.
 
  - weather button for particles 
   - 1 just pick a weather icon I guess.
@@ -999,8 +1000,10 @@ Added SavedDesignActions.js to .gitignore
     - 2 
 
  - fix email input box issue
-
+ - make the overlay containers more flexibile and uniform.
 
 ----- DID: 
-"increase the contrats in  image editor icons with darker bg color and a light border, was unable to effect the svg icons themselves."
- "extended the city scape in all directions and added in a few more models."
+increase the contrats in  image editor icons with darker bg color and a light border, was unable to effect the svg icons themselves.
+extended the city scape in all directions and added in a few more models.
+added a skyscraper but had some issues with materials and textures.
+added a skyscraper and changed adder logo to one with angled text.

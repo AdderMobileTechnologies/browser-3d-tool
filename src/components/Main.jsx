@@ -21,6 +21,8 @@ import IconControlGroup from "./subcomponents/_iconControlGroup";
 import OverlayControls from "./subcomponents/_overlayControls";
 import OverlayControlsRight from "./subcomponents/_overlayControlsRight";
 import OverlayControlsUpperLeft from "./subcomponents/_overlayControlsUpperLeft";
+import OverlayControlsUpperRight from "./subcomponents/_overlayControlsUpperRight";
+import OverlayControlsMUIPopOver from "./subcomponents/_overlayControlsMUIPopOver";
 import MUIAlertDialog from "./subcomponents/MUIAlertDialog";
 import UITextInput from "./subcomponents/elements/UITextInput";
 import EMailer from "./subcomponents/_emailer";
@@ -1553,7 +1555,6 @@ class Main extends React.Component {
                   callback={this.subCallback}
                   callback_ScreenShotButtonPress={this.screenshotButtonPress}
                   data={{ key: "value" }}
-                  iconRain={this.iconRain}
                 ></OverlayControlsUpperLeft>
                 {/** <OverlayControls
                   callback={this.subCallback}
@@ -1563,9 +1564,18 @@ class Main extends React.Component {
                 */}
 
                 <OverlayControlsRight
+                  callback={this.subCallback}
+                  data={{ key: "subCallback" }}
+                ></OverlayControlsRight>
+                <OverlayControlsUpperRight
+                  callback={this.subCallback}
+                  iconRain={this.iconRain}
+                  data={{ key: "iconRain" }}
+                ></OverlayControlsUpperRight>
+                <OverlayControlsMUIPopOver
                   callback={this.changeEnvironment}
                   data={{ key: "value" }}
-                ></OverlayControlsRight>
+                ></OverlayControlsMUIPopOver>
               </div>
             </Grid>
             <Grid container>
