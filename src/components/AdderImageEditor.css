@@ -34,6 +34,24 @@
     min-width: 250px !important;
 }
 
+/*
+the pencil svg: 
+<use xlink:href="/static/media/icon-a.843c03ed.svg#icon-a-ic-draw" class="normal"></use>
+*/
+
+.normal {
+    /* border: dotted 1px red !important;*/
+    /*The following have no effect on the image editor icons ie. svgs */
+    /* color: #fff !important;*/
+}
+
+.tui-image-editor-item {
+    border: solid rgb(112, 112, 112) .5px !important;
+    background-color: #000 !important;
+    /*The following have no effect on the image editor icons ie. svgs */
+    color: #fff;
+}
+
 div.MuiDialogContent-root {
     background-color: #000 !important;
     background: #000 !important;

@@ -936,4 +936,40 @@ adderGuiUtility.js model is where the rotation slider code is.
  Continous Download when on Porsche .
  does NOT happen the first time around after the manifest has been incremented. 
  I just removed a non existent img that was attached to a texture. 
- 
+ refresh
+ THEN... it starts all over again.. trying to request http://dbdev.adder.io/assets/ 
+ with nothing in particular 
+ try to rename the manifest to break it . 
+ ok now it can not find it. it takes 1.32 seconds to download the porsche model. 
+
+
+ LEFT OFF HERE Fri: 10-04-2019
+
+
+Added SavedDesignActions.js to .gitignore
+ there appears to be an issue that relates to the manifest file for the porsche model so I turned it off for now.
+ lost most of my git commit notes after having to do a hard reset to get ready to move to dbdev.adder.io 
+ Realized that the the designs need a model class to keep them organized especially for the process of trying to download and reinstall 
+ the design into the app. Did some research into the 'Babylonjs Inspector' when I was trying to figure out how I can get the rotation changes 
+ from within the babylon scene, out to the react side of the code. It looks like something we might be able to utilize in the future 
+ but I had issues trying to get it set up. There is some chatter about it on stackoverview.  
+
+ Mon 10-07-2019:
+ - brighten toast icons 
+    - no luck changing the 'svgs' 
+    - was able to add contrast with darker bg color and lighter border.
+ - more models
+    - one sided  billboard 
+    - parallel billboard
+ - weather button for particles 
+  - 1 just pick a weather icon I guess.
+ - constrain or extend scene ? 
+    -1 
+    -2 add more city blocks 
+ - udate adder logo  - 
+    - 1 
+    - 2 
+
+
+
+
