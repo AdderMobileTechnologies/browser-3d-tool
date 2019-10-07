@@ -138,6 +138,366 @@
 
         },
         {
+
+            "name": "streetLight_North1a",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "-5",
+                "y": "0",
+                "z": "-55"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+         {
+
+            "name": "streetLight_North1b",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "6",
+                "y": "0",
+                "z": "-55"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "-90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+        {
+
+            "name": "streetLight_North2a",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "-5",
+                "y": "0",
+                "z": "-95"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+         {
+
+            "name": "streetLight_North2b",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "6",
+                "y": "0",
+                "z": "-95"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "-90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+        {
+
+            "name": "streetLight_North3a",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "-5",
+                "y": "0",
+                "z": "-135"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+         {
+
+            "name": "streetLight_North3b",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "6",
+                "y": "0",
+                "z": "-135"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "-90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+         {
+
+            "name": "streetLight_Central1a",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "-5",
+                "y": "0",
+                "z": "20"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+         {
+
+            "name": "streetLight_Central1b",
+            "filepath": "CITY/streetLight.babylon",
+            "dir": "CITY",
+            "filename": "streetLight",
+            "position": {
+                "x": "6",
+                "y": "0",
+                "z": "20"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "-90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "streetLight_001", 
+            "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+
+        },
+        {
             "name": "crane",
             "filepath": "CITY/crane.babylon",
             "dir": "CITY",
@@ -233,6 +593,50 @@
                 "x": "25",
                 "y": "0",
                 "z": "-25"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
+                    "z": "0"
+                },
+                "angle": "0"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "building_rounded_corners_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }
+         , {
+
+            "name": "building_rounded_corners2",
+            "filepath": "CITY/building_rounded_corners.babylon",
+            "dir": "CITY",
+            "filename": "building_rounded_corners",
+            "position": {
+                "x": "-23",
+                "y": "0",
+                "z": "-70"
             },
             "rotation": {
                 "axis": {
@@ -365,6 +769,350 @@
                 "x": "1",
                 "y": "0",
                 "z": "5"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4North1",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "1",
+                "y": "0",
+                "z": "-90"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4North2",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "1",
+                "y": "0",
+                "z": "-180"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4East1",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "-91",
+                "y": "0",
+                "z": "-90"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4East2",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "-91",
+                "y": "0",
+                "z": "5"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4East3",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "-91",
+                "y": "0",
+                "z": "95"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4West1",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "91",
+                "y": "0",
+                "z": "5"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4West2",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "91",
+                "y": "0",
+                "z": "-95"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4South1",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "",
+                "y": "0",
+                "z": "95"
             },
             "rotation": {
                 "axis": {
