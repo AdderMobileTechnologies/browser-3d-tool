@@ -1239,7 +1239,19 @@ class Main extends React.Component {
     //TODO: save this to the user session as well.
     button.click();
   }
-
+  iconRain() {
+    if (scope.state.isRaining) {
+      scope.environment_Rain("stop");
+      scope.setState({
+        isRaining: false
+      });
+    } else {
+      scope.environment_Rain("start");
+      scope.setState({
+        isRaining: true
+      });
+    }
+  }
   iconShare() {
     console.log("iconShare");
     //let util = new AdderUtil();
@@ -1539,6 +1551,7 @@ class Main extends React.Component {
                   callback={this.subCallback}
                   callback_ScreenShotButtonPress={this.screenshotButtonPress}
                   data={{ key: "value" }}
+                  iconRain={this.iconRain}
                 ></OverlayControlsUpperLeft>
                 {/** <OverlayControls
                   callback={this.subCallback}
