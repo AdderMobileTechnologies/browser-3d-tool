@@ -89,6 +89,17 @@ class AdderLoader {
         let behavior = adderModel.getBehavior();
         mesh.isPickable = false; // set all meshes to Not Clickable by default
 
+        if (mesh.id === "KC9BG19_Untitled.071") {
+          console.log("adderLoader.jsx:: FOUND: KC9BG19_Untitled.071");
+          //can I apply texture to mesh id x ? // apply texture BG13w1
+          const asw = adderModel.getAdderSceneWrapper();
+          let mesh_id = mesh.id;
+          asw.applyTextureToMesh(
+            mesh_id,
+            "dbdev.adder.io/assets/CITY/BG13w1.jpg"
+          );
+        }
+
         for (let index in behavior) {
           let currentStrategy = behavior[index]["strategy"];
           //Usage: Set-Selectable-Meshes

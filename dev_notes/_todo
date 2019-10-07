@@ -962,6 +962,33 @@ Added SavedDesignActions.js to .gitignore
     - one sided  billboard 
     - parallel billboard
     - environment models ( ie. individuals from the city scape original?)
+        - document process of getting models from blender original city scape. 
+        open Blender 
+        get file C:\Users\Bayon\projects\adder_creative_resources\blender_models\CITY_FBX_KC9\ " slice up  "
+        select all meshes of a model and set them in a different layer view 
+        select all ,but ONLY the meshes of the separated model
+        file export > wavefront .obj  > 'Selection Only'
+        import it into a brand new blender project.
+        export it as a babylon file 
+        mv file over to 3dtool assets 
+          STOP: check the path to the image files used by the model point to CITY/ dir where they should already be stored.
+            - do search for <"diffuseTexture":{"name":"> and replace with <"diffuseTexture":{"name":"CITY/>
+        mv file up to server ~ your 'Home' directory with WinSCP or the equivalent
+        sudo mv file to /var/www/html/assets/CITY/filename.babylon 
+        and create a manifest file for it as well.
+        then build a meta_data JSON for it within the environment meta data file you want it to be in.
+
+        Trouble Shooting:
+          * Some of the materials/textures are still missing. 
+              - look for mesh ids in the babylon file 
+                - found: KC9BG19_Untitled.071 
+                - write a condition to look for it in the adder models...
+                   - user adderSceneWrapper function to applyTextureToMesh   in this case... BG13w1
+                  THIS DID NOT WORK: but the mesh appears to have an image texture and material applied to it.
+                  went into blender searched for the mesh KC9BG19_Untitled.071 and found that it was attached to modern.jpg which,
+                  was throwing a can not find error in the console. And I removed it from the texture definition.
+                  did a new babylon export.
+
  - weather button for particles 
   - 1 just pick a weather icon I guess.
  - constrain or extend scene ? 
@@ -976,4 +1003,4 @@ Added SavedDesignActions.js to .gitignore
 
 ----- DID: 
 "increase the contrats in  image editor icons with darker bg color and a light border, was unable to effect the svg icons themselves."
- 
+ "extended the city scape in all directions and added in a few more models."

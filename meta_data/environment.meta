@@ -629,10 +629,10 @@
         }
          , {
 
-            "name": "building_rounded_corners2",
-            "filepath": "CITY/building_rounded_corners.babylon",
+            "name": "skyscraper_1",
+            "filepath": "CITY/skyscraper_1.3.babylon",
             "dir": "CITY",
-            "filename": "building_rounded_corners",
+            "filename": "skyscraper_1",
             "position": {
                 "x": "-23",
                 "y": "0",
@@ -651,7 +651,7 @@
                 "y": "1",
                 "z": "1"
             },
-            "uid": "building_rounded_corners_001",
+            "uid": "skyscraper_1",
              "behavior": [
                         {
                             "strategy": "scale",
