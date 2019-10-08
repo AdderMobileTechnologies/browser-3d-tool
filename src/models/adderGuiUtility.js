@@ -2,6 +2,7 @@ import * as BABYLON from "babylonjs";
 import * as GUI from "babylonjs-gui";
 
 class AdderGuiUtility {
+  currentX_value = 0;
   gui_create_grid2 = advancedTexture => {
     // grid container for form controls
     var grid = new GUI.Grid();
@@ -112,6 +113,236 @@ class AdderGuiUtility {
 
     return results;
   };
+  //////////////////////////////////////////
+  // GUI SELECTION PANEL
+  /* to use: 
+  0) let mesh_id = mesh_id
+  1) let rotateGroup = make_rotateGroup()
+  2) addSliderToRotateGroup :   (rotateGroup, name, method, mesh_id, angle, displayValue)
+  3) let sectionPanel = gui_selection_panel( rotateGroup, width, height) 
+  4) gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) 
+  
+  advancedTexture,
+  mesh_id
+  let options = {
+    name:"",
+    method:"",
+    angle:"",
+    width:"",
+    height:"",
+    displayValue:""
+  }
+  make_default_selection_panel = (advancedTexture, mesh_id, options) 
+  */
+
+  make_default_selection_panel = (advancedTexture, mesh_id, options) => {
+    console.log(
+      "adderGUIUtility: make_default_selection_panel(): mesh_id:",
+      mesh_id
+    );
+    /* to use: 
+      0) let mesh_id = mesh_id
+      1) let rotateGroup = make_rotateGroup()
+      2) addSliderToRotateGroup :   (rotateGroup, name, method, mesh_id, angle, displayValue)
+      3) let sectionPanel = gui_selection_panel( rotateGroup, width, height) 
+      4) gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) 
+      */
+    let rotateGroup = this.make_rotateGroup();
+    console.log("rotateGroup:", rotateGroup);
+    console.log(typeof rotateGroup);
+    console.log(rotateGroup instanceof BABYLON.GUI.SliderGroup);
+    //(mesh_id, options.angle)
+    this.addSliderToRotateGroup(
+      rotateGroup,
+      options.name,
+      this.orientateX,
+      mesh_id,
+      options.angle,
+      options.displayValue
+    );
+    let sectionPanel = this.gui_selection_panel(
+      rotateGroup,
+      options.width,
+      options.height
+    );
+    this.gui_add_selection_panel_to_scene(advancedTexture, sectionPanel);
+  };
+
+  gui_selection_panel = (rotateGroup, width, height) => {
+    var selectBox = new BABYLON.GUI.SelectionPanel("sp", [rotateGroup]);
+    selectBox.width = width; //0.25
+    selectBox.height = height; //0.56
+    selectBox.horizontalAlignment =
+      BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    return selectBox;
+  };
+
+  gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) => {
+    advancedTexture.addControl(selection_panel);
+  };
+
+  orientateY = function(mesh_id, angle) {
+    mesh_id.rotation.y = angle;
+  };
+
+  orientateX = function(mesh_id, angle) {
+    mesh_id.rotation.x = angle;
+  };
+
+  displayValue = function(value) {
+    return BABYLON.Tools.ToDegrees(value) | 0;
+  };
+  make_rotateGroup = () => {
+    let rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
+    return rotateGroup;
+  };
+  addSliderToRotateGroup = () => {
+    console.log("fooey");
+  };
+  /*
+  addSliderToRotateGroup = (
+    rotateGroup,
+    name,
+    method,
+    mesh_id,
+    angle,
+    displayValue
+  ) => { 
+    // !!!!! Unhandled Rejection (TypeError): a is not a function !!!!! 
+     rotateGroup.addSlider(
+      name,
+      method(mesh_id, angle),
+      "degs",
+      0,
+      2 * Math.PI,
+      0,
+      displayValue
+    );
+  };
+*/
+  /*
+  toSize = function(mesh_id, isChecked) {
+    if (isChecked) {
+      mesh_id.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+    } else {
+      mesh_id.scaling = new BABYLON.Vector3(1, 1, 1);
+    }
+  };
+
+  toPlace = function(mesh_id, isChecked) {
+    if (isChecked) {
+      mesh_id.position.y = 1.5;
+    } else {
+      mesh_id.position.y = 0.5;
+    }
+  };
+
+  make_transformGroup = (transformGroup, toSize, toPlace) => {
+    transformGroup = new BABYLON.GUI.CheckboxGroup("Transformation");
+    transformGroup.addCheckbox("Small", toSize);
+    transformGroup.addCheckbox("High", toPlace);
+  };
+  make_colorGroup = (colorGroup, setColor) => {
+    colorGroup = new BABYLON.GUI.RadioGroup("Color");
+    colorGroup.addRadio("Blue", setColor, true);
+    colorGroup.addRadio("Red", setColor);
+  };
+*/
+  easy_selection_panel = (scene, advancedTexture, mesh) => {
+    console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
+
+    var toSize = function(isChecked) {
+      if (isChecked) {
+        mesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+      } else {
+        mesh.scaling = new BABYLON.Vector3(1, 1, 1);
+      }
+    };
+
+    var toPlace = function(isChecked) {
+      if (isChecked) {
+        mesh.position.y = 1.5;
+      } else {
+        mesh.position.y = 0.5;
+      }
+    };
+
+    var orientateY = function(angle) {
+      mesh.rotation.y = angle;
+    };
+    var orientateX = function(angle) {
+      mesh.rotation.x = angle;
+    };
+
+    var displayValue = function(value) {
+      return BABYLON.Tools.ToDegrees(value) | 0;
+    };
+
+    var transformGroup = new BABYLON.GUI.CheckboxGroup("Transformation");
+    transformGroup.addCheckbox("Small", toSize);
+    transformGroup.addCheckbox("High", toPlace);
+
+    var rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
+
+    rotateGroup.addSlider(
+      "Angle Y",
+      orientateY,
+      "degs",
+      0,
+      2 * Math.PI * 0.1,
+      0,
+      displayValue
+    );
+    /*
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+      "UI"
+    );
+    */
+    /*   transformGroup,
+      colorGroup,
+       rotateGroup,
+      */
+
+    var selectBox = new BABYLON.GUI.SelectionPanel("sp", [rotateGroup]);
+    selectBox.width = 0.25;
+    selectBox.height = 0.56;
+    selectBox.horizontalAlignment =
+      BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+    advancedTexture.addControl(selectBox);
+    /*
+    rotateGroup.addSlider(
+      "Angle X",
+      orientateX,
+      "degs",
+      0,
+      2 * Math.PI * 0.1,
+      Math.PI * 0.1,
+      displayValue
+    );*/
+    var moveY = function(val) {
+      mesh.position.y = mesh.position.y + val;
+    };
+    var displayValueN = function(value, obj) {
+      console.log("obj.previousVal:", obj.previousVal);
+      console.log("value:", value);
+
+      return BABYLON.Tools.ToDegrees(value) | 0;
+    };
+
+    var moveX = function(val) {
+      var obj = {};
+      obj.previousVal = val;
+
+      let degreeVal = displayValueN(val, obj);
+      console.log("degreeValue:", degreeVal);
+      mesh.position.x = mesh.position.x - val;
+    };
+    rotateGroup.addSlider("Position X", moveX, "degs", 0, 3, 0.1, displayValue);
+  };
+  ////////////////////////////////////////
 }
 export default AdderGuiUtility;
 

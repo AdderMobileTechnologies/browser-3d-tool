@@ -1029,11 +1029,27 @@ and revisit list from yesterday.
   - get the other icon set up for 'scene' 
  - try to nest a grid for the Babylon GUI as well to get more controll over sliders position.
 - strange resizing behavior between the icon control group and the screenshots areas.
+- remove white in grid list ... perhaps: .makeStyles-root-112{background-color:xxx}
 
 - Babylon GUI improvements: https://doc.babylonjs.com/how_to/selector
       -- selection panel https://www.babylonjs-playground.com/#BXMTCD#1
       -- custom coolors: https://www.babylonjs-playground.com/#BXMTCD#3
+      adderLoader:::   if (currentStrategy === "gui") { ::::
+              results = adderGuiUtility.control_sliderWithHeader(
+                mesh.parent,
+                "billboard"
+              );
+              header = results[0];
+              slider = results[1];
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
+
 
  -DONE: 
   checked email setup ,needs auth, and fixed weather icon size and tranparency.
    change out the new icons and tweak their size and position.
+  working on an advanced gui panel for control multiple aspects of a mesh/model 
+
+LEFT OFF HERE: 
+  on 2 branches: 
+    bayon-oct4 
+    slider-grids 

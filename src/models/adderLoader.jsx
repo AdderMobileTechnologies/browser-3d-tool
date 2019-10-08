@@ -141,6 +141,7 @@ class AdderLoader {
           var results = null;
           var header = null;
           var slider = null;
+          let scene = adderSceneWrapper.getScene();
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
               results = adderGuiUtility.control_sliderWithHeader(
@@ -150,17 +151,65 @@ class AdderLoader {
               header = results[0];
               slider = results[1];
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
+              /* */
+              /*
+            advancedTexture,
+            mesh_id
+            let options = {
+              name:"",
+              method:"",
+              angle:"",
+              width:"",
+              height:"",
+              displayValue:""
+            }
+            make_default_selection_panel = (advancedTexture, mesh_id, options) 
+            */
+              console.log("mesh.parent:", mesh.parent);
+              console.log("mesh.parent.id", mesh.parent.id);
+              /*
+              let options = {
+                name: "foo",
+                method: "orientateX",
+                angle: "90",
+                width: "0.25",
+                height: "0.5",
+                displayValue: "yo"
+              };
+              adderGuiUtility.make_default_selection_panel(
+                advancedTexture,
+                mesh.parent,
+                options
+              );
+*/
+              /*
+              let scene = adderSceneWrapper.getScene();
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
+*/
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon":
-              results = adderGuiUtility.control_sliderWithHeader(
+              /* results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "porsche"
               );
               header = results[0];
               slider = results[1];
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
+*/
+
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
+
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
+              /*
               results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "porsche"
@@ -168,6 +217,14 @@ class AdderLoader {
               header = results[0];
               slider = results[1];
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
+              */
+
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
+
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
               results = adderGuiUtility.control_sliderWithHeader(
