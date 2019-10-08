@@ -17,7 +17,9 @@ class AdderGuiUtility {
     advancedTexture.addControl(grid);
     return grid;
   };
-
+  lamenate = () => {
+    console.log("lamenate");
+  };
   panel_Grid = (advancedTexture, header, slider, panel) => {
     advancedTexture.layer.layerMask = 2;
 
