@@ -17,9 +17,7 @@ class AdderGuiUtility {
     advancedTexture.addControl(grid);
     return grid;
   };
-  lamenate = () => {
-    console.log("lamenate");
-  };
+
   panel_Grid = (advancedTexture, header, slider, panel) => {
     advancedTexture.layer.layerMask = 2;
 
@@ -28,6 +26,7 @@ class AdderGuiUtility {
         var panel1 = new BABYLON.GUI.StackPanel();
         panel1.width = "120px";
         panel1.fontSize = "14px";
+
         panel1.horizontalAlignment =
           BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         panel1.verticalAlignment =
@@ -40,6 +39,7 @@ class AdderGuiUtility {
         var panel2 = new BABYLON.GUI.StackPanel();
         panel2.width = "120px";
         panel2.fontSize = "14px";
+
         panel2.horizontalAlignment =
           BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         panel2.verticalAlignment =
@@ -52,6 +52,7 @@ class AdderGuiUtility {
         var panel3 = new BABYLON.GUI.StackPanel();
         panel3.width = "120px";
         panel3.fontSize = "14px";
+
         panel3.horizontalAlignment =
           BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         panel3.verticalAlignment =
