@@ -670,7 +670,7 @@
                             }
                         }
                     ]
-        } , {
+        }  , {
 
             "name": "skyscraper_2",
             "filepath": "CITY/skyscraper_2.0.babylon",
@@ -947,6 +947,49 @@
                 "axis": {
                     "x": "0",
                     "y": "1",
+                    "z": "0"
+                },
+                "angle": "90"
+            },
+            "scaling": {
+                "x": "1",
+                "y": "1",
+                "z": "1"
+            },
+            "uid": "block4_001",
+             "behavior": [
+                        {
+                            "strategy": "scale",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        },
+                        {
+                            "strategy": "no-select",
+                            "parameters": {
+                                "x": "0",
+                                "y": "0",
+                                "z": "0"
+                            }
+                        }
+                    ]
+        }, {
+
+            "name": "block4North3",
+            "filepath": "CITY/block4.babylon",
+            "dir": "CITY",
+            "filename": "block4",
+            "position": {
+                "x": "1",
+                "y": "0",
+                "z": "-270"
+            },
+            "rotation": {
+                "axis": {
+                    "x": "0",
+                    "y": "0",
                     "z": "0"
                 },
                 "angle": "90"

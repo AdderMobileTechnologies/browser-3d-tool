@@ -15,8 +15,8 @@ export default function OverlayControlsUpperRight(props) {
           iconName="rain"
           classNames="icon_btn overlay-button"
           style={{
-            backgroundColor: "green !important",
-            background: "green !important"
+            backgroundColor: "none !important",
+            background: "none !important"
           }}
         ></UIButton>
         ;

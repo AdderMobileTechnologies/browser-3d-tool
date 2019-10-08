@@ -1016,6 +1016,14 @@ and revisit list from yesterday.
 
 *note on Environment Models: they seem to be losing their texture somewhere along the line. 
  - fix email input box issue
+    - 2 issues:
+      - having a blank value="" prevented entering data into the :TO input.
+      - google stopped liking the user and pass:
+      Test enabling “Access for less secure apps” (which just means the client/app doesn’t use OAuth 2.0 - https://oauth.net/2/) for the 
+      account you are trying to access.  It's found in the account settings on the Security tab, Account permissions (not available to accounts 
+      with 2-step verification enabled):  https://support.google.com/accounts/answer/6010255?hl=en
+
  - make the overlay containers more flexibile and uniform.
  - adder logo quality 
- 
+ - look into the images that Ian passed over to me yesterday. 
+ - try to nest a grid for the Babylon GUI as well to get more controll over sliders position.

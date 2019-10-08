@@ -31,7 +31,8 @@ export default function EMailer(props) {
   const sendEmail = data => {
     let promise_designOptions = new Promise(function(resolve, reject) {
       const url = `${K.META_URL}/email/send`;
-
+      console.log("_emailer.jsx:sendEmail():data:", data);
+      localStorage.setItem("email data:", JSON.stringify(data));
       let params = {
         from: "hardcoded-in-server",
         to: data.email_to,
@@ -77,7 +78,6 @@ export default function EMailer(props) {
           type="text"
           name="to"
           placeholder="john.doe@anonymous.com"
-          value=""
         ></input>
         <input
           id="email_subject"

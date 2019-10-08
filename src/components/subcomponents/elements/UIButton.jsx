@@ -9,7 +9,7 @@ import IconUndo from "./../../../assets/icons/undoTransparent.png";
 import Landscape from "./../../../assets/icons/landscape_2x.png";
 import Location_City from "./../../../assets/icons/location_city_2x.png";
 // Weather_Icons_1B-03.png
-import Rain from "./../../../assets/icons/Component 22 – 1.png";
+import Rain from "./../../../assets/icons/icon_weather_cloud_1.png"; //Component 22 – 1.png
 
 // Old Material UI Stuff
 import Avatar from "@material-ui/core/Avatar";
@@ -47,6 +47,13 @@ const iconStyle = {
     width: "44px",
     height: "44px",
     backgroundColor: "#ddd",
+    borderRadius: "6px",
+    xboxShadow: "2px 3px 3px #ccc"
+  },
+  small_transparent: {
+    width: "44px",
+    height: "44px",
+    backgroundColor: "none",
     borderRadius: "6px",
     xboxShadow: "2px 3px 3px #ccc"
   }
@@ -137,7 +144,7 @@ class UIButton extends Component {
             onClick={this.props.onClick}
             alt={alt}
             src={src}
-            style={{ ...iconStyle.small }}
+            style={{ ...iconStyle.small_transparent }}
           />
         );
       case "camera_alt":

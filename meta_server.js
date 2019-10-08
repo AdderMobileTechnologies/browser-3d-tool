@@ -79,8 +79,13 @@ app.get("/meta/design/", function(req, res) {
 
 app.post("/email/send/", function(req, res) {
   //console.log("/email/send/");
-  //console.log("req:", req);
-  //console.log("req.body", req.body);
+  console.log("req.query:", req.query);
+  console.log("req.params:", req.params);
+  console.log("req.body", req.body);
+  console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
+  console.log(`Your env var is ${NODEMAILER_USER}`); // whatever
+  console.log(`Your env var is ${NODEMAILER_PASS}`); // whatever
+  console.log(`Your env var is ${NODEMAILER_SMTP_PORT}`); // whatever
   //------------------------------------
   var transport = nodemailer.createTransport({
     host: NODEMAILER_SMTP_HOST,
