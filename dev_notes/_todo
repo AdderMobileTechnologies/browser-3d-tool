@@ -958,6 +958,7 @@ Added SavedDesignActions.js to .gitignore
  -# brighten toast icons 
     - no luck changing the 'svgs' 
     - was able to add contrast with darker bg color and lighter border.
+    - sent svgs to Ian
  - more models
     - one sided  billboard 
     - parallel billboard
@@ -1007,3 +1008,14 @@ increase the contrats in  image editor icons with darker bg color and a light bo
 extended the city scape in all directions and added in a few more models.
 added a skyscraper but had some issues with materials and textures.
 added a skyscraper and changed adder logo to one with angled text.
+move some of the overlay controls to new locations and rewire dependencies.
+
+//========================================================================================
+Tuesday : start here . get Ian the svgs for TUI 
+and revisit list from yesterday.
+
+*note on Environment Models: they seem to be losing their texture somewhere along the line. 
+ - fix email input box issue
+ - make the overlay containers more flexibile and uniform.
+ - adder logo quality 
+ 
