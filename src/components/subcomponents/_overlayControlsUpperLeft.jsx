@@ -13,7 +13,7 @@ export default function OverlayControlsUpperRight(props) {
           title="Screen Shot"
           buttonText="Save Image"
           onClick={props.callback_ScreenShotButtonPress}
-          iconName="camera_alt"
+          iconName="screen_shot"
           classNames="icon_btn overlay-button"
           style={{
             /* background: "none !important",
@@ -22,7 +22,7 @@ export default function OverlayControlsUpperRight(props) {
             background: "green !important"
           }}
         ></UIButton>
-
+        {/** camera_alt  */}
         {/**
 
         <UIButton

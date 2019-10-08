@@ -1024,6 +1024,10 @@ and revisit list from yesterday.
       with 2-step verification enabled):  https://support.google.com/accounts/answer/6010255?hl=en
 
  - make the overlay containers more flexibile and uniform.
- - adder logo quality 
+ - adder logo quality (ok)
  - look into the images that Ian passed over to me yesterday. 
+  - get the other icon set up for 'scene' 
  - try to nest a grid for the Babylon GUI as well to get more controll over sliders position.
+
+ -DONE: 
+  checked email setup ,needs auth, and fixed weather icon size and tranparency.

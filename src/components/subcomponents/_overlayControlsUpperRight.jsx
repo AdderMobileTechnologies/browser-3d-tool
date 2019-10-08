@@ -19,7 +19,7 @@ export default function OverlayControlsUpperRight(props) {
             background: "none !important"
           }}
         ></UIButton>
-        ;
+
         {/**
                 <UIButton
                   title="Crop Image"

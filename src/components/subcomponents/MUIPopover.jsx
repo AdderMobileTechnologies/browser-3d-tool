@@ -48,7 +48,7 @@ export default function SimplePopover(props) {
         aria-describedby={id}
         variant="contained"
         onClick={handleClick}
-        iconName="movie_filter"
+        iconName="scene_change"
         classNames="  overlay-button"
       ></UIButton>
 

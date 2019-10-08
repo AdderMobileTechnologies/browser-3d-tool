@@ -982,17 +982,17 @@
             "dir": "CITY",
             "filename": "block4",
             "position": {
-                "x": "1",
+                "x": "0",
                 "y": "0",
                 "z": "-270"
             },
             "rotation": {
                 "axis": {
-                    "x": "0",
+                    "x": "",
                     "y": "0",
-                    "z": "0"
+                    "z": "1"
                 },
-                "angle": "90"
+                "angle": "0"
             },
             "scaling": {
                 "x": "1",

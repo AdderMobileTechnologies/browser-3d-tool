@@ -73,10 +73,28 @@
 .gui-overlay-upper-left {
     position: absolute;
     top: 1%;
-    left: 5px;
+    left: 0px;
     background-color: none !important;
     background: none !important;
     width: 45px;
+}
+
+.gui-overlay-upper-right {
+    position: absolute;
+    top: 1%;
+    right: 80px;
+    background-color: none;
+    background: none;
+    width: 1px;
+}
+
+.gui-overlay-mui-popover {
+    position: absolute;
+    top: 1%;
+    right: 40px;
+    background-color: none;
+    background: none;
+    width: 1px;
 }
 
 .gui-overlay {
@@ -102,24 +120,6 @@
 .gui-overlay-right {
     position: absolute;
     top: 85%;
-    right: 60px;
-    background-color: none;
-    background: none;
-    width: 1px;
-}
-
-.gui-overlay-upper-right {
-    position: absolute;
-    top: 5%;
-    right: 120px;
-    background-color: none;
-    background: none;
-    width: 1px;
-}
-
-.gui-overlay-mui-popover {
-    position: absolute;
-    top: 5%;
     right: 60px;
     background-color: none;
     background: none;

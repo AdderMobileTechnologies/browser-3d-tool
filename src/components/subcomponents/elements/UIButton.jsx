@@ -9,7 +9,9 @@ import IconUndo from "./../../../assets/icons/undoTransparent.png";
 import Landscape from "./../../../assets/icons/landscape_2x.png";
 import Location_City from "./../../../assets/icons/location_city_2x.png";
 // Weather_Icons_1B-03.png
-import Rain from "./../../../assets/icons/icon_weather_cloud_1.png"; //Component 22 – 1.png
+import Rain from "./../../../assets/icons/Component 22 – 1b@2x.png"; //Component 22 – 1.png
+import Screenshot from "./../../../assets/icons/Component 28 – 1b@2x.png";
+import SceneChange from "./../../../assets/icons/Component 25 – 1b@2x.png";
 
 // Old Material UI Stuff
 import Avatar from "@material-ui/core/Avatar";
@@ -53,6 +55,13 @@ const iconStyle = {
   small_transparent: {
     width: "44px",
     height: "44px",
+    backgroundColor: "none",
+    borderRadius: "6px",
+    xboxShadow: "2px 3px 3px #ccc"
+  },
+  smaller_transparent: {
+    width: "34px",
+    height: "34px",
     backgroundColor: "none",
     borderRadius: "6px",
     xboxShadow: "2px 3px 3px #ccc"
@@ -144,7 +153,33 @@ class UIButton extends Component {
             onClick={this.props.onClick}
             alt={alt}
             src={src}
-            style={{ ...iconStyle.small_transparent }}
+            style={{ ...iconStyle.smaller_transparent }}
+          />
+        );
+      case "screen_shot":
+        alt = "screen_shot";
+        src = Screenshot;
+        // break;
+        return (
+          <input
+            type={"image"}
+            onClick={this.props.onClick} // this.props.onClick();
+            alt={alt}
+            src={src}
+            style={{ ...iconStyle.smaller_transparent }}
+          />
+        );
+      case "scene_change":
+        alt = "scene_change";
+        src = SceneChange;
+        // break;
+        return (
+          <input
+            type={"image"}
+            onClick={this.props.onClick} // this.props.onClick();
+            alt={alt}
+            src={src}
+            style={{ ...iconStyle.smaller_transparent }}
           />
         );
       case "camera_alt":
