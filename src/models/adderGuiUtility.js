@@ -315,6 +315,15 @@ class AdderGuiUtility extends React.Component {
     selectBox.horizontalAlignment =
       BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    /* Change Color Scheme  */
+    selectBox.fontSize = 11;
+    selectBox.fontWeight = 600;
+    selectBox.paddingLeft = 12;
+    selectBox.alpha = 0.5;
+    selectBox.background = "#555555";
+    selectBox.barColor = "#4F7DF2";
+    selectBox.color = "#FFFFFF";
+    selectBox.labelolor = "#FFFFFF";
 
     advancedTexture.addControl(selectBox);
 
