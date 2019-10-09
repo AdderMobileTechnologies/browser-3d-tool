@@ -76,22 +76,17 @@ var createScene = function() {
   colorGroup.addRadio("Blue", setColor, true);
   colorGroup.addRadio("Red", setColor);
 
-  make_rotateGroup = (name, _s_) => {
-    var rotateGroup = new BABYLON.GUI.SliderGroup(name, _s_);
-    return rotateGroup;
-  };
+  var rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
 
-  addSliderToRotateGroup = (rotateGroup, name, method, displayValue) => {
-    rotateGroup.addSlider(
-      name,
-      method,
-      "degs",
-      0,
-      2 * Math.PI,
-      0,
-      displayValue
-    );
-  };
+  rotateGroup.addSlider(
+    "Angle Y",
+    orientateY,
+    "degs",
+    0,
+    2 * Math.PI,
+    0,
+    displayValue
+  );
 
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
     "UI"

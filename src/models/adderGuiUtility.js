@@ -123,142 +123,9 @@ class AdderGuiUtility extends React.Component {
 
     return results;
   };
+
   //////////////////////////////////////////
   // GUI SELECTION PANEL
-  /* to use: 
-  0) let mesh_id = mesh_id
-  1) let rotateGroup = make_rotateGroup()
-  2) addSliderToRotateGroup :   (rotateGroup, name, method, mesh_id, angle, displayValue)
-  3) let sectionPanel = gui_selection_panel( rotateGroup, width, height) 
-  4) gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) 
-  
-  advancedTexture,
-  mesh_id
-  let options = {
-    name:"",
-    method:"",
-    angle:"",
-    width:"",
-    height:"",
-    displayValue:""
-  }
-  make_default_selection_panel = (advancedTexture, mesh_id, options) 
-  */
-
-  make_default_selection_panel = (advancedTexture, mesh_id, options) => {
-    console.log(
-      "adderGUIUtility: make_default_selection_panel(): mesh_id:",
-      mesh_id
-    );
-    /* to use: 
-      0) let mesh_id = mesh_id
-      1) let rotateGroup = make_rotateGroup()
-      2) addSliderToRotateGroup :   (rotateGroup, name, method, mesh_id, angle, displayValue)
-      3) let sectionPanel = gui_selection_panel( rotateGroup, width, height) 
-      4) gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) 
-      */
-    let rotateGroup = this.make_rotateGroup();
-    console.log("rotateGroup:", rotateGroup);
-    console.log(typeof rotateGroup);
-    console.log(rotateGroup instanceof BABYLON.GUI.SliderGroup);
-    //(mesh_id, options.angle)
-    this.addSliderToRotateGroup(
-      rotateGroup,
-      options.name,
-      this.orientateX,
-      mesh_id,
-      options.angle,
-      options.displayValue
-    );
-    let sectionPanel = this.gui_selection_panel(
-      rotateGroup,
-      options.width,
-      options.height
-    );
-    this.gui_add_selection_panel_to_scene(advancedTexture, sectionPanel);
-  };
-
-  gui_selection_panel = (rotateGroup, width, height) => {
-    var selectBox = new BABYLON.GUI.SelectionPanel("sp", [rotateGroup]);
-    selectBox.width = width; //0.25
-    selectBox.height = height; //0.56
-    selectBox.horizontalAlignment =
-      BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    return selectBox;
-  };
-
-  gui_add_selection_panel_to_scene = (advancedTexture, selection_panel) => {
-    advancedTexture.addControl(selection_panel);
-  };
-
-  orientateY = function(mesh_id, angle) {
-    mesh_id.rotation.y = angle;
-  };
-
-  orientateX = function(mesh_id, angle) {
-    mesh_id.rotation.x = angle;
-  };
-
-  displayValue = function(value) {
-    return BABYLON.Tools.ToDegrees(value) | 0;
-  };
-  make_rotateGroup = () => {
-    let rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
-    return rotateGroup;
-  };
-  addSliderToRotateGroup = () => {
-    console.log("fooey");
-  };
-  /*
-  addSliderToRotateGroup = (
-    rotateGroup,
-    name,
-    method,
-    mesh_id,
-    angle,
-    displayValue
-  ) => { 
-    // !!!!! Unhandled Rejection (TypeError): a is not a function !!!!! 
-     rotateGroup.addSlider(
-      name,
-      method(mesh_id, angle),
-      "degs",
-      0,
-      2 * Math.PI,
-      0,
-      displayValue
-    );
-  };
-*/
-  /*
-  toSize = function(mesh_id, isChecked) {
-    if (isChecked) {
-      mesh_id.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
-    } else {
-      mesh_id.scaling = new BABYLON.Vector3(1, 1, 1);
-    }
-  };
-
-  toPlace = function(mesh_id, isChecked) {
-    if (isChecked) {
-      mesh_id.position.y = 1.5;
-    } else {
-      mesh_id.position.y = 0.5;
-    }
-  };
-
-  make_transformGroup = (transformGroup, toSize, toPlace) => {
-    transformGroup = new BABYLON.GUI.CheckboxGroup("Transformation");
-    transformGroup.addCheckbox("Small", toSize);
-    transformGroup.addCheckbox("High", toPlace);
-  };
-  make_colorGroup = (colorGroup, setColor) => {
-    colorGroup = new BABYLON.GUI.RadioGroup("Color");
-    colorGroup.addRadio("Blue", setColor, true);
-    colorGroup.addRadio("Red", setColor);
-  };
-*/
   easy_selection_panel = (scene, advancedTexture, mesh) => {
     console.log("easy selection panel:");
     console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
@@ -272,14 +139,6 @@ class AdderGuiUtility extends React.Component {
       }
     };
 
-    var toPlace = function(isChecked) {
-      if (isChecked) {
-        mesh.position.y = 1.5;
-      } else {
-        mesh.position.y = 0.5;
-      }
-    };
-
     var orientateY = function(angle) {
       mesh.rotation.y = angle;
     };
@@ -290,15 +149,13 @@ class AdderGuiUtility extends React.Component {
     var displayValue = function(value) {
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
-
-    var transformGroup = new BABYLON.GUI.CheckboxGroup("Transformation");
-    transformGroup.addCheckbox("Small", toSize);
-    transformGroup.addCheckbox("High", toPlace);
-
-    var rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
+    var onValueChange = function(value) {
+      console.log("onValueChange value:", value);
+      return " ";
+    };
 
     /*
-    rotateGroup.addSlider(
+    positionGroup.addSlider(
       "Angle Y",
       orientateY,
       "degs",
@@ -308,24 +165,38 @@ class AdderGuiUtility extends React.Component {
       displayValue
     );
    */
+    var transformGroup = new BABYLON.GUI.CheckboxGroup("Transformation");
+    transformGroup.addCheckbox("Small", toSize);
 
-    var selectBox = new BABYLON.GUI.SelectionPanel("sp", [rotateGroup]);
-    selectBox.width = 0.25;
-    selectBox.height = 0.56;
-    selectBox.horizontalAlignment =
+    var positionGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
+    console.log(
+      "What is inside the positionGroup: ie. sliderGroup?",
+      positionGroup
+    );
+
+    var selectionPanel = new BABYLON.GUI.SelectionPanel("sp", [positionGroup]);
+    selectionPanel.width = 0.25;
+    selectionPanel.height = 0.56;
+    selectionPanel.horizontalAlignment =
       BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-    /* Change Color Scheme  */
-    selectBox.fontSize = 11;
-    selectBox.fontWeight = 600;
-    selectBox.paddingLeft = 12;
-    selectBox.alpha = 0.5;
-    selectBox.background = "#555555";
-    selectBox.barColor = "#4F7DF2";
-    selectBox.color = "#FFFFFF";
-    selectBox.labelolor = "#FFFFFF";
+    selectionPanel.verticalAlignment =
+      BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    /* selectionPanel style */
+    selectionPanel.fontSize = 11;
+    selectionPanel.fontWeight = 600;
+    selectionPanel.paddingTop = 2;
+    selectionPanel.paddingLeft = 2;
+    selectionPanel.paddingRight = 2;
+    selectionPanel.paddingBottom = 2;
+    selectionPanel.alpha = 0.7;
+    selectionPanel.background = "#222";
+    selectionPanel.barColor = "#4F7DF2";
+    selectionPanel.color = "#FFFFFF";
+    selectionPanel.labelolor = "#FFFFFF";
+    selectionPanel.cornerRadius = 8;
+    selectionPanel.thickness = 0.5;
 
-    advancedTexture.addControl(selectBox);
+    advancedTexture.addControl(selectionPanel);
 
     var moveY = function(val) {
       mesh.position.y = mesh.position.y + val;
@@ -344,7 +215,7 @@ class AdderGuiUtility extends React.Component {
       }
       scope.x_previous = val;
     };
-    rotateGroup.addSlider("Position X", moveX, "degs", 0, 3, 0.1, displayValue);
+
     var moveZ = function(val) {
       let degreeVal = displayValueN(val);
       if (scope.z_previous > val) {
@@ -354,50 +225,89 @@ class AdderGuiUtility extends React.Component {
       }
       scope.z_previous = val;
     };
-    rotateGroup.addSlider("Position Z", moveZ, "degs", 0, 3, 0.1, displayValue);
+
+    positionGroup.addSlider(
+      "Position X",
+      moveX,
+      " ",
+      0,
+      3,
+      0.05,
+      onValueChange
+    );
+
+    positionGroup.addSlider(
+      "Position Z",
+      moveZ,
+      " ",
+      0,
+      3,
+      0.05,
+      onValueChange
+    );
+    positionGroup.addSlider(
+      "Angle Y",
+      orientateY,
+      " ",
+      0,
+      2 * Math.PI * 0.1,
+      0,
+      onValueChange
+    );
+
+    let selectors = positionGroup.selectors;
+    //X
+    let selectorX = selectors[0];
+    selectorX.paddingTop = 0;
+    selectorX.paddingBottom = 0;
+    selectorX.fontFamily = "Courier";
+    selectorX.fontSize = 11;
+    selectorX.height = "35px";
+    let selectorX_slider_label = selectorX.children[0];
+    selectorX_slider_label.height = "15px";
+    let selectorX_slider = selectorX.children[1];
+    selectorX_slider.height = "18px";
+    selectorX_slider.isThumbCircle = true;
+    selectorX_slider.paddingTop = 0;
+    selectorX_slider.paddingBottom = 0;
+
+    //Z
+    let selectorZ = selectors[1];
+    selectorZ.paddingTop = 0;
+    selectorZ.paddingBottom = 0;
+    selectorZ.fontFamily = "Courier";
+    selectorZ.fontSize = 11;
+    let selectorZ_slider_label = selectorZ.children[0];
+    selectorZ_slider_label.height = "15px";
+    let selectorZ_slider = selectorZ.children[1];
+    selectorZ_slider.height = "18px";
+    selectorZ_slider.isThumbCircle = true;
+    selectorZ_slider.thumbWidth = "15px";
+    selectorZ_slider.paddingTop = 0;
+    selectorZ_slider.paddingBottom = 0;
+    selectorZ_slider.color = "#222";
+    selectorZ_slider.shadowColor = "#ccc";
+    selectorZ_slider.borderColor = "#000";
+
+    //Y
+    let selectorY = selectors[2];
+    selectorY.paddingTop = 0;
+    selectorY.paddingBottom = 0;
+    selectorY.fontFamily = "Courier";
+    selectorY.fontSize = 11;
+    let selectorY_slider_label = selectorY.children[0];
+    selectorY_slider_label.height = "15px";
+    let selectorY_slider = selectorY.children[1];
+    selectorY_slider.height = "18px";
+    selectorY_slider.isThumbCircle = true;
+    selectorY_slider.thumbWidth = "15px";
+    selectorY_slider.paddingTop = 0;
+    selectorY_slider.paddingBottom = 0;
+    selectorY_slider.color = "#222";
+    selectorY_slider.shadowColor = "#ccc";
+    selectorY_slider.borderColor = "#000";
   };
+
   ////////////////////////////////////////
 }
 export default AdderGuiUtility;
-
-/*
-  /* ORIGINAL: 
-        if (value > slider.metadata) {
-          mesh.rotation.y = value * 0.1;
-        } else {
-          mesh.rotation.y = -(value * 0.1);
-        }
-        */
-/*
-       //attempt #1 
-        // Alternative:  may need to be converted to radians:
-        if (value > 1) {
-          //2 - sliderValue * 360
-          let meshRotationValue = (2 - value) * 360 * (Math.PI / 180);
-          mesh.rotation.y = meshRotationValue;
-          console.log("meshRotationValue:", meshRotationValue);
-        }
-        if (value < 1) {
-          // sliderValue * -360
-          let meshRotationValueLess = value * -360 * (Math.PI / 180) ;
-          mesh.rotation.y = meshRotationValueLess;
-          console.log("meshRotationValueLess:", meshRotationValueLess);
-        }
-        if (value === 0 || value === 1 || value === 2) {
-          //slider valu e = 0
-          mesh.rotation.y = 0;
-        }
-        //end #1
-        */
-
-/*
-        
-IF 2 = 360 and 1 = 0 and 0 = -360
-
-
-
-
-
-
-
-        */
