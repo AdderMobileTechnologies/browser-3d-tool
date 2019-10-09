@@ -1,7 +1,17 @@
+import React from "react";
 import * as BABYLON from "babylonjs";
 import * as GUI from "babylonjs-gui";
 
-class AdderGuiUtility {
+class AdderGuiUtility extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      y_previous: 0,
+      z_previous: 0,
+      x_previous: 0
+    };
+    //this.moveX = this.moveX.bind(this);
+  }
   currentX_value = 0;
   gui_create_grid2 = advancedTexture => {
     // grid container for form controls
@@ -250,8 +260,10 @@ class AdderGuiUtility {
   };
 */
   easy_selection_panel = (scene, advancedTexture, mesh) => {
+    console.log("easy selection panel:");
     console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
-
+    console.log("this.state:", this.state);
+    var scope = this.state;
     var toSize = function(isChecked) {
       if (isChecked) {
         mesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
@@ -309,7 +321,7 @@ class AdderGuiUtility {
     selectBox.height = 0.56;
     selectBox.horizontalAlignment =
       BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
 
     advancedTexture.addControl(selectBox);
     /*
@@ -325,20 +337,24 @@ class AdderGuiUtility {
     var moveY = function(val) {
       mesh.position.y = mesh.position.y + val;
     };
-    var displayValueN = function(value, obj) {
-      console.log("obj.previousVal:", obj.previousVal);
+    var displayValueN = function(value) {
       console.log("value:", value);
 
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
 
     var moveX = function(val) {
-      var obj = {};
-      obj.previousVal = val;
-
-      let degreeVal = displayValueN(val, obj);
+      let degreeVal = displayValueN(val);
       console.log("degreeValue:", degreeVal);
-      mesh.position.x = mesh.position.x - val;
+      console.log("scope:", scope);
+
+      if (scope.x_previous > val) {
+        mesh.position.x = mesh.position.x + val;
+      } else {
+        mesh.position.x = mesh.position.x - val;
+      }
+
+      scope.x_previous = val;
     };
     rotateGroup.addSlider("Position X", moveX, "degs", 0, 3, 0.1, displayValue);
   };
