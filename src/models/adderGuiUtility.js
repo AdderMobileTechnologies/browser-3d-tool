@@ -6,6 +6,8 @@ class AdderGuiUtility extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectionPanel: {},
+      mesh: {},
       y_previous: 0,
       z_previous: 0,
       x_previous: 0
@@ -131,6 +133,7 @@ class AdderGuiUtility extends React.Component {
     console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
     console.log("this.state:", this.state);
     var scope = this.state;
+    scope.mesh = mesh;
     var toSize = function(isChecked) {
       if (isChecked) {
         mesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
@@ -140,7 +143,15 @@ class AdderGuiUtility extends React.Component {
     };
 
     var orientateY = function(angle) {
-      mesh.rotation.y = angle;
+      let val = displayValueN(angle);
+      if (scope.y_previous > val) {
+        // mesh.position.x = mesh.position.x + val;
+        mesh.rotation.y = angle;
+      } else if (scope.y_previous < val) {
+        // mesh.position.x = mesh.position.x - val;
+        mesh.rotation.y = -1 * angle;
+      }
+      scope.y_previous = val;
     };
     var orientateX = function(angle) {
       mesh.rotation.x = angle;
@@ -150,7 +161,11 @@ class AdderGuiUtility extends React.Component {
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
     var onValueChange = function(value) {
-      console.log("onValueChange value:", value);
+      // console.log("onValueChange value:", value);
+      console.log("scope:", scope);
+      if (scope.mesh.position.x <= -8) {
+        //WORKS:  scope.selectionPanel.isVisible = false;
+      }
       return " ";
     };
 
@@ -175,6 +190,7 @@ class AdderGuiUtility extends React.Component {
     );
 
     var selectionPanel = new BABYLON.GUI.SelectionPanel("sp", [positionGroup]);
+    scope.selectionPanel = selectionPanel;
     selectionPanel.width = 0.25;
     selectionPanel.height = 0.56;
     selectionPanel.horizontalAlignment =
@@ -208,6 +224,9 @@ class AdderGuiUtility extends React.Component {
 
     var moveX = function(val) {
       let degreeVal = displayValueN(val);
+      console.log("mesh.position.x:", mesh.position.x);
+      // console.log("scope.x_previous:", scope.x_previous);
+      // console.log("val:", val);
       if (scope.x_previous > val) {
         mesh.position.x = mesh.position.x + val;
       } else {
@@ -219,9 +238,9 @@ class AdderGuiUtility extends React.Component {
     var moveZ = function(val) {
       let degreeVal = displayValueN(val);
       if (scope.z_previous > val) {
-        mesh.position.z = mesh.position.z + val;
-      } else {
         mesh.position.z = mesh.position.z - val;
+      } else {
+        mesh.position.z = mesh.position.z + val;
       }
       scope.z_previous = val;
     };
@@ -230,8 +249,8 @@ class AdderGuiUtility extends React.Component {
       "Position X",
       moveX,
       " ",
-      0,
-      3,
+      0.95,
+      1.45,
       0.05,
       onValueChange
     );
@@ -246,7 +265,7 @@ class AdderGuiUtility extends React.Component {
       onValueChange
     );
     positionGroup.addSlider(
-      "Angle Y",
+      "Rotate Y",
       orientateY,
       " ",
       0,

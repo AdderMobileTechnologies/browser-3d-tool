@@ -144,6 +144,11 @@ class AdderSceneWrapper {
       }
     };
   }
+
+  get_UIState() {
+    return "data from the adderSceneWrapper method getUIState()";
+  }
+
   disposeOfMeshesForModel(givenModelName) {
     let models = this.getModels();
     for (let x in models) {

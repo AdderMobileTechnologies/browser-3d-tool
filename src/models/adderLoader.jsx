@@ -142,6 +142,7 @@ class AdderLoader {
           var header = null;
           var slider = null;
           let scene = adderSceneWrapper.getScene();
+          let asw = adderSceneWrapper;
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
               results = adderGuiUtility.control_sliderWithHeader(
