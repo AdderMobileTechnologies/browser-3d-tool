@@ -297,6 +297,7 @@ class AdderGuiUtility extends React.Component {
 
     var rotateGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
 
+    /*
     rotateGroup.addSlider(
       "Angle Y",
       orientateY,
@@ -306,15 +307,7 @@ class AdderGuiUtility extends React.Component {
       0,
       displayValue
     );
-    /*
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
-      "UI"
-    );
-    */
-    /*   transformGroup,
-      colorGroup,
-       rotateGroup,
-      */
+   */
 
     var selectBox = new BABYLON.GUI.SelectionPanel("sp", [rotateGroup]);
     selectBox.width = 0.25;
@@ -324,39 +317,35 @@ class AdderGuiUtility extends React.Component {
     selectBox.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
 
     advancedTexture.addControl(selectBox);
-    /*
-    rotateGroup.addSlider(
-      "Angle X",
-      orientateX,
-      "degs",
-      0,
-      2 * Math.PI * 0.1,
-      Math.PI * 0.1,
-      displayValue
-    );*/
+
     var moveY = function(val) {
       mesh.position.y = mesh.position.y + val;
     };
     var displayValueN = function(value) {
       console.log("value:", value);
-
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
 
     var moveX = function(val) {
       let degreeVal = displayValueN(val);
-      console.log("degreeValue:", degreeVal);
-      console.log("scope:", scope);
-
       if (scope.x_previous > val) {
         mesh.position.x = mesh.position.x + val;
       } else {
         mesh.position.x = mesh.position.x - val;
       }
-
       scope.x_previous = val;
     };
     rotateGroup.addSlider("Position X", moveX, "degs", 0, 3, 0.1, displayValue);
+    var moveZ = function(val) {
+      let degreeVal = displayValueN(val);
+      if (scope.z_previous > val) {
+        mesh.position.z = mesh.position.z + val;
+      } else {
+        mesh.position.z = mesh.position.z - val;
+      }
+      scope.z_previous = val;
+    };
+    rotateGroup.addSlider("Position Z", moveZ, "degs", 0, 3, 0.1, displayValue);
   };
   ////////////////////////////////////////
 }

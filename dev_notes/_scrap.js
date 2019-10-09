@@ -1,20 +1,10 @@
-"meshes":[{"name":"KC9BG19_Untitled.071"
-"id":"KC9BG19_Untitled.071"
-"materialId":"skyscraper_1.Multimaterial#0"
-"billboardMode":0
-"position":[0
-0
-0]
-"rotation":[-1.5708
-0
-0]
-"scaling":[1
-1
-1]
-"isVisible":true
-"freezeWorldMatrix":false
-"isEnabled":true
-"checkCollisions":false
-"receiveShadows":false
-"pickable":true
-"tags":""
+var moveZ = function(val) {
+  let degreeVal = displayValueN(val);
+  if (scope.z_previous > val) {
+    mesh.position.z = mesh.position.z + val;
+  } else {
+    mesh.position.z = mesh.position.z - val;
+  }
+  scope.z_previous = val;
+};
+rotateGroup.addSlider("position.z", moveZ, "degs", 0, 3, 0.1, displayValue);
