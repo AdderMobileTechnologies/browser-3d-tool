@@ -39,7 +39,8 @@ import { Resizable, ResizableBox } from "react-resizable";
 //css
 import "./minimum.css";
 import "./Main.css";
-
+//Part of RxJS implementation.
+import { messageService } from '../_services'; //import { messageService } from '../@/_services';
 ///////////////
 import * as GUI from "babylonjs-gui";
 import AdderGuiUtility from "../models/adderGuiUtility";
@@ -54,8 +55,11 @@ class Main extends React.Component {
     super(props);
 
     scope = this;
+    /*
+  // For RXJS implementation  messages: []  */
 
     this.state = {
+      messages: [],
       scene: {},
       canvas: {},
       last_adderAssetObject: "empty asset",
@@ -152,6 +156,8 @@ class Main extends React.Component {
   }
   componentWillUnmount() {
     this.triggerChange = null;
+     // unsubscribe to ensure no memory leaks: RXJS 
+     this.subscription.unsubscribe();
   }
   //Environment
   changeEnvironment = args => {
@@ -935,6 +941,19 @@ class Main extends React.Component {
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
+    // -- RXJS 
+     // subscribe to home component messages
+     this.subscription = messageService.getMessage().subscribe(message => {
+      if (message) {
+          // add message to local state if not empty
+          this.setState({ messages: [...this.state.messages, message] });
+      } else {
+          // clear messages when empty message received
+          this.setState({ messages: [] });
+      }
+  });
+  //---end rxjs 
+
     //----------------------------------------------
     const url = `${K.META_URL}/design/get`;
     console.log(" const url = `${K.META_URL}/design/get`;", url);
@@ -1487,8 +1506,21 @@ class Main extends React.Component {
     console.log("down...");
   }
 */
+//rxjs 
+sendMessage() {
+  // send message to subscribers via observable subject
+  messageService.sendMessage('Message from Home Page Component to App Component!');
+}
+
+clearMessages() {
+  // clear messages
+  messageService.clearMessages();
+}
+//--end rxjs 
 
   render() {
+    //rxjs 
+    const { messages } = this.state;
     return (
       <Grid container>
         <Grid container spacing={0} id="ParentContainer">
@@ -1784,6 +1816,16 @@ class Main extends React.Component {
           <button onClick={this.cameraTargetY_up}>+</button>
         <button onClick={this.cameraTargetY_down}>-</button>
         */}
+        <Grid>
+          <p>rxjs</p>
+          {messages.map((message, index) =>
+                                        <div key={index} className="alert alert-success">{message.text}</div>
+                                    )}
+                                      <h2>React + RxJS Component Communication</h2>
+                <button onClick={this.sendMessage} className="btn btn-primary">Send Message</button>
+                <button onClick={this.clearMessages} className="btn btn-secondary">Clear Messages</button>                
+           
+        </Grid>
       </Grid>
     );
   }
