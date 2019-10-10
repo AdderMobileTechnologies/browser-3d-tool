@@ -59,6 +59,9 @@ class Designer extends React.Component {
       }
     );
   }
+  rxjsCallback(){
+    console.log("rxjsCallback")
+  }
   selectElement(id, valueToSelect) {
     console.log("selectElement(id, valueToSelect)");
     console.log("id:", id);
@@ -540,16 +543,9 @@ class Designer extends React.Component {
           </Grid>
         </Grid>
         <hr style={{ marginTop: "25px" }} />
-        <Grid> 
-        <p>rxjs in designer</p>
-          {messages.map((message, index) =>
-                                        <div key={index} className="alert alert-success">{message.text}</div>
-                                    )}
-                                      <h2>React + RxJS Component Communication</h2>
-                <button onClick={this.sendMessage} className="btn btn-primary">Send Message</button>
-                <button onClick={this.clearMessages} className="btn btn-secondary">Clear Messages</button>                
-           
-     
+        <Grid>  
+          {/** rxjs map function requires some kind of html  */}
+            {messages.map((message,index) => <div></div>),scope.rxjsCallback()}
         </Grid>
       </div>
     );

@@ -1231,6 +1231,10 @@ class Main extends React.Component {
 
   environment_Rain(action) {
     let scene = scope.state.scene;
+    ///
+console.log("action:",action);
+     this.sendMessage(action);
+    ///
     if (action === "start") {
       BABYLON.ParticleHelper.CreateAsync("rain", scene, false).then(set => {
         set.start();
@@ -1508,8 +1512,9 @@ class Main extends React.Component {
 */
 //rxjs 
 sendMessage() {
+  //does not appear to accept args.? 
   // send message to subscribers via observable subject
-  messageService.sendMessage('Message from Home Page Component to App Component!');
+  messageService.sendMessage('UI Status Change in Main.jsx');
 }
 
 clearMessages() {
@@ -1816,7 +1821,7 @@ clearMessages() {
           <button onClick={this.cameraTargetY_up}>+</button>
         <button onClick={this.cameraTargetY_down}>-</button>
         */}
-        <Grid>
+        {/* <Grid>
           <p>rxjs</p>
           {messages.map((message, index) =>
                                         <div key={index} className="alert alert-success">{message.text}</div>
@@ -1825,7 +1830,7 @@ clearMessages() {
                 <button onClick={this.sendMessage} className="btn btn-primary">Send Message</button>
                 <button onClick={this.clearMessages} className="btn btn-secondary">Clear Messages</button>                
            
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   }
