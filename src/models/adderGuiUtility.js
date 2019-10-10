@@ -17,7 +17,6 @@ class AdderGuiUtility extends React.Component {
       y_previous: 0,
       z_previous: 0,
       x_previous: 0,
-      selectionPanelIsVisible : false,
       //isRaining:props.isRaining,
     };
     scope = this;
@@ -258,7 +257,7 @@ componentWillUnmount() {
     selectionPanel.labelolor = "#FFFFFF";
     selectionPanel.cornerRadius = 8;
     selectionPanel.thickness = 0.5;
-    selectionPanel.isVisible = true;
+    selectionPanel.isVisible = false;
 /* will not allow setState without a componentWillMount () function ...tied directly to it. 
     this.setState({
       selectionPanel: selectionPanel

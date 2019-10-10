@@ -19,6 +19,17 @@ export default function OverlayControlsUpperRight(props) {
             background: "none !important"
           }}
         ></UIButton>
+ <UIButton
+          title="Settings Applications"
+          buttonText="settings"
+          onClick={props.iconGear}
+          iconName="settings_applications"
+          classNames="icon_btn overlay-button"
+          style={{
+            backgroundColor: "none !important",
+            background: "none !important"
+          }}
+        ></UIButton>
 
         {/**
                 <UIButton

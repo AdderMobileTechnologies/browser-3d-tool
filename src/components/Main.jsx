@@ -87,6 +87,7 @@ class Main extends React.Component {
       sign1MeshId: null,
       sign2MeshId: null,
       isRaining: false,
+      isVisibleSelectionPanel: true,
       userSession: {
         userInfo: [],
         userModel: {
@@ -1265,16 +1266,33 @@ console.log("action:",action);
     //TODO: save this to the user session as well.
     button.click();
   }
+iconGear(){
+  // this is where we want to handle the hiding and showing of selection panels...
+  if (scope.state.isVisibleSelectionPanel) {
+    scope.sendMessage();
+    scope.setState({
+      isVisibleSelectionPanel: false
+    });
+  } else {
+    scope.sendMessage();
+    scope.setState({
+      isVisibleSelectionPanel: true
+    });
+  }
+}
+
+
+
   iconRain() {
     if (scope.state.isRaining) {
       scope.environment_Rain("stop");
-      scope.sendMessage();
+      //scope.sendMessage();
       scope.setState({
         isRaining: false
       });
     } else {
       scope.environment_Rain("start");
-      scope.sendMessage();
+      //scope.sendMessage();
       scope.setState({
         isRaining: true
       });
@@ -1292,17 +1310,17 @@ console.log("action:",action);
 
     let result = util.store(type, item, json);
     console.log("result:", result);
-    if (scope.state.isRaining) {
-      scope.environment_Rain("stop");
-      scope.setState({
-        isRaining: false
-      });
-    } else {
-      scope.environment_Rain("start");
-      scope.setState({
-        isRaining: true
-      });
-    }
+    // if (scope.state.isRaining) {
+    //  // scope.environment_Rain("stop");
+    //   //scope.setState({
+    //    // isRaining: false
+    //   //});
+    // } else {
+    //   // scope.environment_Rain("start");
+    //   // scope.setState({
+    //   //   isRaining: true
+    //   // });
+    // }
     //------------
     //could the let constants get in the way ?
     var canvas = scope.state.canvas;
@@ -1516,7 +1534,8 @@ console.log("action:",action);
 sendMessage() {
   //does not appear to accept args.? 
   // send message to subscribers via observable subject
-  if(this.state.isRaining){
+  //isRaining
+  if(this.state.isVisibleSelectionPanel){
     messageService.sendMessage('true');
   }else{
     messageService.sendMessage('false');
@@ -1614,7 +1633,8 @@ clearMessages() {
                 <OverlayControlsUpperRight
                   callback={this.subCallback}
                   iconRain={this.iconRain}
-                  data={{ key: "iconRain" }}
+                  iconGear={this.iconGear}
+                  data={{ key: "iconGear" }}
                 ></OverlayControlsUpperRight>
                 <OverlayControlsMUIPopOver
                   callback={this.changeEnvironment}

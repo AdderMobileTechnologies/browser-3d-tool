@@ -8,6 +8,7 @@ import IconShare from "./../../../assets/icons/shareTransparent.png";
 import IconUndo from "./../../../assets/icons/undoTransparent.png";
 import Landscape from "./../../../assets/icons/landscape_2x.png";
 import Location_City from "./../../../assets/icons/location_city_2x.png";
+import Settings_Applications from "./../../../assets/icons/settings_applications.png";
 // Weather_Icons_1B-03.png
 import Rain from "./../../../assets/icons/Component 22 – 1b@2x.png"; //Component 22 – 1.png
 import Screenshot from "./../../../assets/icons/Component 28 – 1b@2x.png";
@@ -143,6 +144,19 @@ class UIButton extends Component {
             style={{ ...iconStyle.small }}
           />
         );
+        case "settings_applications":
+            alt = "settings_applications";
+            src = Settings_Applications;
+            // break;
+            return (
+              <input
+                type={"image"}
+                onClick={this.props.onClick}
+                alt={alt}
+                src={src}
+                style={{ ...iconStyle.smaller_transparent }}
+              />
+            );
       case "rain":
         alt = "rain";
         src = Rain;
