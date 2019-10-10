@@ -1099,5 +1099,8 @@ now to apply it to the hide/show sectionPanel:
   - transfer current fn from rain icon over to new icon. 
   - in the rxjs callback inside the ...?adderGuiUtility?...or other.. perform hide show.
     - will probably require turn a flag on and off in state. 
-    
+    (?) how will it handle multiple selection panels at same time? 
+    it layers them on top of each other and the hide/show only works for the 1st created selectionPanel. 
+
+create a separate icon for selectionPanel. 
 
