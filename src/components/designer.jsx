@@ -15,6 +15,8 @@ import Grid from "@material-ui/core/Grid"; //
 
 import "./minimum.css";
 import "./designer.css";
+//Part of RxJS implementation.
+import { messageService } from '../_services'; //import { messageService } from '../@/_services';
 
 let scope;
 class Designer extends React.Component {
@@ -22,6 +24,7 @@ class Designer extends React.Component {
     super(props);
 
     this.state = {
+      messages: [],
       adderSceneWrapper: {},
       isOnAdType: false,
       adType_options: [],
@@ -383,9 +386,28 @@ class Designer extends React.Component {
   //   let adderLoader = new AdderLoader(this.props.adderSceneWrapper);
   //   adderLoader.addSingleModel(adderAsset);
   // };
-
+  componentWillUnmount() {
+    
+     // unsubscribe to ensure no memory leaks: RXJS 
+     this.subscription.unsubscribe();
+  }
   componentDidMount() {
     let scope = this;
+
+ // -- RXJS 
+     // subscribe to home component messages
+     this.subscription = messageService.getMessage().subscribe(message => {
+      if (message) {
+          // add message to local state if not empty
+          this.setState({ messages: [...this.state.messages, message] });
+      } else {
+          // clear messages when empty message received
+          this.setState({ messages: [] });
+      }
+  });
+  //---end rxjs 
+
+
     this.setState({
       adderSceneWrapper: this.getAdderSceneWrapper()
     });
@@ -475,6 +497,7 @@ class Designer extends React.Component {
   //   }
   // }
   render() {
+    const { messages } = this.state;
     return (
       <div className="designer">
         <hr />
@@ -517,6 +540,17 @@ class Designer extends React.Component {
           </Grid>
         </Grid>
         <hr style={{ marginTop: "25px" }} />
+        <Grid> 
+        <p>rxjs in designer</p>
+          {messages.map((message, index) =>
+                                        <div key={index} className="alert alert-success">{message.text}</div>
+                                    )}
+                                      <h2>React + RxJS Component Communication</h2>
+                <button onClick={this.sendMessage} className="btn btn-primary">Send Message</button>
+                <button onClick={this.clearMessages} className="btn btn-secondary">Clear Messages</button>                
+           
+     
+        </Grid>
       </div>
     );
   }
