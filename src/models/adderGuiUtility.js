@@ -1,19 +1,51 @@
 import React from "react";
 import * as BABYLON from "babylonjs";
 import * as GUI from "babylonjs-gui";
+//1
+import { messageService } from '../_services'; 
 
+import Grid from "@material-ui/core/Grid"; //
+let scope;
 class AdderGuiUtility extends React.Component {
   constructor(props) {
     super(props);
+    //2
     this.state = {
+      messages: [],
       selectionPanel: {},
       mesh: {},
       y_previous: 0,
       z_previous: 0,
-      x_previous: 0
+      x_previous: 0,
+      selectionPanelIsVisible : false,
+      //isRaining:props.isRaining,
     };
+    scope = this;
     //this.moveX = this.moveX.bind(this);
   }
+  //3
+  componentDidMount() {
+    console.log("does adderGuiUtility Mount ? in its present form?")
+    //DOES NOT actually mount because not called like a regular react comp
+    //what if I moved this to inside the function that gets called.
+    let scope = this;
+    // subscribe to home component messages
+    this.subscription = messageService.getMessage().subscribe(message => {
+        if (message) {
+            // add message to local state if not empty
+            this.setState({ messages: [...this.state.messages, message] });
+        } else {
+            // clear messages when empty message received
+            this.setState({ messages: [] });
+        }
+    });
+}
+//4
+componentWillUnmount() {
+  // unsubscribe to ensure no memory leaks: RXJS 
+  this.subscription.unsubscribe();
+}
+  
   currentX_value = 0;
   gui_create_grid2 = advancedTexture => {
     // grid container for form controls
@@ -132,6 +164,20 @@ class AdderGuiUtility extends React.Component {
     console.log("easy selection panel:");
     console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
     console.log("this.state:", this.state);
+    ///--- insert the didmount code here instead
+   // let scope = this;
+    // RXJS: subscribe to home component messages
+    this.subscription = messageService.getMessage().subscribe(message => {
+        if (message) {
+            // add message to local state if not empty
+            this.setState({ messages: [...this.state.messages, message] });
+        } else {
+            // clear messages when empty message received
+            this.setState({ messages: [] });
+        }
+    });
+
+    /// - end didmount code.
     var scope = this.state;
     scope.mesh = mesh;
     var toSize = function(isChecked) {
@@ -190,7 +236,8 @@ class AdderGuiUtility extends React.Component {
     );
 
     var selectionPanel = new BABYLON.GUI.SelectionPanel("sp", [positionGroup]);
-    scope.selectionPanel = selectionPanel;
+   // scope.selectionPanel = selectionPanel;
+   
     selectionPanel.width = 0.25;
     selectionPanel.height = 0.56;
     selectionPanel.horizontalAlignment =
@@ -211,8 +258,17 @@ class AdderGuiUtility extends React.Component {
     selectionPanel.labelolor = "#FFFFFF";
     selectionPanel.cornerRadius = 8;
     selectionPanel.thickness = 0.5;
+    selectionPanel.isVisible = true;
+/* will not allow setState without a componentWillMount () function ...tied directly to it. 
+    this.setState({
+      selectionPanel: selectionPanel
+    }, () => {console.log("should have set selectionPanel insto state.")})
+    */
+   //the error mentioned assigning it directly to state. 
+   this.state.selectionPanel = selectionPanel;
 
     advancedTexture.addControl(selectionPanel);
+   console.log("advancedTexture:",advancedTexture);
 
     var moveY = function(val) {
       mesh.position.y = mesh.position.y + val;
@@ -326,7 +382,37 @@ class AdderGuiUtility extends React.Component {
     selectorY_slider.shadowColor = "#ccc";
     selectorY_slider.borderColor = "#000";
   };
+  rxjsCallback(msg){
+    console.log("rxjsCallback: adderGuiUtility..YES...but need a flag.:msg:",msg)
+    //can I show hide the selectionPanel from HERE ? 
+    //this.state.selectionPanel.isVisible = false; or true
+   // console.log("props:",this.props)
+   console.log("this.state look for selectionPanel...:",this.state);
+    //THEN I NEED A FLAG ...
+    if(msg.text === 'true'){
+     // this.state.selectionPanel.isVisible = true; 
+      //this is NOT re-showing the selectionPanel ? 
+      console.log('msg is true');
+      this.state.selectionPanel.isVisible = true;
+    }else{
+     // this.state.selectionPanel.isVisible = false; 
+     console.log('msg is false...');
+     this.state.selectionPanel.isVisible = false;
+    }
+}
+  render() {
+    const { messages } = this.state; 
+    console.log("render() this.state",this.state);
+    console.log("render() this.scope:",this.scope)
 
+    return( 
+    <Grid>  
+      {/** rxjs map function requires some kind of html 
+      {messages.map((message,index) => <div></div>),scope.rxjsCallback()}  */}
+      
+      {messages.map((message,index) => {scope.rxjsCallback(message)})}
+  </Grid>)
+  }
   ////////////////////////////////////////
 }
 export default AdderGuiUtility;

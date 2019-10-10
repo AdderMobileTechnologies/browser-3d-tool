@@ -1065,5 +1065,39 @@ Reflect:
   - add more models 
   - constrain scene view .
  
-  - 
+  Brandons Trigger Method: 
+  /////////--------------------------------------
+  MAIN: ------------------
+    - outside the constructor:
+     register(triggerChange) {
+        console.log("Main(): register(triggerChange):");
+        this.triggerChange = triggerChange;
+      }
+   revertChild(data) {
+      //method : ad_type, sub_type, detail
+      console.log("revertChild....data:", data);
+    }
+   componentWillUnmount() {
+      this.triggerChange = null;
+    }
+  DESIGNER: ------------------------
+      - in constructor:
+       this.triggerChange = this.triggerChange.bind(this);
+        props.register(this.triggerChange);
+
+    - outside the constructor 
+     triggerChange(data) {}
+//////---------------------------------------------
+
+rxjs: 
+https://jasonwatmore.com/post/2019/02/13/react-rxjs-communicating-between-components-with-observable-subject
+https://github.com/cornflourblue/react-rxjs-communicating-between-components
+
+rxjs works beautifully! 
+now to apply it to the hide/show sectionPanel:
+  - need an icon.
+  - transfer current fn from rain icon over to new icon. 
+  - in the rxjs callback inside the ...?adderGuiUtility?...or other.. perform hide show.
+    - will probably require turn a flag on and off in state. 
+    
 

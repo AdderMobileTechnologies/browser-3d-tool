@@ -1233,7 +1233,7 @@ class Main extends React.Component {
     let scene = scope.state.scene;
     ///
 console.log("action:",action);
-     this.sendMessage(action);
+    
     ///
     if (action === "start") {
       BABYLON.ParticleHelper.CreateAsync("rain", scene, false).then(set => {
@@ -1268,11 +1268,13 @@ console.log("action:",action);
   iconRain() {
     if (scope.state.isRaining) {
       scope.environment_Rain("stop");
+      scope.sendMessage();
       scope.setState({
         isRaining: false
       });
     } else {
       scope.environment_Rain("start");
+      scope.sendMessage();
       scope.setState({
         isRaining: true
       });
@@ -1514,7 +1516,12 @@ console.log("action:",action);
 sendMessage() {
   //does not appear to accept args.? 
   // send message to subscribers via observable subject
-  messageService.sendMessage('UI Status Change in Main.jsx');
+  if(this.state.isRaining){
+    messageService.sendMessage('true');
+  }else{
+    messageService.sendMessage('false');
+  }
+ 
 }
 
 clearMessages() {
@@ -1831,6 +1838,9 @@ clearMessages() {
                 <button onClick={this.clearMessages} className="btn btn-secondary">Clear Messages</button>                
            
         </Grid> */}
+        {/** RXJS: had to include this so that the state changes would get detected. */}
+        {/**NOT ABLE TO SEND PROPS: isRaining={this.state.isRaining} May Be Two Separate Instances... */}
+        <Grid><AdderGuiUtility ></AdderGuiUtility></Grid>
       </Grid>
     );
   }

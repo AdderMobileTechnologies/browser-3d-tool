@@ -3,7 +3,7 @@ Rxjs:
 How to set up a listener/subscriber.
 and 
 How to set up a publisher/message sender.
-
+*also remember the code in the '_services' dir.
 
 How to set up a listener in 7 steps:
 1)
@@ -17,14 +17,15 @@ componentDidMount() {
     let scope = this;
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
-    if (message) {
-        // add message to local state if not empty
-        this.setState({ messages: [...this.state.messages, message] });
-    } else {
-        // clear messages when empty message received
-        this.setState({ messages: [] });
-    }
-});
+        if (message) {
+            // add message to local state if not empty
+            this.setState({ messages: [...this.state.messages, message] });
+        } else {
+            // clear messages when empty message received
+            this.setState({ messages: [] });
+        }
+    });
+}
 4)
  componentWillUnmount() {
     // unsubscribe to ensure no memory leaks: RXJS 

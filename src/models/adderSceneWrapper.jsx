@@ -33,7 +33,7 @@ class AdderSceneWrapper {
     let _uuid = Date();
     let _advancedTexture = advancedTexture;
     let adderGuiUtility = new AdderGuiUtility();
-    let _grid = adderGuiUtility.gui_create_grid2(_advancedTexture);
+    //let _grid = adderGuiUtility.gui_create_grid2(_advancedTexture);
 
     this.getUUID = () => {
       // console.log("AdderModelWrapper UUID:::", _uuid);
@@ -52,9 +52,9 @@ class AdderSceneWrapper {
     this.getAdvancedTexture = () => {
       return _advancedTexture;
     };
-    this.getGrid = () => {
+    /*this.getGrid = () => {
       return _grid;
-    };
+    };*/
 
     this.appendModels = adderModel => {
       _models.push(adderModel);

@@ -81,7 +81,7 @@ class AdderLoader {
       const advancedTexture = asw.getAdvancedTexture();
       let adderGuiUtility = new AdderGuiUtility(advancedTexture);
       // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
-      const grid = asw.getGrid();
+      //===>>>const grid = asw.getGrid();
       //--------------------------------------------------
       result.meshes.forEach(function(mesh) {
         //get Behaviors via models meta data.
@@ -145,6 +145,7 @@ class AdderLoader {
           let asw = adderSceneWrapper;
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
+              /*
               results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "billboard"
@@ -152,6 +153,14 @@ class AdderLoader {
               header = results[0];
               slider = results[1];
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
+*/
+            adderGuiUtility.easy_selection_panel(
+              scene,
+              advancedTexture,
+              mesh.parent
+            );
+
+
               /* */
               /*
             advancedTexture,
@@ -202,11 +211,7 @@ class AdderLoader {
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
 */
 
-              adderGuiUtility.easy_selection_panel(
-                scene,
-                advancedTexture,
-                mesh.parent
-              );
+            
 
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
