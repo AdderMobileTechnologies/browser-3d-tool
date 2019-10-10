@@ -1,0 +1,72 @@
+Rxjs:
+
+How to set up a listener/subscriber.
+and 
+How to set up a publisher/message sender.
+
+
+How to set up a listener in 7 steps:
+1)
+import { messageService } from '../_services'; //import { messageService } from '../@/_services';
+2)
+this.state = {
+    messages: []
+}
+3)
+componentDidMount() {
+    let scope = this;
+    // subscribe to home component messages
+    this.subscription = messageService.getMessage().subscribe(message => {
+    if (message) {
+        // add message to local state if not empty
+        this.setState({ messages: [...this.state.messages, message] });
+    } else {
+        // clear messages when empty message received
+        this.setState({ messages: [] });
+    }
+});
+4)
+ componentWillUnmount() {
+    // unsubscribe to ensure no memory leaks: RXJS 
+    this.subscription.unsubscribe();
+}
+5) 
+ render() {
+    const { messages } = this.state; //inside render method...
+6)
+ <Grid>  
+    {/** rxjs map function requires some kind of html  */}
+    {messages.map((message,index) => <div></div>),scope.rxjsCallback()}
+</Grid>
+7)
+rxjsCallback(){
+    console.log("rxjsCallback")
+}
+
+How to set up the 'sender of messages'.
+1)
+import { messageService } from '../_services';
+2)
+this.state = {
+      messages: []
+}
+3)
+(same as setting up listener)
+4)
+( same as setting up listener)
+5)
+sendMessage() {
+  messageService.sendMessage('UI Status Change in Main.jsx');
+}
+6)
+clearMessages() {
+  messageService.clearMessages();
+}
+7) 
+ render() {
+    const { messages } = this.state; //inside render method...
+8)
+function thatSendsTheMessage(){
+    this.sendMessage(action);
+}
+     
