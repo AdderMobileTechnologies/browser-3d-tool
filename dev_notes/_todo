@@ -1053,3 +1053,17 @@ LEFT OFF HERE:
   on 2 branches: 
     bayon-oct4 
     slider-grids 
+
+Thursday: 10-10-2019
+Reflect: 
+  - Masking ability.
+  - Hide Show the Selection Panel 
+       - observer design pattern to handle cross component communication better. 
+       - Brandons existing method with 'trigger'
+  - Better Particle Emitter Control 
+  - brighten tui icons 
+  - add more models 
+  - constrain scene view .
+ 
+  - 
+
