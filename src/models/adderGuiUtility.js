@@ -16,6 +16,7 @@ class AdderGuiUtility extends React.Component {
       mesh: {},
       y_previous: 0,
       z_previous: 0,
+      z_previous_pos:0,
       x_previous: 0,
       //isRaining:props.isRaining,
     };
@@ -206,8 +207,8 @@ componentWillUnmount() {
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
     var onValueChange = function(value) {
-      // console.log("onValueChange value:", value);
-      console.log("scope:", scope);
+       //console.log("onValueChange value:", value);
+      //console.log("scope:", scope);
       
       return " ";
     };
@@ -274,47 +275,88 @@ componentWillUnmount() {
       console.log("value:", value);
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
-
-    var moveX = function(val) {
-      let degreeVal = displayValueN(val);
-      console.log("mesh.position.x:", mesh.position.x);
-      // console.log("scope.x_previous:", scope.x_previous);
-      // console.log("val:", val);
-      if (scope.x_previous > val) {
-        mesh.position.x = mesh.position.x + val/2;
-      } else {
-        mesh.position.x = mesh.position.x - val/2;
+ 
+   var moveX = function(val) {
+    let x_max = 10;
+    let x_min = -10;
+    /* max and min must be in sync with :
+    selectorx_slider.maximum = 10;
+    selectorx_slider.minimum = -10;
+    and parameters in 'addSlider' method.
+    */
+    if (scope.x_previous > val) {
+    //going down
+      mesh.position.x =  val;
+      if(val <= -10){
+          mesh.position.x = -10;
+          scope.x_previous = x_min;
+      }else{
+        scope.x_previous = val;
+        scope.x_previous_pos = mesh.position.x;
       }
-      scope.x_previous = val;
-    };
+    } else {
+      //going up
+      mesh.position.x =  val;
+      if(val >= 10){
+        mesh.position.x = 10;
+        scope.x_previous = x_max;
+      }else{
+        scope.x_previous = val;
+        scope.x_previous_pos = mesh.position.x;
+      }
+    }  
+    
+  };
 
     var moveZ = function(val) {
-      let degreeVal = displayValueN(val);
+      let z_max = 10;
+      let z_min = -10;
+      /* max and min must be in sync with :
+      selectorZ_slider.maximum = 10;
+      selectorZ_slider.minimum = -10;
+      and parameters in 'addSlider' method.
+      */
       if (scope.z_previous > val) {
-        mesh.position.z = mesh.position.z - val/2;
+      //going down
+        mesh.position.z =  val;
+        if(val <= -10){
+            mesh.position.z = -10;
+            scope.z_previous = z_min;
+        }else{
+          scope.z_previous = val;
+          scope.z_previous_pos = mesh.position.z;
+        }
       } else {
-        mesh.position.z = mesh.position.z + val/2;
-      }
-      scope.z_previous = val;
+        //going up
+        mesh.position.z =  val;
+        if(val >= 10){
+          mesh.position.z = 10;
+          scope.z_previous = z_max;
+        }else{
+          scope.z_previous = val;
+          scope.z_previous_pos = mesh.position.z;
+        }
+      }  
+      
     };
 
     positionGroup.addSlider(
       "Position X",
       moveX,
       " ",
-      0.95,
-      1.45,
-      0.01,
+      -10,
+      10,
+      0,
       onValueChange
     );
-
+//addSlider(label: string, func?: function, unit?: string, min?: number, max?: number, value?: number, onValueChange?: function): void
     positionGroup.addSlider(
       "Position Z",
       moveZ,
       " ",
+      -10,
+      10,
       0,
-      3,
-      0.01,
       onValueChange
     );
     positionGroup.addSlider(
@@ -340,8 +382,11 @@ componentWillUnmount() {
     let selectorX_slider = selectorX.children[1];
     selectorX_slider.height = "18px";
     selectorX_slider.isThumbCircle = true;
+    selectorX_slider.isThumbClamped = true;
     selectorX_slider.paddingTop = 0;
     selectorX_slider.paddingBottom = 0;
+    selectorX_slider.maximum = 10;
+    selectorX_slider.minimum = -10;
 
     //Z
     let selectorZ = selectors[1];
@@ -354,12 +399,15 @@ componentWillUnmount() {
     let selectorZ_slider = selectorZ.children[1];
     selectorZ_slider.height = "18px";
     selectorZ_slider.isThumbCircle = true;
+    selectorZ_slider.isThumbClamped = true;
     selectorZ_slider.thumbWidth = "15px";
     selectorZ_slider.paddingTop = 0;
     selectorZ_slider.paddingBottom = 0;
     selectorZ_slider.color = "#222";
     selectorZ_slider.shadowColor = "#ccc";
     selectorZ_slider.borderColor = "#000";
+    selectorZ_slider.maximum = 10;
+    selectorZ_slider.minimum = -10;
 
     //Y
     let selectorY = selectors[2];
@@ -372,6 +420,9 @@ componentWillUnmount() {
     let selectorY_slider = selectorY.children[1];
     selectorY_slider.height = "18px";
     selectorY_slider.isThumbCircle = true;
+    selectorY_slider.isThumbClamped = true;
+    selectorY_slider.displayThumb = false;
+    selectorY_slider.step = .01;
     selectorY_slider.thumbWidth = "15px";
     selectorY_slider.paddingTop = 0;
     selectorY_slider.paddingBottom = 0;

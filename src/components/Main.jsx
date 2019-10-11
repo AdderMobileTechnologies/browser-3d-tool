@@ -741,12 +741,13 @@ class Main extends React.Component {
       console.log("callback_Designer:adderAsset:", adderAsset);
       scope.defineSelectableMeshesForAdderAsset(adderAsset);
       //clean up previous model: selection panel.iconGear
-      scope.setState({
+      //This was supposed to remove the previous models selection Panel, but it was causing a one click delay on the gear.
+      /*scope.setState({
         isVisibleSelectionPanel: false
       },()=>{ 
         scope.sendMessage();
         
-      });
+      });*/
     }
   }
   loadScene = adderAsset => {

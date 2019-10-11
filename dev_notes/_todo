@@ -1158,4 +1158,8 @@ How is the GUI part of babylon working now.
     another idea was to have the draggable dialog on click of model, then instead of going directly to the editor, 
     make the editor one of the choices in addition to the selection panel. 
     then the selection panel itself would have a close button. 
-    
+
+- BUG: another obvious bug is WHERE the thumb button on the slider is when you move it.
+- BUG: initial click on Gear Icon is NOT displaying it. 
+- using slider.displayThumb = false; does NOT hide the thumb as expected. 
+- so far , I haven't had any luck with setting the min and max values of the sliders either.
