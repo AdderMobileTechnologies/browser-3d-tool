@@ -1131,3 +1131,31 @@ find all circumstances where the selection panel should be hidden.
   - set motion limit constraints.
  - back and forth between models the gear loses it's parent. 
  - add panel to station wagon too. 
+ /*
+---------------RE-add to model ---------------------
+import AdderGuiUtility from "./adderGuiUtility";
+let scene = adderSceneWrapper.getScene();
+let asw = adderSceneWrapper;
+  adderGuiUtility.easy_selection_panel(
+    scene,
+    advancedTexture,
+    mesh.parent
+  );
+-------------------------------------------
+*/
+How is the GUI part of babylon working now.
+  - each model has a strategy for 'gui' if it is to have one. 
+  - when those models are loaded in the 'adderLoader' the selection panel is assigned to them as 'invisible'. 
+  - if there are more than one panel open ...
+    - they still effect the appropriate model 
+    - but, the hide/show gear only works for the top panel. 
+    
+    other desired functionality:
+    - when a model is selected, close all other panels . I can close them , but I can't open them back up. 
+    possible solutions:
+    instead of a gear: have an icon for each model ? (would get messy fast.)
+    
+    another idea was to have the draggable dialog on click of model, then instead of going directly to the editor, 
+    make the editor one of the choices in addition to the selection panel. 
+    then the selection panel itself would have a close button. 
+    

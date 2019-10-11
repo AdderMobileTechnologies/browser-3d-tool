@@ -190,6 +190,7 @@ class AdderCamera {
         camera.useAutoRotationBehavior = useAutoRotationBehavior;
       }
     }
+    camera.wheelDeltaPercentage = .001;
     return camera;
   }
 }

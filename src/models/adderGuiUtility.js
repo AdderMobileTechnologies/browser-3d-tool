@@ -191,10 +191,10 @@ componentWillUnmount() {
       let val = displayValueN(angle);
       if (scope.y_previous > val) {
         // mesh.position.x = mesh.position.x + val;
-        mesh.rotation.y = angle;
+        mesh.rotation.y = angle/2;
       } else if (scope.y_previous < val) {
         // mesh.position.x = mesh.position.x - val;
-        mesh.rotation.y = -1 * angle;
+        mesh.rotation.y = -1 * angle/2;
       }
       scope.y_previous = val;
     };
@@ -208,9 +208,7 @@ componentWillUnmount() {
     var onValueChange = function(value) {
       // console.log("onValueChange value:", value);
       console.log("scope:", scope);
-      if (scope.mesh.position.x <= -8) {
-        //WORKS:  scope.selectionPanel.isVisible = false;
-      }
+      
       return " ";
     };
 
@@ -283,9 +281,9 @@ componentWillUnmount() {
       // console.log("scope.x_previous:", scope.x_previous);
       // console.log("val:", val);
       if (scope.x_previous > val) {
-        mesh.position.x = mesh.position.x + val;
+        mesh.position.x = mesh.position.x + val/2;
       } else {
-        mesh.position.x = mesh.position.x - val;
+        mesh.position.x = mesh.position.x - val/2;
       }
       scope.x_previous = val;
     };
@@ -293,9 +291,9 @@ componentWillUnmount() {
     var moveZ = function(val) {
       let degreeVal = displayValueN(val);
       if (scope.z_previous > val) {
-        mesh.position.z = mesh.position.z - val;
+        mesh.position.z = mesh.position.z - val/2;
       } else {
-        mesh.position.z = mesh.position.z + val;
+        mesh.position.z = mesh.position.z + val/2;
       }
       scope.z_previous = val;
     };
@@ -306,7 +304,7 @@ componentWillUnmount() {
       " ",
       0.95,
       1.45,
-      0.05,
+      0.01,
       onValueChange
     );
 
@@ -316,7 +314,7 @@ componentWillUnmount() {
       " ",
       0,
       3,
-      0.05,
+      0.01,
       onValueChange
     );
     positionGroup.addSlider(
