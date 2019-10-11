@@ -1,17 +1,27 @@
-//Y
-let selectorY = selectors[1];
-selectorY.paddingTop = 0;
-selectorY.paddingBottom = 0;
-selectorY.fontFamily = "Courier";
-selectorY.fontSize = 11;
-let selectorY_slider_label = selectorY.children[0];
-selectorY_slider_label.height = "15px";
-let selectorY_slider = selectorY.children[1];
-selectorY_slider.height = "18px";
-selectorY_slider.isThumbCircle = true;
-selectorY_slider.thumbWidth = "15px";
-selectorY_slider.paddingTop = 0;
-selectorY_slider.paddingBottom = 0;
-selectorY_slider.color = "#222";
-selectorY_slider.shadowColor = "#ccc";
-selectorY_slider.borderColor = "#000";
+//Brandons Register Child Function
+/////////--------------------------------------
+// Registering a child components function with it's parent so that the parent can call the function when it needs to.
+//<Parent>: ------------------
+//- outside the constructor:
+
+registerChildFunction(childFunction) {
+    this.childFunction = childFunction;
+}
+callChildFunction(data) {
+//call the registered function.
+this.childFunction(data);
+}
+componentWillUnmount() {
+this.childFunction = null;
+}
+//</Parent>
+
+////<Child>: ------------------------
+//- inside constructor:
+    this.childFunction = this.childFunction.bind(this);
+    props.registerChildFunction(this.childFunction);
+
+//- outside the constructor 
+childFunction(data) {}
+
+//////-</Child> --------------------------------------------

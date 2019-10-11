@@ -740,6 +740,13 @@ class Main extends React.Component {
       scope.loadScene(adderAsset);
       console.log("callback_Designer:adderAsset:", adderAsset);
       scope.defineSelectableMeshesForAdderAsset(adderAsset);
+      //clean up previous model: selection panel.iconGear
+      scope.setState({
+        isVisibleSelectionPanel: false
+      },()=>{ 
+        scope.sendMessage();
+        
+      });
     }
   }
   loadScene = adderAsset => {
@@ -854,91 +861,107 @@ class Main extends React.Component {
 
   screenshotButtonPress(evt) {
     console.log("- - - - screenshotButtonPress :evt:", evt);
-    let engine = this.state.engine; //was embedded under Ad_Scene in version 1
-    let camera = this.state.camera;
-    //let stateScope = this.state;
-    let that = this;
+     
+    /* THIS DID NOT WORK:
+    // call to close the selection panel like in iconGear()
+    scope.setState({
+      isVisibleSelectionPanel: false
+    },()=>{ 
+      scope.sendMessage();
+      scope.completeScreenshot();
+    });
+    */
 
-    function addScreenshot(src) {
-      // console.log("addScreenShot(src) src:", src);
-      //TODO: left off here : reconsider how screen shots are getting saved
-      let image_uid = "img_" + Date.now();
+   let engine = this.state.engine; //was embedded under Ad_Scene in version 1
+   let camera = this.state.camera;
+   //let stateScope = this.state;
+   let that = this;
 
-      let image_model = {
-        id: image_uid,
-        name: "",
-        data: src,
-        url: "",
-        filename: "",
-        usage: "screenshot"
-      };
+   function addScreenshot(src) {
+     // console.log("addScreenShot(src) src:", src);
+     //TODO: left off here : reconsider how screen shots are getting saved
+     let image_uid = "img_" + Date.now();
 
-      const array_image_models = that.state.images.slice();
-      array_image_models.push(image_model);
-      that.setState(
-        prevState => ({
-          ...prevState,
-          images: array_image_models
-        }),
-        () => {
-          const obj = { image_id: image_uid, src: "" };
-          //console.log("");
-          const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
-          array_image_models.push(obj);
+     let image_model = {
+       id: image_uid,
+       name: "",
+       data: src,
+       url: "",
+       filename: "",
+       usage: "screenshot"
+     };
 
-          that.setState(prevState => ({
-            ...prevState,
-            userSession: {
-              ...prevState.userSession,
-              designModel: {
-                ...prevState.userSession.designModel,
-                screenShots: array_image_models
-              }
-            }
-          }));
+     const array_image_models = that.state.images.slice();
+     array_image_models.push(image_model);
+     that.setState(
+       prevState => ({
+         ...prevState,
+         images: array_image_models
+       }),
+       () => {
+         const obj = { image_id: image_uid, src: "" };
+         //console.log("");
+         const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
+         array_image_models.push(obj);
 
-          // we need to get the current array of tileData  push to copy of it   and redefine it
-          that.setState(prevState => ({
-            ...prevState,
-            tileData: {
-              ...prevState.tileData
-            }
-          }));
+         that.setState(prevState => ({
+           ...prevState,
+           userSession: {
+             ...prevState.userSession,
+             designModel: {
+               ...prevState.userSession.designModel,
+               screenShots: array_image_models
+             }
+           }
+         }));
 
-          let tileDataObject = {
-            id: image_uid,
-            key: image_uid,
-            img: src,
-            title: image_uid,
+         // we need to get the current array of tileData  push to copy of it   and redefine it
+         that.setState(prevState => ({
+           ...prevState,
+           tileData: {
+             ...prevState.tileData
+           }
+         }));
 
-            cols: 2
-          };
+         let tileDataObject = {
+           id: image_uid,
+           key: image_uid,
+           img: src,
+           title: image_uid,
 
-          const newTileDataArray = that.state.tileData.slice();
-          newTileDataArray.push(tileDataObject);
-          that.setState(
-            prevState => ({
-              ...prevState,
-              tileData: newTileDataArray
-            }),
-            () => {}
-          );
-        }
-      );
-    }
+           cols: 2
+         };
 
-    BABYLON.Tools.CreateScreenshot(
-      engine,
-      camera,
-      { width: 400, height: 300 },
-      function(data) {
-        let img = document.createElement("img");
-        img.src = data;
+         const newTileDataArray = that.state.tileData.slice();
+         newTileDataArray.push(tileDataObject);
+         that.setState(
+           prevState => ({
+             ...prevState,
+             tileData: newTileDataArray
+           }),
+           () => {}
+         );
+       }
+     );
+   }
 
-        addScreenshot(img.src);
-      }
-    );
+   BABYLON.Tools.CreateScreenshot(
+     engine,
+     camera,
+     { width: 400, height: 300 },
+     function(data) {
+       let img = document.createElement("img");
+       img.src = data;
+
+       addScreenshot(img.src);
+     }
+   );
+
   } //
+
+  completeScreenshot(){
+
+  }
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);

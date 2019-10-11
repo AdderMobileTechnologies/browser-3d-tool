@@ -145,61 +145,63 @@ class AdderLoader {
           let asw = adderSceneWrapper;
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
-              /*
-              results = adderGuiUtility.control_sliderWithHeader(
-                mesh.parent,
-                "billboard"
-              );
-              header = results[0];
-              slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
-*/
+                                    /*
+                                                results = adderGuiUtility.control_sliderWithHeader(
+                                                  mesh.parent,
+                                                  "billboard"
+                                                );
+                                                header = results[0];
+                                                slider = results[1];
+                                                adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
+                                  */
+            /* WORKING PANEL: 
+            dev. tried adding this to 'addSingleModel' method to see if I can make it only an option when selected. but some vars not yet defined. */
             adderGuiUtility.easy_selection_panel(
               scene,
               advancedTexture,
               mesh.parent
             );
+          
 
 
-              /* */
-              /*
-            advancedTexture,
-            mesh_id
-            let options = {
-              name:"",
-              method:"",
-              angle:"",
-              width:"",
-              height:"",
-              displayValue:""
-            }
-            make_default_selection_panel = (advancedTexture, mesh_id, options) 
-            */
-              console.log("mesh.parent:", mesh.parent);
-              console.log("mesh.parent.id", mesh.parent.id);
-              /*
-              let options = {
-                name: "foo",
-                method: "orientateX",
-                angle: "90",
-                width: "0.25",
-                height: "0.5",
-                displayValue: "yo"
-              };
-              adderGuiUtility.make_default_selection_panel(
-                advancedTexture,
-                mesh.parent,
-                options
-              );
-*/
-              /*
-              let scene = adderSceneWrapper.getScene();
-              adderGuiUtility.easy_selection_panel(
-                scene,
-                advancedTexture,
-                mesh.parent
-              );
-*/
+                            /* */
+                            /*
+                          advancedTexture,
+                          mesh_id
+                          let options = {
+                            name:"",
+                            method:"",
+                            angle:"",
+                            width:"",
+                            height:"",
+                            displayValue:""
+                          }
+                          make_default_selection_panel = (advancedTexture, mesh_id, options) 
+                          */
+            
+                            /*
+                                          let options = {
+                                            name: "foo",
+                                            method: "orientateX",
+                                            angle: "90",
+                                            width: "0.25",
+                                            height: "0.5",
+                                            displayValue: "yo"
+                                          };
+                                          adderGuiUtility.make_default_selection_panel(
+                                            advancedTexture,
+                                            mesh.parent,
+                                            options
+                                          );
+                            */
+                            /*
+                                          let scene = adderSceneWrapper.getScene();
+                                          adderGuiUtility.easy_selection_panel(
+                                            scene,
+                                            advancedTexture,
+                                            mesh.parent
+                                          );
+                            */
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon":
               /* results = adderGuiUtility.control_sliderWithHeader(
@@ -233,22 +235,32 @@ class AdderLoader {
 
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
-              results = adderGuiUtility.control_sliderWithHeader(
+             /* results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "vw"
               );
               header = results[0];
               slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);*/
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon":
-              results = adderGuiUtility.control_sliderWithHeader(
+              /*results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "vw"
               );
               header = results[0];
               slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);
+              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);*/
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
               break;
             default:
               console.log(
@@ -273,6 +285,14 @@ class AdderLoader {
     }
 
     this.addSingleModel = function(adderAsset) {
+     
+     
+      let adderSceneWrapper = this.getAdderSceneWrapper();
+      //let asw = adderSceneWrapper;
+      let scene = adderSceneWrapper.getScene();
+      const advancedTexture = adderSceneWrapper.getAdvancedTexture();
+      let adderGuiUtility = new AdderGuiUtility(advancedTexture);
+
       let position = adderAsset.getPosition();
       let positionVect = new BABYLON.Vector3(
         position.x,
@@ -318,6 +338,7 @@ class AdderLoader {
       /* How to change Parent Mesh Position.*/
       //Position and Rotation: applied to parent mesh.
       let adderModelParent = adderModel.getParentMesh();
+     
       //Position:
       let adderModelPosition = adderModel.getPosition();
       adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
@@ -333,6 +354,29 @@ class AdderLoader {
       //Scaling:
       let scalingFactorX = adderModel.getScaling();
       adderModelParent.scaling = scalingFactorX;
+       /*
+        ---------------RE-add to model ---------------------
+        import AdderGuiUtility from "./adderGuiUtility";
+        let scene = adderSceneWrapper.getScene();
+        let asw = adderSceneWrapper;
+          adderGuiUtility.easy_selection_panel(
+            scene,
+            advancedTexture,
+            mesh.parent
+          );
+          (?) REmove all other selectionpanels?
+        -------------------------------------------
+      
+        //add selection panel :
+        //does not work here because scope.mesh.position is undefined ?
+        console.log("adderModelParent",adderModelParent);
+      
+          adderGuiUtility.easy_selection_panel(
+            scene,
+            advancedTexture,
+            adderModelParent.id
+          );
+              */
     };
   }
 }

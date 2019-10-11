@@ -1065,29 +1065,33 @@ Reflect:
   - add more models 
   - constrain scene view .
  
-  Brandons Trigger Method: 
-  /////////--------------------------------------
-  MAIN: ------------------
-    - outside the constructor:
-     register(triggerChange) {
-        console.log("Main(): register(triggerChange):");
-        this.triggerChange = triggerChange;
-      }
-   revertChild(data) {
-      //method : ad_type, sub_type, detail
-      console.log("revertChild....data:", data);
-    }
-   componentWillUnmount() {
-      this.triggerChange = null;
-    }
-  DESIGNER: ------------------------
-      - in constructor:
-       this.triggerChange = this.triggerChange.bind(this);
-        props.register(this.triggerChange);
+ //Brandons Register Child Function
+/////////--------------------------------------
+// Registering a child components function with it's parent so that the parent can call the function when it needs to.
+//<Parent>: ------------------
+//- outside the constructor:
 
-    - outside the constructor 
-     triggerChange(data) {}
-//////---------------------------------------------
+registerChildFunction(childFunction) {
+    this.childFunction = childFunction;
+}
+callChildFunction(data) {
+//call the registered function.
+this.childFunction(data);
+}
+componentWillUnmount() {
+this.childFunction = null;
+}
+//</Parent>
+
+////<Child>: ------------------------
+//- inside constructor:
+    this.childFunction = this.childFunction.bind(this);
+    props.registerChildFunction(this.childFunction);
+
+//- outside the constructor 
+childFunction(data) {}
+
+//////-</Child> --------------------------------------------
 
 rxjs: 
 https://jasonwatmore.com/post/2019/02/13/react-rxjs-communicating-between-components-with-observable-subject
@@ -1104,3 +1108,26 @@ now to apply it to the hide/show sectionPanel:
 
 create a separate icon for selectionPanel. 
 
+
+
+Thursday: 10-10-2019
+decided to try the RxJS library for observer pattern, and used it to hide/show the selection panel for 
+adjusting a models x,z positions and y rotation.
+boiled rxjs down to bare essentials for the purpose of handling ui status change update.
+rxjs set up notes
+I have the show hide functionality working with rxjs observer pattern, its messy and needs to be cleaned up , but it works.
+added an icon gear for the selection panel hide show in the upper right as well as sorted out the logic for hide show from the old icon.
+
+Friday 10-11-2019 
+find all circumstances where the selection panel should be hidden. 
+  - ie. when a different model is selected. 
+  - automatically if the user tries to do a screenshot, so that it does not appear in the image.
+    -did not work: although it hid the selection panel it wasn't quick enough to avoid the screenshot. revisit.
+  - METHOD TO REMOVE SELECTIONPANEL:
+      removeGroup(groupNb: number): void 
+      to be called when a new model is created.
+          how to detect when new model is created. ?
+          how to re-open selection panel after it was removed ? 
+  - set motion limit constraints.
+ - back and forth between models the gear loses it's parent. 
+ - add panel to station wagon too. 
