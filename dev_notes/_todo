@@ -1159,7 +1159,82 @@ How is the GUI part of babylon working now.
     make the editor one of the choices in addition to the selection panel. 
     then the selection panel itself would have a close button. 
 
-- BUG: another obvious bug is WHERE the thumb button on the slider is when you move it.
-- BUG: initial click on Gear Icon is NOT displaying it. 
-- using slider.displayThumb = false; does NOT hide the thumb as expected. 
-- so far , I haven't had any luck with setting the min and max values of the sliders either.
+- # BUG: another obvious bug is WHERE the thumb button on the slider is when you move it.
+- # BUG: initial click on Gear Icon is NOT displaying it. 
+- *true, using slider.displayThumb = false; does NOT hide the thumb as expected. 
+- # so far , I haven't had any luck with setting the min and max values of the sliders either.
+
+
+// ===========================================================================
+Mon: 10-14-2019 
+
+'selection panel' 
+  -should change owner whenever model is clicked.(Does Not).
+
+  Big Picture: 
+    I. file: 'adderGuiUtility'
+       Has the function 'easy_selection_panel' which takes in a
+        'scene,advancedTexture,mesh,and adderSceneWrapper'.
+         INNER FUNCTIONS:
+        It contains a couple of 'Inner Functions' that handle ...
+        'rotation, degrees value, size, getting status of UI ,
+        listens forvalue change which handles visibility,
+        changes in position, 
+        It also has functions that accumulatively build the selection panel,
+        from 'groups', which are home to 'controls' ie. sliders.
+        The sliders consists of a label as well so it is referred 
+        to mainly as a 'selector'
+        Each selector is 'drilled down into' via the DOM to control style aspects.  
+        Which is potentially problematic in terms of maintaining proper relationships.
+        
+
+//Thought: seems like if we made the selection panel a class, and then made that class a 'member' of 
+say the 'adderModel' or 'adderMeshWrapper' class, then we'd have greater control over the relationship and behavior.
+So, turn the 'easy_selection_panel' into a class.
+Then, when it is created, or at least propogated in the 'adderLoader' class, which is 
+coincidentally in the middle of creating and defining a new meshWrapper class,
+just assign it as a member of the MeshWrapper class.
+Then, the benefit would be, instead of the 'adderLoader' creating a sort of 'one-off' during 
+load, it would be creating a new class member which could be triggered at will.
+
+The 'AdderMeshWrapper' currently is constructed with 3 parameters,
+a mesh, position, and rotation. The 'mesh' is the only 'required' parameter.
+Amd the only substantial method outside the setter and getters in 
+a method for 'applying Texture From DataURL'.
+Now this is specific to each 'mesh' so I have erred in my logic. 
+
+The 'selection panel' needs to be a member of the 'AdderModel' class.
+It receives the following parameters, 'adderSceneWrapper,modelFile,
+parentMesh,position,rotationAxis,rotationAngle,meshWrappers,sclaing,
+and behavior'. 
+
+The 'parentMesh' and the 'sceneWrapper'  are 2 of the 4 params needed 
+to create the 'selection panel' . Only 2 left are 'scene' and 'advancedTexture'.
+Aside from the getter and setter methods, the only substantial method 
+is for setting the parent mesh rotation. 
+
+Question where and how is the model class being created. 
+Currently the only place an 'adderModel' gets instantiated is in the
+'adderLoader' class during the 'addSingleModel' method.
+
+This 'method' gets called from 'Main.jsx' during the 
+'loadScene' method. As well as, inside the 'adderMeta' class.
+The difference being, adderMeta handles 'ALL' meshes , where the 
+'loadScene' method only gets called for 'Selected' ad type models, 
+our targets. 
+
+So it works like this. The loadScene sends an 'adderAsset' to the adder Loader 
+ addSingleModel method. Which incidentally gets the other 2 parameters 
+ we need, scene and advancedTexture from the 'asw' . Then the 'adder loader' 
+ class uses the meta data to create the appropriate parameters for the 
+ 'adder model' and it is then instantiated. It is then 'loaded' along with all its 
+ individual mesh members. And also, a 'parentMesh' is derived from its internal 
+ methods and the 'position', and 'rotation' are applied to it. 
+
+ So, inside the adderLoader , add single model method, the parameters we 
+ need for a selection panel that we have are...
+ reminder: scene,advancedTexture,mesh,and adderSceneWrapper,
+ In here we already have 1) scene, 2) advancedTexture 3) adderSceneWrapper AND 
+ the 'parentMesh' . Only , we get the parent mesh 'after' the model has been,
+ instantiated. 
+

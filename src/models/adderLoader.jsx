@@ -145,7 +145,7 @@ class AdderLoader {
           let asw = adderSceneWrapper;
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
-                                    /*
+              /*
                                                 results = adderGuiUtility.control_sliderWithHeader(
                                                   mesh.parent,
                                                   "billboard"
@@ -154,18 +154,16 @@ class AdderLoader {
                                                 slider = results[1];
                                                 adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
                                   */
-            /* WORKING PANEL: 
+              /* WORKING PANEL: 
             dev. tried adding this to 'addSingleModel' method to see if I can make it only an option when selected. but some vars not yet defined. */
-            adderGuiUtility.easy_selection_panel(
-              scene,
-              advancedTexture,
-              mesh.parent
-            );
-          
+              adderGuiUtility.easy_selection_panel(
+                scene,
+                advancedTexture,
+                mesh.parent
+              );
 
-
-                            /* */
-                            /*
+              /* */
+              /*
                           advancedTexture,
                           mesh_id
                           let options = {
@@ -178,8 +176,8 @@ class AdderLoader {
                           }
                           make_default_selection_panel = (advancedTexture, mesh_id, options) 
                           */
-            
-                            /*
+
+              /*
                                           let options = {
                                             name: "foo",
                                             method: "orientateX",
@@ -194,7 +192,7 @@ class AdderLoader {
                                             options
                                           );
                             */
-                            /*
+              /*
                                           let scene = adderSceneWrapper.getScene();
                                           adderGuiUtility.easy_selection_panel(
                                             scene,
@@ -212,8 +210,6 @@ class AdderLoader {
               slider = results[1];
               adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
 */
-
-            
 
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
@@ -235,7 +231,7 @@ class AdderLoader {
 
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
-             /* results = adderGuiUtility.control_sliderWithHeader(
+              /* results = adderGuiUtility.control_sliderWithHeader(
                 mesh.parent,
                 "vw"
               );
@@ -285,8 +281,6 @@ class AdderLoader {
     }
 
     this.addSingleModel = function(adderAsset) {
-     
-     
       let adderSceneWrapper = this.getAdderSceneWrapper();
       //let asw = adderSceneWrapper;
       let scene = adderSceneWrapper.getScene();
@@ -319,10 +313,24 @@ class AdderLoader {
       let modelFile = filepath;
       // console.log("model path to file modelFile:", modelFile);
       ///////////////////////////////////////////////////////////////////
+      //Create a meshParent for the model. And send it in instead of null as the 3rd
+      //parameter.
+      //some declarations will be duplicates !
+      let unitVec = new BABYLON.Vector3(1, 1, 1);
+      let mesh_parentOptions = { width: 0, height: 0, depth: 0 };
+      let mesh_parent = BABYLON.MeshBuilder.CreateBox(
+        modelFile,
+        mesh_parentOptions,
+        scene
+      );
+      mesh_parent.isVisible = false;
+      mesh_parent.scaling = unitVec.scale(1);
+      mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
+
       let adderModel = new AdderModel(
         adderSceneWrapper,
         modelFile,
-        null,
+        mesh_parent,
         positionVect,
         rotationAxisVect,
         rotationAngle,
@@ -338,7 +346,7 @@ class AdderLoader {
       /* How to change Parent Mesh Position.*/
       //Position and Rotation: applied to parent mesh.
       let adderModelParent = adderModel.getParentMesh();
-     
+
       //Position:
       let adderModelPosition = adderModel.getPosition();
       adderModelParent.setPositionWithLocalVector(adderModelPosition); //new BABYLON.Vector3(7, 1, 0)
@@ -354,7 +362,7 @@ class AdderLoader {
       //Scaling:
       let scalingFactorX = adderModel.getScaling();
       adderModelParent.scaling = scalingFactorX;
-       /*
+      /*
         ---------------RE-add to model ---------------------
         import AdderGuiUtility from "./adderGuiUtility";
         let scene = adderSceneWrapper.getScene();
