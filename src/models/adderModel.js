@@ -18,6 +18,7 @@ we should probably get the model id or name at the time of the mesh click being 
 */
 
 import BABYLON from "babylonjs"; // Mesh, Vector3, Quaternion
+import GuiLite from "./guiLite";
 
 class AdderModel {
   constructor(
@@ -30,6 +31,9 @@ class AdderModel {
     meshWrappers = null,
     scaling = null,
     behavior = null
+    /* guiLite = null,
+    scene = null,
+    advancedTexture = null*/
   ) {
     if (modelFile === "" || typeof modelFile !== "string") {
       throw new Error(
@@ -92,9 +96,24 @@ class AdderModel {
     let _meshWrappers = meshWrappers;
     let _scaling = scaling;
     let _behavior = behavior;
-
+    /*
+    let _guiLite = guiLite;
+    let _scene = scene;
+    let _advancedTexture = advancedTexture;
+*/
     /*
         Note: The 'position' and 'rotation' parameters actually need to be applied to the 'parent mesh'.
+    */
+    /*
+    this.getGuiLite = () => {
+      return _guiLite;
+    };
+    this.getScene = () => {
+      return _scene;
+    };
+    this.getAdvancedTexture = () => {
+      return _advancedTexture;
+    };
     */
     this.getAdderSceneWrapper = () => {
       return _adderSceneWrapper;
@@ -148,6 +167,7 @@ class AdderModel {
     this.getBehavior = () => {
       return _behavior;
     };
+
     /*
     this.setParentMeshPosition = positionVector3 => {
       if (!(positionVector3 instanceof BABYLON.Vector3)) {
@@ -157,6 +177,16 @@ class AdderModel {
       }
 
       //let parentMesh = this.getParentMesh();
+    };
+*/
+    /*
+    this.activateGuiLite = () => {
+      console.log("activate GuiLite....");
+      let guiLite = this.getGuiLite();
+      let scene = this.getScene();
+      let advancedTexture = this.getAdvancedTexture();
+      let mesh_parent = this.getParentMesh();
+      guiLite.easy_selection_panel(scene, advancedTexture, mesh_parent, "Name");
     };
 */
     this.setParentMeshRotation = (axis, angle) => {

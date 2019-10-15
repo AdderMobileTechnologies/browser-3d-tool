@@ -1238,3 +1238,300 @@ So it works like this. The loadScene sends an 'adderAsset' to the adder Loader
  the 'parentMesh' . Only , we get the parent mesh 'after' the model has been,
  instantiated. 
 
+
+// ===========================================================================
+Mon: 10-14-2019 
+
+'selection panel' 
+  -should change owner whenever model is clicked.(Does Not).
+
+  Big Picture: 
+    I. file: 'adderGuiUtility'
+       Has the function 'easy_selection_panel' which takes in a
+        'scene,advancedTexture,mesh,and adderSceneWrapper'.
+         INNER FUNCTIONS:
+        It contains a couple of 'Inner Functions' that handle ...
+        'rotation, degrees value, size, getting status of UI ,
+        listens forvalue change which handles visibility,
+        changes in position, 
+        It also has functions that accumulatively build the selection panel,
+        from 'groups', which are home to 'controls' ie. sliders.
+        The sliders consists of a label as well, so it is referred 
+        to mainly as a 'selector'
+        Each selector is 'drilled down into' via the DOM to control style aspects.  
+        Which is potentially problematic in terms of maintaining proper relationships.
+        
+
+//Thought: seems like if we made the selection panel a class, and then made that class a 'member' of 
+say the 'adderModel' or 'adderMeshWrapper' class, then we'd have greater control over the relationship and behavior.
+So, turn the 'easy_selection_panel' into a class.
+Then, when it is created, or at least propogated in the 'adderLoader' class, which is 
+coincidentally in the middle of creating and defining a new meshWrapper class,
+just assign it as a member of the MeshWrapper class.
+Then, the benefit would be, instead of the 'adderLoader' creating a sort of 'one-off' during 
+load, it would be creating a new class member which could be triggered at will.
+
+The 'AdderMeshWrapper' currently is constructed with 3 parameters,
+a mesh, position, and rotation. The 'mesh' is the only 'required' parameter.
+Amd the only substantial method outside the setter and getters in 
+a method for 'applying Texture From DataURL'.
+Now this is specific to each 'mesh' so I have erred in my logic. 
+
+The 'selection panel' needs to be a member of the 'AdderModel' class.
+It receives the following parameters, 'adderSceneWrapper,modelFile,
+parentMesh,position,rotationAxis,rotationAngle,meshWrappers,sclaing,
+and behavior'. 
+
+The 'parentMesh' and the 'sceneWrapper'  are 2 of the 4 params needed 
+to create the 'selection panel' . Only 2 left are 'scene' and 'advancedTexture'.
+Aside from the getter and setter methods, the only substantial method 
+is for setting the parent mesh rotation. 
+
+Question where and how is the model class being created. 
+Currently the only place an 'adderModel' gets instantiated is in the
+'adderLoader' class during the 'addSingleModel' method.
+
+This 'method' gets called from 'Main.jsx' during the 
+'loadScene' method. As well as, inside the 'adderMeta' class.
+The difference being, adderMeta handles 'ALL' meshes , where the 
+'loadScene' method only gets called for 'Selected' ad type models, 
+our targets. 
+
+So it works like this. The loadScene sends an 'adderAsset' to the adder Loader 
+ addSingleModel method. Which incidentally gets the other 2 parameters 
+ we need, scene and advancedTexture from the 'asw' . Then the 'adder loader' 
+ class uses the meta data to create the appropriate parameters for the 
+ 'adder model' and it is then instantiated. It is then 'loaded' along with all its 
+ individual mesh members. And also, a 'parentMesh' is derived from its internal 
+ methods and the 'position', and 'rotation' are applied to it. 
+
+ So, inside the adderLoader , add single model method, the parameters we 
+ need for a selection panel that we have are...
+ reminder: 
+
+ * - scene, advancedTexture, mesh, and adderSceneWrapper,
+
+ In here we already have 1) scene, 2) advancedTexture 3) adderSceneWrapper AND 
+ the 'parentMesh' . Only , we get the parent mesh 'after' the model has been,
+ instantiated. 
+ The way this works, is that if a 'null' parentMesh parameter 
+ is sent to the adderModel during construction, one is 
+ created for it during construction. So , if we can extract that, and apply it in adderLoader before instantiating an adderModel, 
+ we will have what we want, which is a 'selectionPanel' as a 
+ method or property of an adderModel. 
+ ok. 
+ So now the plan is to, 
+ 1) create a 'AdderSelectionPanel' class. 
+2) build it in the 'Adder Loader' class during 'add single model'
+method. 
+3) Then add the 'selection panel' as a parameter, to the 'adder model'
+class.
+4) Then how do we trigger the 'hide/show' aspect of the panel, and how do we apply the 
+selection panel changes to the model?  
+5) we will want to know if the model itself 'is the currently selected model'. 
+Another property that needs to be added to the 'adderModel'
+IF we were to send the 'scene' and 'advancedTexture' into the adderModel class,
+we could construct the selection panel inside the model...but do we want to pass those 
+kinds of things into the model....not really.
+
+
+OTHER aspects that are needed for the 'selectionPanel' class.
+import React from "react";
+import * as BABYLON from "babylonjs";
+import * as GUI from "babylonjs-gui";
+
+ this.state = {
+      selectionPanel: {},
+      mesh: {},
+      y_previous: 0,
+      z_previous: 0,
+      x_previous: 0
+    };
+
+Status: Everything is hooked up 'Class wise' ;
+now to use it instead of the adderGuiUtility. 
+1) a model is added to the scene. 
+2) click the gear and silence. 
+    -> Main-> iconGear() 
+    which uses state to set 'isVisibleSelectionPanel' 
+    and to 'sendMessage()' for RxJS . 
+
+    -> in the 'sendMessage() ' method 
+    based on the state...true, or false, 
+    sends message of either "true" or "false" on to RxJS. 
+
+    messageService: 
+    was getting registered in the adderGuiUtility  class.... 
+  ie. 
+  import { messageService } from '../_services';  
+  and then the set up code: runs in the 'componentDidMount' 
+
+  THEN in the render of Designer  const {messages} = this.state.
+  <Grid> {messages.map((message,index) => <div></div>),scope.rxjsCallback()}</Grid>
+
+  WHICH IN TURN: 
+  scope.rxjsCallback()
+  SO ... 
+  AdderGuiUtility 
+  has the listener code: 
+    <Grid> {messages.map((message,index) => <div></div>),scope.rxjsCallback()}</Grid>
+  AND the rxjsCallback(msg)  which depending of "true" or "false" 
+  sets the selectionPanelVisibilityAccordingly. 
+
+  SO: we are back to the question of whether the AdderSelectionPanel can 'extend' 
+  the React.Component ? otherwise find an alternative ... like 
+  setting up the rxjs in the getAdderSelectionPanel method .. 
+  or just use a state variable somehow else. : ? 
+
+So the rxjs elements are (5): 
+1) the import 
+2) the setup  ---> appears to already be in original  selectionPanel.
+3) the unmount / unsubscrribe 
+4) the callback rxjs that ultimately performs the change.
+5) the HTML element that 'maps through the messages'.
+
+OK. the import is in the class. 
+the setup is in the getAdderSelectionPanel method.
+  along with the ' map through messages element'
+  the rxjsCallback is set up like a class method 
+  and the 'unsubscribe' method is added to the class as well. 
+(? will it work ? )
+
+iconGear: is setting true or false
+the rxjs callback is listening in adderGuiUtility
+ 
+ not getting to the class. 
+ think it might be necessary to extend react.component to listen to 
+ state changes. 
+
+ NOT yest listening for rxjs. 
+
+What if I by-pass the rxjs for now. How would that work. 
+The 'panel' class needs to be able to listen for changes in the UI, of 
+a subcomponent. 
+
+The main difference between the 'panel class' and the 'guiUtility' appropach , is 
+that the guiUtility is a react component and does NOT receive 
+constructor parameters. 
+
+What if I boil the 'adderGuiUtility' down to the bare functionality that I want. 
+Then see if that can act as the class as opposed to the selectionPanel class.
+
+how is it used. 
+1) gets imported in adderLoader
+instantiated as a stand alone and then 
+easy_selection_panel called with scene,aTexture, & parentMesh 
+
+
+//rethinking the use of adderGuiUtility: 
+
+it is both a react component and a special function that excepts 
+specific parameters ....MAINLY the 'mesh.parent'. 
+
+The react part listens for the Rxjs  messages  and it currently gets 
+instantiated in the adderLoadr async mesh... 
+
+OK GuiLite is boiled down version 
+1) used in adderLoader during async import of meshes..
+2) has a hook in Main.jsx 
+
+can I assign this to an adder model instead of the other class I tried. ? 
+What is the difference between adding during mesh async load and singleModelLoad ? 
+
+Ok... so back to the way it was working... 
+can I get an ID of some kind to go along with the rxjs. ? 
+
+=================================
+can turn on off selectionPanel for each model separately. 
+But I can't get them back once I've selected another.
+Why can't I use the same mechanism that loadst the image editor. ? 
+
+Main.jsx -> windowCallbackPickable(mesh_id, caller) 
+
+triggers the 'startEditing' which shows/hides the modal. 
+
+instantiating the selectionPanels upon selection of a model ... is more intuitive.. 
+in some ways but you have to deal with the pop up. 
+(?)
+ :
+
+I could have a button like the one in the modal 'Apply Image' that closes the window, 
+except I'll call it 'position your model' and it could 'hide/show' the 
+appropriate 'iconGear' for that model ? 
+
+onApplyClick
+  -> onApplyCallback
+    ->  onApplyCallback={handleImageEditorResults}
+      -> setOpen(false);
+      -> props.imageEditorCallback(dataURL);
+        -> Main.jsx -> imageEditorCallback()
+      
+it would have to hide show the gear icon. open ...
+ they are two different things one is the 'model' the other is 
+ the 'specific mesh' that was clicked....
+
+
+The iconGear could appear with the appropriate sidebar. 
+
+  BUG: I would expect 'when you click on a new model, that the sidebar would 
+  change to the appropriate model.
+What triggers the sidebar differences. ? 
+this.state.selected_ad_type 
+However , different vehicles share the same sidebar so that's another obstacle. 
+*manually closing selectionPanel.
+when clicking on either the "designer selectors" or  "a different mesh" 
+then the selectionPanel should hide.
+So, what is triggering it...on iconGear that I could use? 
+
+ if (scope.state.isVisibleSelectionPanel) {
+      scope.sendMessage();
+      scope.setState({
+        isVisibleSelectionPanel: false
+      });
+    }
+
+    what if I place this code at windowPick
+does not 'really' get rid of the previous 
+  but if I add this ///clearCurrentPanel: true 
+  how about, "true", "false", "clear" 
+  maybe...
+  "dispose() to remove the selection panel ?  " 
+  this.state.selectionPanel.dispose(); IS NOT A FUNCTION error! 
+  https://doc.babylonjs.com/api/classes/babylon.gui.selectionpanel#dispose really? 
+  * I guess because I have the selectionPanel stored as a state variable it somehow can not access its methods? 
+
+DID: 
+Trying to build a class that cna merge the 'React.Component' class characteristics of having and tracking state, 
+while as well as trying to create an ensulated class for a 'BABYLON.SelectionPanel' , reason being so that it can listen for 
+the rxjs messages that are sent out within the state scope of components. Or at least that is how it seems, becasue I 
+was not able to get a regular class to hear the rxjs messages. In summary I'm trying to find a way to make a selection panel that controls 
+the position and rotation of particular models but that knows when to disappear and let another model take over. I need a change in model, to 
+change the owner of the 'selection panel' as well, or to at least 'hide' the selection panel so that the new models selection  panel can appear.
+
+Tue 10-15-2019
+
+Ok. So reviewing yesterdays work,
+- I overlooked the rxjs aspect during my initial set up logic. 
+- I ran into problems determining whether a 'mesh' or a 'model' is the desired target. 
+- I reverted to a 'boiled down' version of the adderGuiUtility and called it guiLite. 
+- What is happening is, 'guiLite' is used by each model during 'loading process' to create separate 'selection panels' that are hidden until clicked. 
+  - 
+- I believe there may be a way to use the 'name' property of a selectionPanel to control it individually. 
+Let's get after it. 
+- current state of behavior:
+  - you can use the selectionPanel ONLY on the model when you first add it. If you hide it. And if you do not insert another model, first without utilizing it. 
+  - If you do not hide the first models panel, then insert another model, you can access both by hide showing the 'second' models panel, BUT, you can not hide the 
+  first models panel, AND they are actually 'LAYERED' on top off each other. 
+
+
+  (?) What if I could just create 1 selectionPanel. Then, depending 
+  on which current model is selected it binds to that model. 
+  It would have to be instantiated differently. Without 
+  the parent mesh, up front. 
+
+  I think it is already added in Main, so lets see if I can get it without a model. 
+  well we are hearing the rxjs messages, but not seeing the panel. 
+
+
+
+

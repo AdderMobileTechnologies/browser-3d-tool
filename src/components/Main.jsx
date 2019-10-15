@@ -40,10 +40,12 @@ import { Resizable, ResizableBox } from "react-resizable";
 import "./minimum.css";
 import "./Main.css";
 //Part of RxJS implementation.
-import { messageService } from '../_services'; //import { messageService } from '../@/_services';
+import { messageService } from "../_services"; //import { messageService } from '../@/_services';
 ///////////////
 import * as GUI from "babylonjs-gui";
 import AdderGuiUtility from "../models/adderGuiUtility";
+
+import GuiLite from "../models/guiLite";
 
 let scope;
 const UIGridList = K.UIGridList;
@@ -59,6 +61,7 @@ class Main extends React.Component {
   // For RXJS implementation  messages: []  */
 
     this.state = {
+      currentModel: "",
       messages: [],
       scene: {},
       canvas: {},
@@ -157,8 +160,8 @@ class Main extends React.Component {
   }
   componentWillUnmount() {
     this.triggerChange = null;
-     // unsubscribe to ensure no memory leaks: RXJS 
-     this.subscription.unsubscribe();
+    // unsubscribe to ensure no memory leaks: RXJS
+    this.subscription.unsubscribe();
   }
   //Environment
   changeEnvironment = args => {
@@ -661,6 +664,39 @@ class Main extends React.Component {
     let asw = this.state.adderSceneWrapper;
     //use asw to
     let model = asw.getModelForMeshId(mesh_id);
+    console.log("model:", model);
+    let parentMesh = model.getParentMesh();
+    console.log("parentMesh: ", parentMesh.id);
+    /**/
+    /////////////////////////////////////////////////
+    //hide open selectionPanel:
+    if (scope.state.isVisibleSelectionPanel) {
+      // do no send until state clear is set... scope.sendMessage();
+      console.log("WINDOW CALLBACK PICKABLE  SHOULD CLEAR>>>>:");
+      scope.setState(
+        {
+          //isVisibleSelectionPanel: false,
+          clearCurrentPanel: true
+        },
+        () => {
+          scope.sendMessage();
+        }
+      );
+    }
+    /*
+    // could I use guiLite here to add selectionPanel.
+    //: yes but it is a bit awkward and nto intuitive.
+    let guiLite = new GuiLite();
+    let scene = asw.getScene();
+    const advancedTexture = asw.getAdvancedTexture();
+    guiLite.easy_selection_panel(
+      scene,
+      advancedTexture,
+      parentMesh,
+      parentMesh.id
+    );
+    */
+    /////////////////////////////////////////////////
     let position = model.getPosition();
     console.log("position of model:", position);
 
@@ -684,6 +720,8 @@ class Main extends React.Component {
     });
 */
 
+    // HERE: DEFINE THE SELECTED MODEL : ?
+
     // HOW TO define when an action is the frist time a model is selected to get a texture.??? Can I use the mesh_id to check somehow?
 
     if (!this.state.startEditing) {
@@ -691,7 +729,8 @@ class Main extends React.Component {
         {
           startEditing: true,
           editing_mesh_id: mesh_id,
-          finishedEditing: false
+          finishedEditing: false,
+          currentModel: model
         },
         () => {
           console.log("editing mesh id:", mesh_id);
@@ -862,7 +901,7 @@ class Main extends React.Component {
 
   screenshotButtonPress(evt) {
     console.log("- - - - screenshotButtonPress :evt:", evt);
-     
+
     /* THIS DID NOT WORK:
     // call to close the selection panel like in iconGear()
     scope.setState({
@@ -873,111 +912,108 @@ class Main extends React.Component {
     });
     */
 
-   let engine = this.state.engine; //was embedded under Ad_Scene in version 1
-   let camera = this.state.camera;
-   //let stateScope = this.state;
-   let that = this;
+    let engine = this.state.engine; //was embedded under Ad_Scene in version 1
+    let camera = this.state.camera;
+    //let stateScope = this.state;
+    let that = this;
 
-   function addScreenshot(src) {
-     // console.log("addScreenShot(src) src:", src);
-     //TODO: left off here : reconsider how screen shots are getting saved
-     let image_uid = "img_" + Date.now();
+    function addScreenshot(src) {
+      // console.log("addScreenShot(src) src:", src);
+      //TODO: left off here : reconsider how screen shots are getting saved
+      let image_uid = "img_" + Date.now();
 
-     let image_model = {
-       id: image_uid,
-       name: "",
-       data: src,
-       url: "",
-       filename: "",
-       usage: "screenshot"
-     };
+      let image_model = {
+        id: image_uid,
+        name: "",
+        data: src,
+        url: "",
+        filename: "",
+        usage: "screenshot"
+      };
 
-     const array_image_models = that.state.images.slice();
-     array_image_models.push(image_model);
-     that.setState(
-       prevState => ({
-         ...prevState,
-         images: array_image_models
-       }),
-       () => {
-         const obj = { image_id: image_uid, src: "" };
-         //console.log("");
-         const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
-         array_image_models.push(obj);
+      const array_image_models = that.state.images.slice();
+      array_image_models.push(image_model);
+      that.setState(
+        prevState => ({
+          ...prevState,
+          images: array_image_models
+        }),
+        () => {
+          const obj = { image_id: image_uid, src: "" };
+          //console.log("");
+          const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
+          array_image_models.push(obj);
 
-         that.setState(prevState => ({
-           ...prevState,
-           userSession: {
-             ...prevState.userSession,
-             designModel: {
-               ...prevState.userSession.designModel,
-               screenShots: array_image_models
-             }
-           }
-         }));
+          that.setState(prevState => ({
+            ...prevState,
+            userSession: {
+              ...prevState.userSession,
+              designModel: {
+                ...prevState.userSession.designModel,
+                screenShots: array_image_models
+              }
+            }
+          }));
 
-         // we need to get the current array of tileData  push to copy of it   and redefine it
-         that.setState(prevState => ({
-           ...prevState,
-           tileData: {
-             ...prevState.tileData
-           }
-         }));
+          // we need to get the current array of tileData  push to copy of it   and redefine it
+          that.setState(prevState => ({
+            ...prevState,
+            tileData: {
+              ...prevState.tileData
+            }
+          }));
 
-         let tileDataObject = {
-           id: image_uid,
-           key: image_uid,
-           img: src,
-           title: image_uid,
+          let tileDataObject = {
+            id: image_uid,
+            key: image_uid,
+            img: src,
+            title: image_uid,
 
-           cols: 2
-         };
+            cols: 2
+          };
 
-         const newTileDataArray = that.state.tileData.slice();
-         newTileDataArray.push(tileDataObject);
-         that.setState(
-           prevState => ({
-             ...prevState,
-             tileData: newTileDataArray
-           }),
-           () => {}
-         );
-       }
-     );
-   }
+          const newTileDataArray = that.state.tileData.slice();
+          newTileDataArray.push(tileDataObject);
+          that.setState(
+            prevState => ({
+              ...prevState,
+              tileData: newTileDataArray
+            }),
+            () => {}
+          );
+        }
+      );
+    }
 
-   BABYLON.Tools.CreateScreenshot(
-     engine,
-     camera,
-     { width: 400, height: 300 },
-     function(data) {
-       let img = document.createElement("img");
-       img.src = data;
+    BABYLON.Tools.CreateScreenshot(
+      engine,
+      camera,
+      { width: 400, height: 300 },
+      function(data) {
+        let img = document.createElement("img");
+        img.src = data;
 
-       addScreenshot(img.src);
-     }
-   );
-
+        addScreenshot(img.src);
+      }
+    );
   } //
 
-  completeScreenshot(){
-
-  }
+  completeScreenshot() {}
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
-    // -- RXJS 
-     // subscribe to home component messages
-     this.subscription = messageService.getMessage().subscribe(message => {
+    // -- RXJS
+    // subscribe to home component messages
+    this.subscription = messageService.getMessage().subscribe(message => {
       if (message) {
-          // add message to local state if not empty
-          this.setState({ messages: [...this.state.messages, message] });
+        // add message to local state if not empty
+        this.setState({ messages: [...this.state.messages, message] });
       } else {
-          // clear messages when empty message received
-          this.setState({ messages: [] });
+        // clear messages when empty message received
+        this.setState({ messages: [] });
       }
-  });
-  //---end rxjs 
+    });
+    //---end rxjs
 
     //----------------------------------------------
     const url = `${K.META_URL}/design/get`;
@@ -1257,8 +1293,8 @@ class Main extends React.Component {
   environment_Rain(action) {
     let scene = scope.state.scene;
     ///
-console.log("action:",action);
-    
+    console.log("action:", action);
+
     ///
     if (action === "start") {
       BABYLON.ParticleHelper.CreateAsync("rain", scene, false).then(set => {
@@ -1290,22 +1326,20 @@ console.log("action:",action);
     //TODO: save this to the user session as well.
     button.click();
   }
-iconGear(){
-  // this is where we want to handle the hiding and showing of selection panels...
-  if (scope.state.isVisibleSelectionPanel) {
-    scope.sendMessage();
-    scope.setState({
-      isVisibleSelectionPanel: false
-    });
-  } else {
-    scope.sendMessage();
-    scope.setState({
-      isVisibleSelectionPanel: true
-    });
+  iconGear() {
+    // this is where we want to handle the hiding and showing of selection panels...
+    if (scope.state.isVisibleSelectionPanel) {
+      scope.sendMessage();
+      scope.setState({
+        isVisibleSelectionPanel: false
+      });
+    } else {
+      scope.sendMessage();
+      scope.setState({
+        isVisibleSelectionPanel: true
+      });
+    }
   }
-}
-
-
 
   iconRain() {
     if (scope.state.isRaining) {
@@ -1554,27 +1588,31 @@ iconGear(){
     console.log("down...");
   }
 */
-//rxjs 
-sendMessage() {
-  //does not appear to accept args.? 
-  // send message to subscribers via observable subject
-  //isRaining
-  if(this.state.isVisibleSelectionPanel){
-    messageService.sendMessage('true');
-  }else{
-    messageService.sendMessage('false');
+  //rxjs
+  sendMessage() {
+    //does not appear to accept args.?
+    // send message to subscribers via observable subject
+    //isRaining
+    if (this.state.clearCurrentPanel) {
+      messageService.sendMessage("clear");
+      //TODO: reset flag:
+    } else {
+      if (this.state.isVisibleSelectionPanel) {
+        messageService.sendMessage("true");
+      } else {
+        messageService.sendMessage("false");
+      }
+    }
   }
- 
-}
 
-clearMessages() {
-  // clear messages
-  messageService.clearMessages();
-}
-//--end rxjs 
+  clearMessages() {
+    // clear messages
+    messageService.clearMessages();
+  }
+  //--end rxjs
 
   render() {
-    //rxjs 
+    //rxjs
     const { messages } = this.state;
     return (
       <Grid container>
@@ -1884,7 +1922,13 @@ clearMessages() {
         </Grid> */}
         {/** RXJS: had to include this so that the state changes would get detected. */}
         {/**NOT ABLE TO SEND PROPS: isRaining={this.state.isRaining} May Be Two Separate Instances... */}
-        <Grid><AdderGuiUtility ></AdderGuiUtility></Grid>
+        <Grid>
+          <AdderGuiUtility></AdderGuiUtility>
+        </Grid>
+        <Grid>
+          <GuiLite></GuiLite>
+          {/* NO LUCK PASSING PROPS ie. activePanelName={this.state.activePanelName}  */}
+        </Grid>
       </Grid>
     );
   }

@@ -13,6 +13,8 @@ import AdderModel from "./adderModel";
 import AdderMeshWrapper from "./adderMeshWrapper";
 import AdderGuiUtility from "./adderGuiUtility";
 
+import GuiLite from "./guiLite";
+
 class AdderLoader {
   constructor(adderSceneWrapper = null) {
     if (
@@ -80,6 +82,9 @@ class AdderLoader {
       const asw = adderModel.getAdderSceneWrapper();
       const advancedTexture = asw.getAdvancedTexture();
       let adderGuiUtility = new AdderGuiUtility(advancedTexture);
+
+      let guiLite = new GuiLite(advancedTexture);
+
       // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
       //===>>>const grid = asw.getGrid();
       //--------------------------------------------------
@@ -145,118 +150,39 @@ class AdderLoader {
           let asw = adderSceneWrapper;
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
-              /*
-                                                results = adderGuiUtility.control_sliderWithHeader(
-                                                  mesh.parent,
-                                                  "billboard"
-                                                );
-                                                header = results[0];
-                                                slider = results[1];
-                                                adderGuiUtility.panel_Grid(advancedTexture, header, slider, 1);
-                                  */
-              /* WORKING PANEL: 
-            dev. tried adding this to 'addSingleModel' method to see if I can make it only an option when selected. but some vars not yet defined. */
-              adderGuiUtility.easy_selection_panel(
+              /*  calling this via the 'model select ...windowCallbackPickable() in Main...instead.
+               */
+              guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
-                mesh.parent
+                mesh.parent,
+                "Billboard"
               );
 
-              /* */
-              /*
-                          advancedTexture,
-                          mesh_id
-                          let options = {
-                            name:"",
-                            method:"",
-                            angle:"",
-                            width:"",
-                            height:"",
-                            displayValue:""
-                          }
-                          make_default_selection_panel = (advancedTexture, mesh_id, options) 
-                          */
-
-              /*
-                                          let options = {
-                                            name: "foo",
-                                            method: "orientateX",
-                                            angle: "90",
-                                            width: "0.25",
-                                            height: "0.5",
-                                            displayValue: "yo"
-                                          };
-                                          adderGuiUtility.make_default_selection_panel(
-                                            advancedTexture,
-                                            mesh.parent,
-                                            options
-                                          );
-                            */
-              /*
-                                          let scene = adderSceneWrapper.getScene();
-                                          adderGuiUtility.easy_selection_panel(
-                                            scene,
-                                            advancedTexture,
-                                            mesh.parent
-                                          );
-                            */
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon":
-              /* results = adderGuiUtility.control_sliderWithHeader(
-                mesh.parent,
-                "porsche"
-              );
-              header = results[0];
-              slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
-*/
-
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
-              /*
-              results = adderGuiUtility.control_sliderWithHeader(
-                mesh.parent,
-                "porsche"
-              );
-              header = results[0];
-              slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 2);
-              */
-
-              adderGuiUtility.easy_selection_panel(
+              /**/
+              guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
-                mesh.parent
+                mesh.parent,
+                "Sportscar"
               );
 
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
-              /* results = adderGuiUtility.control_sliderWithHeader(
-                mesh.parent,
-                "vw"
-              );
-              header = results[0];
-              slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);*/
-              adderGuiUtility.easy_selection_panel(
-                scene,
-                advancedTexture,
-                mesh.parent
-              );
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon":
-              /*results = adderGuiUtility.control_sliderWithHeader(
-                mesh.parent,
-                "vw"
-              );
-              header = results[0];
-              slider = results[1];
-              adderGuiUtility.panel_Grid(advancedTexture, header, slider, 3);*/
-              adderGuiUtility.easy_selection_panel(
+              /*  */
+              guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
-                mesh.parent
+                mesh.parent,
+                "Station Wagon"
               );
+
               break;
             default:
               console.log(
@@ -327,6 +253,10 @@ class AdderLoader {
       mesh_parent.scaling = unitVec.scale(1);
       mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
 
+      //===>
+      let guiLite = new GuiLite(advancedTexture);
+      // guiLite.easy_selection_panel(scene, advancedTexture, mesh_parent, "Name");
+
       let adderModel = new AdderModel(
         adderSceneWrapper,
         modelFile,
@@ -336,11 +266,15 @@ class AdderLoader {
         rotationAngle,
         [],
         scalingVect,
-        behavior
+        behavior,
+        guiLite,
+        scene,
+        advancedTexture
       );
       //adderLoader.modelLoader(adderModel)
       this.modelLoader(adderModel);
 
+      //===> adderModel.activateGuiLite();
       // Changing The Position of a PARENT MESH of an AdderModel currently requires 'getting the parent mesh and applying the babylon method to it.ie.setPositionWithLocalVector(Vector3)
       // This is not desireable becasue we'd like to be able to do it from the model itself, I would imagine.
       /* How to change Parent Mesh Position.*/
