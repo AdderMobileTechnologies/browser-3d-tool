@@ -68,6 +68,7 @@ class Main extends React.Component {
   */
 
     this.state = {
+      gLiteScope: {},
       currentModel: "",
       messages: [],
       scene: {},
@@ -173,8 +174,22 @@ class Main extends React.Component {
       this.state.currentModelParent,
       this.state.CurrentModelParentName
     );
-  }
 
+    this.get_gLiteScope = this.get_gLiteScope.bind(this);
+    this.add_selectionPanel = this.add_selectionPanel.bind(this);
+  }
+  get_gLiteScope(data) {
+    //parent function for storing child scope.
+    console.log("THIS is the parent get_gLiteScope...");
+    console.log("this is the data:", data);
+    this.setState({
+      gLiteScope: data
+    });
+    //this.props.g
+  }
+  add_selectionPanel(panel) {
+    //add to array of selection panels...and this need to be passed as a prop.
+  }
   callChildFunction(data) {
     //call the registered function.
 
@@ -841,6 +856,19 @@ class Main extends React.Component {
     // HOLD:
     //guiLite.changeParentModel(modelParent);
     // NO: scope.callChildFunction({ "call-Child-Function": "data" });
+    ////////////////////////////////
+    if (this.state.currentModelParent_isLoaded) {
+      console.log(
+        "this.state.gLiteScope:  does it have the remoteFunction ? ",
+        this.state.gLiteScope
+      );
+
+      this.state.gLiteScope.remoteFunction({ currentModelParent: modelParent });
+    } else {
+      console.log("gLite not mounted yet.");
+    }
+
+    /////////////////////////////////////
     this.callChildFunction([
       { scene: this.state.scene },
       { advancedTexture: this.state.advancedTexture },
@@ -848,12 +876,12 @@ class Main extends React.Component {
       { modelParentName: "fugazi" }
     ]);
     // create new one here instead of parent change appropach.
-    guiLite.easy_selection_panel(
-      this.state.scene,
-      this.state.advancedTexture,
-      modelParent,
-      "Mackaroo"
-    );
+    // guiLite.easy_selection_panel(
+    //   this.state.scene,
+    //   this.state.advancedTexture,
+    //   modelParent,
+    //   "Mackaroo"
+    // );
     let that = this;
     this.setState(
       {
@@ -2007,6 +2035,8 @@ class Main extends React.Component {
               currentModelParent={this.state.currentModelParent}
               currentModelParentName={this.state.currentModelParentName}
               registerChildFunction={this.registerChildFunction}
+              get_gLiteScope={this.get_gLiteScope}
+              add_selectionPanel={this.add_selectionPanel}
             ></GuiLite>
           )}
 

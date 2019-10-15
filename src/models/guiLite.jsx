@@ -6,6 +6,7 @@ import { messageService } from "../_services";
 
 import Grid from "@material-ui/core/Grid"; //
 let scope;
+let childScope;
 class GuiLite extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ class GuiLite extends React.Component {
     //2
     this.state = {
       messages: [],
+      array_selectionPanels: [],
       selectionPanel: {},
       mesh: this.props.currentModelParent,
       currentModelParent: this.props.currentModelParent,
@@ -27,11 +29,14 @@ class GuiLite extends React.Component {
       //isRaining:props.isRaining,
     };
     scope = this;
+    childScope = this;
     this.state.advancedTexture = this.props.advancedTexture;
     //this.moveX = this.moveX.bind(this);
     this.changeParentModel = this.changeParentModel.bind(this);
 
     this.childFunction = this.childFunction.bind(this);
+    this.remoteFunction = this.remoteFunction.bind(this);
+
     /* if (typeof props.registerChildFunction === "function") {
       props.registerChildFunction(this.childFunction);
       console.log("are we registering the childe function ????? ");
@@ -57,12 +62,40 @@ class GuiLite extends React.Component {
       data[3].modelParentName
     );
   }
-
+  remoteFunction(data) {
+    //remote function to be called from and by the Parent component.
+    console.log(" in gLite: remoteFunction(data) ", data);
+    console.log(
+      "scope.state. has the parameters I want...for selection Panel  but the currentModelParent is out of date. "
+    );
+    console.log("scope:", scope);
+    let a_selection_panel = this.easy_selection_panel(
+      scope.state.scene,
+      scope.state.advancedTexture,
+      data.currentModelParent,
+      "funkamuungusitis"
+    );
+    var temp_array_selectionPanels = this.state.array_selectionPanels;
+    //set all existing selection panels isVisible to false:
+    for (let sp of temp_array_selectionPanels) {
+      console.log("selection panel:", sp);
+      sp.isVisible = false;
+    }
+    temp_array_selectionPanels.push(a_selection_panel);
+    scope.setState(prevState => ({
+      ...prevState,
+      array_selectionPanels: temp_array_selectionPanels
+    }));
+  }
   //3
   componentDidMount() {
-    console.log("does GuiLite Mount ? in its present form? props:", this.props);
-
+    console.log(
+      "gLite: does GuiLite Mount ? in its present form? props:",
+      this.props
+    );
+    this.props.get_gLiteScope(childScope);
     let scope = this;
+    //this.props.get_gLiteScope(scope); //should be same as calling get_gLiteScope in Parent.
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
       if (message) {
@@ -76,13 +109,30 @@ class GuiLite extends React.Component {
       }
     });
     console.log("PROPS CHECK BEFORE PANEL:", this.props);
-    /*
-    this.easy_selection_panel(
+    //JUST THE INITIAL PANEL:
+    let a_selection_panel = this.easy_selection_panel(
       this.props.scene,
       this.props.advancedTexture,
       this.state.currentModelParent,
       this.props.currentModelParentName
     );
+    var temp_array_selectionPanels = this.state.array_selectionPanels;
+    for (let sp of temp_array_selectionPanels) {
+      console.log("selection panel:", sp);
+    }
+    temp_array_selectionPanels.push(a_selection_panel);
+    scope.setState(prevState => ({
+      ...prevState,
+      array_selectionPanels: temp_array_selectionPanels
+    }));
+    /*
+     // array of selection panels like this: 
+        var temp_array_selectionPanels = this.state.array_selectionPanels;
+        temp_array_selectionPanels.push(_selectionPanel);
+        scope.setState(prevState => ({
+          ...prevState,
+          array_selectionPanels: temp_array_selectionPanels
+        }));
     */
   }
   //4
@@ -346,6 +396,7 @@ class GuiLite extends React.Component {
         selector_slider.shadowColor = "#ccc";
         selector_slider.borderColor = "#000";
       }
+      return selectionPanel;
     }
   };
 
