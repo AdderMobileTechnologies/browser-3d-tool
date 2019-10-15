@@ -48,6 +48,7 @@ import AdderGuiUtility from "../models/adderGuiUtility";
 import GuiLite from "../models/guiLite";
 
 let scope;
+let guiLite = {};
 const UIGridList = K.UIGridList;
 //region: Render Methods
 let util = new AdderUtil();
@@ -58,12 +59,22 @@ class Main extends React.Component {
 
     scope = this;
     /*
-  // For RXJS implementation  messages: []  */
+  // For RXJS implementation  messages: [] 
+  
+   #scene={this.state.scene}
+           -#- advancedTexture={this.advancedTexture}
+            meshParent={this.currentModelParent}
+            name={this.meshParentDisplayName}
+  */
 
     this.state = {
       currentModel: "",
       messages: [],
       scene: {},
+      advancedTexture: {},
+      currentModelParent_isLoaded: false,
+      currentModelParent: {},
+      currentModelParentName: "jack",
       canvas: {},
       last_adderAssetObject: "empty asset",
       sceneIsSet: false,
@@ -147,7 +158,36 @@ class Main extends React.Component {
       ></Designer>
     );*/
     this.register = this.register.bind(this); //extra
+    // this.registerChildFunction = this.registerChildFunction.bind(this);
+    //this.childFunction = this.childFunction.bind(this);
+    //this.childFunction = () => {};
+    /*
+  this.props.scene,
+      this.props.advancedTexture,
+      this.state.currentModelParent,
+      this.props.currentModelParentName
+    */
+    guiLite = new GuiLite(
+      this.state.scene,
+      this.state.advancedTexture,
+      this.state.currentModelParent,
+      this.state.CurrentModelParentName
+    );
   }
+
+  callChildFunction(data) {
+    //call the registered function.
+
+    // console.log("to call the child function");
+    // console.log("this:", this);
+    // console.log("typeof childFunction");
+    // console.log(typeof childFuntion);
+    // console.log("original:");
+    // this.childFunction({ "child fn": "original" });
+    console.log("guiLite:");
+    guiLite.childFunction(data);
+  }
+
   register(triggerChange) {
     console.log("Main(): register(triggerChange):");
     this.triggerChange = triggerChange;
@@ -162,6 +202,7 @@ class Main extends React.Component {
     this.triggerChange = null;
     // unsubscribe to ensure no memory leaks: RXJS
     this.subscription.unsubscribe();
+    this.childFunction = null;
   }
   //Environment
   changeEnvironment = args => {
@@ -792,7 +833,38 @@ class Main extends React.Component {
   loadScene = adderAsset => {
     this.state.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
-    adderLoader.addSingleModel(adderAsset);
+    let modelParent = adderLoader.addSingleModel(adderAsset);
+    console.log("modelParent:", modelParent);
+    // Can I get a parentModel backas return for 'addSingleModel' ? . YES
+    //this.state.guiLite
+    // let myGuiLite = this.state.guiLite;
+    // HOLD:
+    //guiLite.changeParentModel(modelParent);
+    // NO: scope.callChildFunction({ "call-Child-Function": "data" });
+    this.callChildFunction([
+      { scene: this.state.scene },
+      { advancedTexture: this.state.advancedTexture },
+      { modelParent: modelParent },
+      { modelParentName: "fugazi" }
+    ]);
+    // create new one here instead of parent change appropach.
+    guiLite.easy_selection_panel(
+      this.state.scene,
+      this.state.advancedTexture,
+      modelParent,
+      "Mackaroo"
+    );
+    let that = this;
+    this.setState(
+      {
+        currentModelParent: modelParent
+      },
+      () => {
+        that.setState({
+          currentModelParent_isLoaded: true
+        });
+      }
+    );
   };
   defineSelectableMeshesForAdderAsset(adderAsset) {
     console.log(
@@ -1129,6 +1201,8 @@ class Main extends React.Component {
       {
         scene: scene,
         adderSceneWrapper: adderSceneWrapper,
+        advancedTexture: advancedTexture,
+
         environment_type: "CITY"
       },
       () => {
@@ -1926,8 +2000,27 @@ class Main extends React.Component {
           <AdderGuiUtility></AdderGuiUtility>
         </Grid>
         <Grid>
-          <GuiLite></GuiLite>
-          {/* NO LUCK PASSING PROPS ie. activePanelName={this.state.activePanelName}  */}
+          {this.state.currentModelParent_isLoaded && (
+            <GuiLite
+              scene={this.state.scene}
+              advancedTexture={this.state.advancedTexture}
+              currentModelParent={this.state.currentModelParent}
+              currentModelParentName={this.state.currentModelParentName}
+              registerChildFunction={this.registerChildFunction}
+            ></GuiLite>
+          )}
+
+          {/* 
+          scene,
+          advancedTexture,
+          mesh.parent,
+          "Station Wagon"
+
+          NO LUCK PASSING PROPS 
+          ie. activePanelName={this.state.activePanelName}  
+        
+        
+        */}
         </Grid>
       </Grid>
     );
@@ -1935,3 +2028,30 @@ class Main extends React.Component {
 }
 
 export default Main;
+
+/////////--------------------------------------
+// Registering a child components function with it's parent so that the parent can call the function when it needs to.
+//<Parent>: ------------------
+//- outside the constructor:
+
+// registerChildFunction(childFunction) {
+//   this.childFunction = childFunction;
+// }
+// callChildFunction(data) {
+// //call the registered function.
+// this.childFunction(data);
+// }
+// componentWillUnmount() {
+// this.childFunction = null;
+// }
+//</Parent>
+
+////<Child>: ------------------------
+// //- inside constructor:
+//   this.childFunction = this.childFunction.bind(this);
+//   props.registerChildFunction(this.childFunction);
+
+// //- outside the constructor
+// childFunction(data) {}
+
+//////-</Child> --------------------------------------------

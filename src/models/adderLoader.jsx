@@ -83,7 +83,7 @@ class AdderLoader {
       const advancedTexture = asw.getAdvancedTexture();
       let adderGuiUtility = new AdderGuiUtility(advancedTexture);
 
-      let guiLite = new GuiLite(advancedTexture);
+      //let guiLite = new GuiLite(advancedTexture);
 
       // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
       //===>>>const grid = asw.getGrid();
@@ -151,38 +151,38 @@ class AdderLoader {
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
               /*  calling this via the 'model select ...windowCallbackPickable() in Main...instead.
-               */
+              
               guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
                 mesh.parent,
                 "Billboard"
               );
-
+ */
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.babylon":
               break;
             case "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon":
-              /**/
+              /*
               guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
                 mesh.parent,
                 "Sportscar"
               );
-
+*/
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.babylon":
               break;
             case "ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon":
-              /*  */
+              /* 
               guiLite.easy_selection_panel(
                 scene,
                 advancedTexture,
                 mesh.parent,
                 "Station Wagon"
               );
-
+ */
               break;
             default:
               console.log(
@@ -254,7 +254,8 @@ class AdderLoader {
       mesh_parent.setPositionWithLocalVector(new BABYLON.Vector3(0, 0, 0));
 
       //===>
-      let guiLite = new GuiLite(advancedTexture);
+      // let guiLite = new GuiLite(advancedTexture);
+      let guiLite = null;
       // guiLite.easy_selection_panel(scene, advancedTexture, mesh_parent, "Name");
 
       let adderModel = new AdderModel(
@@ -319,6 +320,8 @@ class AdderLoader {
             adderModelParent.id
           );
               */
+      console.log("before return adderModelParent:", adderModelParent);
+      return adderModelParent;
     };
   }
 }

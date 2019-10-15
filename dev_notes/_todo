@@ -1531,7 +1531,28 @@ Let's get after it.
 
   I think it is already added in Main, so lets see if I can get it without a model. 
   well we are hearing the rxjs messages, but not seeing the panel. 
+  "git save at safe spot" 
+  1) stop loader version of instantiation with comments. 
+2) move the parameters over as props instead of constructor params. 
+3) define the props parameters:
+  when and where? 
+  Main.jsx -> componentDidMount() -> setState before engine loop.
+ok.
+Now at correct time...add these to state.
+currentParentMesh: {},
+currentParentMeshName: {},
+(?) at DesignerCallback ? : 
+Can I get a parentModel backas return for 'addSingleModel' ?  YES.
+
+ok. working, but I need to update state for model change. 
+and state needs to update 'selectionPanel'
+
+What if  I had an array of guiLite selection panels that were sent back to Main.
+Ten maybe I could remove them when creating another? 
 
 
+For some reason , state is not getting updated when I check at rxjs callback:
+
+Can I send child scope back to Parent scope to be managed. ? 
 
 
