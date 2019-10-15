@@ -69,12 +69,36 @@ class GuiLite extends React.Component {
       "scope.state. has the parameters I want...for selection Panel  but the currentModelParent is out of date. "
     );
     console.log("scope:", scope);
-    let a_selection_panel = this.easy_selection_panel(
-      scope.state.scene,
-      scope.state.advancedTexture,
-      data.currentModelParent,
-      "funkamuungusitis"
-    );
+
+    // CHECK if a panel already exists with that name just set it to visible instead of creating a new one.
+    // -loop through existing panels get true or false, a match.
+    let result = this.matchExistingPanels(data.currentModelParentName);
+    if (!result) {
+      let a_selection_panel = this.easy_selection_panel(
+        scope.state.scene,
+        scope.state.advancedTexture,
+        data.currentModelParent,
+        data.currentModelParent.name
+      );
+      this.manageSelectionPanels(a_selection_panel);
+    } else {
+      console.log("THERE WAS A MATCH WE NEED TO SHOW IT.");
+    }
+
+    // var temp_array_selectionPanels = this.state.array_selectionPanels;
+    // //set all existing selection panels isVisible to false:
+    // for (let sp of temp_array_selectionPanels) {
+    //   console.log("selection panel:", sp);
+    //   sp.isVisible = false;
+    // }
+    // temp_array_selectionPanels.push(a_selection_panel);
+    // scope.setState(prevState => ({
+    //   ...prevState,
+    //   array_selectionPanels: temp_array_selectionPanels
+    // }));
+  }
+
+  manageSelectionPanels(a_selection_panel) {
     var temp_array_selectionPanels = this.state.array_selectionPanels;
     //set all existing selection panels isVisible to false:
     for (let sp of temp_array_selectionPanels) {
@@ -87,6 +111,21 @@ class GuiLite extends React.Component {
       array_selectionPanels: temp_array_selectionPanels
     }));
   }
+  matchExistingPanels(currentModelParentName) {
+    var temp_array_selectionPanels = this.state.array_selectionPanels;
+    //set all existing selection panels isVisible to false:
+    console.log("currentModelParentName is:", currentModelParentName);
+    for (let sp of temp_array_selectionPanels) {
+      if (sp.name === currentModelParentName) {
+        console.log("a match!");
+        return true;
+      } else {
+        console.log("no match.");
+        return false;
+      }
+    }
+  }
+
   //3
   componentDidMount() {
     console.log(
@@ -95,16 +134,14 @@ class GuiLite extends React.Component {
     );
     this.props.get_gLiteScope(childScope);
     let scope = this;
-    //this.props.get_gLiteScope(scope); //should be same as calling get_gLiteScope in Parent.
+
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
       if (message) {
         // add message to local state if not empty
-        // this.setState({ messages: [...this.state.messages, message] });
         this.state.messages = [...this.state.messages, message];
       } else {
         // clear messages when empty message received
-        // this.setState({ messages: [] });
         this.state.messages = [];
       }
     });
@@ -114,26 +151,10 @@ class GuiLite extends React.Component {
       this.props.scene,
       this.props.advancedTexture,
       this.state.currentModelParent,
-      this.props.currentModelParentName
+      this.props.currentModelParent.name
     );
-    var temp_array_selectionPanels = this.state.array_selectionPanels;
-    for (let sp of temp_array_selectionPanels) {
-      console.log("selection panel:", sp);
-    }
-    temp_array_selectionPanels.push(a_selection_panel);
-    scope.setState(prevState => ({
-      ...prevState,
-      array_selectionPanels: temp_array_selectionPanels
-    }));
-    /*
-     // array of selection panels like this: 
-        var temp_array_selectionPanels = this.state.array_selectionPanels;
-        temp_array_selectionPanels.push(_selectionPanel);
-        scope.setState(prevState => ({
-          ...prevState,
-          array_selectionPanels: temp_array_selectionPanels
-        }));
-    */
+
+    this.manageSelectionPanels(a_selection_panel);
   }
   //4
   componentWillUnmount() {

@@ -1555,4 +1555,7 @@ For some reason , state is not getting updated when I check at rxjs callback:
 
 Can I send child scope back to Parent scope to be managed. ? 
 
+we are now manageing array of selection panels... 
+the trick now is to name them properly and hide show them  appropriately. 
+
 

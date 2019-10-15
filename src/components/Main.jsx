@@ -863,7 +863,10 @@ class Main extends React.Component {
         this.state.gLiteScope
       );
 
-      this.state.gLiteScope.remoteFunction({ currentModelParent: modelParent });
+      this.state.gLiteScope.remoteFunction(
+        { currentModelParent: modelParent },
+        { currentModelParentName: modelParent.name }
+      );
     } else {
       console.log("gLite not mounted yet.");
     }
