@@ -47,52 +47,14 @@ class GuiLite extends React.Component {
     */
     console.log("WHY DOESNT THIS FAIL AS EXPECTED?");
     console.log(data.method);
-
-    /*
-    //remote function to be called from and by the Parent component.
-    console.log(" in gLite: remoteFunction(data) ", data);
-    console.log(
-      "scope.state. has the parameters I want...for selection Panel  but the currentModelParent is out of date. "
-    );
-    console.log("scope:", scope);
-
-    // CHECK if a panel already exists with that name just set it to visible instead of creating a new one.
-    // -loop through existing panels get true or false, a match.
-
-    // THIS DOES NOTE EVVEN GET CALLED WHEN THE MODEL IS CLICKED ON.ie. opening the image editor.
-
-    console.log("lookign form match :", data.currentModelParent.name);
-    let result = this.matchExistingPanels(data.currentModelParent.name);
-    console.log("RESULT: ", result);
-    if (result) {
-      console.log("THERE WAS   MATCH WE NEED TO SHOW EXISTING.");
-      //hide all then show the matching panel.
-      this.showExistingMatch(data.currentModelParent.name);
-    } else {
-      console.log("THERE WAS NOT A MATCH WE NEED TO Make a panel.");
-      let a_selection_panel = this.easy_selection_panel(
-        scope.state.scene,
-        scope.state.advancedTexture,
-        data.currentModelParent,
-        data.currentModelParent.name
-      );
-      this.manageSelectionPanels(a_selection_panel);
-    }*/
-    //dev test: only run what looks like necessary code for loading a new model and it's panel.
-    //result: everything still works as expected.
     console.log("the .-.-.data:", data);
+
     if (data.method === "createSelectionPanel") {
-      console.log(
-        "Is mesh undefined: data.currentModelParent",
-        data.currentModelParent
-      );
+      //1) remove all existing panels.
+      this.disposeOfExistingPanels();
+      //2)  then set array to empty.
+      this.clearPanelsArray();
       this.createSelectionPanel(data);
-      // let a_selection_panel = this.easy_selection_panel(
-      //   scope.state.scene,
-      //   scope.state.advancedTexture,
-      //   data[1].currentModelParent,
-      //   data[2].currentModelParentName
-      // );
     }
 
     if (data.method === "checkExistingPanels") {
@@ -107,7 +69,6 @@ class GuiLite extends React.Component {
 
     if (data.method === "clearExistingPanelsAddThisOne") {
       //1) remove all existing panels.
-      //ie. loop and dispose()
       this.disposeOfExistingPanels();
       //2)  then set array to empty.
       this.clearPanelsArray();
@@ -116,8 +77,8 @@ class GuiLite extends React.Component {
     }
   }
   disposeOfExistingPanels() {
-    for (let p of this.state.array_selectionPanels) {
-      p.dispose();
+    for (let sp of this.state.array_selectionPanels) {
+      sp.dispose();
     }
   }
   clearPanelsArray() {
@@ -131,9 +92,8 @@ class GuiLite extends React.Component {
       data.currentModelParentName
     );
     console.log("INFINITE: manageSelectionPanels");
-    //===>INFINITE LOOP: HERE:?:
+
     this.manageSelectionPanels(a_selection_panel);
-    //this.manageModels(data);
   }
 
   manageModels(data) {
