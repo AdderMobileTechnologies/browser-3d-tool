@@ -48,7 +48,7 @@ import AdderGuiUtility from "../models/adderGuiUtility";
 import GuiLite from "../models/guiLite";
 
 let scope;
-let guiLite = {};
+
 const UIGridList = K.UIGridList;
 //region: Render Methods
 let util = new AdderUtil();
@@ -69,6 +69,7 @@ class Main extends React.Component {
 
     this.state = {
       gLiteScope: {},
+      gLiteScope_isDefined: false,
       currentModel: "",
       messages: [],
       scene: {},
@@ -139,7 +140,7 @@ class Main extends React.Component {
     this.saveScreenshot = this.saveScreenshot.bind(this);
     this.save_UIAction = this.save_UIAction.bind(this);
     this.sidebarButtonClickAlt = this.sidebarButtonClickAlt.bind(this);
-    this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
+    this.callback_WindowPickable = this.callback_WindowPickable.bind(this);
     this.imageEditorClose = this.imageEditorClose.bind(this);
     this.changeEnvironment = this.changeEnvironment.bind(this);
     this.environment_Rain = this.environment_Rain.bind(this);
@@ -159,48 +160,26 @@ class Main extends React.Component {
       ></Designer>
     );*/
     this.register = this.register.bind(this); //extra
-    // this.registerChildFunction = this.registerChildFunction.bind(this);
-    //this.childFunction = this.childFunction.bind(this);
-    //this.childFunction = () => {};
+    this.deployRemoteFunction = this.deployRemoteFunction.bind(this);
+    this.foobar = this.foobar.bind(this);
+    this.foobar_callback = this.foobar_callback.bind(this);
+
     /*
   this.props.scene,
       this.props.advancedTexture,
       this.state.currentModelParent,
       this.props.currentModelParentName
     */
-    guiLite = new GuiLite(
-      this.state.scene,
-      this.state.advancedTexture,
-      this.state.currentModelParent,
-      this.state.CurrentModelParentName
-    );
 
     this.get_gLiteScope = this.get_gLiteScope.bind(this);
-    this.add_selectionPanel = this.add_selectionPanel.bind(this);
   }
   get_gLiteScope(data) {
     //parent function for storing child scope.
-    console.log("THIS is the parent get_gLiteScope...");
-    console.log("this is the data:", data);
-    this.setState({
-      gLiteScope: data
-    });
-    //this.props.g
-  }
-  add_selectionPanel(panel) {
-    //add to array of selection panels...and this need to be passed as a prop.
-  }
-  callChildFunction(data) {
-    //call the registered function.
 
-    // console.log("to call the child function");
-    // console.log("this:", this);
-    // console.log("typeof childFunction");
-    // console.log(typeof childFuntion);
-    // console.log("original:");
-    // this.childFunction({ "child fn": "original" });
-    console.log("guiLite:");
-    guiLite.childFunction(data);
+    this.setState({
+      gLiteScope: data,
+      gLiteScope_isDefined: true
+    });
   }
 
   register(triggerChange) {
@@ -217,7 +196,6 @@ class Main extends React.Component {
     this.triggerChange = null;
     // unsubscribe to ensure no memory leaks: RXJS
     this.subscription.unsubscribe();
-    this.childFunction = null;
   }
   //Environment
   changeEnvironment = args => {
@@ -627,7 +605,7 @@ class Main extends React.Component {
   sidebarButtonClickAlt(args) {
     //Purpose: save new mesh to array of meshes in state
     // I do not need to save meshes in this manner anymore.
-    this.windowCallbackPickable(args.name, "sidebarButtonClickAlt");
+    this.callback_WindowPickable(args.name, "sidebarButtonClickAlt");
   }
 
   imageEditorClose = () => {
@@ -719,7 +697,7 @@ class Main extends React.Component {
     );
   };
 
-  windowCallbackPickable(mesh_id, caller) {
+  callback_WindowPickable(mesh_id, caller) {
     console.log("WINDOW CALLBACK PICKABLE: ");
     console.log("mesh_id:", mesh_id);
     console.log("caller:", caller);
@@ -737,56 +715,11 @@ class Main extends React.Component {
     );
 
     this.setState({
-      theCurrentModelParent: parentModel
+      theCurrentModelParent: parentModel,
+      theCurrentModelParentName: parentModel.name
     });
-    // // THIS IS NOT HIDING WHAT IT SHOULD BE :
-    // this.state.gLiteScope.remoteFunction(
-    //   { currentModelParent: parentModel },
-    //   { currentModelParentName: parentModel.name }
-    // );
-    /**/
+
     /////////////////////////////////////////////////
-    //hide open selectionPanel:
-    // HIDE TEMP: could be interfering with show hide
-    /*
-    if (scope.state.isVisibleSelectionPanel) {
-      // do no send until state clear is set... scope.sendMessage();
-      console.log("WINDOW CALLBACK PICKABLE  SHOULD CLEAR>>>>:");
-      scope.setState(
-        {
-          //isVisibleSelectionPanel: false,
-          clearCurrentPanel: true
-        },
-        () => {
-          scope.sendMessage();
-        }
-      );
-    }
-
-    */
-
-    /*
-    // could I use guiLite here to add selectionPanel.
-    //: yes but it is a bit awkward and nto intuitive.
-    let guiLite = new GuiLite();
-    let scene = asw.getScene();
-    const advancedTexture = asw.getAdvancedTexture();
-    guiLite.easy_selection_panel(
-      scene,
-      advancedTexture,
-      parentMesh,
-      parentMesh.id
-    );
-    */
-    /////////////////////////////////////////////////
-    let position = model.getPosition();
-    console.log("position of model:", position);
-
-    if (position instanceof BABYLON.Vector3) {
-      console.log("is vector 3");
-    } else {
-      console.log("is NOT a vector 3");
-    }
 
     //get camera and change setTarget to this position.
     // position IS a BABYLON.Vector3 instantiation AND  this.state.camera IS the camera...
@@ -807,6 +740,7 @@ class Main extends React.Component {
     // HOW TO define when an action is the frist time a model is selected to get a texture.??? Can I use the mesh_id to check somehow?
 
     if (!this.state.startEditing) {
+      let that = this;
       this.setState(
         {
           startEditing: true,
@@ -818,10 +752,12 @@ class Main extends React.Component {
           console.log("editing mesh id:", mesh_id);
           // THIS IS NOT HIDING WHAT IT SHOULD BE :
           console.log("hide from here.? ");
-          this.state.gLiteScope.remoteFunction(
+          // MAYBE ICAN REMOVE IT FROM THE 'advancedTexture' OBJECT ?
+          that.state.gLiteScope.remoteFunction([
+            { method: "checkExistingPanels" },
             { currentModelParent: parentModel },
             { currentModelParentName: parentModel.name }
-          );
+          ]);
         }
       );
     } else {
@@ -879,57 +815,119 @@ class Main extends React.Component {
     }
   }
   loadScene = adderAsset => {
+    console.log(
+      "loadScene :: LOAD SCENE: how many times ? Once per new model."
+    );
     this.state.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
     let modelParent = adderLoader.addSingleModel(adderAsset);
+
+    let that = this;
+    this.setState(
+      {
+        currentModelParent: modelParent,
+        currentModelParentName: modelParent.name
+      },
+      () => {
+        that.setState(
+          {
+            currentModelParent_isLoaded: true
+          },
+          // that.deployRemoteFunction()
+          // that.foobar()
+          () => {
+            that.deployRemoteFunction();
+          }
+        );
+      }
+    );
+
     console.log("who is  the modelParent:", modelParent);
-    // Can I get a parentModel backas return for 'addSingleModel' ? . YES
-    //this.state.guiLite
-    // let myGuiLite = this.state.guiLite;
-    // HOLD:
-    //guiLite.changeParentModel(modelParent);
-    // NO: scope.callChildFunction({ "call-Child-Function": "data" });
+
     ////////////////////////////////
+    /*
     if (this.state.currentModelParent_isLoaded) {
       console.log(
         "this.state.gLiteScope:  does it have the remoteFunction ? ",
         this.state.gLiteScope
       );
 
+      //dev2: remove call to remote functionall together.:: result no additional panels are created.
+      //dev temp remove test: { method: "createSelectionPanel" },
+      //DEV: conclusion: this is only getting called for the 'additional' selection panels that are getting added.
+      //So, how is the first panle getting created.
+      // let that = this;
+      //dev: move to AFTER async model defined in state.
+      //Dev: although 'currentModlParent_isLoaded' should be true at the async callback of the upcoming setState function for it, the state, still
+      // does not recognize it yet.  somehow. so that must be why I was calling it hear.
+      // however the model was coming out as undefined... so I moved it to preceded this method. and if it does not work encapsulate it in a function that gets called after the async callback .
+
       this.state.gLiteScope.remoteFunction(
+        { method: "createSelectionPanel" },
         { currentModelParent: modelParent },
         { currentModelParentName: modelParent.name }
       );
+
+      //dev: test NEITHER. did not solve it.
     } else {
       console.log("gLite not mounted yet.");
-    }
-
-    /////////////////////////////////////
-    this.callChildFunction([
-      { scene: this.state.scene },
-      { advancedTexture: this.state.advancedTexture },
-      { modelParent: modelParent },
-      { modelParentName: "fugazi" }
-    ]);
-    // create new one here instead of parent change appropach.
-    // guiLite.easy_selection_panel(
-    //   this.state.scene,
-    //   this.state.advancedTexture,
-    //   modelParent,
-    //   "Mackaroo"
-    // );
-    let that = this;
-    this.setState(
-      {
-        currentModelParent: modelParent
-      },
-      () => {
-        that.setState({
-          currentModelParent_isLoaded: true
-        });
-      }
-    );
+    }*/
   };
+  deployRemoteFunction() {
+    console.log(
+      "deployRemoteFunction::: call as an async await IT WILL calasync method ...try without first. "
+    );
+    if (this.state.currentModelParent_isLoaded) {
+      if (this.state.gLiteScope_isDefined) {
+        console.log(
+          "currentModelParent SHOULD be loaded.....first time NO,second time YES"
+        );
+        //this is somehow out of sync with the react developer tools definition of the currentModelParent.
+        console.log(
+          "this should be defined:this.state.currentModelParent:",
+          this.state.currentModelParent,
+          " and this:",
+          this.state.currentModelParentName
+        );
+        console.log("and the gLiteScope:", this.state.gLiteScope);
+        this.state.gLiteScope.remoteFunction([
+          { method: "createSelectionPanel" },
+          { currentModelParent: this.state.currentModelParent },
+          { currentModelParentName: this.state.currentModelParentName }
+        ]);
+      } else {
+        console.log("this.state.gLiteScope is NOT defined yet.? ");
+      }
+    }
+  }
+  //////////////////////////////////////////////////
+  async foobar() {
+    let that = this;
+    console.log("do stuff that's asynchronous ");
+    await setTimeout(function() {
+      console.log("echo poo");
+      that.foobar_callback();
+    }, 1000);
+  }
+
+  foobar_callback() {
+    console.log("foobar callback");
+    if (this.state.gLiteScope_isDefined) {
+      console.log(
+        "currentModelParent SHOULD be loaded.....first time NO,second time YES"
+      );
+      this.state.gLiteScope.remoteFunction(
+        { method: "createSelectionPanel" },
+        { currentModelParent: this.state.currentModelParent },
+        { currentModelParentName: this.state.currentModelParentName }
+      );
+    } else {
+      console.log("this.state.gLiteScope is NOT defined yet.? ");
+    }
+  }
+  //foobar();
+
+  ////////////////////////////////////////////////
   defineSelectableMeshesForAdderAsset(adderAsset) {
     console.log(
       "defineSelectableMeshesForAdderAsset(adderAsset):adderAsset",
@@ -1313,7 +1311,7 @@ class Main extends React.Component {
               finishedEditing: true
             });
           } else {
-            scope.windowCallbackPickable(
+            scope.callback_WindowPickable(
               pickResult.pickedMesh.name,
               "eventListener"
             );
@@ -2070,23 +2068,9 @@ class Main extends React.Component {
               advancedTexture={this.state.advancedTexture}
               currentModelParent={this.state.currentModelParent}
               currentModelParentName={this.state.currentModelParentName}
-              registerChildFunction={this.registerChildFunction}
               get_gLiteScope={this.get_gLiteScope}
-              add_selectionPanel={this.add_selectionPanel}
             ></GuiLite>
           )}
-
-          {/* 
-          scene,
-          advancedTexture,
-          mesh.parent,
-          "Station Wagon"
-
-          NO LUCK PASSING PROPS 
-          ie. activePanelName={this.state.activePanelName}  
-        
-        
-        */}
         </Grid>
       </Grid>
     );
@@ -2094,30 +2078,3 @@ class Main extends React.Component {
 }
 
 export default Main;
-
-/////////--------------------------------------
-// Registering a child components function with it's parent so that the parent can call the function when it needs to.
-//<Parent>: ------------------
-//- outside the constructor:
-
-// registerChildFunction(childFunction) {
-//   this.childFunction = childFunction;
-// }
-// callChildFunction(data) {
-// //call the registered function.
-// this.childFunction(data);
-// }
-// componentWillUnmount() {
-// this.childFunction = null;
-// }
-//</Parent>
-
-////<Child>: ------------------------
-// //- inside constructor:
-//   this.childFunction = this.childFunction.bind(this);
-//   props.registerChildFunction(this.childFunction);
-
-// //- outside the constructor
-// childFunction(data) {}
-
-//////-</Child> --------------------------------------------

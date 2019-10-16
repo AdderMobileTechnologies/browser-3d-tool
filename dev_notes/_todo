@@ -352,11 +352,11 @@ exceptions:
 CHANGES: 
 
     this.sidebarButtonClickAlt. = this.sidebarButtonClickAlt.bind(this) 
-     this.windowCallbackPickable = this.windowCallbackPickable.bind(this);
+     this.callback_WindowPickable = this.callback_WindowPickable.bind(this);
 
      try to eliminate the 'scp and scope' factors.
 
-     AFTER windowCallbackPickable ,,, I needed to reset flag back to false. This fixed the back to back sidebar selection.
+     AFTER callback_WindowPickable ,,, I needed to reset flag back to false. This fixed the back to back sidebar selection.
      HOWEVER, upon a direct click afterwards on billboard I get the 'double popup and freeze.' 
 
 
@@ -668,7 +668,7 @@ ok I think 2 main things
 
 changing the target of a camera 
 click on a mesh: 
-Main.jsx -> windowCallbackPickable(mesh_id, caller) ... 
+Main.jsx -> callback_WindowPickable(mesh_id, caller) ... 
   1st you need the vector3 of the models parent mesh position.
     - get 'mesh parent' 
     - get 'mesh parent' vector3 position.
@@ -1446,7 +1446,7 @@ can turn on off selectionPanel for each model separately.
 But I can't get them back once I've selected another.
 Why can't I use the same mechanism that loadst the image editor. ? 
 
-Main.jsx -> windowCallbackPickable(mesh_id, caller) 
+Main.jsx -> callback_WindowPickable(mesh_id, caller) 
 
 triggers the 'startEditing' which shows/hides the modal. 
 
@@ -1542,7 +1542,7 @@ Now at correct time...add these to state.
 currentParentMesh: {},
 currentParentMeshName: {},
 (?) at DesignerCallback ? : 
-Can I get a parentModel backas return for 'addSingleModel' ?  YES.
+Can I get a parentModel back as return for 'addSingleModel' ?  YES.
 
 ok. working, but I need to update state for model change. 
 and state needs to update 'selectionPanel'
@@ -1573,3 +1573,70 @@ THEN...run it through the remote functions MATCHING clause...
 Did: 
 Continued work on the selectionPanels , sending child scope back to parent  and trying to use a child functionto 
 hide show the selectionPanels. It appears to be working fairly well but there are some bugs that I can't figure out yet.
+
+Wed 10-16-2019 : 
+Review yesterday: I created an array to save each panel in and was trying to use the 'currently selected model name' to checkfor existing panels, 
+and either hide show existing or create new one if necessary. Problem was the second panel , even though there was a match, and it was directed to 'hide',
+it did not. 
+Also, the panels are set up to 'hide' when a new model is inserted. That works for all three models. so that's good. 
+The problem comes in when trying to reselect an existing model. 
+Currently selecting a model involves 'selecting a 'mesh' , not a model.', then getting the parent mesh/model for it. 
+What happens is the 'Image editor' pops up as well, BUT currently the last selected panel for the last model is on screen AND the 
+'just selected ' panel is 'underneath' it in the layers. 
+Good surprise is that on selecting a station wagon, it goes back to normal. BUT selecting the porsche and adding an image did NOT apply the image.although it 
+did load the appropriate panel. Actually it loaded the image on the other side of the car...freak accident probbably clicking through the window...
+So...in conclusion the problem seems to be isolated to either the 'billboard' or the 'first inserted model' hav9ing the bug of not hiding the previous panel appropriate.ly.
+And it appears to be 'the first loaded panel' is where the bug is.
+ok. Let's get after it. 
+Where is the first panel getting created and why is it behaing differenetly than the others. ? 
+one gets created right in the constructor , probably the problem area. 
+The other possibility is that of the 'render' method. Which should not load until the first parent model is verified.
+The guiLite that is instantiated in the constructor is the one that is used in the childFunction...later. 
+ie. callChildFunction(data)...
+  -> which gets called in the 'loadScene' method. One red flag is that appears to be called outside of the condition that the first
+  parent model is loaded. Neither 'before', 'after' or 'none' solved or interrupted the bug/function.
+  check at the constructor. Now it appears that nothing is even calling the childFuntion. callChildFunction(data)
+  commented it out completely to no effect. Removing it from the constructor as well had no effect. 
+  Now 'GuiLite' is only imported so far as it is needed to exist as a sub component. 
+  So this is the only code in Main.jsx that is getting used in relationship to it. 
+   <Grid>
+          {this.state.currentModelParent_isLoaded && (
+            <GuiLite
+              scene={this.state.scene}
+              advancedTexture={this.state.advancedTexture}
+              currentModelParent={this.state.currentModelParent}
+              currentModelParentName={this.state.currentModelParentName}
+              //REMOVE:UNSED:-> registerChildFunction={this.registerChildFunction}
+              get_gLiteScope={this.get_gLiteScope}
+               //REMOVE:UNSED:-> add_selectionPanel={this.add_selectionPanel}
+            ></GuiLite>
+          )}
+        </Grid>
+      }
+*gLiteScope: is getting used in main.jsx to...
+showExistingMatch: in 'imageEditorClose',
+'loadScene' to call remoteFunction...
+why is it calling 'remoteFunction' during loadScene? 
+the remoteFunction is designed to 'check for a match' and handle appropriately either hide/show or create.
+test:dev: DO  NOT CALL remoteFunction and see results: 
+  -> looks like it does NOT create the new panel. does NOT hide previous panel.
+Hypothesis: if we pass a desired 'method' to the remote function , then we should have a hook into the child compmonent for various purposes.
+This works however I discovered that remoteFunction only gets called for the 'additionally created models' not for the initial model. 
+DEV: conclusion: this(remoteFunction) is only getting called for the 'additional' selection panels that are getting added.
+      //So, how is the first panle getting created.
+So, GuiLite, must be creating the inital panel with props passed in initially. So in componenet did mount, the easy_selection_panel method gets called,
+and maybe it is not getting added to the array to be checked. 
+It gets called the same way as in remoteFunction  so when it continues to the 'manage' function something is afoot.
+Actually, no, there is a difference in its inputs ...
+didMount inputs       : props,props,state,props
+remote function inputs: scope,scope,data,data 
+
+changed didMount inputs to all 'state' vars.
+THEN. ERROR in the 'remoteFunction' method::: TypeError: Cannot read property 'name' of undefined
+easy fix just name parameter appropriately... 
+another ERROR: :::  line 371 TypeError: Cannot read property 'position' of undefined
+the error only occurs on the 'additionally loaded models? ' 
+I think we just need to move the call to remote function to where after the modelParent has been async desfinined in state.
+
+OK. it appears that gLiteScope has not yet been gathered at the tiime of calling the first 'remoteFunction' call during loadScene.
+and we were consequently sending an undefined object to the remote function....on the second go round.

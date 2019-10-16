@@ -31,38 +31,23 @@ class GuiLite extends React.Component {
     scope = this;
     childScope = this;
     this.state.advancedTexture = this.props.advancedTexture;
-    //this.moveX = this.moveX.bind(this);
     this.changeParentModel = this.changeParentModel.bind(this);
-
-    this.childFunction = this.childFunction.bind(this);
     this.remoteFunction = this.remoteFunction.bind(this);
-
-    /* if (typeof props.registerChildFunction === "function") {
-      props.registerChildFunction(this.childFunction);
-      console.log("are we registering the childe function ????? ");
-    } else {
-      console.log("what is props.registerChildFunction...");
-      console.log(typeof props.registerChildFunction);
-    }*/
   }
 
-  childFunction(data) {
-    console.log(" inside guiLite: childFunction(data): ", data);
-    //can I build a new selection Panel from here?
-    console.log("PRE-EXISTING DATA:"); // NOT WHAT I NEED:
-    console.log(data[0].scene);
-    console.log(data[1].advancedTexture);
-    console.log(data[2].modelParent);
-    console.log(data[3].modelParentName);
-
-    this.easy_selection_panel(
-      data[0].scene,
-      data[1].advancedTexture,
-      data[2].modelParent,
-      data[3].modelParentName
-    );
-  }
   remoteFunction(data) {
+    /*
+    IN: requires a 'method' as one of the data parameters.
+    data[0].method
+    data[1].currentModelParent
+    data[2].currentModelParentName
+
+
+    */
+    console.log("WHY DOESNT THIS FAIL AS EXPECTED?");
+    console.log(data.method);
+
+    /*
     //remote function to be called from and by the Parent component.
     console.log(" in gLite: remoteFunction(data) ", data);
     console.log(
@@ -72,6 +57,9 @@ class GuiLite extends React.Component {
 
     // CHECK if a panel already exists with that name just set it to visible instead of creating a new one.
     // -loop through existing panels get true or false, a match.
+
+    // THIS DOES NOTE EVVEN GET CALLED WHEN THE MODEL IS CLICKED ON.ie. opening the image editor.
+
     console.log("lookign form match :", data.currentModelParent.name);
     let result = this.matchExistingPanels(data.currentModelParent.name);
     console.log("RESULT: ", result);
@@ -88,6 +76,26 @@ class GuiLite extends React.Component {
         data.currentModelParent.name
       );
       this.manageSelectionPanels(a_selection_panel);
+    }*/
+    //dev test: only run what looks like necessary code for loading a new model and it's panel.
+    //result: everything still works as expected.
+    console.log("the .-.-.data:", data);
+    if (data[0].method === "createSelectionPanel") {
+      console.log(
+        "Is mesh undefined: data.currentModelParent",
+        data[1].currentModelParent
+      );
+
+      let a_selection_panel = this.easy_selection_panel(
+        scope.state.scene,
+        scope.state.advancedTexture,
+        data[1].currentModelParent,
+        data[2].currentModelParentName
+      );
+    }
+
+    if (data[0].method === "checkExistingPanels") {
+      console.log("DO NOT create another panel if one already exists...");
     }
   }
 
@@ -166,11 +174,15 @@ class GuiLite extends React.Component {
     console.log("PROPS CHECK BEFORE PANEL:", this.props);
     //JUST THE INITIAL PANEL:
     let a_selection_panel = this.easy_selection_panel(
-      this.props.scene,
-      this.props.advancedTexture,
+      this.state.scene,
+      this.state.advancedTexture,
       this.state.currentModelParent,
-      this.props.currentModelParent.name
+      this.state.currentModelParent.name
     );
+    /*
+      these inputs: props,props,state,props
+      remote function inputs: scope,scope,data,data
+    */
 
     this.manageSelectionPanels(a_selection_panel);
   }
@@ -206,6 +218,9 @@ class GuiLite extends React.Component {
   //////////////////////////////////////////
   // GUI SELECTION PANEL
   easy_selection_panel = (scene, advancedTexture, mesh, group_name) => {
+    //should I call this every time a model is loaded to keep it up to date?
+    // NO EFFECT: this.props.get_gLiteScope(childScope);
+
     if (advancedTexture != "undefined" && advancedTexture != undefined) {
       console.log("GuiLite.js:easy_selection_panel():mesh:", mesh);
       console.log("WTF: advancedTexture:", advancedTexture);
@@ -491,9 +506,3 @@ class GuiLite extends React.Component {
   }
 }
 export default GuiLite;
-//- inside constructor:
-// this.childFunction = this.childFunction.bind(this);
-// props.registerChildFunction(this.childFunction);
-
-//- outside the constructor
-// childFunction(data) {}
