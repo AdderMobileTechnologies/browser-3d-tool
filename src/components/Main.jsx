@@ -699,45 +699,14 @@ class Main extends React.Component {
 
   callback_WindowPickable(mesh_id, caller) {
     console.log("WINDOW CALLBACK PICKABLE: ");
-    console.log("mesh_id:", mesh_id);
-    console.log("caller:", caller);
-    // this.getModelForMeshId
     let asw = this.state.adderSceneWrapper;
-    //use asw to
     let model = asw.getModelForMeshId(mesh_id);
-    console.log("model:", model);
     let parentModel = model.getParentMesh();
-    console.log("window callback .. parentModel: ", parentModel.id);
-    console.log("parentModel name is parentModel.name", parentModel.name);
-    //remoteFunction here or make a separate name check function
-    console.log(
-      "WINDOW CALLBACK PICKABLE: make remote call to check for a matching panel. "
-    );
 
     this.setState({
       theCurrentModelParent: parentModel,
       theCurrentModelParentName: parentModel.name
     });
-
-    /////////////////////////////////////////////////
-
-    //get camera and change setTarget to this position.
-    // position IS a BABYLON.Vector3 instantiation AND  this.state.camera IS the camera...
-    // BUT using the setTarget method of camera makes most of the scene disappear.
-    /*  
-// TRYING TO CHANGE TARGET OF CAMERA TO SELECTED MODEL:
-    let camera_new = this.state.camera;
-    console.log("camera_new :", camera_new);
-    camera_new.setTarget(position);
-    camera_new.attachControl(this.state.canvas, true);
-    this.setState({
-      camera: camera_new
-    });
-*/
-
-    // HERE: DEFINE THE SELECTED MODEL : ?
-
-    // HOW TO define when an action is the frist time a model is selected to get a texture.??? Can I use the mesh_id to check somehow?
 
     if (!this.state.startEditing) {
       let that = this;
@@ -750,18 +719,24 @@ class Main extends React.Component {
         },
         () => {
           console.log("editing mesh id:", mesh_id);
-          // THIS IS NOT HIDING WHAT IT SHOULD BE :
-          console.log("hide from here.? ");
-          // MAYBE ICAN REMOVE IT FROM THE 'advancedTexture' OBJECT ?
-          that.state.gLiteScope.remoteFunction([
-            { method: "checkExistingPanels" },
-            { currentModelParent: parentModel },
-            { currentModelParentName: parentModel.name }
-          ]);
+          // After a mesh click we call gLiteScope.checkExistingPanels
+          // we might want to just: remove all panels: and create a new one specifically for this parentModel
+          // that.state.gLiteScope.remoteFunction({
+          //   method: "checkExistingPanels",
+          //   currentModelParent: parentModel,
+          //   currentModelParentName: parentModel.name
+          // });
+
+          that.state.gLiteScope.remoteFunction({
+            method: "clearExistingPanelsAddThisOne",
+            currentModelParent: parentModel,
+            currentModelParentName: parentModel.name
+          });
         }
       );
     } else {
       //console.log("already editing ...");
+      console.log("ALREADY EDITING DO I NEED TO CREATE A PANEL ");
     }
     //did not good tacking on the show hide code here.
   }
@@ -890,13 +865,16 @@ class Main extends React.Component {
           this.state.currentModelParentName
         );
         console.log("and the gLiteScope:", this.state.gLiteScope);
-        this.state.gLiteScope.remoteFunction([
-          { method: "createSelectionPanel" },
-          { currentModelParent: this.state.currentModelParent },
-          { currentModelParentName: this.state.currentModelParentName }
-        ]);
+        this.state.gLiteScope.remoteFunction({
+          method: "createSelectionPanel",
+          currentModelParent: this.state.currentModelParent,
+          currentModelParentName: this.state.currentModelParentName
+        });
       } else {
-        console.log("this.state.gLiteScope is NOT defined yet.? ");
+        console.log(
+          "this.state.gLiteScope is NOT defined yet. on the FIRST MODEL insertion. so How can I call the manage models function.  "
+        );
+        //IF I Can't,?, do I need to manage the array of models here on MAIN instead?
       }
     }
   }

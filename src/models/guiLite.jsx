@@ -15,6 +15,7 @@ class GuiLite extends React.Component {
     this.state = {
       messages: [],
       array_selectionPanels: [],
+      array_models: [],
       selectionPanel: {},
       mesh: this.props.currentModelParent,
       currentModelParent: this.props.currentModelParent,
@@ -80,32 +81,74 @@ class GuiLite extends React.Component {
     //dev test: only run what looks like necessary code for loading a new model and it's panel.
     //result: everything still works as expected.
     console.log("the .-.-.data:", data);
-    if (data[0].method === "createSelectionPanel") {
+    if (data.method === "createSelectionPanel") {
       console.log(
         "Is mesh undefined: data.currentModelParent",
-        data[1].currentModelParent
+        data.currentModelParent
       );
-
-      let a_selection_panel = this.easy_selection_panel(
-        scope.state.scene,
-        scope.state.advancedTexture,
-        data[1].currentModelParent,
-        data[2].currentModelParentName
-      );
+      this.createSelectionPanel(data);
+      // let a_selection_panel = this.easy_selection_panel(
+      //   scope.state.scene,
+      //   scope.state.advancedTexture,
+      //   data[1].currentModelParent,
+      //   data[2].currentModelParentName
+      // );
     }
 
-    if (data[0].method === "checkExistingPanels") {
-      console.log("DO NOT create another panel if one already exists...");
+    if (data.method === "checkExistingPanels") {
+      let match = this.matchExistingPanels(data.currentModelParentName);
+      if (match) {
+        //IF find MAtch for ... data[2].currentModelParentName  just  SHOW panel and hide all others.
+        this.showExistingMatch(data.currentModelParentName);
+      } else {
+        //ELSE create a new panel.
+      }
     }
+
+    if (data.method === "clearExistingPanelsAddThisOne") {
+      //1) remove all existing panels.
+      //ie. loop and dispose()
+      this.disposeOfExistingPanels();
+      //2)  then set array to empty.
+      this.clearPanelsArray();
+      //3) then call 'createSelectionPanel' with the data.
+      this.createSelectionPanel(data);
+    }
+  }
+  disposeOfExistingPanels() {
+    for (let p of this.state.array_selectionPanels) {
+      p.dispose();
+    }
+  }
+  clearPanelsArray() {
+    this.state.array_selectionPanels = [];
+  }
+  createSelectionPanel(data) {
+    let a_selection_panel = this.easy_selection_panel(
+      scope.state.scene,
+      scope.state.advancedTexture,
+      data.currentModelParent,
+      data.currentModelParentName
+    );
+    console.log("INFINITE: manageSelectionPanels");
+    //===>INFINITE LOOP: HERE:?:
+    this.manageSelectionPanels(a_selection_panel);
+    //this.manageModels(data);
+  }
+
+  manageModels(data) {
+    console.log("MANAGE MODELS NEEDS TO GET CALLED FOR EVERY MODEL.");
+    var temp_array_models = this.state.array_models;
+    temp_array_models.push(data);
+    scope.setState(prevState => ({
+      ...prevState,
+      array_models: temp_array_models
+    }));
   }
 
   manageSelectionPanels(a_selection_panel) {
+    // I THINK: the only thing that needs to happen here is to save the sp into an array to manage it.
     var temp_array_selectionPanels = this.state.array_selectionPanels;
-    //set all existing selection panels isVisible to false:
-    for (let sp of temp_array_selectionPanels) {
-      console.log("selection panel:", sp);
-      sp.isVisible = false;
-    }
     temp_array_selectionPanels.push(a_selection_panel);
     scope.setState(prevState => ({
       ...prevState,
@@ -119,11 +162,11 @@ class GuiLite extends React.Component {
 
     for (let sp of temp_array_selectionPanels) {
       if (sp.name === currentModelParentName) {
-        console.log("a match!");
+        //console.log("a match!");
 
         return true;
       } else {
-        console.log("no match.");
+        //console.log("no match.");
         return false;
       }
     }
@@ -132,18 +175,36 @@ class GuiLite extends React.Component {
   showExistingMatch(existing_name) {
     var temp_array_selectionPanels = this.state.array_selectionPanels;
     //set all existing selection panels isVisible to false:
-    console.log("showExistingPanel: hide others:");
-    for (let sp of temp_array_selectionPanels) {
-      console.log("showExistingPanel:HIDE: ", sp.name);
-      //'should have been hidden'  was supposed to hide but did NOT
-      sp.isVisible = false;
-    }
+    console.log("showExistingMatch: existing_name:", existing_name);
+
     // TEMP : commment out temporarily to see if the other panels ARE getting hidden.
     for (let sp of temp_array_selectionPanels) {
       if (sp.name === existing_name) {
-        console.log("showExistingPanel:SHOW: ", sp.name);
+        console.log("showExistingMatch:SHOW:  ", sp.name);
         sp.isVisible = true;
+        console.log("What does the current sp look like:sp:", sp);
+        // I commented out the following loop.
+        /*
+        for (let data of this.state.array_models) {
+          console.log(
+            "should be recreating a panel for the matching model.......IT IS ONLY FINDING the staion wagon. so the first model NEVER go saved into the array."
+          );
+          console.log("data is ", data);
+          if (data.currentModelParentName === existing_name) {
+            console.log("INFINITE: createSelectionPanel");
+            //====>>> INFINITE:
+            this.createSelectionPanel(data);
+            
+          }
+        }
+        */
+
         //when it was visible it was still underneath the 'should have been hidden' one.
+      } else {
+        console.log("showExistingMatch:HIDE:DISPOSE: POP: sp:", sp);
+        sp.dispose(); //keep sp.dispose() HERE
+        temp_array_selectionPanels.pop();
+        //correct
       }
     }
     scope.setState(prevState => ({
@@ -220,7 +281,16 @@ class GuiLite extends React.Component {
   easy_selection_panel = (scene, advancedTexture, mesh, group_name) => {
     //should I call this every time a model is loaded to keep it up to date?
     // NO EFFECT: this.props.get_gLiteScope(childScope);
-
+    //this.manageModels(data); model, and modelName
+    //uh oh, infinite loop on selection of billboard mesh.
+    //=>
+    let data = {
+      method: "manageModels",
+      currentModelParent: mesh,
+      currentModelParentName: mesh.name
+    };
+    this.manageModels(data);
+    //now 1) prevent it from getting called twice ? and 2) Do I need to manage the panel array as well at this point. ?
     if (advancedTexture != "undefined" && advancedTexture != undefined) {
       console.log("GuiLite.js:easy_selection_panel():mesh:", mesh);
       console.log("WTF: advancedTexture:", advancedTexture);

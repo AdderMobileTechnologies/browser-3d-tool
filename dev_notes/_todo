@@ -1640,3 +1640,17 @@ I think we just need to move the call to remote function to where after the mode
 
 OK. it appears that gLiteScope has not yet been gathered at the tiime of calling the first 'remoteFunction' call during loadScene.
 and we were consequently sending an undefined object to the remote function....on the second go round.
+OK . showExistingMatch(existing_name) appears to be doing what it is supposed to. 
+showExistingPanel: hide others:
+guiLite.jsx:154 showExistingPanel:HIDE:  ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon
+guiLite.jsx:154 showExistingPanel:HIDE:  ad_type/vehicle/sub_type/4door/detail/stationwagon/vw_toureg-2.6.1.babylon
+guiLite.jsx:165 showExistingPanel:SHOW:  ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon
+setting the isVisible property appropriately ... IT IS NOT actually changing the property. 
+
+What if instead of hide show I dispose or create ? 
+ok. almost there trying the dispose and create vs the hide and show approach... 
+whatever the case , the first model does not appear to be getting added to the array of managed Models. 
+
+It is not created in the callback_windowPickable or the second call to the 'remoteFunction'.
+
+So I'm trying to change the logic to dispose and create ...I'm getting infinite loops in relation to the array_panels .
