@@ -635,9 +635,16 @@ class Main extends React.Component {
       startEditing: false,
       finishedEditing: true
     });
+
+    console.log("How the hell is this not hiding the unanted panel.? ");
+    this.state.gLiteScope.showExistingMatch(
+      this.state.theCurrentModelParent.name
+    );
   };
   imageEditorCallback = dataURL => {
     console.log("image editor callback ...with dataURL:", dataURL);
+    //maybe will hide when back to main DOM?
+
     this.setState(
       {
         startEditing: false,
@@ -721,11 +728,27 @@ class Main extends React.Component {
     //use asw to
     let model = asw.getModelForMeshId(mesh_id);
     console.log("model:", model);
-    let parentMesh = model.getParentMesh();
-    console.log("parentMesh: ", parentMesh.id);
+    let parentModel = model.getParentMesh();
+    console.log("window callback .. parentModel: ", parentModel.id);
+    console.log("parentModel name is parentModel.name", parentModel.name);
+    //remoteFunction here or make a separate name check function
+    console.log(
+      "WINDOW CALLBACK PICKABLE: make remote call to check for a matching panel. "
+    );
+
+    this.setState({
+      theCurrentModelParent: parentModel
+    });
+    // // THIS IS NOT HIDING WHAT IT SHOULD BE :
+    // this.state.gLiteScope.remoteFunction(
+    //   { currentModelParent: parentModel },
+    //   { currentModelParentName: parentModel.name }
+    // );
     /**/
     /////////////////////////////////////////////////
     //hide open selectionPanel:
+    // HIDE TEMP: could be interfering with show hide
+    /*
     if (scope.state.isVisibleSelectionPanel) {
       // do no send until state clear is set... scope.sendMessage();
       console.log("WINDOW CALLBACK PICKABLE  SHOULD CLEAR>>>>:");
@@ -739,6 +762,9 @@ class Main extends React.Component {
         }
       );
     }
+
+    */
+
     /*
     // could I use guiLite here to add selectionPanel.
     //: yes but it is a bit awkward and nto intuitive.
@@ -790,11 +816,18 @@ class Main extends React.Component {
         },
         () => {
           console.log("editing mesh id:", mesh_id);
+          // THIS IS NOT HIDING WHAT IT SHOULD BE :
+          console.log("hide from here.? ");
+          this.state.gLiteScope.remoteFunction(
+            { currentModelParent: parentModel },
+            { currentModelParentName: parentModel.name }
+          );
         }
       );
     } else {
       //console.log("already editing ...");
     }
+    //did not good tacking on the show hide code here.
   }
   // To hide or show the appropriate sidebar image and controls
   callback_Designer(args = null, adderAsset = null, adderAssetObject = null) {
@@ -849,7 +882,7 @@ class Main extends React.Component {
     this.state.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
     let modelParent = adderLoader.addSingleModel(adderAsset);
-    console.log("modelParent:", modelParent);
+    console.log("who is  the modelParent:", modelParent);
     // Can I get a parentModel backas return for 'addSingleModel' ? . YES
     //this.state.guiLite
     // let myGuiLite = this.state.guiLite;

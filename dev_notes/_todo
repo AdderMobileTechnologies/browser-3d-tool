@@ -1558,4 +1558,18 @@ Can I send child scope back to Parent scope to be managed. ?
 we are now manageing array of selection panels... 
 the trick now is to name them properly and hide show them  appropriately. 
 
+THE next step: is to figure out WHO the parent model is NO MATTER WHICH MESH gets picked. 
+THEN...run it through the remote functions MATCHING clause...  
+  1) at pickableMesh....in main. 
+  2) at sidebar button click 
 
+
+  //PROBLEM hiding some of the panels: 
+
+  What if instead of returning the 'selectionPanel' , 'easy' returns the parameters for 
+  the selectionpanel , we use the parameters  to make or destroy panel when we want. 
+  ??? 
+
+Did: 
+Continued work on the selectionPanels , sending child scope back to parent  and trying to use a child functionto 
+hide show the selectionPanels. It appears to be working fairly well but there are some bugs that I can't figure out yet.

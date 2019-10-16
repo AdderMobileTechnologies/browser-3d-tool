@@ -72,8 +72,15 @@ class GuiLite extends React.Component {
 
     // CHECK if a panel already exists with that name just set it to visible instead of creating a new one.
     // -loop through existing panels get true or false, a match.
-    let result = this.matchExistingPanels(data.currentModelParentName);
-    if (!result) {
+    console.log("lookign form match :", data.currentModelParent.name);
+    let result = this.matchExistingPanels(data.currentModelParent.name);
+    console.log("RESULT: ", result);
+    if (result) {
+      console.log("THERE WAS   MATCH WE NEED TO SHOW EXISTING.");
+      //hide all then show the matching panel.
+      this.showExistingMatch(data.currentModelParent.name);
+    } else {
+      console.log("THERE WAS NOT A MATCH WE NEED TO Make a panel.");
       let a_selection_panel = this.easy_selection_panel(
         scope.state.scene,
         scope.state.advancedTexture,
@@ -81,21 +88,7 @@ class GuiLite extends React.Component {
         data.currentModelParent.name
       );
       this.manageSelectionPanels(a_selection_panel);
-    } else {
-      console.log("THERE WAS A MATCH WE NEED TO SHOW IT.");
     }
-
-    // var temp_array_selectionPanels = this.state.array_selectionPanels;
-    // //set all existing selection panels isVisible to false:
-    // for (let sp of temp_array_selectionPanels) {
-    //   console.log("selection panel:", sp);
-    //   sp.isVisible = false;
-    // }
-    // temp_array_selectionPanels.push(a_selection_panel);
-    // scope.setState(prevState => ({
-    //   ...prevState,
-    //   array_selectionPanels: temp_array_selectionPanels
-    // }));
   }
 
   manageSelectionPanels(a_selection_panel) {
@@ -115,15 +108,40 @@ class GuiLite extends React.Component {
     var temp_array_selectionPanels = this.state.array_selectionPanels;
     //set all existing selection panels isVisible to false:
     console.log("currentModelParentName is:", currentModelParentName);
+
     for (let sp of temp_array_selectionPanels) {
       if (sp.name === currentModelParentName) {
         console.log("a match!");
+
         return true;
       } else {
         console.log("no match.");
         return false;
       }
     }
+  }
+
+  showExistingMatch(existing_name) {
+    var temp_array_selectionPanels = this.state.array_selectionPanels;
+    //set all existing selection panels isVisible to false:
+    console.log("showExistingPanel: hide others:");
+    for (let sp of temp_array_selectionPanels) {
+      console.log("showExistingPanel:HIDE: ", sp.name);
+      //'should have been hidden'  was supposed to hide but did NOT
+      sp.isVisible = false;
+    }
+    // TEMP : commment out temporarily to see if the other panels ARE getting hidden.
+    for (let sp of temp_array_selectionPanels) {
+      if (sp.name === existing_name) {
+        console.log("showExistingPanel:SHOW: ", sp.name);
+        sp.isVisible = true;
+        //when it was visible it was still underneath the 'should have been hidden' one.
+      }
+    }
+    scope.setState(prevState => ({
+      ...prevState,
+      array_selectionPanels: temp_array_selectionPanels
+    }));
   }
 
   //3
@@ -351,7 +369,14 @@ class GuiLite extends React.Component {
           }
         }
       };
-
+      var toDispose = function(isChecked) {
+        if (isChecked) {
+          selectionPanel.dispose();
+        } else {
+          console.log("fooeey");
+        }
+      };
+      // FAILS TO ADD CHECKBOX ::: ???? positionGroup.addCheckbox("close", toDispose);
       positionGroup.addSlider(
         "Position X",
         moveX,
