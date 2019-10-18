@@ -5,6 +5,16 @@ import * as GUI from "babylonjs-gui";
 import { messageService } from "../_services";
 
 import Grid from "@material-ui/core/Grid"; //
+
+/*
+TODO: Now it looks as though 1st I will/may need to store each meshwrappers new value in the state
+of this guiLite class. Also, I will probably need to manage an array of these meshWrappers like 
+I currently manage an array of selectionPanels.
+
+*/
+
+
+
 let scope;
 let childScope;
 class GuiLite extends React.Component {
@@ -17,16 +27,18 @@ class GuiLite extends React.Component {
       array_selectionPanels: [],
       array_models: [],
       selectionPanel: {},
-      mesh: this.props.currentModelParent,
       currentModelParent: this.props.currentModelParent,
       scene: this.props.scene,
       advancedTexture: this.props.advancedTexture,
       currentModelParentName: this.props.currentModelParentName,
       y_previous: 0,
       z_previous: 0,
-      z_previous_pos: 0,
       x_previous: 0,
-      group_name: ""
+      group_name: "",
+      u_scale:0,
+      v_scale: 0,
+      u_offset: 0,
+      v_offset: 0
       //isRaining:props.isRaining,
     };
     scope = this;
@@ -324,7 +336,6 @@ class GuiLite extends React.Component {
             scope.z_previous = z_min;
           } else {
             scope.z_previous = val;
-            scope.z_previous_pos = modelParent.position.z;
           }
         } else {
           //going up
@@ -334,7 +345,6 @@ class GuiLite extends React.Component {
             scope.z_previous = z_max;
           } else {
             scope.z_previous = val;
-            scope.z_previous_pos = modelParent.position.z;
           }
         }
       };
@@ -349,12 +359,13 @@ class GuiLite extends React.Component {
         if (meshWrapper) {
           //==============================================
           //get the values that are NOT being changed to avoid 'undefined'.
-          meshWrapper.setUOffset(meshWrapper.getUOffset());
-          meshWrapper.setVOffset(meshWrapper.getVOffset());
+          meshWrapper.setUOffset(scope.u_offset);
+          meshWrapper.setVOffset(scope.v_offset);
           meshWrapper.setUScale(val);
           meshWrapper.setVScale(val);
           //===========================================
-  
+          scope.u_scale = val;
+          scope.v_scale = val;
           meshWrapper.reapplyTexture();
         }
         
@@ -365,10 +376,11 @@ class GuiLite extends React.Component {
         if (meshWrapper) {
           //get the values that are NOT being changed to avoid 'undefined'.
           meshWrapper.setUOffset(val);
-          meshWrapper.setVOffset(meshWrapper.getVOffset());
-          meshWrapper.setUScale(meshWrapper.getUScale());
-          meshWrapper.setVScale(meshWrapper.getVScale());
-  
+          meshWrapper.setVOffset(scope.v_offset);
+          meshWrapper.setUScale(scope.u_scale);
+          meshWrapper.setVScale(scope.v_scale);
+   
+          scope.u_offset = val;
           meshWrapper.reapplyTexture();
         }
       }
@@ -376,11 +388,11 @@ class GuiLite extends React.Component {
         let meshWrapper = currentMeshWrapper
       if (meshWrapper) {
         //get the values that are NOT being changed to avoid 'undefined'.
-        meshWrapper.setUOffset(meshWrapper.getUOffset());
+        meshWrapper.setUOffset(scope.u_offset);
         meshWrapper.setVOffset(val);
-        meshWrapper.setUScale(meshWrapper.getUScale());
-        meshWrapper.setVScale(meshWrapper.getVScale());
-
+        meshWrapper.setUScale(scope.u_scale);
+        meshWrapper.setVScale(scope.v_scale);
+        scope.v_offset = val;
         meshWrapper.reapplyTexture();
       }
     }
