@@ -1654,3 +1654,27 @@ whatever the case , the first model does not appear to be getting added to the a
 It is not created in the callback_windowPickable or the second call to the 'remoteFunction'.
 
 So I'm trying to change the logic to dispose and create ...I'm getting infinite loops in relation to the array_panels .
+It happens after a click on the billboard mesh. On clicking a mesh, it calls the checkExistingPanels.... 
+Finally got the panel beast under control... 
+
+
+Next TODO: 
+make sure the 'sidebar' updates with the selected model. 
+1) get ad_type from  parentModel info
+
+2) just need to change this to 0 or 1 depending on ad_type 
+this.state.selected_ad_type
+
+ok that works but came across a bug: 
+×
+Main.jsx 677 TypeError: Cannot read property 'getParentMesh' of undefined
+
+ sidebarButtonClickAlt(args) {
+    //Purpose: save new mesh to array of meshes in state
+    // I do not need to save meshes in this manner anymore.
+    this.callback_WindowPickable(args.name, "sidebarButtonClickAlt");
+  }
+
+Start Here Tomorrow: 
+ASW getModelForMeshId  
+

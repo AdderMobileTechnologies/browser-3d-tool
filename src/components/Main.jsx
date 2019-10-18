@@ -145,31 +145,9 @@ class Main extends React.Component {
     this.changeEnvironment = this.changeEnvironment.bind(this);
     this.environment_Rain = this.environment_Rain.bind(this);
     this.environment_Smoke = this.environment_Smoke.bind(this);
-    /**
-      this.cameraTargetY_up = this.cameraTargetY_up.bind(this);
-        this.cameraTargetY_down = this.cameraTargetY_down.bind(this);
-      */
-    /*
-    this.designer = (
-      <Designer
-        scene={this.state.scene}
-        getAdderSceneWrapper={this.getAdderSceneWrapper}
-        adderSceneWrapper={this.state.adderSceneWrapper}
-        callback={this.callback_Designer}
-        callback_withModelInfo={this.callback_withModelInfo}
-      ></Designer>
-    );*/
+
     this.register = this.register.bind(this); //extra
     this.deployRemoteFunction = this.deployRemoteFunction.bind(this);
-    this.foobar = this.foobar.bind(this);
-    this.foobar_callback = this.foobar_callback.bind(this);
-
-    /*
-  this.props.scene,
-      this.props.advancedTexture,
-      this.state.currentModelParent,
-      this.props.currentModelParentName
-    */
 
     this.get_gLiteScope = this.get_gLiteScope.bind(this);
   }
@@ -613,11 +591,6 @@ class Main extends React.Component {
       startEditing: false,
       finishedEditing: true
     });
-
-    console.log("How the hell is this not hiding the unanted panel.? ");
-    this.state.gLiteScope.showExistingMatch(
-      this.state.theCurrentModelParent.name
-    );
   };
   imageEditorCallback = dataURL => {
     console.log("image editor callback ...with dataURL:", dataURL);
@@ -698,9 +671,17 @@ class Main extends React.Component {
   };
 
   callback_WindowPickable(mesh_id, caller) {
-    console.log("WINDOW CALLBACK PICKABLE: ");
+    console.log("WINDOW CALLBACK PICKABLE: console.log(mesh_id): ", mesh_id);
+    // A DIFFERENCE in MESH_ID styles ? NO: billboard_2sides_angled_sign_2 via sidebar.
+    //                                 billboard_2sides_angled_sign_2
+    // FOLLOW the 'sign one' button forward.
     let asw = this.state.adderSceneWrapper;
     let model = asw.getModelForMeshId(mesh_id);
+    //Main.jsx 677 TypeError: Cannot read property 'getParentMesh' of undefined
+    //ERROR: happened after selecting the one button on the sidebar after it had been turned over by the selected_ad_type flag.
+    // ! Not ABle to get a 'model' or 'parent mesh' based on my billboards mesh_id ?
+    // why what changed?
+
     let parentModel = model.getParentMesh();
 
     this.setState({
@@ -719,16 +700,24 @@ class Main extends React.Component {
         },
         () => {
           console.log("editing mesh id:", mesh_id);
-          // After a mesh click we call gLiteScope.checkExistingPanels
-          // we might want to just: remove all panels: and create a new one specifically for this parentModel
-          // that.state.gLiteScope.remoteFunction({
-          //   method: "checkExistingPanels",
-          //   currentModelParent: parentModel,
-          //   currentModelParentName: parentModel.name
-          // });
+          //ie.  billboard_2sides_angled_sign_2
+          //ie. vehicle_4door_stationwagon_leftside_medium
+          //so, split on "_" get first
+          let splitStr = mesh_id.split("_");
+          //define var appropriately.
+          var ad_type = null;
+          if (splitStr[0] == "vehicle") {
+            ad_type = "0";
+          } else if (splitStr[0] === "billboard") {
+            ad_type = "1";
+          }
+          scope.setState({
+            selected_ad_type: ad_type
+          });
+          //it is NOT refreshing the sidebar.
 
           that.state.gLiteScope.remoteFunction({
-            method: "clearExistingPanelsAddThisOne",
+            method: "createSelectionPanel",
             currentModelParent: parentModel,
             currentModelParentName: parentModel.name
           });
@@ -808,63 +797,16 @@ class Main extends React.Component {
           {
             currentModelParent_isLoaded: true
           },
-          // that.deployRemoteFunction()
-          // that.foobar()
           () => {
             that.deployRemoteFunction();
           }
         );
       }
     );
-
-    console.log("who is  the modelParent:", modelParent);
-
-    ////////////////////////////////
-    /*
-    if (this.state.currentModelParent_isLoaded) {
-      console.log(
-        "this.state.gLiteScope:  does it have the remoteFunction ? ",
-        this.state.gLiteScope
-      );
-
-      //dev2: remove call to remote functionall together.:: result no additional panels are created.
-      //dev temp remove test: { method: "createSelectionPanel" },
-      //DEV: conclusion: this is only getting called for the 'additional' selection panels that are getting added.
-      //So, how is the first panle getting created.
-      // let that = this;
-      //dev: move to AFTER async model defined in state.
-      //Dev: although 'currentModlParent_isLoaded' should be true at the async callback of the upcoming setState function for it, the state, still
-      // does not recognize it yet.  somehow. so that must be why I was calling it hear.
-      // however the model was coming out as undefined... so I moved it to preceded this method. and if it does not work encapsulate it in a function that gets called after the async callback .
-
-      this.state.gLiteScope.remoteFunction(
-        { method: "createSelectionPanel" },
-        { currentModelParent: modelParent },
-        { currentModelParentName: modelParent.name }
-      );
-
-      //dev: test NEITHER. did not solve it.
-    } else {
-      console.log("gLite not mounted yet.");
-    }*/
   };
   deployRemoteFunction() {
-    console.log(
-      "deployRemoteFunction::: call as an async await IT WILL calasync method ...try without first. "
-    );
     if (this.state.currentModelParent_isLoaded) {
       if (this.state.gLiteScope_isDefined) {
-        console.log(
-          "currentModelParent SHOULD be loaded.....first time NO,second time YES"
-        );
-        //this is somehow out of sync with the react developer tools definition of the currentModelParent.
-        console.log(
-          "this should be defined:this.state.currentModelParent:",
-          this.state.currentModelParent,
-          " and this:",
-          this.state.currentModelParentName
-        );
-        console.log("and the gLiteScope:", this.state.gLiteScope);
         this.state.gLiteScope.remoteFunction({
           method: "createSelectionPanel",
           currentModelParent: this.state.currentModelParent,
@@ -874,38 +816,10 @@ class Main extends React.Component {
         console.log(
           "this.state.gLiteScope is NOT defined yet. on the FIRST MODEL insertion. so How can I call the manage models function.  "
         );
-        //IF I Can't,?, do I need to manage the array of models here on MAIN instead?
       }
     }
   }
-  //////////////////////////////////////////////////
-  async foobar() {
-    let that = this;
-    console.log("do stuff that's asynchronous ");
-    await setTimeout(function() {
-      console.log("echo poo");
-      that.foobar_callback();
-    }, 1000);
-  }
 
-  foobar_callback() {
-    console.log("foobar callback");
-    if (this.state.gLiteScope_isDefined) {
-      console.log(
-        "currentModelParent SHOULD be loaded.....first time NO,second time YES"
-      );
-      this.state.gLiteScope.remoteFunction(
-        { method: "createSelectionPanel" },
-        { currentModelParent: this.state.currentModelParent },
-        { currentModelParentName: this.state.currentModelParentName }
-      );
-    } else {
-      console.log("this.state.gLiteScope is NOT defined yet.? ");
-    }
-  }
-  //foobar();
-
-  ////////////////////////////////////////////////
   defineSelectableMeshesForAdderAsset(adderAsset) {
     console.log(
       "defineSelectableMeshesForAdderAsset(adderAsset):adderAsset",

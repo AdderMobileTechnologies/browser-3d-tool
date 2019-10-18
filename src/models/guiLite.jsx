@@ -39,40 +39,16 @@ class GuiLite extends React.Component {
   remoteFunction(data) {
     /*
     IN: requires a 'method' as one of the data parameters.
-    data[0].method
-    data[1].currentModelParent
-    data[2].currentModelParentName
-
-
+    data.method
+    data.currentModelParent
+    data.currentModelParentName
     */
-    console.log("WHY DOESNT THIS FAIL AS EXPECTED?");
-    console.log(data.method);
-    console.log("the .-.-.data:", data);
-
     if (data.method === "createSelectionPanel") {
       //1) remove all existing panels.
       this.disposeOfExistingPanels();
       //2)  then set array to empty.
       this.clearPanelsArray();
-      this.createSelectionPanel(data);
-    }
-
-    if (data.method === "checkExistingPanels") {
-      let match = this.matchExistingPanels(data.currentModelParentName);
-      if (match) {
-        //IF find MAtch for ... data[2].currentModelParentName  just  SHOW panel and hide all others.
-        this.showExistingMatch(data.currentModelParentName);
-      } else {
-        //ELSE create a new panel.
-      }
-    }
-
-    if (data.method === "clearExistingPanelsAddThisOne") {
-      //1) remove all existing panels.
-      this.disposeOfExistingPanels();
-      //2)  then set array to empty.
-      this.clearPanelsArray();
-      //3) then call 'createSelectionPanel' with the data.
+      //3) create the panel
       this.createSelectionPanel(data);
     }
   }
@@ -110,63 +86,6 @@ class GuiLite extends React.Component {
     // I THINK: the only thing that needs to happen here is to save the sp into an array to manage it.
     var temp_array_selectionPanels = this.state.array_selectionPanels;
     temp_array_selectionPanels.push(a_selection_panel);
-    scope.setState(prevState => ({
-      ...prevState,
-      array_selectionPanels: temp_array_selectionPanels
-    }));
-  }
-  matchExistingPanels(currentModelParentName) {
-    var temp_array_selectionPanels = this.state.array_selectionPanels;
-    //set all existing selection panels isVisible to false:
-    console.log("currentModelParentName is:", currentModelParentName);
-
-    for (let sp of temp_array_selectionPanels) {
-      if (sp.name === currentModelParentName) {
-        //console.log("a match!");
-
-        return true;
-      } else {
-        //console.log("no match.");
-        return false;
-      }
-    }
-  }
-
-  showExistingMatch(existing_name) {
-    var temp_array_selectionPanels = this.state.array_selectionPanels;
-    //set all existing selection panels isVisible to false:
-    console.log("showExistingMatch: existing_name:", existing_name);
-
-    // TEMP : commment out temporarily to see if the other panels ARE getting hidden.
-    for (let sp of temp_array_selectionPanels) {
-      if (sp.name === existing_name) {
-        console.log("showExistingMatch:SHOW:  ", sp.name);
-        sp.isVisible = true;
-        console.log("What does the current sp look like:sp:", sp);
-        // I commented out the following loop.
-        /*
-        for (let data of this.state.array_models) {
-          console.log(
-            "should be recreating a panel for the matching model.......IT IS ONLY FINDING the staion wagon. so the first model NEVER go saved into the array."
-          );
-          console.log("data is ", data);
-          if (data.currentModelParentName === existing_name) {
-            console.log("INFINITE: createSelectionPanel");
-            //====>>> INFINITE:
-            this.createSelectionPanel(data);
-            
-          }
-        }
-        */
-
-        //when it was visible it was still underneath the 'should have been hidden' one.
-      } else {
-        console.log("showExistingMatch:HIDE:DISPOSE: POP: sp:", sp);
-        sp.dispose(); //keep sp.dispose() HERE
-        temp_array_selectionPanels.pop();
-        //correct
-      }
-    }
     scope.setState(prevState => ({
       ...prevState,
       array_selectionPanels: temp_array_selectionPanels
@@ -526,8 +445,6 @@ class GuiLite extends React.Component {
     const { messages } = this.state;
     return (
       <Grid>
-        <p>DO I GET PROPS OR NOT? </p>
-        {console.log("render():props:", this.props)}
         {messages.map((message, index) => {
           scope.rxjsCallback(message);
         })}
