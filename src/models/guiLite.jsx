@@ -238,7 +238,7 @@ class GuiLite extends React.Component {
       // scope.selectionPanel = selectionPanel;
 
       selectionPanel.width = 0.25;
-      selectionPanel.height = 0.75;
+      selectionPanel.height = 0.95;
       selectionPanel.horizontalAlignment =
         BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
       selectionPanel.verticalAlignment =
@@ -340,10 +340,10 @@ class GuiLite extends React.Component {
       };
 
       var scaleUV = function(val){
-        console.log("scaleUV: val:",val)
+        //console.log("scaleUV: val:",val)
         //inside this function is where the uv scaling code should get called or run. 
         //OK: getting a value: now integrate the functionality
-        console.log("currentMeshWrapper:",currentMeshWrapper); // THAT is just a mesh id. I need a meshWrapper
+        //console.log("currentMeshWrapper:",currentMeshWrapper); // THAT is just a mesh id. I need a meshWrapper
         let meshWrapper = currentMeshWrapper
         
         if (meshWrapper) {
@@ -360,6 +360,30 @@ class GuiLite extends React.Component {
         
 
       }
+      var offsetU = function(val){
+          let meshWrapper = currentMeshWrapper
+        if (meshWrapper) {
+          //get the values that are NOT being changed to avoid 'undefined'.
+          meshWrapper.setUOffset(val);
+          meshWrapper.setVOffset(meshWrapper.getVOffset());
+          meshWrapper.setUScale(meshWrapper.getUScale());
+          meshWrapper.setVScale(meshWrapper.getVScale());
+  
+          meshWrapper.reapplyTexture();
+        }
+      }
+      var offsetV = function(val){
+        let meshWrapper = currentMeshWrapper
+      if (meshWrapper) {
+        //get the values that are NOT being changed to avoid 'undefined'.
+        meshWrapper.setUOffset(meshWrapper.getUOffset());
+        meshWrapper.setVOffset(val);
+        meshWrapper.setUScale(meshWrapper.getUScale());
+        meshWrapper.setVScale(meshWrapper.getVScale());
+
+        meshWrapper.reapplyTexture();
+      }
+    }
       var toDispose = function(isChecked) {
         if (isChecked) {
           selectionPanel.dispose();
@@ -407,6 +431,25 @@ class GuiLite extends React.Component {
         0,
         onValueChange
       );
+
+      positionGroup.addSlider(
+        "Offset U",
+        offsetU,
+        " ",
+        0,
+        1,
+        0,
+        onValueChange
+      );
+      positionGroup.addSlider(
+        "Offset V",
+        offsetV,
+        " ",
+        0,
+        1,
+        0,
+        onValueChange
+      );
        
 
       //Position Group Styling:
@@ -424,9 +467,16 @@ class GuiLite extends React.Component {
       //Y
       let selectorY = selectors[2];
       styleSelector(selectorY);
-
+      //uv_scale
       let selectorUVScale = selectors[3];
       styleSelector(selectorUVScale);
+      //u_offset
+      let selectorUOffset = selectors[4];
+      styleSelector(selectorUOffset);
+      //v_offset
+      let selectorVOffset = selectors[5];
+      styleSelector(selectorVOffset);
+       
 
       function styleSelector(selector) {
         selector.paddingTop = 0;
