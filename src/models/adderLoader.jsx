@@ -87,6 +87,7 @@ class AdderLoader {
 
       // let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
       //===>>>const grid = asw.getGrid();
+      //const grid = asw.getGrid();
       //--------------------------------------------------
       result.meshes.forEach(function(mesh) {
         //get Behaviors via models meta data.
@@ -148,6 +149,12 @@ class AdderLoader {
           var slider = null;
           let scene = adderSceneWrapper.getScene();
           let asw = adderSceneWrapper;
+
+          //uvmap
+          var scaleControl = null;
+          var scaleHeader = null;
+          var scaleSlider = null;
+
           switch (mesh.parent.id) {
             case "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon":
               /*  calling this via the 'model select ...windowCallbackPickable() in Main...instead.
@@ -200,6 +207,28 @@ class AdderLoader {
         }
 
         let newAdderMeshWrapper = new AdderMeshWrapper(mesh, null, null);
+        //uvmap insert:
+        //HERE we are including sliders/controls on a per 'mesh' basis . meta data mesh name.
+        // let CURRENT_MESH = "vehicle_4door_stationwagon_leftside_medium";
+        let CURRENT_MESH = "billboard_2sides_angled_sign_2";
+        //test :
+        if (mesh.id === CURRENT_MESH) {
+          scaleControl = adderGuiUtility.uv_ScaleControl(
+            newAdderMeshWrapper,
+            "scale",
+            "HORIZONTAL_ALIGNMENT_CENTER",
+            "VERTICAL_ALIGNMENT_TOP"
+          );
+          scaleHeader = scaleControl[0];
+          scaleSlider = scaleControl[1];
+          adderGuiUtility.panel_Flex(
+            advancedTexture,
+            scaleHeader,
+            scaleSlider,
+            "HORIZONTAL_ALIGNMENT_CENTER",
+            "VERTICAL_ALIGNMENT_TOP"
+          );
+        }
         adderMeshWrappers.push(newAdderMeshWrapper);
       });
 

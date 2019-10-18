@@ -2,7 +2,7 @@ import React from "react";
 import * as BABYLON from "babylonjs";
 import * as GUI from "babylonjs-gui";
 //1
-import { messageService } from '../_services'; 
+import { messageService } from "../_services";
 
 import Grid from "@material-ui/core/Grid"; //
 let scope;
@@ -16,8 +16,8 @@ class AdderGuiUtility extends React.Component {
       mesh: {},
       y_previous: 0,
       z_previous: 0,
-      z_previous_pos:0,
-      x_previous: 0,
+      z_previous_pos: 0,
+      x_previous: 0
       //isRaining:props.isRaining,
     };
     scope = this;
@@ -25,27 +25,27 @@ class AdderGuiUtility extends React.Component {
   }
   //3
   componentDidMount() {
-    console.log("does adderGuiUtility Mount ? in its present form?")
+    console.log("does adderGuiUtility Mount ? in its present form?");
     //DOES NOT actually mount because not called like a regular react comp
     //what if I moved this to inside the function that gets called.
     let scope = this;
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
-        if (message) {
-            // add message to local state if not empty
-            this.setState({ messages: [...this.state.messages, message] });
-        } else {
-            // clear messages when empty message received
-            this.setState({ messages: [] });
-        }
+      if (message) {
+        // add message to local state if not empty
+        this.setState({ messages: [...this.state.messages, message] });
+      } else {
+        // clear messages when empty message received
+        this.setState({ messages: [] });
+      }
     });
-}
-//4
-componentWillUnmount() {
-  // unsubscribe to ensure no memory leaks: RXJS 
-  this.subscription.unsubscribe();
-}
-  
+  }
+  //4
+  componentWillUnmount() {
+    // unsubscribe to ensure no memory leaks: RXJS
+    this.subscription.unsubscribe();
+  }
+
   currentX_value = 0;
   gui_create_grid2 = advancedTexture => {
     // grid container for form controls
@@ -158,6 +158,147 @@ componentWillUnmount() {
     return results;
   };
 
+  //uvmap
+  uv_ScaleControl = (meshWrapper, headerTitle, h_align, v_align) => {
+    console.log("mesh or meshWrapper:", meshWrapper);
+    var header = new BABYLON.GUI.TextBlock();
+    header.text = headerTitle + ":";
+    header.height = "40px";
+    header.color = "white";
+    header.paddingLeft = "15px";
+    var _h_align = "";
+    var _v_align = "";
+    if ((h_align = "HORIZONTAL_ALIGNMENT_LEFT")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    } else if ((h_align = "HORIZONTAL_ALIGNMENT_RIGHT")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    } else if ((h_align = "HORIZONTAL_ALIGNMENT_CENTER")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    }
+    if ((v_align = "VERTICAL_ALIGNMENT_TOP")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    } else if ((v_align = "VERTICAL_ALIGNMENT_CENTER")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    } else if ((v_align = "VERTICAL_ALIGNMENT_BOTTOM")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    }
+
+    header.textHorizontalAlignment = _h_align;
+
+    header.paddingTop = "10px";
+    // panel3.addControl(header);
+
+    var slider = new BABYLON.GUI.Slider();
+
+    slider.horizontalAlignment = _h_align;
+    slider.verticalAlignment = _v_align;
+
+    slider.minimum = 0;
+    slider.paddingLeft = 12;
+    slider.maximum = 2;
+    slider.isThumbCircle = true;
+    slider.thumbWidth = "15px";
+    slider.color = "#222";
+    slider.shadowColor = "#ccc";
+    slider.borderColor = "#000";
+    slider.value = 0;
+    slider.height = "16px";
+    slider.width = "100px";
+    slider.metadata = 0;
+    slider.onValueChangedObservable.add(function(value) {
+      console.log("UV changes:");
+      console.log("value:", value);
+      if (meshWrapper) {
+        //==============================================
+        //get the values that are NOT being changed to avoid 'undefined'.
+        meshWrapper.setUOffset(meshWrapper.getUOffset());
+        meshWrapper.setVOffset(meshWrapper.getVOffset());
+        meshWrapper.setUScale(value);
+        meshWrapper.setVScale(value);
+        //===========================================
+
+        meshWrapper.reapplyTexture();
+      }
+      //using the metadata property to store the previous slider value for comparison when sliding left or right.
+      slider.metadata = value;
+    });
+
+    var results = [header, slider];
+
+    return results;
+  };
+  panel_Flex = (advancedTexture, header, slider, h_align, v_align) => {
+    advancedTexture.layer.layerMask = 2;
+
+    var _h_align = "";
+    var _v_align = "";
+    if ((h_align = "HORIZONTAL_ALIGNMENT_LEFT")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    } else if ((h_align = "HORIZONTAL_ALIGNMENT_RIGHT")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    } else if ((h_align = "HORIZONTAL_ALIGNMENT_CENTER")) {
+      _h_align = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    }
+    if ((v_align = "VERTICAL_ALIGNMENT_TOP")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    } else if ((v_align = "VERTICAL_ALIGNMENT_CENTER")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    } else if ((v_align = "VERTICAL_ALIGNMENT_BOTTOM")) {
+      _v_align = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    }
+
+    var panelFlex = new BABYLON.GUI.StackPanel();
+    panelFlex.width = "120px";
+    panelFlex.fontSize = "14px";
+    panelFlex.horizontalAlignment = _h_align;
+    panelFlex.verticalAlignment = _v_align;
+    advancedTexture.addControl(panelFlex);
+    panelFlex.addControl(header);
+    panelFlex.addControl(slider);
+    /*
+  switch (panel) {
+    case 1:
+      var panel1 = new BABYLON.GUI.StackPanel();
+      panel1.width = "120px";
+      panel1.fontSize = "14px";
+      panel1.horizontalAlignment =
+        BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+      panel1.verticalAlignment =
+        BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+      advancedTexture.addControl(panel1);
+      panel1.addControl(header);
+      panel1.addControl(slider);
+      break;
+    case 2:
+      var panel2 = new BABYLON.GUI.StackPanel();
+      panel2.width = "120px";
+      panel2.fontSize = "14px";
+      panel2.horizontalAlignment =
+        BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+      panel2.verticalAlignment =
+        BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+      advancedTexture.addControl(panel2);
+      panel2.addControl(header);
+      panel2.addControl(slider);
+      break;
+    case 3:
+      var panel3 = new BABYLON.GUI.StackPanel();
+      panel3.width = "120px";
+      panel3.fontSize = "14px";
+      panel3.horizontalAlignment =
+        BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+      panel3.verticalAlignment =
+        BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+      advancedTexture.addControl(panel3);
+      panel3.addControl(header);
+      panel3.addControl(slider);
+      break;
+    default:
+      break;
+  }*/
+  };
+  //end uv map addition
+
   //////////////////////////////////////////
   // GUI SELECTION PANEL
   easy_selection_panel = (scene, advancedTexture, mesh) => {
@@ -165,16 +306,16 @@ componentWillUnmount() {
     console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
     console.log("this.state:", this.state);
     ///--- insert the didmount code here instead
-   // let scope = this;
+    // let scope = this;
     // RXJS: subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
-        if (message) {
-            // add message to local state if not empty
-            this.setState({ messages: [...this.state.messages, message] });
-        } else {
-            // clear messages when empty message received
-            this.setState({ messages: [] });
-        }
+      if (message) {
+        // add message to local state if not empty
+        this.setState({ messages: [...this.state.messages, message] });
+      } else {
+        // clear messages when empty message received
+        this.setState({ messages: [] });
+      }
     });
 
     /// - end didmount code.
@@ -192,10 +333,10 @@ componentWillUnmount() {
       let val = displayValueN(angle);
       if (scope.y_previous > val) {
         // mesh.position.x = mesh.position.x + val;
-        mesh.rotation.y = angle/2;
+        mesh.rotation.y = angle / 2;
       } else if (scope.y_previous < val) {
         // mesh.position.x = mesh.position.x - val;
-        mesh.rotation.y = -1 * angle/2;
+        mesh.rotation.y = (-1 * angle) / 2;
       }
       scope.y_previous = val;
     };
@@ -207,9 +348,9 @@ componentWillUnmount() {
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
     var onValueChange = function(value) {
-       //console.log("onValueChange value:", value);
+      //console.log("onValueChange value:", value);
       //console.log("scope:", scope);
-      
+
       return " ";
     };
 
@@ -234,8 +375,8 @@ componentWillUnmount() {
     );
 
     var selectionPanel = new BABYLON.GUI.SelectionPanel("sp", [positionGroup]);
-   // scope.selectionPanel = selectionPanel;
-   
+    // scope.selectionPanel = selectionPanel;
+
     selectionPanel.width = 0.25;
     selectionPanel.height = 0.56;
     selectionPanel.horizontalAlignment =
@@ -257,16 +398,16 @@ componentWillUnmount() {
     selectionPanel.cornerRadius = 8;
     selectionPanel.thickness = 0.5;
     selectionPanel.isVisible = false;
-/* will not allow setState without a componentWillMount () function ...tied directly to it. 
+    /* will not allow setState without a componentWillMount () function ...tied directly to it. 
     this.setState({
       selectionPanel: selectionPanel
     }, () => {console.log("should have set selectionPanel insto state.")})
     */
-   //the error mentioned assigning it directly to state. 
-   this.state.selectionPanel = selectionPanel;
+    //the error mentioned assigning it directly to state.
+    this.state.selectionPanel = selectionPanel;
 
     advancedTexture.addControl(selectionPanel);
-   console.log("advancedTexture:",advancedTexture);
+    console.log("advancedTexture:", advancedTexture);
 
     var moveY = function(val) {
       mesh.position.y = mesh.position.y + val;
@@ -275,38 +416,37 @@ componentWillUnmount() {
       console.log("value:", value);
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
- 
-   var moveX = function(val) {
-    let x_max = 10;
-    let x_min = -10;
-    /* max and min must be in sync with :
+
+    var moveX = function(val) {
+      let x_max = 10;
+      let x_min = -10;
+      /* max and min must be in sync with :
     selectorx_slider.maximum = 10;
     selectorx_slider.minimum = -10;
     and parameters in 'addSlider' method.
     */
-    if (scope.x_previous > val) {
-    //going down
-      mesh.position.x =  val;
-      if(val <= -10){
+      if (scope.x_previous > val) {
+        //going down
+        mesh.position.x = val;
+        if (val <= -10) {
           mesh.position.x = -10;
           scope.x_previous = x_min;
-      }else{
-        scope.x_previous = val;
-        scope.x_previous_pos = mesh.position.x;
+        } else {
+          scope.x_previous = val;
+          scope.x_previous_pos = mesh.position.x;
+        }
+      } else {
+        //going up
+        mesh.position.x = val;
+        if (val >= 10) {
+          mesh.position.x = 10;
+          scope.x_previous = x_max;
+        } else {
+          scope.x_previous = val;
+          scope.x_previous_pos = mesh.position.x;
+        }
       }
-    } else {
-      //going up
-      mesh.position.x =  val;
-      if(val >= 10){
-        mesh.position.x = 10;
-        scope.x_previous = x_max;
-      }else{
-        scope.x_previous = val;
-        scope.x_previous_pos = mesh.position.x;
-      }
-    }  
-    
-  };
+    };
 
     var moveZ = function(val) {
       let z_max = 10;
@@ -317,27 +457,26 @@ componentWillUnmount() {
       and parameters in 'addSlider' method.
       */
       if (scope.z_previous > val) {
-      //going down
-        mesh.position.z =  val;
-        if(val <= -10){
-            mesh.position.z = -10;
-            scope.z_previous = z_min;
-        }else{
+        //going down
+        mesh.position.z = val;
+        if (val <= -10) {
+          mesh.position.z = -10;
+          scope.z_previous = z_min;
+        } else {
           scope.z_previous = val;
           scope.z_previous_pos = mesh.position.z;
         }
       } else {
         //going up
-        mesh.position.z =  val;
-        if(val >= 10){
+        mesh.position.z = val;
+        if (val >= 10) {
           mesh.position.z = 10;
           scope.z_previous = z_max;
-        }else{
+        } else {
           scope.z_previous = val;
           scope.z_previous_pos = mesh.position.z;
         }
-      }  
-      
+      }
     };
 
     positionGroup.addSlider(
@@ -349,7 +488,7 @@ componentWillUnmount() {
       0,
       onValueChange
     );
-//addSlider(label: string, func?: function, unit?: string, min?: number, max?: number, value?: number, onValueChange?: function): void
+    //addSlider(label: string, func?: function, unit?: string, min?: number, max?: number, value?: number, onValueChange?: function): void
     positionGroup.addSlider(
       "Position Z",
       moveZ,
@@ -422,7 +561,7 @@ componentWillUnmount() {
     selectorY_slider.isThumbCircle = true;
     selectorY_slider.isThumbClamped = true;
     selectorY_slider.displayThumb = false;
-    selectorY_slider.step = .01;
+    selectorY_slider.step = 0.01;
     selectorY_slider.thumbWidth = "15px";
     selectorY_slider.paddingTop = 0;
     selectorY_slider.paddingBottom = 0;
@@ -430,36 +569,42 @@ componentWillUnmount() {
     selectorY_slider.shadowColor = "#ccc";
     selectorY_slider.borderColor = "#000";
   };
-  rxjsCallback(msg){
-    console.log("rxjsCallback: adderGuiUtility..YES...but need a flag.:msg:",msg)
-    //can I show hide the selectionPanel from HERE ? 
+  rxjsCallback(msg) {
+    console.log(
+      "rxjsCallback: adderGuiUtility..YES...but need a flag.:msg:",
+      msg
+    );
+    //can I show hide the selectionPanel from HERE ?
     //this.state.selectionPanel.isVisible = false; or true
-   // console.log("props:",this.props)
-   console.log("this.state look for selectionPanel...:",this.state);
+    // console.log("props:",this.props)
+    console.log("this.state look for selectionPanel...:", this.state);
     //THEN I NEED A FLAG ...
-    if(msg.text === 'true'){
-     // this.state.selectionPanel.isVisible = true; 
-      //this is NOT re-showing the selectionPanel ? 
-      console.log('msg is true');
+    if (msg.text === "true") {
+      // this.state.selectionPanel.isVisible = true;
+      //this is NOT re-showing the selectionPanel ?
+      console.log("msg is true");
       this.state.selectionPanel.isVisible = true;
-    }else{
-     // this.state.selectionPanel.isVisible = false; 
-     console.log('msg is false...');
-     this.state.selectionPanel.isVisible = false;
+    } else {
+      // this.state.selectionPanel.isVisible = false;
+      console.log("msg is false...");
+      this.state.selectionPanel.isVisible = false;
     }
-}
+  }
   render() {
-    const { messages } = this.state; 
-    console.log("render() this.state",this.state);
-    console.log("render() this.scope:",this.scope)
+    const { messages } = this.state;
+    console.log("render() this.state", this.state);
+    console.log("render() this.scope:", this.scope);
 
-    return( 
-    <Grid>  
-      {/** rxjs map function requires some kind of html 
+    return (
+      <Grid>
+        {/** rxjs map function requires some kind of html 
       {messages.map((message,index) => <div></div>),scope.rxjsCallback()}  */}
-      
-      {messages.map((message,index) => {scope.rxjsCallback(message)})}
-  </Grid>)
+
+        {messages.map((message, index) => {
+          scope.rxjsCallback(message);
+        })}
+      </Grid>
+    );
   }
   ////////////////////////////////////////
 }
