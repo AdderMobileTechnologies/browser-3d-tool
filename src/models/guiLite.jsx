@@ -39,7 +39,7 @@ class GuiLite extends React.Component {
       v_scale: 0,
       u_offset: 0,
       v_offset: 0
-      //isRaining:props.isRaining,
+       
     };
     scope = this;
     childScope = this;
@@ -73,7 +73,6 @@ class GuiLite extends React.Component {
     this.state.array_selectionPanels = [];
   }
   createSelectionPanel(data) {
-    //data now has 'currentMeshWrapper' too
     let a_selection_panel = this.easy_selection_panel(
       scope.state.scene,
       scope.state.advancedTexture,
@@ -81,13 +80,10 @@ class GuiLite extends React.Component {
       data.currentModelParentName,
       data.currentMeshWrapper
     );
-    console.log("INFINITE: manageSelectionPanels");
-
     this.manageSelectionPanels(a_selection_panel);
   }
 
   manageModels(data) {
-    console.log("MANAGE MODELS NEEDS TO GET CALLED FOR EVERY MODEL.");
     var temp_array_models = this.state.array_models;
     temp_array_models.push(data);
     scope.setState(prevState => ({
@@ -97,7 +93,6 @@ class GuiLite extends React.Component {
   }
 
   manageSelectionPanels(a_selection_panel) {
-    // I THINK: the only thing that needs to happen here is to save the sp into an array to manage it.
     var temp_array_selectionPanels = this.state.array_selectionPanels;
     temp_array_selectionPanels.push(a_selection_panel);
     scope.setState(prevState => ({
@@ -173,11 +168,7 @@ class GuiLite extends React.Component {
   //////////////////////////////////////////
   // GUI SELECTION PANEL
   easy_selection_panel = (scene, advancedTexture, modelParent, group_name, currentMeshWrapper) => {
-    //should I call this every time a model is loaded to keep it up to date?
-    // NO EFFECT: this.props.get_gLiteScope(childScope);
-    //this.manageModels(data); model, and modelName
-    //uh oh, infinite loop on selection of billboard modelParent.
-    //=>
+  
     console.log("guiLite:easy_selection_panel(): currentMeshWrapper:",currentMeshWrapper);
     let data = {
       method: "manageModels",
@@ -186,10 +177,8 @@ class GuiLite extends React.Component {
       currentMeshWrapper: currentMeshWrapper
     };
     this.manageModels(data);
-    //now 1) prevent it from getting called twice ? and 2) Do I need to manage the panel array as well at this point. ?
+
     if (advancedTexture != "undefined" && advancedTexture != undefined) {
-      console.log("GuiLite.js:easy_selection_panel():modelParent:", modelParent);
-      console.log("WTF: advancedTexture:", advancedTexture);
       this.state.group_name = group_name;
       // RXJS: subscribe to home component messages
       this.subscription = messageService.getMessage().subscribe(message => {
@@ -290,18 +279,14 @@ class GuiLite extends React.Component {
       };
 
       var moveX = function(val) {
-        let x_max = 10;
-        let x_min = -10;
-        /* max and min must be in sync with :
-        selectorx_slider.maximum = 10;
-        selectorx_slider.minimum = -10;
-        and parameters in 'addSlider' method.
-        */
+        let x_max = 30;
+        let x_min = -30;
+      
         if (scope.x_previous > val) {
           //going down
           modelParent.position.x = val;
-          if (val <= -10) {
-            modelParent.position.x = -10;
+          if (val <= x_min) {
+            modelParent.position.x = x_min;
             scope.x_previous = x_min;
           } else {
             scope.x_previous = val;
@@ -310,8 +295,8 @@ class GuiLite extends React.Component {
         } else {
           //going up
           modelParent.position.x = val;
-          if (val >= 10) {
-            modelParent.position.x = 10;
+          if (val >= x_max) {
+            modelParent.position.x = x_max;
             scope.x_previous = x_max;
           } else {
             scope.x_previous = val;
@@ -321,18 +306,14 @@ class GuiLite extends React.Component {
       };
 
       var moveZ = function(val) {
-        let z_max = 10;
-        let z_min = -10;
-        /* max and min must be in sync with :
-          selectorZ_slider.maximum = 10;
-          selectorZ_slider.minimum = -10;
-          and parameters in 'addSlider' method.
-          */
+        let z_max = 30;
+        let z_min = -30;
+        
         if (scope.z_previous > val) {
           //going down
           modelParent.position.z = val;
-          if (val <= -10) {
-            modelParent.position.z = -10;
+          if (val <= z_min) {
+            modelParent.position.z = z_min;
             scope.z_previous = z_min;
           } else {
             scope.z_previous = val;
@@ -340,8 +321,8 @@ class GuiLite extends React.Component {
         } else {
           //going up
           modelParent.position.z = val;
-          if (val >= 10) {
-            modelParent.position.z = 10;
+          if (val >= z_max) {
+            modelParent.position.z = z_max;
             scope.z_previous = z_max;
           } else {
             scope.z_previous = val;
@@ -350,51 +331,38 @@ class GuiLite extends React.Component {
       };
 
       var scaleUV = function(val){
-        //console.log("scaleUV: val:",val)
-        //inside this function is where the uv scaling code should get called or run. 
-        //OK: getting a value: now integrate the functionality
-        //console.log("currentMeshWrapper:",currentMeshWrapper); // THAT is just a mesh id. I need a meshWrapper
         let meshWrapper = currentMeshWrapper
-        
         if (meshWrapper) {
-          //==============================================
-          //get the values that are NOT being changed to avoid 'undefined'.
           meshWrapper.setUOffset(scope.u_offset);
           meshWrapper.setVOffset(scope.v_offset);
           meshWrapper.setUScale(val);
           meshWrapper.setVScale(val);
-          //===========================================
           scope.u_scale = val;
           scope.v_scale = val;
           meshWrapper.reapplyTexture();
         }
-        
-
       }
       var offsetU = function(val){
-          let meshWrapper = currentMeshWrapper
+        let meshWrapper = currentMeshWrapper
         if (meshWrapper) {
-          //get the values that are NOT being changed to avoid 'undefined'.
           meshWrapper.setUOffset(val);
           meshWrapper.setVOffset(scope.v_offset);
           meshWrapper.setUScale(scope.u_scale);
           meshWrapper.setVScale(scope.v_scale);
-   
           scope.u_offset = val;
           meshWrapper.reapplyTexture();
         }
       }
       var offsetV = function(val){
         let meshWrapper = currentMeshWrapper
-      if (meshWrapper) {
-        //get the values that are NOT being changed to avoid 'undefined'.
-        meshWrapper.setUOffset(scope.u_offset);
-        meshWrapper.setVOffset(val);
-        meshWrapper.setUScale(scope.u_scale);
-        meshWrapper.setVScale(scope.v_scale);
-        scope.v_offset = val;
-        meshWrapper.reapplyTexture();
-      }
+        if (meshWrapper) {
+          meshWrapper.setUOffset(scope.u_offset);
+          meshWrapper.setVOffset(val);
+          meshWrapper.setUScale(scope.u_scale);
+          meshWrapper.setVScale(scope.v_scale);
+          scope.v_offset = val;
+          meshWrapper.reapplyTexture();
+        }
     }
       var toDispose = function(isChecked) {
         if (isChecked) {
@@ -403,13 +371,13 @@ class GuiLite extends React.Component {
           console.log("fooeey");
         }
       };
-      // FAILS TO ADD CHECKBOX ::: ???? positionGroup.addCheckbox("close", toDispose);
+       
       positionGroup.addSlider(
         "Position X",
         moveX,
         " ",
-        -10,
-        10,
+        -30,
+        30,
         0,
         onValueChange
       );
@@ -418,8 +386,8 @@ class GuiLite extends React.Component {
         "Position Z",
         moveZ,
         " ",
-        -10,
-        10,
+        -30,
+        30,
         0,
         onValueChange
       );
@@ -432,24 +400,21 @@ class GuiLite extends React.Component {
         0,
         onValueChange
       );
-      //HERE we add a slider to replace the uvmap slider.
-      
       positionGroup.addSlider(
         "Scale",
         scaleUV,
         " ",
         0,
-        1,
+        3,
         0,
         onValueChange
       );
-
       positionGroup.addSlider(
         "Offset U",
         offsetU,
         " ",
         0,
-        1,
+        3,
         0,
         onValueChange
       );
@@ -458,12 +423,11 @@ class GuiLite extends React.Component {
         offsetV,
         " ",
         0,
-        1,
+        3,
         0,
         onValueChange
       );
        
-
       //Position Group Styling:
       positionGroup._groupHeader.color = "White";
 
@@ -471,11 +435,9 @@ class GuiLite extends React.Component {
       //X
       let selectorX = selectors[0];
       styleSelector(selectorX);
-
       //Z
       let selectorZ = selectors[1];
       styleSelector(selectorZ);
-
       //Y
       let selectorY = selectors[2];
       styleSelector(selectorY);
@@ -489,7 +451,6 @@ class GuiLite extends React.Component {
       let selectorVOffset = selectors[5];
       styleSelector(selectorVOffset);
        
-
       function styleSelector(selector) {
         selector.paddingTop = 0;
         selector.paddingBottom = 0;
@@ -515,36 +476,17 @@ class GuiLite extends React.Component {
   };
 
   rxjsCallback(msg) {
-    console.log("this:", this);
-    console.log("rxjsCallback this.props:", this.props);
     if (msg.text === "true") {
-      //console.log("msg is true");
-      // if (this.props.activePanelName === this.state.group_name) {
       this.state.selectionPanel.isVisible = true;
-      console.log(this.state.group_name);
-      console.log("state data at rxjs callback point:");
-      console.log(this.state);
-      console.log("visible");
-      console.log("activate?");
-      //this.easy_selection_panel()
-      // }
     } else if (msg.text === "false") {
-      // if (this.props.activePanelName === this.state.group_name) {
-      // console.log("msg is false...");
       this.state.selectionPanel.isVisible = false;
-      console.log(this.state.group_name);
-      console.log("invisible");
-      console.log("deactivate?");
-      // }
     } else if (msg.text === "clear") {
-      //call clear from pickableWindow method in main
-      //HOW TO REMOVE A selectionPanel
-      console.log(" CLEAR AND DISPOSE ???? ");
       this.state.selectionPanel.dispose();
     } else {
       console.log("getting an invalid message sent via rxjsCallback.");
     }
   }
+
   render() {
     const { messages } = this.state;
     return (

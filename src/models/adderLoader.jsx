@@ -210,9 +210,11 @@ class AdderLoader {
         //uvmap insert:
         //HERE we are including sliders/controls on a per 'mesh' basis . meta data mesh name.
         // let CURRENT_MESH = "vehicle_4door_stationwagon_leftside_medium";
-        let CURRENT_MESH = "billboard_2sides_angled_sign_2";
+        //let CURRENT_MESH = "billboard_2sides_angled_sign_2";
+        let CURRENT_MESH = "monkey"
         //test :
         if (mesh.id === CURRENT_MESH) {
+
           scaleControl = adderGuiUtility.uv_ScaleControl(
             newAdderMeshWrapper,
             "scale",

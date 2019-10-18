@@ -148,46 +148,52 @@ class AdderMeshWrapper {
 
     this.reapplyTexture = () => {
       console.log("AdderMeshWrapper:reapplyTexture() ");
+      if(typeof this._dataURL != "undefined" && typeof this._dataUrl != undefined){
 
-      let mesh = this.getMesh();
-      console.log("verify :mesh:", mesh);
+      
+        if(this._imgFileName != "undefined" && this._dataURL != "undefined" && this._scene != "undefined" ){
+          let mesh = this.getMesh();
+          console.log("verify :mesh:", mesh);
 
-      console.log("verify file,URL,and scene parameters:");
-      console.log("this._imgFileName:", this._imgFileName);
-      console.log("this._dataURL:", this._dataURL);
-      console.log("this._scene:", this._scene);
-      let tex = Texture.LoadFromDataString(
-        this._imgFileName,
-        this._dataURL,
-        this._scene
-      );
-      let mat = new StandardMaterial("mat", _scene);
-      mat.diffuseTexture = tex;
+          console.log("verify file,URL,and scene parameters:");
+          console.log("this._imgFileName:", this._imgFileName);
+          console.log("this._dataURL:", this._dataURL);
+          console.log("this._scene:", this._scene);
+          let tex = Texture.LoadFromDataString(
+            this._imgFileName,
+            this._dataURL,
+            this._scene
+          );
+          let mat = new StandardMaterial("mat", _scene);
+          mat.diffuseTexture = tex;
 
-      //try a single hardcoded offset change.
-      console.log("verify UV parameters:-------------------");
-      //OFFSETS
-      console.log("original _uOffset:", this.getUOffset());
-      console.log("this._uOffset:", this._uOffset);
-      console.log("original _vOffset:", this.getVOffset());
-      console.log("this._vOffset:", this._vOffset);
-      //SCALES:
-      console.log("original _uScale:", this.getUScale());
-      console.log("this._uScale:", this._uScale);
-      console.log("original _vScale:", this.getVScale());
-      console.log("this._vScale:", this._vScale);
+          //try a single hardcoded offset change.
+          console.log("verify UV parameters:-------------------");
+          //OFFSETS
+          console.log("original _uOffset:", this.getUOffset());
+          console.log("this._uOffset:", this._uOffset);
+          console.log("original _vOffset:", this.getVOffset());
+          console.log("this._vOffset:", this._vOffset);
+          //SCALES:
+          console.log("original _uScale:", this.getUScale());
+          console.log("this._uScale:", this._uScale);
+          console.log("original _vScale:", this.getVScale());
+          console.log("this._vScale:", this._vScale);
 
-      let commitChanges = true;
-      if (commitChanges) {
-        mat.diffuseTexture.uOffset = this._uOffset; // did .5 and it worked hard coded.
-        mat.diffuseTexture.vOffset = this._vOffset;
-        mat.diffuseTexture.uScale = this._uScale;
-        mat.diffuseTexture.vScale = this._vScale;
-      } else {
-        console.log("NOT EXECUTING THE CHANGES ON PURPOSE.");
+          let commitChanges = true;
+          if (commitChanges) {
+            mat.diffuseTexture.uOffset = this._uOffset; // did .5 and it worked hard coded.
+            mat.diffuseTexture.vOffset = this._vOffset;
+            mat.diffuseTexture.uScale = this._uScale;
+            mat.diffuseTexture.vScale = this._vScale;
+          } else {
+            console.log("NOT EXECUTING THE CHANGES ON PURPOSE.");
+          }
+
+          mesh.material = mat;
+        }
       }
-
-      mesh.material = mat;
+            
     };
   }
   setMesh(mesh) {
