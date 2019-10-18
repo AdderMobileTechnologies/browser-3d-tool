@@ -143,6 +143,33 @@ class AdderSceneWrapper {
         }
       }
     };
+
+    //get mesh wrapper for mesh_id 
+    this.getMeshWrapperForMeshId = mesh_id => {
+      console.log("adderSceneWrapper:getMeshWrapperForMeshId()");
+      /*
+      example in new format:
+      vehicle_2door_sportscar_rightside_small
+      vs 
+      vehicle_2door_sportscar_rightside_large
+      thus splitName[3]  where 3 = reightside.
+      */
+      let ModelsArray = this.getModels();
+      for (let mIndex in ModelsArray) {
+        let model = ModelsArray[mIndex];
+        let meshWrappers = model.getMeshWrappers();
+        for (let mwIndex in meshWrappers) {
+          let meshWrapper = meshWrappers[mwIndex];
+          let _mesh = meshWrapper.getMesh();
+
+          if (_mesh.id === mesh_id) {
+            return meshWrapper;
+          }
+        }
+      }
+    };
+
+    //end 
   }
 
   get_UIState() {

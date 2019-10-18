@@ -677,6 +677,9 @@ class Main extends React.Component {
     // FOLLOW the 'sign one' button forward.
     let asw = this.state.adderSceneWrapper;
     let model = asw.getModelForMeshId(mesh_id);
+    //!  I NEED:  meshWrapper , from mesh_id, for the UV Map Slider ... 
+    //is there a function in asw ? 
+    let currentMeshWrapper = asw.getMeshWrapperForMeshId(mesh_id);
     //Main.jsx 677 TypeError: Cannot read property 'getParentMesh' of undefined
     //ERROR: happened after selecting the one button on the sidebar after it had been turned over by the selected_ad_type flag.
     // ! Not ABle to get a 'model' or 'parent mesh' based on my billboards mesh_id ?
@@ -686,7 +689,8 @@ class Main extends React.Component {
 
     this.setState({
       theCurrentModelParent: parentModel,
-      theCurrentModelParentName: parentModel.name
+      theCurrentModelParentName: parentModel.name,
+      theCurrentMeshWrapper: currentMeshWrapper
     });
 
     if (!this.state.startEditing) {
@@ -696,7 +700,8 @@ class Main extends React.Component {
           startEditing: true,
           editing_mesh_id: mesh_id,
           finishedEditing: false,
-          currentModel: model
+          currentModel: model,
+          currentMeshWrapper : currentMeshWrapper
         },
         () => {
           console.log("editing mesh id:", mesh_id);
@@ -719,7 +724,8 @@ class Main extends React.Component {
           that.state.gLiteScope.remoteFunction({
             method: "createSelectionPanel",
             currentModelParent: parentModel,
-            currentModelParentName: parentModel.name
+            currentModelParentName: parentModel.name,
+            currentMeshWrapper: currentMeshWrapper
           });
         }
       );
@@ -810,7 +816,8 @@ class Main extends React.Component {
         this.state.gLiteScope.remoteFunction({
           method: "createSelectionPanel",
           currentModelParent: this.state.currentModelParent,
-          currentModelParentName: this.state.currentModelParentName
+          currentModelParentName: this.state.currentModelParentName,
+          currentMeshWrapper : this.state.currentMeshWrapper
         });
       } else {
         console.log(

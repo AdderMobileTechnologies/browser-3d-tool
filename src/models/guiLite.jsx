@@ -61,11 +61,13 @@ class GuiLite extends React.Component {
     this.state.array_selectionPanels = [];
   }
   createSelectionPanel(data) {
+    //data now has 'currentMeshWrapper' too
     let a_selection_panel = this.easy_selection_panel(
       scope.state.scene,
       scope.state.advancedTexture,
       data.currentModelParent,
-      data.currentModelParentName
+      data.currentModelParentName,
+      data.currentMeshWrapper
     );
     console.log("INFINITE: manageSelectionPanels");
 
@@ -117,7 +119,8 @@ class GuiLite extends React.Component {
       this.state.scene,
       this.state.advancedTexture,
       this.state.currentModelParent,
-      this.state.currentModelParent.name
+      this.state.currentModelParent.name,
+      this.state.currentMeshWrapper
     );
     /*
       these inputs: props,props,state,props
@@ -157,21 +160,23 @@ class GuiLite extends React.Component {
   }
   //////////////////////////////////////////
   // GUI SELECTION PANEL
-  easy_selection_panel = (scene, advancedTexture, mesh, group_name) => {
+  easy_selection_panel = (scene, advancedTexture, modelParent, group_name, currentMeshWrapper) => {
     //should I call this every time a model is loaded to keep it up to date?
     // NO EFFECT: this.props.get_gLiteScope(childScope);
     //this.manageModels(data); model, and modelName
-    //uh oh, infinite loop on selection of billboard mesh.
+    //uh oh, infinite loop on selection of billboard modelParent.
     //=>
+    console.log("guiLite:easy_selection_panel(): currentMeshWrapper:",currentMeshWrapper);
     let data = {
       method: "manageModels",
-      currentModelParent: mesh,
-      currentModelParentName: mesh.name
+      currentModelParent: modelParent,
+      currentModelParentName: modelParent.name,
+      currentMeshWrapper: currentMeshWrapper
     };
     this.manageModels(data);
     //now 1) prevent it from getting called twice ? and 2) Do I need to manage the panel array as well at this point. ?
     if (advancedTexture != "undefined" && advancedTexture != undefined) {
-      console.log("GuiLite.js:easy_selection_panel():mesh:", mesh);
+      console.log("GuiLite.js:easy_selection_panel():modelParent:", modelParent);
       console.log("WTF: advancedTexture:", advancedTexture);
       this.state.group_name = group_name;
       // RXJS: subscribe to home component messages
@@ -189,26 +194,26 @@ class GuiLite extends React.Component {
 
       /// - end didmount code.
       var scope = this.state;
-      scope.mesh = mesh;
+      scope.modelParent = modelParent;
       var toSize = function(isChecked) {
         if (isChecked) {
-          mesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+          modelParent.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
         } else {
-          mesh.scaling = new BABYLON.Vector3(1, 1, 1);
+          modelParent.scaling = new BABYLON.Vector3(1, 1, 1);
         }
       };
 
       var orientateY = function(angle) {
         let val = displayValueN(angle);
         if (scope.y_previous > val) {
-          mesh.rotation.y = angle / 2;
+          modelParent.rotation.y = angle / 2;
         } else if (scope.y_previous < val) {
-          mesh.rotation.y = (-1 * angle) / 2;
+          modelParent.rotation.y = (-1 * angle) / 2;
         }
         scope.y_previous = val;
       };
       var orientateX = function(angle) {
-        mesh.rotation.x = angle;
+        modelParent.rotation.x = angle;
       };
 
       var displayValue = function(value) {
@@ -233,7 +238,7 @@ class GuiLite extends React.Component {
       // scope.selectionPanel = selectionPanel;
 
       selectionPanel.width = 0.25;
-      selectionPanel.height = 0.56;
+      selectionPanel.height = 0.75;
       selectionPanel.horizontalAlignment =
         BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
       selectionPanel.verticalAlignment =
@@ -265,7 +270,7 @@ class GuiLite extends React.Component {
       console.log("advancedTexture:", advancedTexture);
 
       var moveY = function(val) {
-        mesh.position.y = mesh.position.y + val;
+        modelParent.position.y = modelParent.position.y + val;
       };
       var displayValueN = function(value) {
         console.log("value:", value);
@@ -282,23 +287,23 @@ class GuiLite extends React.Component {
         */
         if (scope.x_previous > val) {
           //going down
-          mesh.position.x = val;
+          modelParent.position.x = val;
           if (val <= -10) {
-            mesh.position.x = -10;
+            modelParent.position.x = -10;
             scope.x_previous = x_min;
           } else {
             scope.x_previous = val;
-            scope.x_previous_pos = mesh.position.x;
+            scope.x_previous_pos = modelParent.position.x;
           }
         } else {
           //going up
-          mesh.position.x = val;
+          modelParent.position.x = val;
           if (val >= 10) {
-            mesh.position.x = 10;
+            modelParent.position.x = 10;
             scope.x_previous = x_max;
           } else {
             scope.x_previous = val;
-            scope.x_previous_pos = mesh.position.x;
+            scope.x_previous_pos = modelParent.position.x;
           }
         }
       };
@@ -313,26 +318,48 @@ class GuiLite extends React.Component {
           */
         if (scope.z_previous > val) {
           //going down
-          mesh.position.z = val;
+          modelParent.position.z = val;
           if (val <= -10) {
-            mesh.position.z = -10;
+            modelParent.position.z = -10;
             scope.z_previous = z_min;
           } else {
             scope.z_previous = val;
-            scope.z_previous_pos = mesh.position.z;
+            scope.z_previous_pos = modelParent.position.z;
           }
         } else {
           //going up
-          mesh.position.z = val;
+          modelParent.position.z = val;
           if (val >= 10) {
-            mesh.position.z = 10;
+            modelParent.position.z = 10;
             scope.z_previous = z_max;
           } else {
             scope.z_previous = val;
-            scope.z_previous_pos = mesh.position.z;
+            scope.z_previous_pos = modelParent.position.z;
           }
         }
       };
+
+      var scaleUV = function(val){
+        console.log("scaleUV: val:",val)
+        //inside this function is where the uv scaling code should get called or run. 
+        //OK: getting a value: now integrate the functionality
+        console.log("currentMeshWrapper:",currentMeshWrapper); // THAT is just a mesh id. I need a meshWrapper
+        let meshWrapper = currentMeshWrapper
+        
+        if (meshWrapper) {
+          //==============================================
+          //get the values that are NOT being changed to avoid 'undefined'.
+          meshWrapper.setUOffset(meshWrapper.getUOffset());
+          meshWrapper.setVOffset(meshWrapper.getVOffset());
+          meshWrapper.setUScale(val);
+          meshWrapper.setVScale(val);
+          //===========================================
+  
+          meshWrapper.reapplyTexture();
+        }
+        
+
+      }
       var toDispose = function(isChecked) {
         if (isChecked) {
           selectionPanel.dispose();
@@ -369,6 +396,18 @@ class GuiLite extends React.Component {
         0,
         onValueChange
       );
+      //HERE we add a slider to replace the uvmap slider.
+      
+      positionGroup.addSlider(
+        "Scale",
+        scaleUV,
+        " ",
+        0,
+        1,
+        0,
+        onValueChange
+      );
+       
 
       //Position Group Styling:
       positionGroup._groupHeader.color = "White";
@@ -385,6 +424,9 @@ class GuiLite extends React.Component {
       //Y
       let selectorY = selectors[2];
       styleSelector(selectorY);
+
+      let selectorUVScale = selectors[3];
+      styleSelector(selectorUVScale);
 
       function styleSelector(selector) {
         selector.paddingTop = 0;
