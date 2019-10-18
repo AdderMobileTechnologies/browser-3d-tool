@@ -1678,3 +1678,12 @@ Main.jsx 677 TypeError: Cannot read property 'getParentMesh' of undefined
 Start Here Tomorrow: 
 ASW getModelForMeshId  
 
+Friday 10-18-2019 : 
+Merged the uvmap-1 branch into this branch , the advanced selection panels. 
+Now the task at hand is to merge the uv functionality that occurs in the old adderGuiUtility, into the 'guiLite' class 
+where the new selection panel code is. Also keep in mind the AdderMeshWrapper class and the AdderLoader
+ class where the uvmap  functionalityis currently running.
+ We will need to 'swap out' the 'uv controls' per specific mesh, while keeping the 'position and rotation' controls 
+ that are 'model' specific.  ... 
+ Let's Get After It.
+ ...
