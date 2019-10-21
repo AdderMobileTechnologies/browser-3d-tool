@@ -1687,3 +1687,8 @@ where the new selection panel code is. Also keep in mind the AdderMeshWrapper cl
  that are 'model' specific.  ... 
  Let's Get After It.
  ...
+
+Mon: 10-21-2019:
+1) make sure all controls fit on the selection panels good. 
+2) figure out any console errors , images that are trying to be loaded, the porsche manifest issue. 
+3) the gear icon more visible

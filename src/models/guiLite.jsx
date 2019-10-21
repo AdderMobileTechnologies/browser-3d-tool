@@ -13,8 +13,6 @@ I currently manage an array of selectionPanels.
 
 */
 
-
-
 let scope;
 let childScope;
 class GuiLite extends React.Component {
@@ -35,11 +33,10 @@ class GuiLite extends React.Component {
       z_previous: 0,
       x_previous: 0,
       group_name: "",
-      u_scale:0,
+      u_scale: 0,
       v_scale: 0,
       u_offset: 0,
       v_offset: 0
-       
     };
     scope = this;
     childScope = this;
@@ -167,9 +164,17 @@ class GuiLite extends React.Component {
   }
   //////////////////////////////////////////
   // GUI SELECTION PANEL
-  easy_selection_panel = (scene, advancedTexture, modelParent, group_name, currentMeshWrapper) => {
-  
-    console.log("guiLite:easy_selection_panel(): currentMeshWrapper:",currentMeshWrapper);
+  easy_selection_panel = (
+    scene,
+    advancedTexture,
+    modelParent,
+    group_name,
+    currentMeshWrapper
+  ) => {
+    console.log(
+      "guiLite:easy_selection_panel(): currentMeshWrapper:",
+      currentMeshWrapper
+    );
     let data = {
       method: "manageModels",
       currentModelParent: modelParent,
@@ -239,7 +244,7 @@ class GuiLite extends React.Component {
       // scope.selectionPanel = selectionPanel;
 
       selectionPanel.width = 0.25;
-      selectionPanel.height = 0.95;
+      selectionPanel.height = 0.9;
       selectionPanel.horizontalAlignment =
         BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
       selectionPanel.verticalAlignment =
@@ -247,7 +252,7 @@ class GuiLite extends React.Component {
       /* selectionPanel style */
       selectionPanel.fontSize = 11;
       selectionPanel.fontWeight = 600;
-      selectionPanel.paddingTop = 2;
+      selectionPanel.paddingTop = 35;
       selectionPanel.paddingLeft = 2;
       selectionPanel.paddingRight = 2;
       selectionPanel.paddingBottom = 2;
@@ -255,7 +260,7 @@ class GuiLite extends React.Component {
       selectionPanel.background = "#222";
       selectionPanel.barColor = "#4F7DF2";
       selectionPanel.color = "#FFFFFF";
-      selectionPanel.labelolor = "#FFFFFF";
+      selectionPanel.labelColor = "#FFFFFF";
       selectionPanel.cornerRadius = 8;
       selectionPanel.thickness = 0.5;
       selectionPanel.isVisible = false;
@@ -281,7 +286,7 @@ class GuiLite extends React.Component {
       var moveX = function(val) {
         let x_max = 30;
         let x_min = -30;
-      
+
         if (scope.x_previous > val) {
           //going down
           modelParent.position.x = val;
@@ -308,7 +313,7 @@ class GuiLite extends React.Component {
       var moveZ = function(val) {
         let z_max = 30;
         let z_min = -30;
-        
+
         if (scope.z_previous > val) {
           //going down
           modelParent.position.z = val;
@@ -330,8 +335,8 @@ class GuiLite extends React.Component {
         }
       };
 
-      var scaleUV = function(val){
-        let meshWrapper = currentMeshWrapper
+      var scaleUV = function(val) {
+        let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(scope.u_offset);
           meshWrapper.setVOffset(scope.v_offset);
@@ -341,9 +346,9 @@ class GuiLite extends React.Component {
           scope.v_scale = val;
           meshWrapper.reapplyTexture();
         }
-      }
-      var offsetU = function(val){
-        let meshWrapper = currentMeshWrapper
+      };
+      var offsetU = function(val) {
+        let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(val);
           meshWrapper.setVOffset(scope.v_offset);
@@ -352,9 +357,9 @@ class GuiLite extends React.Component {
           scope.u_offset = val;
           meshWrapper.reapplyTexture();
         }
-      }
-      var offsetV = function(val){
-        let meshWrapper = currentMeshWrapper
+      };
+      var offsetV = function(val) {
+        let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(scope.u_offset);
           meshWrapper.setVOffset(val);
@@ -363,7 +368,7 @@ class GuiLite extends React.Component {
           scope.v_offset = val;
           meshWrapper.reapplyTexture();
         }
-    }
+      };
       var toDispose = function(isChecked) {
         if (isChecked) {
           selectionPanel.dispose();
@@ -371,7 +376,7 @@ class GuiLite extends React.Component {
           console.log("fooeey");
         }
       };
-       
+
       positionGroup.addSlider(
         "Position X",
         moveX,
@@ -400,38 +405,15 @@ class GuiLite extends React.Component {
         0,
         onValueChange
       );
-      positionGroup.addSlider(
-        "Scale",
-        scaleUV,
-        " ",
-        0,
-        3,
-        0,
-        onValueChange
-      );
-      positionGroup.addSlider(
-        "Offset U",
-        offsetU,
-        " ",
-        0,
-        3,
-        0,
-        onValueChange
-      );
-      positionGroup.addSlider(
-        "Offset V",
-        offsetV,
-        " ",
-        0,
-        3,
-        0,
-        onValueChange
-      );
-       
+      positionGroup.addSlider("Scale", scaleUV, " ", 0, 3, 0, onValueChange);
+      positionGroup.addSlider("Offset U", offsetU, " ", 0, 3, 0, onValueChange);
+      positionGroup.addSlider("Offset V", offsetV, " ", 0, 3, 0, onValueChange);
+
       //Position Group Styling:
       positionGroup._groupHeader.color = "White";
 
       let selectors = positionGroup.selectors;
+      console.log("the selectors:", selectors);
       //X
       let selectorX = selectors[0];
       styleSelector(selectorX);
@@ -450,26 +432,37 @@ class GuiLite extends React.Component {
       //v_offset
       let selectorVOffset = selectors[5];
       styleSelector(selectorVOffset);
-       
+
       function styleSelector(selector) {
-        selector.paddingTop = 0;
-        selector.paddingBottom = 0;
+        selector.paddingTop = "0px";
+        selector.paddingBottom = "0px";
         selector.fontFamily = "Courier";
-        selector.fontSize = 11;
+        selector.fontSize = 10;
+
+        selector.height = "30px";
         let selector_slider_label = selector.children[0];
-        selector_slider_label.height = "15px";
+        selector_slider_label.height = "10px";
+        selector_slider_label.marginTop = "0px";
+        selector_slider_label.paddingTop = "0px";
+        selector_slider_label.marginBottom = "0px";
+        selector_slider_label.paddingBottom = "0px";
+        selector_slider_label.marginLeft = "0px";
+        selector_slider_label.paddingLeft = "0px";
         let selector_slider = selector.children[1];
-        selector_slider.height = "18px";
+        selector_slider.height = "13px";
         selector_slider.isThumbCircle = true;
         selector_slider.isThumbClamped = true;
         selector_slider.displayThumb = false;
         selector_slider.step = 0.01;
-        selector_slider.thumbWidth = "15px";
-        selector_slider.paddingTop = 0;
-        selector_slider.paddingBottom = 0;
-        selector_slider.color = "#222";
+        selector_slider.thumbWidth = "10px";
+        selector_slider.paddingTop = "0px";
+        selector_slider.paddingBottom = "0px";
+        selector_slider.paddingLeft = "0px";
+        selector_slider.marginLeft = "0px";
+        selector_slider.color = "#bbb";
         selector_slider.shadowColor = "#ccc";
         selector_slider.borderColor = "#000";
+        selector_slider.width = 0.75;
       }
       return selectionPanel;
     }
