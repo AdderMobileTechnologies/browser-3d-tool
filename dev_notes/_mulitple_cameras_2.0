@@ -1,0 +1,142 @@
+import React, { Component } from "react";
+import * as BABYLON from "babylonjs";
+import BabylonScene from "../BabylonScene/"; // import the component above linking to file we just created.
+
+export default class Viewer extends Component<{}, {}> {
+  onSceneMount = (e: SceneEventArgs) => {
+    const { canvas, scene, engine } = e;
+    /*
+    Currently this changes on click, between two cameras, one focused on the larger cube, and the other on the smaller cube. 
+    I would like it to set the focus to the point where the user clicked if possible. or, to get the position of the model 
+    where the user clicked and then use that to set the focus of the camera. 
+    
+    */
+
+    // This creates and positions a free camera (non-mesh)
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //camera work inside of _research/babylon-react-electron-app in /Viewer/index.js
+    //Brandon mentioned set the camera up in the meta_data and moving the single camera and refocusing the single camera....
+    var camera1 = new BABYLON.ArcRotateCamera(
+      "Camera1",
+      0,
+      10,
+      10,
+      new BABYLON.Vector3(0, 3, 0),
+      scene
+    );
+
+    // Positions the camera overwriting alpha, beta, radius
+    //camera.setPosition(new BABYLON.Vector3(0, 0, 0));
+    // camera.setTarget(BABYLON.Vector3.Zero());
+    //////////-------------------------------------------------
+
+    var camera2 = new BABYLON.ArcRotateCamera(
+      "Camera2",
+      0,
+      10,
+      10,
+      new BABYLON.Vector3(0, 3, 0),
+      scene
+    );
+    // var camera2 = new BABYLON.ArcRotateCamera(
+    //   "Camera",
+    //   0,
+    //   10,
+    //   10,
+    //   new BABYLON.Vector3(0, 3, 30),
+    //   scene
+    // );
+
+    // Positions the camera overwriting alpha, beta, radius
+    // camera2.setPosition(new BABYLON.Vector3(0, 0, 0));
+    // camera2.setTarget(BABYLON.Vector3.Zero());
+    camera1.attachControl(canvas, true);
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    var light = new BABYLON.HemisphericLight(
+      "light1",
+      new BABYLON.Vector3(0, 1, 0),
+      scene
+    );
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.4;
+    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
+    var box1 = BABYLON.Mesh.CreateBox("sphere1", 2, scene);
+    var box2 = BABYLON.Mesh.CreateBox("sphere2", 1, scene);
+    box2.position.z = 30;
+    box1.position.y = 3;
+    box2.position.y = 3;
+    var switchCam = true;
+
+    let createCamera1 = (position, cam_pos) => {
+      console.log("createCamera with position:", cam_pos);
+      camera1 = new BABYLON.ArcRotateCamera(
+        "Camera1",
+        cam_pos.x,
+        cam_pos.y,
+        cam_pos.z,
+        new BABYLON.Vector3(position.x, position.y, position.z),
+        scene
+      );
+      camera1.attachControl(canvas, true);
+
+      return camera1;
+    };
+
+    let createCamera2 = (position, cam_pos) => {
+      console.log("createCamera with position:", cam_pos);
+      camera2 = new BABYLON.ArcRotateCamera(
+        "Camera2",
+        cam_pos.x,
+        cam_pos.y,
+        cam_pos.z,
+        new BABYLON.Vector3(position.x, position.y, position.z),
+        scene
+      );
+      camera2.attachControl(canvas, true);
+
+      return camera2;
+    };
+
+    window.addEventListener("click", function(evt) {
+      if (switchCam) {
+        // scene.activeCamera = camera;
+
+        let cam_pos = camera1.globalPosition;
+        console.log("cam position:", cam_pos);
+        let box1_position = box1.getPositionExpressedInLocalSpace();
+        camera1 = createCamera1(box1_position, cam_pos);
+        scene.activeCamera = camera1;
+      } else {
+        // console.log(box.getPositionExpressedInLocalSpace());
+        let box2_position = box2.getPositionExpressedInLocalSpace();
+        let cam_pos2 = camera2.globalPosition;
+        console.log("cam2 position:", cam_pos2);
+        camera2 = createCamera2(box2_position, cam_pos2);
+        scene.activeCamera = camera2;
+        //console.log("box2:");
+        //console.log(box2.getPositionExpressedInLocalSpace());
+      }
+      switchCam = !switchCam;
+    });
+
+    // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
+    const ground = BABYLON.Mesh.CreateGround("ground1", 2, 2, 1, scene);
+
+    engine.runRenderLoop(() => {
+      if (scene) {
+        scene.render();
+      }
+    });
+  };
+
+  render() {
+    return (
+      // <div>
+      <BabylonScene onSceneMount={this.onSceneMount} />
+      // </div>
+    );
+  }
+}

@@ -1,0 +1,55 @@
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+    var camera = new BABYLON.ArcRotateCamera(
+      "Camera",
+      0,
+      10,
+      10,
+      new BABYLON.Vector3(0, 0, 0),
+      scene
+    );
+
+    // Positions the camera overwriting alpha, beta, radius
+    //camera.setPosition(new BABYLON.Vector3(0, 0, 0));
+    // camera.setTarget(BABYLON.Vector3.Zero());
+    //////////-------------------------------------------------
+    var camera2 = new BABYLON.ArcRotateCamera(
+      "Camera",
+      0,
+      10,
+      10,
+      new BABYLON.Vector3(0, 0, 10),
+      scene
+    );
+
+    // Positions the camera overwriting alpha, beta, radius
+    // camera2.setPosition(new BABYLON.Vector3(0, 0, 0));
+    // camera2.setTarget(BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+    camera2.attachControl(canvas, true);
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    var light = new BABYLON.HemisphericLight(
+      "light1",
+      new BABYLON.Vector3(0, 1, 0),
+      scene
+    );
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.4;
+    // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
+    var box = BABYLON.Mesh.CreateBox("sphere1", 2, scene);
+    var box2 = BABYLON.Mesh.CreateBox("sphere2", 1, scene);
+    box2.position.z = 10;
+    var switchCam = true;
+
+    window.addEventListener("click", function(evt) {
+      if (switchCam) {
+        scene.activeCamera = camera;
+      } else {
+        scene.activeCamera = camera2;
+      }
+      switchCam = !switchCam;
+    });
+
+    // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
+    const ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);

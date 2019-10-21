@@ -1692,7 +1692,7 @@ Mon: 10-21-2019:
 1) make sure all controls fit on the selection panels good. 
 2) figure out any console errors , images that are trying to be loaded, the porsche manifest issue. 
 3) the gear icon more visible (green) 
-4) NOW...need to be able to handle ... multiple sides of a car. 
+ 
 5) cut out some of the console log.
 
  /var/www/html/assets/ad_type/vehicle/sub_type/2door/detail/sportscar/
@@ -1700,5 +1700,8 @@ Mon: 10-21-2019:
  TILING: tried to stop tiling of images on texture: 
  https://blenderartists.org/t/unwanted-texture-repeat-tile-how-do-i-stop-it/514997/5
  no luck. 
+- - -
+GOAL: to change the target of the camera when the user selects a different model. 
 
- 
+CHANGING THE ACTIVE CAMERA:
+https://doc.babylonjs.com/how_to/how_to_use_multi-views
