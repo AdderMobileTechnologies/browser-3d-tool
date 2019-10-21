@@ -123,7 +123,7 @@ class GuiLite extends React.Component {
       this.state.scene,
       this.state.advancedTexture,
       this.state.currentModelParent,
-      this.state.currentModelParent.name,
+      this.state.currentModelParentName,
       this.state.currentMeshWrapper
     );
     /*
@@ -178,7 +178,7 @@ class GuiLite extends React.Component {
     let data = {
       method: "manageModels",
       currentModelParent: modelParent,
-      currentModelParentName: modelParent.name,
+      currentModelParentName: group_name,
       currentMeshWrapper: currentMeshWrapper
     };
     this.manageModels(data);
@@ -243,7 +243,7 @@ class GuiLite extends React.Component {
       ]);
       // scope.selectionPanel = selectionPanel;
 
-      selectionPanel.width = 0.25;
+      selectionPanel.width = 0.15;
       selectionPanel.height = 0.9;
       selectionPanel.horizontalAlignment =
         BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;

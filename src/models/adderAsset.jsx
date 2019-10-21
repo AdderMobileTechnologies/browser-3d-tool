@@ -11,6 +11,7 @@ import AdderSceneWrapper from "./adderSceneWrapper";
 class AdderAsset {
   constructor(
     dir = null,
+    name = null,
     filename = null,
     filepath = null,
     position = null,
@@ -24,6 +25,10 @@ class AdderAsset {
         "AdderAsset:Constructor(): A parameter is expected for the directory that the asset is stored in."
       );
     }
+    if (name === null) {
+      throw new Error("AdderAsset:Constructor() A name parameter is required.");
+    }
+
     if (filename === null) {
       throw new Error(
         "AdderAsset:Constructor() A filename parameter is required."
@@ -65,6 +70,7 @@ class AdderAsset {
     }
 
     let _dir = dir;
+    let _name = name;
     let _filename = filename;
     let _filepath = filepath;
     let _position = position;
@@ -75,6 +81,9 @@ class AdderAsset {
 
     this.getDir = () => {
       return _dir;
+    };
+    this.getName = () => {
+      return _name;
     };
     this.getFilename = () => {
       return _filename;

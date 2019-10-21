@@ -16,7 +16,7 @@ import Grid from "@material-ui/core/Grid"; //
 import "./minimum.css";
 import "./designer.css";
 //Part of RxJS implementation.
-import { messageService } from '../_services'; //import { messageService } from '../@/_services';
+import { messageService } from "../_services"; //import { messageService } from '../@/_services';
 
 let scope;
 class Designer extends React.Component {
@@ -59,8 +59,8 @@ class Designer extends React.Component {
       }
     );
   }
-  rxjsCallback(){
-    console.log("rxjsCallback")
+  rxjsCallback() {
+    console.log("rxjsCallback");
   }
   selectElement(id, valueToSelect) {
     console.log("selectElement(id, valueToSelect)");
@@ -350,8 +350,11 @@ class Designer extends React.Component {
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();
+
+      console.log("assetData.name:", assetData.name);
       let adderAsset = new AdderAsset(
         assetData.dir,
+        assetData.name,
         assetData.filename,
         assetData.filepath,
         assetData.position,
@@ -362,6 +365,7 @@ class Designer extends React.Component {
       );
       let adderAssetObject = {};
       adderAssetObject.dir = assetData.dir;
+      adderAssetObject.name = assetData.name;
       adderAssetObject.filename = assetData.filename;
       adderAssetObject.filepath = assetData.filepath;
       adderAssetObject.position = assetData.position;
@@ -390,26 +394,24 @@ class Designer extends React.Component {
   //   adderLoader.addSingleModel(adderAsset);
   // };
   componentWillUnmount() {
-    
-     // unsubscribe to ensure no memory leaks: RXJS 
-     this.subscription.unsubscribe();
+    // unsubscribe to ensure no memory leaks: RXJS
+    this.subscription.unsubscribe();
   }
   componentDidMount() {
     let scope = this;
 
- // -- RXJS 
-     // subscribe to home component messages
-     this.subscription = messageService.getMessage().subscribe(message => {
+    // -- RXJS
+    // subscribe to home component messages
+    this.subscription = messageService.getMessage().subscribe(message => {
       if (message) {
-          // add message to local state if not empty
-          this.setState({ messages: [...this.state.messages, message] });
+        // add message to local state if not empty
+        this.setState({ messages: [...this.state.messages, message] });
       } else {
-          // clear messages when empty message received
-          this.setState({ messages: [] });
+        // clear messages when empty message received
+        this.setState({ messages: [] });
       }
-  });
-  //---end rxjs 
-
+    });
+    //---end rxjs
 
     this.setState({
       adderSceneWrapper: this.getAdderSceneWrapper()
@@ -543,9 +545,12 @@ class Designer extends React.Component {
           </Grid>
         </Grid>
         <hr style={{ marginTop: "25px" }} />
-        <Grid>  
+        <Grid>
           {/** rxjs map function requires some kind of html  */}
-            {messages.map((message,index) => <div></div>),scope.rxjsCallback()}
+          {
+            (messages.map((message, index) => <div></div>),
+            scope.rxjsCallback())
+          }
         </Grid>
       </div>
     );

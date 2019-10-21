@@ -102,6 +102,7 @@ class AdderMeta {
 
       for (let m = 0; m < value.meta_data.length; m++) {
         let dir = value.meta_data[m]["dir"];
+        let name = value.meta_data[m]["name"];
         let filename = value.meta_data[m]["filename"];
         let filepath = value.meta_data[m]["filepath"];
         let position = value.meta_data[m]["position"];
@@ -109,8 +110,10 @@ class AdderMeta {
         let scaling = value.meta_data[m]["scaling"];
         let behavior = value.meta_data[m]["behavior"];
         //console.log("behavior:", behavior);
+
         let adderAsset = new AdderAsset(
           dir,
+          name,
           filename,
           filepath,
           position,

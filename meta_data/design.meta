@@ -11,7 +11,7 @@
                             "name": "Sports Car",
                             "dir": "porsche",
                             "filename": "porsche2.2",
-                            "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.babylon",
+                            "filepath": "ad_type/vehicle/sub_type/2door/detail/sportscar/porsche2.2.1.clip.babylon",
                             "position": {
                                 "x": "12",
                                 "y": ".80",
@@ -164,7 +164,7 @@
                    "children":[
                        {
                             "uid": "parallel_001",
-                            "name": "Parallell",
+                            "name": "Parallell Billboard",
                             "dir": "Billboard",
                             "filename": "Billboard.v1.1",
                             "filepath": "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon",
@@ -208,7 +208,7 @@
                        },
                         {
                             "uid": "angled_001",
-                            "name": "Angled",
+                            "name": "Angled Billboard",
                             "dir": "Billboard",
                             "filename": "Billboard.v1.1",
                             "filepath": "ad_type/billboard/sub_type/2sides/detail/angled/Billboard.v1.1.babylon",

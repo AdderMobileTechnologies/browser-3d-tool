@@ -75,21 +75,21 @@ class AdderMeshWrapper {
     let _scene = null;
 
     this.setImgFileName = imgFileName => {
-      console.log("setImgFileName :", imgFileName);
+      // console.log("setImgFileName :", imgFileName);
       this._imgFileName = imgFileName;
     };
     this.getImgFileName = () => {
       return _imgFileName;
     };
     this.setDataURL = dataURL => {
-      console.log("setDataURL:", dataURL);
+      //console.log("setDataURL:", dataURL);
       this._dataURL = dataURL;
     };
     this.getDataURL = () => {
       return _dataURL;
     };
     this.setScene = scene => {
-      console.log("setScene:", scene);
+      //console.log("setScene:", scene);
       this._scene = scene;
     };
     this.getScene = () => {
@@ -97,28 +97,28 @@ class AdderMeshWrapper {
     };
     //
     this.setUScale = uScale => {
-      console.log("setUScale", uScale);
+      // console.log("setUScale", uScale);
       this._uScale = uScale;
     };
     this.getUScale = () => {
       return _uScale;
     };
     this.setVScale = vScale => {
-      console.log("setVScale", vScale);
+      //console.log("setVScale", vScale);
       this._vScale = vScale;
     };
     this.getVScale = () => {
       return _vScale;
     };
     this.setUOffset = uOffset => {
-      console.log("setUOffset", uOffset);
+      // console.log("setUOffset", uOffset);
       this._uOffset = uOffset;
     };
     this.getUOffset = () => {
       return _uOffset;
     };
     this.setVOffset = vOffset => {
-      console.log("setVOffset", vOffset);
+      //console.log("setVOffset", vOffset);
       this._vOffset = vOffset;
     };
     this.getVOffset = () => {
@@ -147,18 +147,23 @@ class AdderMeshWrapper {
     };
 
     this.reapplyTexture = () => {
-      console.log("AdderMeshWrapper:reapplyTexture() ");
-      if(typeof this._dataURL != "undefined" && typeof this._dataUrl != undefined){
-
-      
-        if(this._imgFileName != "undefined" && this._dataURL != "undefined" && this._scene != "undefined" ){
+      // console.log("AdderMeshWrapper:reapplyTexture() ");
+      if (
+        typeof this._dataURL != "undefined" &&
+        typeof this._dataUrl != undefined
+      ) {
+        if (
+          this._imgFileName != "undefined" &&
+          this._dataURL != "undefined" &&
+          this._scene != "undefined"
+        ) {
           let mesh = this.getMesh();
           console.log("verify :mesh:", mesh);
 
-          console.log("verify file,URL,and scene parameters:");
-          console.log("this._imgFileName:", this._imgFileName);
-          console.log("this._dataURL:", this._dataURL);
-          console.log("this._scene:", this._scene);
+          // console.log("verify file,URL,and scene parameters:");
+          // console.log("this._imgFileName:", this._imgFileName);
+          // console.log("this._dataURL:", this._dataURL);
+          // console.log("this._scene:", this._scene);
           let tex = Texture.LoadFromDataString(
             this._imgFileName,
             this._dataURL,
@@ -167,18 +172,18 @@ class AdderMeshWrapper {
           let mat = new StandardMaterial("mat", _scene);
           mat.diffuseTexture = tex;
 
-          //try a single hardcoded offset change.
-          console.log("verify UV parameters:-------------------");
-          //OFFSETS
-          console.log("original _uOffset:", this.getUOffset());
-          console.log("this._uOffset:", this._uOffset);
-          console.log("original _vOffset:", this.getVOffset());
-          console.log("this._vOffset:", this._vOffset);
-          //SCALES:
-          console.log("original _uScale:", this.getUScale());
-          console.log("this._uScale:", this._uScale);
-          console.log("original _vScale:", this.getVScale());
-          console.log("this._vScale:", this._vScale);
+          // //try a single hardcoded offset change.
+          // console.log("verify UV parameters:-------------------");
+          // //OFFSETS
+          // console.log("original _uOffset:", this.getUOffset());
+          // console.log("this._uOffset:", this._uOffset);
+          // console.log("original _vOffset:", this.getVOffset());
+          // console.log("this._vOffset:", this._vOffset);
+          // //SCALES:
+          // console.log("original _uScale:", this.getUScale());
+          // console.log("this._uScale:", this._uScale);
+          // console.log("original _vScale:", this.getVScale());
+          // console.log("this._vScale:", this._vScale);
 
           let commitChanges = true;
           if (commitChanges) {
@@ -193,7 +198,6 @@ class AdderMeshWrapper {
           mesh.material = mat;
         }
       }
-            
     };
   }
   setMesh(mesh) {

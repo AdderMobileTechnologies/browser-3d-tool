@@ -60,6 +60,19 @@ const iconStyle = {
     borderRadius: "6px",
     xboxShadow: "2px 3px 3px #ccc"
   },
+  smaller: {
+    width: "34px",
+    height: "34px",
+    margin: "0px",
+    padding: "0px",
+    border: "solid 1px #20E47E",
+    backgroundColor: " none !important",
+    borderRadius: "6px",
+    xboxShadow: "2px 3px 3px #ccc",
+    "&:hover": {
+      backgroundColor: "#ccc"
+    }
+  },
   smaller_transparent: {
     width: "34px",
     height: "34px",
@@ -144,19 +157,26 @@ class UIButton extends Component {
             style={{ ...iconStyle.small }}
           />
         );
-        case "settings_applications":
-            alt = "settings_applications";
-            src = Settings_Applications;
-            // break;
-            return (
-              <input
-                type={"image"}
-                onClick={this.props.onClick}
-                alt={alt}
-                src={src}
-                style={{ ...iconStyle.smaller_transparent }}
-              />
-            );
+      case "settings_applications":
+        alt = "settings_applications";
+        src = Settings_Applications;
+        // break;
+        return (
+          <input
+            type={"image"}
+            onClick={this.props.onClick}
+            alt={alt}
+            src={src}
+            style={{ ...iconStyle.smaller }}
+          />
+        );
+      /*
+https://stackoverflow.com/questions/28365233/inline-css-styles-in-react-how-to-implement-ahover
+{m(
+     this.styles.container,
+     this.state.hovered && this.styles.hover,
+)}
+        */
       case "rain":
         alt = "rain";
         src = Rain;

@@ -374,6 +374,7 @@ class Main extends React.Component {
     let asw = scope.getAdderSceneWrapper();
     let adderAsset = new AdderAsset(
       args.to.dir,
+      args.to.name,
       args.to.filename,
       args.to.filepath,
       args.to.position,
@@ -677,8 +678,8 @@ class Main extends React.Component {
     // FOLLOW the 'sign one' button forward.
     let asw = this.state.adderSceneWrapper;
     let model = asw.getModelForMeshId(mesh_id);
-    //!  I NEED:  meshWrapper , from mesh_id, for the UV Map Slider ... 
-    //is there a function in asw ? 
+    //!  I NEED:  meshWrapper , from mesh_id, for the UV Map Slider ...
+    //is there a function in asw ?
     let currentMeshWrapper = asw.getMeshWrapperForMeshId(mesh_id);
     //Main.jsx 677 TypeError: Cannot read property 'getParentMesh' of undefined
     //ERROR: happened after selecting the one button on the sidebar after it had been turned over by the selected_ad_type flag.
@@ -689,7 +690,7 @@ class Main extends React.Component {
 
     this.setState({
       theCurrentModelParent: parentModel,
-      theCurrentModelParentName: parentModel.name,
+      theCurrentModelParentName: "Dexter",
       theCurrentMeshWrapper: currentMeshWrapper
     });
 
@@ -701,7 +702,7 @@ class Main extends React.Component {
           editing_mesh_id: mesh_id,
           finishedEditing: false,
           currentModel: model,
-          currentMeshWrapper : currentMeshWrapper
+          currentMeshWrapper: currentMeshWrapper
         },
         () => {
           console.log("editing mesh id:", mesh_id);
@@ -710,11 +711,14 @@ class Main extends React.Component {
           //so, split on "_" get first
           let splitStr = mesh_id.split("_");
           //define var appropriately.
+          // var group_name = "";
           var ad_type = null;
           if (splitStr[0] == "vehicle") {
             ad_type = "0";
+            // group_name = "Vehicle";
           } else if (splitStr[0] === "billboard") {
             ad_type = "1";
+            // group_name = "Billboard";
           }
           scope.setState({
             selected_ad_type: ad_type
@@ -724,7 +728,7 @@ class Main extends React.Component {
           that.state.gLiteScope.remoteFunction({
             method: "createSelectionPanel",
             currentModelParent: parentModel,
-            currentModelParentName: parentModel.name,
+            currentModelParentName: that.state.currentModelParentName,
             currentMeshWrapper: currentMeshWrapper
           });
         }
@@ -791,12 +795,12 @@ class Main extends React.Component {
     this.state.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
     let modelParent = adderLoader.addSingleModel(adderAsset);
-
+    console.log("WHAT DOES THIS ADDER ASSET LOOKI LIKE ? ", adderAsset);
     let that = this;
     this.setState(
       {
         currentModelParent: modelParent,
-        currentModelParentName: modelParent.name
+        currentModelParentName: adderAsset.getName()
       },
       () => {
         that.setState(
@@ -817,7 +821,7 @@ class Main extends React.Component {
           method: "createSelectionPanel",
           currentModelParent: this.state.currentModelParent,
           currentModelParentName: this.state.currentModelParentName,
-          currentMeshWrapper : this.state.currentMeshWrapper
+          currentMeshWrapper: this.state.currentMeshWrapper
         });
       } else {
         console.log(
