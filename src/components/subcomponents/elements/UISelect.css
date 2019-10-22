@@ -33,7 +33,7 @@
 
 @media (min-width: 1301px) and (max-width: 1600px) {
     .ui-select {
-        font-size: 1em !important;
+        font-size: .8em !important;
         width: 100%;
     }
 }
