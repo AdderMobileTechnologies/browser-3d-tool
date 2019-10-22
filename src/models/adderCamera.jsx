@@ -85,6 +85,7 @@ class AdderCamera {
     }
 
     //private properties
+    let _camera = null;
     let _canvas = canvas;
     let _type = type;
     let _name = name;
@@ -140,7 +141,9 @@ class AdderCamera {
       this._canvas = canvas;
     }
   }
-
+  getCamera(){
+    return this._camera;
+  }
   getOptions() {
     let options = this._options;
     return options;
@@ -152,18 +155,18 @@ class AdderCamera {
         `Constructor:setOptions() The setOptions method expects a JSON object for options.`
       );
     } else {
-      //TODO: change this default code to function as it should, using the inputted json.
+      //TODO: change this default code to function as it should,  using the inputted json.
       this.setAttachControl(this.getCanvas, true);
       this.lowerBetaLimit = 0;
       this.upperBetaLimit = 10;
     }
   }
 
-  getCamera() {
+  createCamera() {
     let scene = this.getScene();
     let camera = new ArcRotateCamera(
       this.getName(),
-      this.getBeta(),
+      this.getBeta(), 
       this.getAlpha(),
       this.getRadius(),
       this.getTarget(),
@@ -191,7 +194,21 @@ class AdderCamera {
       }
     }
     camera.wheelDeltaPercentage = .001;
+    this._camera = camera;
     return camera;
+  }
+
+  setTarget(coord) {
+    //cordinates: Are the x, y, and z coordinates of a BABYLON.Vector3 
+    //to be applied to the camera. 
+    console.log("Testing adderCamera.setFocus(coord) coord:",coord)
+    console.log("do we have the camera in adderCam class setTarget()::??? ")
+    console.log(this._camera)
+    this._camera.setTarget( new Vector3(coord.x, coord.y, coord.z));
+    /*
+    let camera = this.getCamera();
+    camera1.setTarget( new BABYLON.Vector3(coord.x, coord.y, coord.z));
+    */
   }
 }
 
@@ -220,4 +237,17 @@ What type of camera Behaviors do we want to apply?
     lowerRadiusLimit
     upperRadiusLimit
     useAutoRotationBehavior
+
+
+/*
+//-----------------------------------------------------------------
+Summary: all I really need is 
+1) to detect which mesh is clicked on 
+2) get its position coordinates 
+  let pos1 = box1.getPositionExpressedInLocalSpace();
+3)  create a method in AdderCamera class to 'setTarget
+    and send it the mesh coordinates.
+    camera1.setTarget( new BABYLON.Vector3(pos1.x, pos1.y, pos1.z));
+//-------------------------------------------------------------------
 */
+
