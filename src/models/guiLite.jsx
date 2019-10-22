@@ -338,6 +338,10 @@ class GuiLite extends React.Component {
             scope.z_previous = val;
           }
         }
+        let callbackData = {
+          id:modelParent.id,
+          absolutePosition:modelParent.absolutePosition
+        }
         scope.callback_selectionPanel(modelParent.absolutePosition)
       };
 
