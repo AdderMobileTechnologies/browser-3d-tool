@@ -150,6 +150,34 @@ class Main extends React.Component {
     this.deployRemoteFunction = this.deployRemoteFunction.bind(this);
 
     this.get_gLiteScope = this.get_gLiteScope.bind(this);
+    this.callback_selectionPanel = this.callback_selectionPanel.bind(this);
+  }
+  callback_selectionPanel(data){
+    console.log("Main.jsx: callback_selectionPanel(data) data:",data);
+    
+    let asw = this.state.adderSceneWrapper;
+    let adderCam = asw.getCamera();
+    adderCam.setTarget(data)
+/*
+    let model = asw.getModelForMeshId(mesh_id);
+    
+    let currentMeshWrapper = asw.getMeshWrapperForMeshId(mesh_id);
+    
+
+    let parentModel = model.getParentMesh();
+  //CAMERA: setTarget: get coords from parentModel:
+  console.log("WHAT IS THE PARENT MODEL:",parentModel);
+  let coords = parentModel.getPositionExpressedInLocalSpace();
+  let absolute_position = parentModel.absolutePosition;
+  console.log("coords:",coords);
+  console.log("absolute_position:",absolute_position);
+  console.log("check asw:",asw);
+  let adderCam = asw.getCamera();
+  console.log("test getting the camera from asw adderCam:",adderCam);
+  //===>>> 
+  adderCam.setTarget(absolute_position)
+    //////////////////////
+    */
   }
   get_gLiteScope(data) {
     //parent function for storing child scope.
@@ -842,7 +870,8 @@ Summary: all I really need is
           method: "createSelectionPanel",
           currentModelParent: this.state.currentModelParent,
           currentModelParentName: this.state.currentModelParentName,
-          currentMeshWrapper: this.state.currentMeshWrapper
+          currentMeshWrapper: this.state.currentMeshWrapper,
+          callback_selectionPanel : this.callback_selectionPanel
         });
       } else {
         console.log(
@@ -2005,6 +2034,7 @@ Summary: all I really need is
               currentModelParent={this.state.currentModelParent}
               currentModelParentName={this.state.currentModelParentName}
               get_gLiteScope={this.get_gLiteScope}
+              callback_selectionPanel = {this.callback_selectionPanel}
             ></GuiLite>
           )}
         </Grid>

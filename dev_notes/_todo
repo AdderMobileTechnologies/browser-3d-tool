@@ -1705,3 +1705,12 @@ GOAL: to change the target of the camera when the user selects a different model
 
 CHANGING THE ACTIVE CAMERA:
 https://doc.babylonjs.com/how_to/how_to_use_multi-views
+
+
+Tue 10-22-2019: 
+Now I've got the camera setting its target on the mesh when it is selected. 
+It also needs to set target when one of the position sliders changes. 
+Ok. now it follows the mesh when moved x and z .
+Should focus at the center of the mesh not the foot. 
+so I need 1/2 mesh height to add to absolutPosition Y .
+

@@ -29,6 +29,7 @@ class GuiLite extends React.Component {
       scene: this.props.scene,
       advancedTexture: this.props.advancedTexture,
       currentModelParentName: this.props.currentModelParentName,
+      callback_selectionPanel : this.props.callback_selectionPanel,
       y_previous: 0,
       z_previous: 0,
       x_previous: 0,
@@ -75,7 +76,8 @@ class GuiLite extends React.Component {
       scope.state.advancedTexture,
       data.currentModelParent,
       data.currentModelParentName,
-      data.currentMeshWrapper
+      data.currentMeshWrapper,
+      data.callback_selectionPanel
     );
     this.manageSelectionPanels(a_selection_panel);
   }
@@ -169,7 +171,8 @@ class GuiLite extends React.Component {
     advancedTexture,
     modelParent,
     group_name,
-    currentMeshWrapper
+    currentMeshWrapper,
+    callback_selectionPanel
   ) => {
     console.log(
       "guiLite:easy_selection_panel(): currentMeshWrapper:",
@@ -277,6 +280,7 @@ class GuiLite extends React.Component {
 
       var moveY = function(val) {
         modelParent.position.y = modelParent.position.y + val;
+       
       };
       var displayValueN = function(value) {
         console.log("value:", value);
@@ -308,6 +312,7 @@ class GuiLite extends React.Component {
             scope.x_previous_pos = modelParent.position.x;
           }
         }
+        scope.callback_selectionPanel(modelParent.absolutePosition)
       };
 
       var moveZ = function(val) {
@@ -333,6 +338,7 @@ class GuiLite extends React.Component {
             scope.z_previous = val;
           }
         }
+        scope.callback_selectionPanel(modelParent.absolutePosition)
       };
 
       var scaleUV = function(val) {
