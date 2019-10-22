@@ -204,7 +204,9 @@ class AdderCamera {
     console.log("Testing adderCamera.setFocus(coord) coord:",coord)
     console.log("do we have the camera in adderCam class setTarget()::??? ")
     console.log(this._camera)
+   // let adabtableY = coord.y + 2;
     this._camera.setTarget( new Vector3(coord.x, coord.y, coord.z));
+   // this._camera.setTarget( new Vector3(coord.x, adabtableY, coord.z));
     /*
     let camera = this.getCamera();
     camera1.setTarget( new BABYLON.Vector3(coord.x, coord.y, coord.z));

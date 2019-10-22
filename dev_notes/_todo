@@ -1713,4 +1713,4 @@ It also needs to set target when one of the position sliders changes.
 Ok. now it follows the mesh when moved x and z .
 Should focus at the center of the mesh not the foot. 
 so I need 1/2 mesh height to add to absolutPosition Y .
-
+ 

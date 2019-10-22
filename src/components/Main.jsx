@@ -716,9 +716,17 @@ class Main extends React.Component {
 
     let parentModel = model.getParentMesh();
 //CAMERA: setTarget: get coords from parentModel:
+console.log("can I get height of mesh from parentModel?")
+
 console.log("WHAT IS THE PARENT MODEL:",parentModel);
+console.log("can I get bounding box info?");
+ let boundingInfo = parentModel._boundingInfo;
+ console.log("boundingInfo:",boundingInfo)
+ let boundingBoxMax = parentModel._boundingInfo.boundingBox.maximum;
 let coords = parentModel.getPositionExpressedInLocalSpace();
+ 
 let absolute_position = parentModel.absolutePosition;
+//absolute_position.y = absolute_position.y  ;
 console.log("coords:",coords);
 console.log("absolute_position:",absolute_position);
 console.log("check asw:",asw);
