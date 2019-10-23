@@ -13,7 +13,14 @@ import {
 
 import axios from "axios";
 import { withRouter } from 'react-router';
-import RecoverPassword from './recover-password';
+/*
+TODO: 
+list the endpoints: 
+
+
+*/
+
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
