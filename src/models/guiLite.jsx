@@ -253,7 +253,7 @@ class GuiLite extends React.Component {
       selectionPanel.verticalAlignment =
         BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
       /* selectionPanel style */
-      selectionPanel.fontSize = 11;
+      selectionPanel.fontSize = 13;
       selectionPanel.fontWeight = 600;
       selectionPanel.paddingTop = 35;
       selectionPanel.paddingLeft = 2;
@@ -407,7 +407,7 @@ class GuiLite extends React.Component {
         onValueChange
       );
       positionGroup.addSlider(
-        "Rotate Y",
+        "Rotate",
         orientateY,
         " ",
         0,
@@ -415,9 +415,9 @@ class GuiLite extends React.Component {
         0,
         onValueChange
       );
-      positionGroup.addSlider("Scale", scaleUV, " ", 0, 3, 0, onValueChange);
-      positionGroup.addSlider("Offset U", offsetU, " ", 0, 3, 0, onValueChange);
-      positionGroup.addSlider("Offset V", offsetV, " ", 0, 3, 0, onValueChange);
+      positionGroup.addSlider("Image Scale", scaleUV, " ", 0, 3, 0, onValueChange);
+      positionGroup.addSlider("Image Horizontal", offsetU, " ", 0, 3, 0, onValueChange);
+      positionGroup.addSlider("Image Vertical", offsetV, " ", 0, 3, 0, onValueChange);
 
       //Position Group Styling:
       positionGroup._groupHeader.color = "White";
@@ -447,9 +447,9 @@ class GuiLite extends React.Component {
         selector.paddingTop = "0px";
         selector.paddingBottom = "0px";
         selector.fontFamily = "Courier";
-        selector.fontSize = 10;
+        selector.fontSize = 12;
 
-        selector.height = "30px";
+        selector.height = "45px";
         let selector_slider_label = selector.children[0];
         selector_slider_label.height = "10px";
         selector_slider_label.marginTop = "0px";
@@ -459,12 +459,12 @@ class GuiLite extends React.Component {
         selector_slider_label.marginLeft = "0px";
         selector_slider_label.paddingLeft = "0px";
         let selector_slider = selector.children[1];
-        selector_slider.height = "13px";
+        selector_slider.height = "18px";
         selector_slider.isThumbCircle = true;
         selector_slider.isThumbClamped = true;
         selector_slider.displayThumb = false;
         selector_slider.step = 0.01;
-        selector_slider.thumbWidth = "10px";
+        selector_slider.thumbWidth = "12px";
         selector_slider.paddingTop = "0px";
         selector_slider.paddingBottom = "0px";
         selector_slider.paddingLeft = "0px";
