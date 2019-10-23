@@ -6,13 +6,18 @@ import Main from "./components/Main";
 import Container from "@material-ui/core/Container";
 import "babylonjs-loaders";
 
+import Login from "./authentication/login.jsx"
+
 //https://doc.babylonjs.com/features/npm_support#available-packages
 
 function App() {
   return (
     <div className="App">
       <Container maxWidth="xl">
-        <Main />
+        {/** <Main /> */}
+       {/** <Login />  */}
+       <Login />
+       
       </Container>
     </div>
   );
