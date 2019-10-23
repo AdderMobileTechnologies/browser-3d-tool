@@ -150,6 +150,34 @@ class Main extends React.Component {
     this.deployRemoteFunction = this.deployRemoteFunction.bind(this);
 
     this.get_gLiteScope = this.get_gLiteScope.bind(this);
+    this.callback_selectionPanel = this.callback_selectionPanel.bind(this);
+  }
+  callback_selectionPanel(data){
+    console.log("Main.jsx: callback_selectionPanel(data) data:",data);
+    
+    let asw = this.state.adderSceneWrapper;
+    let adderCam = asw.getCamera();
+    adderCam.setTarget(data)
+/*
+    let model = asw.getModelForMeshId(mesh_id);
+    
+    let currentMeshWrapper = asw.getMeshWrapperForMeshId(mesh_id);
+    
+
+    let parentModel = model.getParentMesh();
+  //CAMERA: setTarget: get coords from parentModel:
+  console.log("WHAT IS THE PARENT MODEL:",parentModel);
+  let coords = parentModel.getPositionExpressedInLocalSpace();
+  let absolute_position = parentModel.absolutePosition;
+  console.log("coords:",coords);
+  console.log("absolute_position:",absolute_position);
+  console.log("check asw:",asw);
+  let adderCam = asw.getCamera();
+  console.log("test getting the camera from asw adderCam:",adderCam);
+  //===>>> 
+  adderCam.setTarget(absolute_position)
+    //////////////////////
+    */
   }
   get_gLiteScope(data) {
     //parent function for storing child scope.
@@ -687,10 +715,39 @@ class Main extends React.Component {
     // why what changed?
 
     let parentModel = model.getParentMesh();
+//CAMERA: setTarget: get coords from parentModel:
+console.log("can I get height of mesh from parentModel?")
 
+console.log("WHAT IS THE PARENT MODEL:",parentModel);
+console.log("can I get bounding box info?");
+ let boundingInfo = parentModel._boundingInfo;
+ console.log("boundingInfo:",boundingInfo)
+ let boundingBoxMax = parentModel._boundingInfo.boundingBox.maximum;
+let coords = parentModel.getPositionExpressedInLocalSpace();
+ 
+let absolute_position = parentModel.absolutePosition;
+//absolute_position.y = absolute_position.y  ;
+console.log("coords:",coords);
+console.log("absolute_position:",absolute_position);
+console.log("check asw:",asw);
+let adderCam = asw.getCamera();
+console.log("test getting the camera from asw adderCam:",adderCam);
+//===>>> 
+adderCam.setTarget(absolute_position)
+/*
+//-----------------------------------------------------------------
+Summary: all I really need is 
+1) to detect which mesh is clicked on 
+2) get its position coordinates 
+  let pos1 = box1.getPositionExpressedInLocalSpace();
+3)  create a method in AdderCamera class to 'setTarget
+    and send it the mesh coordinates.
+    camera1.setTarget( new BABYLON.Vector3(pos1.x, pos1.y, pos1.z));
+//-------------------------------------------------------------------
+*/
     this.setState({
       theCurrentModelParent: parentModel,
-      theCurrentModelParentName: "Dexter",
+      theCurrentModelParentName: "unnamed-model",
       theCurrentMeshWrapper: currentMeshWrapper
     });
 
@@ -821,7 +878,8 @@ class Main extends React.Component {
           method: "createSelectionPanel",
           currentModelParent: this.state.currentModelParent,
           currentModelParentName: this.state.currentModelParentName,
-          currentMeshWrapper: this.state.currentMeshWrapper
+          currentMeshWrapper: this.state.currentMeshWrapper,
+          callback_selectionPanel : this.callback_selectionPanel
         });
       } else {
         console.log(
@@ -1122,9 +1180,15 @@ class Main extends React.Component {
       ) 
       */
       // BABYLON.Vector3.Zero(),
-      let camera = adderCam_arcRotate.getCamera();
+      let camera = adderCam_arcRotate.createCamera();
+      //works: adderCam_arcRotate.setTarget("coords here")
+        console.log("scope in createScene: ",scope)
+        console.log("type of adderCam_arcRotate:");
+        console.log(typeof adderCam_arcRotate);
+        console.log(adderCam_arcRotate);
 
-      scope.setState({ camera: camera });
+     // scope.setState({ adderCamera: adderCam_arcRotate });
+      
       camera.attachControl(canvas, true); //add camera to the scene/canvas
       //create a light
       //let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
@@ -1142,15 +1206,21 @@ class Main extends React.Component {
         new BABYLON.Vector3(15, 20, 30),
         scene
       );
-      return scene;
+        let sceneObject = [scene,adderCam_arcRotate]
+        return sceneObject;
+      //return scene;
     };
 
-    let scene = createScene(scope);
+    let sceneObject = createScene(scope);
+    let scene = sceneObject[0];
+    let adderCamera = sceneObject[1];
     // this.props.setScene(scene);
 
     //set state default environment type...
     let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-    let adderSceneWrapper = new AdderSceneWrapper(scene, [], advancedTexture);
+
+   
+    let adderSceneWrapper = new AdderSceneWrapper(scene, [], advancedTexture, adderCamera);
     adderSceneWrapper.getUUID();
 
     /*  ADDER GUI UTILITY: (should advancedTexture be a property in AdderSceneWrapper constructor ? )
@@ -1972,6 +2042,7 @@ class Main extends React.Component {
               currentModelParent={this.state.currentModelParent}
               currentModelParentName={this.state.currentModelParentName}
               get_gLiteScope={this.get_gLiteScope}
+              callback_selectionPanel = {this.callback_selectionPanel}
             ></GuiLite>
           )}
         </Grid>

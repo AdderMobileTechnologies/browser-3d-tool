@@ -9,7 +9,7 @@ import * as GUI from "babylonjs-gui";
 import AdderGuiUtility from "./adderGuiUtility";
 
 class AdderSceneWrapper {
-  constructor(scene = null, models = null, advancedTexture = null) {
+  constructor(scene = null, models = null, advancedTexture = null, camera = null) {
     if (scene === null || !(scene instanceof Scene)) {
       throw new Error("AdderSceneWrapper");
     } else {
@@ -27,12 +27,16 @@ class AdderSceneWrapper {
         "AdderSceneWrapper: Constructor: Expects a Gui.AdvancedDynamicTexture as an arguement."
       );
     }
+    if( camera === null ){
+      throw new Error("AdderSceneWrapper:constructor(): the camera parameter ca not be null.")
+    }
 
     let _scene = scene;
     let _models = models;
     let _uuid = Date();
     let _advancedTexture = advancedTexture;
-    let adderGuiUtility = new AdderGuiUtility();
+    let _camera = camera;
+    //let adderGuiUtility = new AdderGuiUtility();
     //let _grid = adderGuiUtility.gui_create_grid2(_advancedTexture);
 
     this.getUUID = () => {
@@ -52,6 +56,13 @@ class AdderSceneWrapper {
     this.getAdvancedTexture = () => {
       return _advancedTexture;
     };
+    this.getCamera = () => {
+      console.log("typeof camera:");
+      console.log(typeof _camera)
+console.log("the camera object is",_camera);
+      return _camera;
+      //return this._camera;
+    }
     /*this.getGrid = () => {
       return _grid;
     };*/
