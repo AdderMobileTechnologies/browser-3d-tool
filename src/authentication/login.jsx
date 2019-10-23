@@ -35,7 +35,14 @@ list the endpoints:
     };
 3) 
 .../auth/forgot-password/?email=" + dataPackage.email
+4)
+ ... "/auth/change-password/" + this.state.pwdRecoverURL;
+    With this data:
+    const dataPackage = {
+            password: this.state.existingUser.password
+        };
 
+        
 */
 
 

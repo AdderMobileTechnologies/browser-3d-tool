@@ -9,6 +9,8 @@ import theme from './theme';
 import RecoverPassword from './authentication/recover-password';
 import Login from './authentication/login';
 import Main from './components/Main';
+import VerifyRecoveredPassword from './authentication/verify-recovered-password';
+
 import {
   BrowserRouter as Router,
   Route
@@ -20,6 +22,7 @@ ReactDOM.render(
         <Router> 
           <Route exact path="/" component={Login} />
           <Route path="/recover-password" component={RecoverPassword} />
+          <Route path="/verify-recovered-password" component={VerifyRecoveredPassword} />
           <Route path="/main" component={Main} />
           <App />
         </Router>
