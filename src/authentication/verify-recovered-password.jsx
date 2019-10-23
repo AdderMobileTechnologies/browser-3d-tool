@@ -13,6 +13,7 @@ import axios from "axios";
 
 //import Config from './../../environment';
 import { withRouter } from 'react-router';
+import {useLocation} from 'react-router-dom';
 class VerifyRecoveredPassword extends React.Component {
 
     constructor(props) {
@@ -168,13 +169,7 @@ class VerifyRecoveredPassword extends React.Component {
 
 
 
-        return <div className="" >
-            {/*--------------------------------------------------------------------------------*/}
-            {/*Login Cards*/}
-            {/*--------------------------------------------------------------------------------*/}
-            <div className="auth-wrapper d-flex no-block justify-content-center align-items-center"   > {/**style={sidebarBackground} */}
-                <div className="auth-box x-on-sidebar">
-                    <div id="loginform" className="login-form">
+        return   <div id="loginform" className="login-form">
 
                         <Row>
                             <Col xs="12" md="8">
@@ -334,9 +329,7 @@ class VerifyRecoveredPassword extends React.Component {
                         </Row>
 
                     </div>
-                </div>
-            </div>
-        </div>;
+                
     }
 }
 
