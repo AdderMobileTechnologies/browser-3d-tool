@@ -1,9 +1,6 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import './../assets/scss/style.css';
-import { Route,ForgotButton,Switch,Router,Redirect,
-    useHistory,
-    useLocation} from 'react-router-dom';
 import {
 	Input,
 	CustomInput,
@@ -11,14 +8,12 @@ import {
 	Form,
 	Row,
 	Col,
-    Button
-   
+	Button
 } from 'reactstrap';
+
 import axios from "axios";
+import { withRouter } from 'react-router';
 import RecoverPassword from './recover-password';
-
-let history = useHistory();
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -172,22 +167,13 @@ class Login extends React.Component {
 }
   handleForgotPassword(){
     console.log("handleForgotPassword");
+    this.props.history.push('/recover-password'); // for react-router@3 it would be this.props.router.push('/some/location');
+
   }
   handleForgotPassword() {
     console.log("handleForgotPassword");
     console.log("this.props.history",this.props.history);
-    //this.props.history.push('/authentication/recover-password');
-    let history = useHistory();
-
-    return  (
-      <p>
-        <button
-          onClick={() => history.push("/sideview")}
-        >
-          Forgot Password
-        </button>
-      </p>
-    )  
+    this.props.history.push('/recover-password');
 }
   
   submitLogin(e) {
@@ -242,16 +228,7 @@ renderCreateAccountButton() {
       console.log("componentDidMount");
   }
   render() {
-    return     <Router>
-    <div>
-      <ForgotButton />
-      <Switch>
-        <Route path="/recover-password">
-          <RecoverPassword />
-        </Route>
-      </Switch>
-    </div>
-    <div id="loginform" className="login-form">
+    return   <div id="loginform" className="login-form">
                     <Row>
                         <Col xs="12" md="8">
                             <div className="logo"/>
@@ -308,8 +285,7 @@ renderCreateAccountButton() {
                                             <Col className="sm-12"/>
                                             <Col className="sm-12">
                                                 <Button
-                                                   
-                                                    onClick={() => history.push("/recover-password")}
+                                                    onClick = {this.handleForgotPassword}
                                                     color=""
                                                     className="auth-login-button  create-new-account-button"
                                                     type="button"
@@ -378,12 +354,11 @@ renderCreateAccountButton() {
                         </Col>
                     </Row>
                 </div>;
-                </Router>
-            
+                
 }
 }
 
-export default Login;
+export default withRouter(Login);
 
 /* LIFECYCLE METHODS:
 	componentWillReceiveProps(){ }
@@ -393,47 +368,3 @@ export default Login;
 	componentDidUpdate(){ }
 	componentWillUnmount(){ }
 */
-/*
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
-} from "react-router-dom";
-
- 
-import Sideview from './sideview';
-
-export default function SimpleRedirect() {
-  return (
-    <Router>
-      <div>
-        <ForgotButton />
-        <Switch>
-          <Route path="/sideview">
-            <Sideview />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
- 
-function ForgotButton() {
-  let history = useHistory();
-
-  return  (
-    <p>
-      <button
-        onClick={() => history.push("/sideview")}
-      >
-        Forgot Password
-      </button>
-    </p>
-  )  
-}
- */

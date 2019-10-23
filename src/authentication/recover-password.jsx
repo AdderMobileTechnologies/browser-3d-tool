@@ -7,7 +7,7 @@ class RecoverPassword extends React.Component {
   }
 
   render() {
-    return <div>RecoverPassword page</div>;
+    return <div style={{width:"100%",height:"300px"}}>RecoverPassword page</div>;
   }
 }
 

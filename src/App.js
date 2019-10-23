@@ -16,7 +16,7 @@ function App() {
       <Container maxWidth="xl">
         {/** <Main /> */}
        {/** <Login />  */}
-       <Login />
+      
        
       </Container>
     </div>
