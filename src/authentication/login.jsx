@@ -16,7 +16,25 @@ import { withRouter } from 'react-router';
 /*
 TODO: 
 list the endpoints: 
-
+1)
+.../auth/register
+    With this data:
+    const dataPackage = {
+        email: userData.email,
+        password: userData.password,
+        role: "client",
+        is_verified: "false"
+    };
+2)
+.../v2/auth/login/client
+    With this data:
+    const dataPackage = {
+        email: this.state.existingUser.email,
+        password: this.state.existingUser.password,
+        role: "client"
+    };
+3) 
+.../auth/forgot-password/?email=" + dataPackage.email
 
 */
 
