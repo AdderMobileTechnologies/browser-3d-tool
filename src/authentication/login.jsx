@@ -15,6 +15,8 @@ import axios from "axios";
 import { withRouter } from 'react-router';
 /*
 TODO: 
+
+3d Tool Authentication
 list the endpoints: 
 1)
 .../auth/register
@@ -42,7 +44,7 @@ list the endpoints:
             password: this.state.existingUser.password
         };
 
-        
+
 */
 
 
