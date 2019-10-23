@@ -1147,7 +1147,7 @@ Summary: all I really need is
         upperAlphaLimit: Math.PI / 1.8,
         lowerBetaLimit: 0,
         upperBetaLimit: Math.PI / 2.15,
-        lowerRadiusLimit: 15,
+        lowerRadiusLimit: 5,
         upperRadiusLimit: 60,
         useAutoRotationBehavior: false,
         attachControl: true
