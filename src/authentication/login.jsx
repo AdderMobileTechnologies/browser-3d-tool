@@ -165,6 +165,11 @@ class Login extends React.Component {
   handleForgotPassword(){
     console.log("handleForgotPassword");
   }
+  handleForgotPassword() {
+    console.log("handleForgotPassword");
+    console.log("this.props.history",this.props.history);
+    this.props.history.push('/authentication/recover-password');
+}
   
   submitLogin(e) {
     console.log("submitLogin");
