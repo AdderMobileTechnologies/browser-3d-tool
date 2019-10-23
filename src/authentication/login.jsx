@@ -44,6 +44,12 @@ list the endpoints:
             password: this.state.existingUser.password
         };
 
+TODO: 
+map out the environment.js variables used. 
+1)
+"Config.API.HOST_NAME"
+2)
+"Config.Frontend.VERSION"
 
 */
 
