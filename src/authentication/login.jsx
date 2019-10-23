@@ -58,12 +58,18 @@ class Login extends React.Component {
 
   }
 
-  loginFormInputOnChange(){
+  
+  loginFormInputOnChange(e) {
     console.log("loginFormInputOnChange");
-  }
-  submitLogin(){
-    console.log("submitLogin");
-  }
+    let value = e.target.value;
+    let name = e.target.name;
+
+    this.setState( prevState => ({ existingUser :
+            {...prevState.existingUser, [name]: value
+            }
+    }));
+}
+
   
   toggleForm(e) {
     console.log("toggleForm");
@@ -72,16 +78,142 @@ class Login extends React.Component {
         isLoginForm: !state.isLoginForm
     }));
 }
-  handleInputRegister(){
+  
+  handleInputRegister(e) {
     console.log("handleInputRegister");
-  }
-  registrationCreateUser(){
+    let value = e.target.value;
+    let name = e.target.name;
+    this.setState( prevState => ({ registeringUser :
+            {...prevState.registeringUser, [name]: value
+            }
+    }));
+
+    if(this.state.agreeToTerms === "on") {
+        this.setState({
+            readyToRegister: true
+        });
+    }
+
+    switch(name) {
+        case 'fullName':
+            this.setState(state => ({
+                hasFullName: true
+            }));
+            break;
+        case 'business_name':
+            this.setState(state => ({
+                hasBusiness_name: true
+            }));
+            break;
+        case 'email':
+            this.setState(state => ({
+                hasEmail: true
+            }));
+            break;
+        case 'password':
+            this.setState(state => ({
+                hasPassword: true
+            }));
+            break;
+        case 'agreeToTerms':
+            this.setState( prevState => ({ registeringUser :
+                {...prevState.registeringUser, registeringUser : {
+                        agreeToTerms:"on",
+                    }
+                }
+            }));
+            break;
+        default:
+            break;
+
+    }
+}
+  
+  registrationCreateUser(e) {
     console.log("registrationCreateUser");
-  }
+    e.preventDefault();
+    let userData = this.state.registeringUser;
+
+    const dataPackage = {
+        email: userData.email,
+        password: userData.password,
+        role: "client",
+        is_verified: "false"
+    };
+
+    //const endpoint = Config.API.HOST_NAME + "/auth/register";
+    const endpoint = "Config.API.HOST_NAME" + "/auth/register";
+    
+    fetch(endpoint,{
+        method: "POST",
+        body: JSON.stringify(dataPackage),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    }).then(response => {
+        response.json().then(data =>{
+            if(data.success){
+                localStorage.setItem('token', data.token);
+                this.registrationCreateClient(data.token);
+            } else{
+                alert('It appears as though that email is already in use!');
+            }
+        });
+    });
+}
   handleForgotPassword(){
     console.log("handleForgotPassword");
   }
+  
+  submitLogin(e) {
+    console.log("submitLogin");
+    e.preventDefault();
 
+    //const endpoint = Config.API.HOST_NAME + "/v2/auth/login/client";
+    const endpoint = "Config.API.HOST_NAME" + "/v2/auth/login/client";
+    const dataPackage = {
+        email: this.state.existingUser.email,
+        password: this.state.existingUser.password,
+        role: "client"
+    };
+
+    const config = {
+        method: 'POST',
+        url: endpoint,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: dataPackage
+    };
+
+    axios(config)
+        .then((response) => {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("clientid", response.data.clientid);
+            //localStorage.setItem("version", Config.Frontend.VERSION);
+            localStorage.setItem("version", "Config.Frontend.VERSION");
+            this.props.history.push('/dashboard');
+        })
+        .catch((error) => {
+            localStorage.clear();
+            alert('We\'re sorry, but that is the wrong password for this account.');
+        });
+}
+renderCreateAccountButton() {
+    return(
+        <Button
+            onChange = {this.registrationCreateUser}
+            color=" "
+            size=""
+            className="auth-login-button create-new-account-button"
+            type="submit"
+        >
+            CREATE NEW ACCOUNT
+        </Button>
+    )
+}
   componentDidMount(){ 
       console.log("componentDidMount");
   }
