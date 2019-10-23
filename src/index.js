@@ -8,23 +8,21 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import RecoverPassword from './authentication/recover-password';
 import Login from './authentication/login';
+import Main from './components/Main';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
+  Route
 } from "react-router-dom";
 ReactDOM.render(
     <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-     <Router> 
-     <Route exact path="/" component={Login} />
-     <Route path="/recover-password" component={RecoverPassword} />
-       <App /></Router>
+        <Router> 
+          <Route exact path="/" component={Login} />
+          <Route path="/recover-password" component={RecoverPassword} />
+          <Route path="/main" component={Main} />
+          <App />
+        </Router>
     </ThemeProvider>,
     document.querySelector('#root'),
   );

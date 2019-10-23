@@ -204,10 +204,11 @@ class Login extends React.Component {
             localStorage.setItem("clientid", response.data.clientid);
             //localStorage.setItem("version", Config.Frontend.VERSION);
             localStorage.setItem("version", "Config.Frontend.VERSION");
-            this.props.history.push('/dashboard');
+            this.props.history.push('/main');
         })
         .catch((error) => {
             localStorage.clear();
+             
             alert('We\'re sorry, but that is the wrong password for this account.');
         });
 }
