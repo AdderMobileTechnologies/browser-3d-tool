@@ -211,7 +211,7 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
 
   //region Find User
   try {
-      user = await User.findOne({email: email});
+      user = await User.findOne({email: email}); //TypeError: User.findOne is not a function
   } catch(err) {
       res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).end();
       return next(new Error(`An error occurred while retrieving user entry from database:\n${err.stack}`));

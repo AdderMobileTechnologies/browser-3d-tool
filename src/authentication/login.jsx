@@ -282,7 +282,7 @@ renderCreateAccountButton() {
 }
   componentDidMount(){ 
       console.log("componentDidMount");
-      console.log("Login_URL:",LOGIN_URL);
+      //console.log("Login_URL:",LOGIN_URL);
   }
   render() {
     return   <div id="loginform" className="login-form">
