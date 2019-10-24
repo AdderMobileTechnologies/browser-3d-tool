@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "earcut": "^2.1.5",
+    "eslint": "^6.5.1",
     "fabric": "^3.4.0",
     "jwt-simple": "^0.5.6",
     "nodemailer": "^6.3.1",
@@ -38,6 +39,7 @@
     "reactstrap": "^8.1.1",
     "rxjs": "^6.5.3",
     "tui-image-editor": "^3.7.0",
+    "typescript": "^3.6.4",
     "util": "^0.12.1"
   },
   "scripts": {
