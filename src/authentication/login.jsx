@@ -1,4 +1,5 @@
 import React from "react";
+import {LOGIN_URL} from './../environment.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import './../assets/scss/style.css';
 import {
@@ -267,6 +268,7 @@ renderCreateAccountButton() {
 }
   componentDidMount(){ 
       console.log("componentDidMount");
+      console.log("Login_URL:",LOGIN_URL);
   }
   render() {
     return   <div id="loginform" className="login-form">
