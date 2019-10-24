@@ -1,7 +1,7 @@
 import React from "react";
 import {LOGIN_URL} from './../environment.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import './../assets/scss/style.css';
+import './../assets/scss/style.css';
 import {
 	Input,
 	CustomInput,
@@ -285,7 +285,10 @@ renderCreateAccountButton() {
       //console.log("Login_URL:",LOGIN_URL);
   }
   render() {
-    return   <div id="loginform" className="login-form">
+    return   <div className="" >
+    <div className="auth-wrapper d-flex no-block justify-content-center align-items-center"   > {/**style={sidebarBackground} */}
+        <div className="auth-box x-on-sidebar">
+            <div id="loginform" className="login-form">
                     <Row>
                         <Col xs="12" md="8">
                             <div className="logo"/>
@@ -410,6 +413,9 @@ renderCreateAccountButton() {
                             }
                         </Col>
                     </Row>
+                    </div> 
+                    </div>
+                    </div>
                 </div>;
                 
 }

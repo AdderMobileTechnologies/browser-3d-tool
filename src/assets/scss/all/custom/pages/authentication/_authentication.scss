@@ -1,0 +1,75 @@
+.auth-wrapper {
+  min-height: 100vh;
+  position: relative;
+  .auth-box {
+    background: $black;
+    padding: 20px;
+    box-shadow: $shadow;
+    max-width: 1000px;
+    width: 90%;
+    margin: 10% 0;
+    opacity:.9;
+    .logo {
+      text-align: center;
+      background-image:url('../../assets/images/Transparent - Dark-765x255.png' ); 
+      background-size:contain;
+      background-repeat:no-repeat;
+      margin-top:30px;
+      height:200px;
+      width:auto;
+    }
+    &.on-sidebar {
+      top: 0px;
+      right: 0px;
+      height: 100%;
+      margin: 0px;
+      position: absolute;
+    }
+  }
+  #recoverform {
+    display: none;
+  }
+  .auth-sidebar {
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    overflow: auto;
+    margin: 0px;
+    top: 0px;
+  }
+}
+.auth-box .login-form input {
+  color:$themecolor;
+  background-color:#000;
+}
+.auth-login-button{
+  background-color:#222;
+  color:#ddd;
+}
+a.auth-text-info{
+  color:#ccc;
+}
+.create-new-account-button, .forgot-password-button{
+  color:$themecolor;
+  background-color:#000;
+}
+.error {
+  color: $danger;
+}
+body{
+  background-image:url('../../assets/images/background/BACKGROUND.png' ); 
+  background-size:cover;
+}
+@include media-breakpoint-down(sm) {
+  .auth-wrapper {
+    .auth-sidebar {
+      position: relative;
+      max-width: 100%;
+      width: 100%;
+      margin: 40px 0 60px;
+    }
+    .demo-text {
+      margin-top: 30px;
+    }
+  }
+}

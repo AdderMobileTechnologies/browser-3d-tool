@@ -1,0 +1,356 @@
+
+/** =========================================================
+Adder Specific CSS:
+
+1) containers and wraps
+2) sidebars
+3) stats
+4) icons
+5) images
+6) cards
+7) sections
+8) drag and drop 
+9) boxes
+10) search related items
+11) MUI Table
+=========================================================== */
+
+
+/* containers and wraps -----------------------------------   */
+.page-wrapp .page-content{
+    padding:0px !important;
+}
+.container-fluid{
+    padding-right:0px;
+    padding-left:0px;
+}
+
+/* sidebars -----------------------------------  */
+/* sidebar-left */
+.side-bar-bottom-list ul{
+    list-style:none;
+    padding:0;
+    margin:15px;
+}
+.side-bar-bottom-list ul li {
+    color:#eee;
+}
+.side-bar-bottom-list ul li a {
+    color:#eee;
+}
+/* sidebar-right */
+.sidebar-right-collapse-list{
+    list-style:none;
+    padding-left:0;
+}
+.sidebar-right-collapse-list ul{
+    list-style:none;
+    padding-left:0;
+}
+.sidebar-right-collapse-list li{
+    list-style:none;
+    padding-left:0;
+}
+.sidebar-right-collapse-title{
+    color:#444;
+    font-weight:bold;
+    font-size:1.2rem;
+    cursor:pointer;
+    margin: 0
+}
+.sidebar-subheading{
+    color:#444;
+    font-weight:bold;
+    font-size:1.0rem;
+    margin: 0;
+    cursor:pointer;
+}
+.sidebar-body-text{
+    color:#444;
+    font-size:0.75rem;
+    cursor:pointer;
+}
+.sidebar-right-collapse-list h5{
+    color:#777;
+    font-size:1.2rem;
+}
+.right-sidebar-hr{
+    width:100%;
+}
+
+/* stats -----------------------------------  */
+.stats-section{
+    h1,h2,h3,h4,h5,h6,p{
+        padding:0 0 0 0;
+        margin:0 0 0 0;
+    }
+}
+.stats-section p {
+    color:#ccc;
+}
+.stat-card{
+    height:150px;
+    min-height:150px;
+    max-height:150px;
+}
+/* icons ----------------------------------- */
+.adder-icon{
+    height:22px;
+    width:22px;
+    background-image:url('../images/adder-analytics-icon.png' );
+    background-size:contain;
+    background-repeat:no-repeat;
+}
+
+/* forms and form items ----------------------------------- */
+.form-container button{
+    text-align:left;    
+}
+.input-feedback{
+    color:red;
+}
+.billing-label{
+    margin-top:20px;
+}
+.ad-editor-submit-btn{
+    margin-top:20px;
+    float:right;
+    font-size:2em;
+}
+.settings-form .row{
+    margin-top:5px;
+}
+
+/* images ----------------------------------- */
+.imgPreview{
+    position:relative;
+}
+.carImage1{
+    height:300px;
+    width:auto;
+    background-repeat:no-repeat;
+    /*background-image:url('../../assets/images/cars/Car-Image.jpg');*/
+    background-size:contain;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
+/* css brought in from pages/general/_general.scss */
+
+/* cards ----------------------------------- */
+.card-flat{
+    padding:20px;
+    background-color: #fff;
+     box-shadow:none !important;
+     border-radius:0 !important;
+}
+.card-flat-bordered{
+    padding:20px;
+    background-color: #fff;
+     box-shadow:none !important;
+     border-radius:0 !important;
+     border:solid 1px #eeeeee;
+}
+.rounded{
+    border-radius:3 ;
+}
+.card-dark-grey{
+    background-color: #999999;
+}
+.card-green{
+    background-color: #20e47e;
+}
+
+
+
+ 
+/* sections ------------------------------ */
+.section-showable{
+    /*border: solid 1px #ccc;*/
+    padding:20px;
+    background-color: #fff;
+    margin-bottom:0px;
+   /* box-shadow:0px 2px 5px #888;*/
+}
+.section-showable-btn Button{
+    width:100%;
+    /*border-radius:4px;*/
+    padding:10px;
+    height:44px;
+    outline:0;
+    margin-top:10px;
+    border:none;
+    font-size:20px;
+    /*box-shadow:0px 2px 5px #888;*/
+}
+.section-showable-btn Button:focus{
+   outline:none;
+}
+.section-half{
+    width:48%;
+    margin:auto;
+}
+
+
+/* drag and drop --------------------------------  */
+.drag-and-drop-container{
+    margin-top:30px;
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.drag-and-drop-box{
+    height:50px;
+    border:solid 1px #ccc;
+    background-color:#ddd;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.drag-and-drop-box-text{
+    color:#444;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    line-height:3;
+}
+/* boxes -------------------------------------------- */
+.box-gray-standard{
+    margin-left:auto;
+    margin-right:auto;
+    padding:10px;
+    height:150px;
+    width:80%;
+    background-color:#eee;
+}
+
+/* search related items ------------------------------ */
+.search-results-container{
+    overflow:hidden;
+    overflow-y:scroll;
+    height:150px;
+   /* border:solid 1px #eee;*/
+}
+.search-results-button{
+    /*width:135px;
+    min-width:135px;
+    max-width:135px;*/
+    display:inline-block;
+    width:100%;
+}
+.the-search-input{
+    display:inline-block;
+    width:85%;
+}
+.search-result-select-button{
+    display:inline-block;
+    width:15%;
+    vertical-align:top; 
+}
+.the-search-input-container{
+    width:100%; 
+}
+
+/* MUI table ------------------------------------- */ 
+/*
+attempt to style classes beginning with a particular word...
+div[class^="MuiExpansionPanel"] {
+    border: solid red 1px !important;
+}
+div[class^="MuiCollapse"] {
+    border: solid green 1px !important;
+}
+div[class^="MuiExpansionPanelSummary-expandIcon"] {
+    border: solid red 1px !important;
+}
+div[class^="MuiIconButton"] {
+    border: solid red 1px !important;
+}
+div[class^="MuiExpansionPanel"] {
+    border: solid orange 1px !important;
+}
+ 
+*/
+/* Apparently All the following classes are getting named dynamically so,
+it's hard to have consistent style classes. May need a different approach.
+
+*/
+div.b-text-6{
+    font-weight:bold;
+    margin-left:50px;
+    font-size:1.2em;
+    text-transform: capitalize;
+}
+ 
+.MuiExpansionPanelSummary-expandIcon-43{
+    right:0px;
+    left:10px;
+    /*transform: translateY(-50%) rotate(-90deg) !important; need to be able to detect click to set transform.*/
+}
+.MuiListItem-button-80{
+     /* Second LEVEL row/button*/
+    /* ------ background-color:#efefef !important; */
+   /* !!!!  background-color:#f8f8f8 !important; */
+   background-color:#f8f8f8 !important;
+    font-size:.8em;
+}
+
+/* style ALL expanded */ 
+.MuiExpansionPanelSummary-content-42.MuiExpansionPanelSummary-expanded-39 {
+    margin: 40px 0;
+    opacity:.6;
+    
+}
+
+
+/* ARROWS */
+.MuiExpansionPanelSummary-expandIcon-43.MuiExpansionPanelSummary-expanded-39 {
+    transform: translateY(-50%) rotate(-90deg) !important;
+    /*border:solid 1px red;*/
+}
+.MuiExpansionPanelSummary-expandIcon-43 {
+    top: 50%;
+    
+    position: absolute;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    /*border:solid 1px blue !important;*/
+}
+.MuiExpansionPanelSummary-content-42 > :last-child {
+    padding-right: 32px;
+   /* !!!  color: Orange; 
+   color: #20e47e;
+   text-shadow: .3px .3px #555;
+   */
+   color:#222;
+     
+}
+.MuiExpansionPanel-root-8:first-child   {
+     
+    /*background-color:#000;*/
+     
+}
+.b-panelSummary-2 {
+    /* Affects ALL title rows*/ 
+    padding: 0;
+    margin-left: 0px !important;
+    
+}
+/*
+   div.MuiButtonBase-root-44:first-child{
+    color: red !important;
+  }
+   
+  .b-panelDetails-3{
+      color:#000 !important;
+  }
+
+  js: .MuiButtonBase-root-44
+
+  */
+
+  div.tab-pane.h-100.active  {
+    padding:0px  !important;
+}

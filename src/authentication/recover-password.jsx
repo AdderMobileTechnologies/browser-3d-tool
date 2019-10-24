@@ -84,7 +84,10 @@ class RecoverPassword extends React.Component {
 
 
     render() {
-		return  <div id="loginform" className="login-form">
+		return  <div className="" >
+		<div className="auth-wrapper d-flex no-block justify-content-center align-items-center"   > {/**style={sidebarBackground} */}
+			<div className="auth-box x-on-sidebar">
+				<div id="loginform" className="login-form">
 						<Row>
 							<Col xs="12" md="8">
 								<div className="logo"/>
@@ -128,6 +131,10 @@ class RecoverPassword extends React.Component {
 							</Col>
 						</Row>
 					</div>
+					</div> 
+					</div> 
+					</div>
+					
 				 
 	}
 }
