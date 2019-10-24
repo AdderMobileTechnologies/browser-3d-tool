@@ -47,6 +47,7 @@ list the endpoints:
 
 TODO: 
 map out the environment.js variables used. 
+These will now be in with the meta_server configs...
 1)
 "Config.API.HOST_NAME"
 2)
