@@ -12,9 +12,8 @@ console.log("///////////////////////////////////////////")
 
 const UserConnection = mongoose.createConnection(process.env.PORTAL_DB_HOST + '/UsersDB?authSource=admin', {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    user: String(process.env.PORTAL_DB_USER),
-    pass: String(process.env.PORTAL_DB_PASS)
+    useCreateIndex: true
+    
     
 });
 // 
