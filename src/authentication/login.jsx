@@ -14,6 +14,7 @@ import {
 
 import axios from "axios";
 import { withRouter } from 'react-router';
+import * as K from "../constants";
 /*
 TODO: 
 
@@ -221,9 +222,21 @@ class Login extends React.Component {
   submitLogin(e) {
     console.log("submitLogin");
     e.preventDefault();
-
+    //adder meta    -> models -> constants.js
+    // login.jsx    -> authentication
+//import * as K from "../constants";
+/*
+ const url = `${K.META_URL}/meta/environment2`;
+            axios
+              .get(url)
+              .then(response => response.data)
+              .then(data => {
+                resolve(data);
+              });
+          });
+*/
     //const endpoint = Config.API.HOST_NAME + "/v2/auth/login/client";
-    const endpoint = "Config.API.HOST_NAME" + "/v2/auth/login/client";
+    const endpoint = `${K.META_URL}` + "/v2/auth/login/client";
     const dataPackage = {
         email: this.state.existingUser.email,
         password: this.state.existingUser.password,

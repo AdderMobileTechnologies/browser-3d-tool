@@ -14,13 +14,9 @@
  * Module: <INSERT_MODULE_NAME>
  * Original Filename: index.js
  * Created by: <INSERT_YOUR_NAME>
- * Created on: 8/14/19, 3:19 PM
+ * Created on: 10/14/19, 3:07 PM
  */
 
-const router = require('express').Router();
-
-//router.use("/driver", require("./driverLogin"));
-console.log("api/routes/v2/auth/login/index.js ......")
-router.use("/client", require("./clientLogin"));
-
-module.exports = router;
+module.exports = {
+    checkEndpoint: require("./checkEndpoint")
+};

@@ -11,16 +11,21 @@
  * Any questions may be directed to Brandon Bush<b.bush@adder.io>, CTO
  *
  * Project: web-api
- * Module: <INSERT_MODULE_NAME>
- * Original Filename: index.js
- * Created by: <INSERT_YOUR_NAME>
- * Created on: 8/14/19, 3:19 PM
+ * Module: authorization/checkEndpoint
+ * Original Filename: checkEndpoint.js
+ * Created by: Brandon Bush
+ * Created on: 10/14/19, 3:06 PM
  */
 
-const router = require('express').Router();
+const HTTPStatusCodes = require("node-common-utility").Constants.HTTPStatusCodes;
+module.exports = function checkEndpoint(req, res, next) {
+    let endpoint = req.baseUrl + req.url;
 
-//router.use("/driver", require("./driverLogin"));
-console.log("api/routes/v2/auth/login/index.js ......")
-router.use("/client", require("./clientLogin"));
+    let authorizedEndpoints = new Set(req.user.endpoints);
+    if(!authorizedEndpoints.has(endpoint)) {
+        res.status(HTTPStatusCodes.FORBIDDEN).json({});
+        return next(new Error(`User with api key id ${req.user._id} is not authorized to utilize this endpoint.`));
+    }
 
-module.exports = router;
+    return next();
+};

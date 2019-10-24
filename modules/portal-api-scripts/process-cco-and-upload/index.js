@@ -11,16 +11,24 @@
  * Any questions may be directed to Brandon Bush<b.bush@adder.io>, CTO
  *
  * Project: web-api
- * Module: <INSERT_MODULE_NAME>
+ * Module: process-cco-and-upload
  * Original Filename: index.js
- * Created by: <INSERT_YOUR_NAME>
- * Created on: 8/14/19, 3:19 PM
+ * Created by: Brandon Bush
+ * Created on: 9/30/19, 1:16 PM
  */
 
-const router = require('express').Router();
+require('dotenv').config();
 
-//router.use("/driver", require("./driverLogin"));
-console.log("api/routes/v2/auth/login/index.js ......")
-router.use("/client", require("./clientLogin"));
+const CCO_CAMPAIGN_ID = "";
 
-module.exports = router;
+async function main() {
+
+}
+
+main().then(() => {
+    console.log("Completed script. Be good fam! -B");
+    process.exit(1);
+}).catch((err) => {
+    console.error(err);
+    process.exit(1);
+});

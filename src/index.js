@@ -12,10 +12,10 @@ import Main from './components/Main';
 import VerifyRecoveredPassword from './authentication/verify-recovered-password';
 
 import {
-  //BrowserRouter as Router,
+  BrowserRouter as Router,
   Route
 } from "react-router-dom";
-import {Router} from "react-router";
+//import {Router} from "react-router";
 ReactDOM.render(
     <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
