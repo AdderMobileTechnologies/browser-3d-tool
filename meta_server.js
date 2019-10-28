@@ -1,3 +1,4 @@
+console.log("meta_server: spot 1");
 var express = require("express");
 var app = express();
 var cors = require("cors");
@@ -16,7 +17,10 @@ const {
   META_URL,
   API_URL
 } = require("./config");
+console.log("meta_server: spot 1.1");
+/////////////--------------------------------------------------------------------------------------------------------XXX
 console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
+console.log("meta_server: spot 1.1.1");
 ////////////////////
 /*
 Do I Need These in package-json? 
@@ -27,16 +31,22 @@ Do I Need These in package-json?
 
 */
 //-o-o-o-o-o-o FROM auth.js
-
-const TempUser = require("adder-models").TempUser;
+/////////////////////////////////////////////////////////////////////////////////////////////
+//const TempUser = require("adder-models").TempUser; // STARTS WILD GOOSE CHASE:
+//////////////////////////////////////////////////////////////////////////////////////////////
+console.log("meta_server: spot 1.1.2");
 
 const rand = require("rand-token");
+console.log("meta_server: spot 1.1.3");
 //const nodemailer = require('nodemailer');
 const jwt = require("jwt-simple");
+console.log("meta_server: spot 1.1.4");
 //const API_HOST = process.env.PORTAL_API_HOST;
 const API_HOST = "http://locahost:8001";
+console.log("meta_server: spot 1.1.4");
 //const FRONTEND_HOST = process.env.FRONTEND_HOST;
-
+//---------------------------------------------------------------------------------------------------------------------XXX
+console.log("meta_server: spot 1.2");
 const nodemailerOptions = {
   host: process.env.NODEMAILER_SMTP_HOST,
   port: Number(process.env.NODEMAILER_SMTP_PORT),
@@ -52,7 +62,7 @@ const HTTPStatusCodes = require("node-common-utility").Constants
   .HTTPStatusCodes;
 
 let transporter = nodemailer.createTransport(nodemailerOptions);
-
+console.log("meta_server: spot 1.3");
 //-o-o-o-o-o-o-o
 
 //authentication
@@ -78,11 +88,11 @@ const HTTPCodes = require("node-common-utility").Constants.HTTPStatusCodes;
 const Stopwatch = require("node-common-utility").Profiling.Stopwatch;
 const Regex = require("node-common-utility").Regex;
 //endregion
-
+console.log("meta_server: spot 1.4");
 //region Initialize Utilities
 const logger = new ImmutableTagLogger("SYSTEM");
 //endregion
-
+console.log("meta_server: spot 2");
 //region Configure Middleware
 app.disable("etag");
 app.use(compression());
@@ -98,7 +108,7 @@ app.use(function(req, res, next) {
   return next();
 });
 //endregion
-
+console.log("meta_server: spot 1.5");
 //region Configure Passport
 const isObjectIDValid = id => {
   if (typeof id === "undefined" || id === null) {
@@ -183,6 +193,7 @@ app.use(
     limit: "50mb"
   })
 );
+console.log("meta_server: spot 3");
 
 app.get("/", function(req, res) {
   res.send("meta server reached.");
@@ -317,6 +328,7 @@ app.get("/design/get/", function(req, res) {
 //     console.log("data saved!");
 //   });*/
 // });
+console.log("meta_server: spot 4");
 app.post("/v2/auth/login/client", async function(req, res, next) {
   console.log("post: /v2/auth/login/client");
   console.log("req.body", req.body);
@@ -1217,9 +1229,9 @@ app.post("/change-password/:token", async function(req, res, next) {
 });
 
 //-o-o-o-o-o-o-o-o-o
-
+console.log("meta_server: spot 5");
 app.listen(8001, function() {
   console.log("App running on port 8001");
 });
-
+console.log("meta_server: spot 6");
 //module.exports = router;
