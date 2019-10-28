@@ -1714,3 +1714,22 @@ Ok. now it follows the mesh when moved x and z .
 Should focus at the center of the mesh not the foot. 
 so I need 1/2 mesh height to add to absolutPosition Y .
  
+
+Mon 10-28-2019: 
+What is needed for MVP? 
+1) login registration and meta_server as API.
+  - not working yet.
+
+  
+2) the tool 
+  A) What can a user get? 
+    They can create a scene with their branding image applied to either vehicles or billboards.
+    They can then download an image of the scene.
+    They can email the scene to someone. 
+  
+
+
+  TODO TASKS:
+  - mongodb on desktop? 
+  - local does not have styling ? should. 
+  
