@@ -1,11 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
-console.log("U S I N G   adder-model :: client.js ");
-console.log(
-  "CONNECTION(?): ",
-  process.env.PORTAL_DB_HOST + "/UsersDB?authSource=admin"
-);
+
 const users = mongoose.createConnection(
   process.env.PORTAL_DB_HOST + "/UsersDB?authSource=admin",
   {

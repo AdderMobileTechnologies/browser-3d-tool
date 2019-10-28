@@ -1,4 +1,5 @@
-console.log("meta_server: spot 1");
+require("dotenv").config();
+
 var express = require("express");
 var app = express();
 var cors = require("cors");
@@ -17,36 +18,11 @@ const {
   META_URL,
   API_URL
 } = require("./config");
-console.log("meta_server: spot 1.1");
-/////////////--------------------------------------------------------------------------------------------------------XXX
-console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
-console.log("meta_server: spot 1.1.1");
-////////////////////
-/*
-Do I Need These in package-json? 
- "express": "^4.17.1",
-    "express-jwt": "^5.3.1",
-    "express-session": "^1.16.2",
-
-
-*/
-//-o-o-o-o-o-o FROM auth.js
-/////////////////////////////////////////////////////////////////////////////////////////////
-//const TempUser = require("adder-models").TempUser; // STARTS WILD GOOSE CHASE:
-//////////////////////////////////////////////////////////////////////////////////////////////
-console.log("meta_server: spot 1.1.2");
 
 const rand = require("rand-token");
-console.log("meta_server: spot 1.1.3");
-//const nodemailer = require('nodemailer');
 const jwt = require("jwt-simple");
-console.log("meta_server: spot 1.1.4");
-//const API_HOST = process.env.PORTAL_API_HOST;
 const API_HOST = "http://locahost:8001";
-console.log("meta_server: spot 1.1.4");
 //const FRONTEND_HOST = process.env.FRONTEND_HOST;
-//---------------------------------------------------------------------------------------------------------------------XXX
-console.log("meta_server: spot 1.2");
 const nodemailerOptions = {
   host: process.env.NODEMAILER_SMTP_HOST,
   port: Number(process.env.NODEMAILER_SMTP_PORT),
@@ -62,19 +38,15 @@ const HTTPStatusCodes = require("node-common-utility").Constants
   .HTTPStatusCodes;
 
 let transporter = nodemailer.createTransport(nodemailerOptions);
-console.log("meta_server: spot 1.3");
-//-o-o-o-o-o-o-o
 
-//authentication
-//const HTTPStatusCodes = require("node-common-utility").Constants.HTTPStatusCodes;
 //ok
 // noT OK: const User = require("adder-models").User;
 const APIKey = require("adder-models").APIKey;
 const User = require("adder-models").User;
 const Client = require("adder-models").Client;
+const TempUser = require("adder-models").TempUser;
 //const jwt = require("jwt-simple");
 
-//-------------------
 const compression = require("compression");
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
@@ -88,11 +60,9 @@ const HTTPCodes = require("node-common-utility").Constants.HTTPStatusCodes;
 const Stopwatch = require("node-common-utility").Profiling.Stopwatch;
 const Regex = require("node-common-utility").Regex;
 //endregion
-console.log("meta_server: spot 1.4");
 //region Initialize Utilities
 const logger = new ImmutableTagLogger("SYSTEM");
 //endregion
-console.log("meta_server: spot 2");
 //region Configure Middleware
 app.disable("etag");
 app.use(compression());
@@ -108,7 +78,6 @@ app.use(function(req, res, next) {
   return next();
 });
 //endregion
-console.log("meta_server: spot 1.5");
 //region Configure Passport
 const isObjectIDValid = id => {
   if (typeof id === "undefined" || id === null) {
@@ -144,46 +113,9 @@ passport.use(
   )
 );
 // noinspection JSCheckFunctionSignatures
-/*
-// noinspection JSCheckFunctionSignatures
-passport.use("ClientStrategy", new JwtStrategy({
-    secretOrKey: process.env.JWT_SIGNING_KEY,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt")
-}, function(jwt_payload, done) {
-    //TODO: ADD IN STATEFUL LOGIC TO CHECK IF A JWT KEY HAS BEEN REVOKED! DO THIS IN THE METADB!
-    let valid = isObjectIDValid(jwt_payload._id);
-    if(!valid) {
-        logger.error(`An error has occurred in passport ClientStrategy strategy (in server.js):\n${valid.stack}`);
-        return done(valid, false);
-    }
-
-    Client.findById(jwt_payload._id, function(err, client) {
-        if(err) {
-            logger.error(`An error has occurred in passport ClientStrategy strategy (in server.js):\n${err.stack}`);
-            return done(err, false);
-        }
-
-        if(!client) {
-            logger.info(`(401) -- PASSPORT ClientStrategy REJECTION: ${jwt_payload._id}`);
-            return done(null, false);
-        }
-
-        return done(null, client);
-    });
-}));
-*/
 
 app.use(passport.initialize({ userProperty: "user" }));
 //endregion
-
-//---------
-
-/////////////////
-//body-parser parameters to allow larger files:
-// bodyParser = {
-//   json: { limit: "50mb", extended: true },
-//   urlencoded: { limit: "10mb", extended: true }
-// };
 
 app.use(bodyParser.json({ limit: "50mb", extended: true })); // to support JSON-encoded bodies
 app.use(
@@ -193,7 +125,6 @@ app.use(
     limit: "50mb"
   })
 );
-console.log("meta_server: spot 3");
 
 app.get("/", function(req, res) {
   res.send("meta server reached.");
@@ -240,16 +171,6 @@ app.get("/meta/design/", function(req, res) {
 });
 
 app.post("/email/send/", function(req, res) {
-  //console.log("/email/send/");
-  /*console.log("req.query:", req.query);
-  console.log("req.params:", req.params);
-  console.log("req.body", req.body);
-  console.log(`Your env var is ${NODEMAILER_SMTP_HOST}`); // whatever
-  console.log(`Your env var is ${NODEMAILER_USER}`); // whatever
-  console.log(`Your env var is ${NODEMAILER_PASS}`); // whatever
-  console.log(`Your env var is ${NODEMAILER_SMTP_PORT}`); // whatever
-  */
-  //------------------------------------
   var transport = nodemailer.createTransport({
     host: NODEMAILER_SMTP_HOST,
     port: NODEMAILER_SMTP_PORT,
@@ -328,12 +249,11 @@ app.get("/design/get/", function(req, res) {
 //     console.log("data saved!");
 //   });*/
 // });
-console.log("meta_server: spot 4");
-app.post("/v2/auth/login/client", async function(req, res, next) {
-  console.log("post: /v2/auth/login/client");
+app.post("/login/client", async function(req, res, next) {
+  console.log("meta_server.js login/client::");
   console.log("req.body", req.body);
   let user = null;
-  let client = null;
+  //let client = null;
   let { email, password } = req.body;
 
   //region Validate Input
@@ -350,7 +270,9 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
 
   //region Find User
   try {
-    user = await User.findOne({ email: email }); //TypeError: User.findOne is not a function
+    console.log("trying: User.findOne");
+
+    user = await User.findOne({ email: email }); //TypeError: User.findOne is not a function.
   } catch (err) {
     res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).end();
     return next(
@@ -359,7 +281,8 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
       )
     );
   }
-  if (!user || !user.client_id) {
+  if (!user) {
+    console.log("meta_server: !user  ");
     res.status(HTTPStatusCodes.NOT_FOUND).end();
     return next();
   }
@@ -367,6 +290,7 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
 
   //region Check if Users Password Is Correct
   try {
+    console.log("meta_server: trying isCorrectClientPassword");
     let isMatch = await user.isCorrectClientPassword(password);
     if (!isMatch) {
       res.status(HTTPStatusCodes.FORBIDDEN).end();
@@ -382,31 +306,10 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
   }
   //endregion
 
-  //region Find Driver
-  try {
-    client = await Client.findById(user.client_id);
-  } catch (err) {
-    res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).end();
-    return next(
-      new Error(
-        `An error occurred while retrieving client entry from database:\n${err.stack}`
-      )
-    );
-  }
-  if (!client) {
-    res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).end();
-    return next(
-      new Error(
-        `Retrieved User entry has an id listed for client_id, but client document ${user.client_id} could not be found!`
-      )
-    );
-  }
-  //endregion
-
   //region Create Token and Return Driver Data
   let token = jwt.encode(
     {
-      _id: client._id,
+      _id: user._id,
       time: new Date().getTime() / 1000
     },
     process.env.JWT_SIGNING_KEY
@@ -415,11 +318,12 @@ app.post("/v2/auth/login/client", async function(req, res, next) {
   //region TODO: REFACTOR THIS TO ONLY RETURN TOKEN. DRIVER INFO SHOULD BE RETRIEVED IN SEPARATE ENDPOINT
   let returnObject = {
     token: token,
-    clientid: client._id
+    clientid: user._id
   };
   //endregion
-
+  console.log("meta_server:: status code and return json");
   res.status(HTTPStatusCodes.OK).json(returnObject);
+  console.log("next middleware/ async await...");
   return next();
 });
 
@@ -448,6 +352,8 @@ app.post("/auth/register", async function(req, res) {
 
   logger.debug("Checking to see if user already exists in database.");
   console.log("spot 1.1");
+  console.log("req.body.email:", req.body.email);
+
   try {
     console.log("User model: User: Does Exist: yes");
     console.log(
@@ -1093,7 +999,7 @@ app.post("/login", function(req, res) {
 
 app.get("/forgot-password", async function(req, res, next) {
   let user;
-
+  console.log("meta_server.jsx:: /forgot-password:: ");
   if (typeof req.query.email === "undefined" || !req.query.email) {
     res.status(HTTPStatusCodes.BAD_REQUEST).end();
     return next(new Error(`Request was missing email in query.`));
@@ -1132,7 +1038,7 @@ app.get("/forgot-password", async function(req, res, next) {
   }
 
   let url = API_HOST + "/auth/change-password/" + token;
-
+  console.log("using URL:", url);
   let mailOptions = {
     from: "Do Not Reply <no-reply@addermobile.com>",
     to: email,

@@ -86,7 +86,7 @@ class Login extends React.Component {
 
     if (localStorage.getItem("token") !== null) {
       //TODO: Add endpoint to API that will check the clientid and token in localStorage, verify they are valid, then redirect to the dashboard.
-      this.props.history.push("/dashboard");
+      this.props.history.push("/main");
       return;
     } else {
       localStorage.clear();
@@ -194,7 +194,10 @@ class Login extends React.Component {
       response.json().then(data => {
         if (data.success) {
           localStorage.setItem("token", data.token);
-          this.registrationCreateClient(data.token);
+          // console.log("what is this:", this);
+          // this.registrationCreateClient(data.token);
+          //SUCCESSFUL REGISTRATION: continue to app. push
+          this.props.history.push("/main");
         } else {
           alert("It appears as though that email is already in use!");
         }
@@ -214,21 +217,9 @@ class Login extends React.Component {
   submitLogin(e) {
     console.log("submitLogin");
     e.preventDefault();
-    //adder meta    -> models -> constants.js
-    // login.jsx    -> authentication
-    //import * as K from "../constants";
-    /*
- const url = `${K.META_URL}/meta/environment2`;
-            axios
-              .get(url)
-              .then(response => response.data)
-              .then(data => {
-                resolve(data);
-              });
-          });
-*/
+
     //const endpoint = Config.API.HOST_NAME + "/v2/auth/login/client";
-    const endpoint = `${K.META_URL}` + "/v2/auth/login/client";
+    const endpoint = `${K.META_URL}` + "/login/client";
     const dataPackage = {
       email: this.state.existingUser.email,
       password: this.state.existingUser.password,
@@ -244,7 +235,7 @@ class Login extends React.Component {
       },
       data: dataPackage
     };
-
+    console.log("login.jsx: submitLogin: config:", config);
     axios(config)
       .then(response => {
         localStorage.setItem("token", response.data.token);

@@ -1,39 +1,21 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
-const BCrypt = require("bcrypt");
+const BCrypt = require("bcrypt");..
+
 
 const ImmutableTagLogger = require("node-common-utility").Logging
   .ImmutableTagLogger;
 
-console.log(
-  "modules:adder-models:user.js: we do have process.env variables: yes."
-);
-//console.log(process.env);
-//console.log("///////////////////////////////////////////");
-/*
-const UserConnection = mongoose.createConnection(process.env.PORTAL_DB_HOST + '/UsersDB?authSource=admin', {
-    useNewUrlParser: true,
-    useCreateIndex: true
-    
-    
-});
-*/
-
-console.log("> > > > U S I N G ::: adder-models: user.js ? ");
-
 const UserConnection = mongoose.createConnection(
-  "mongodb://localhost:27017" + "/UsersDB?authSource=admin",
+  `${process.env.PORTAL_DB_HOST}/UsersDB?authSource=admin`,
   {
+    user: process.env.PORTAL_DB_USER,
+    pass: process.env.PORTAL_DB_PASS,
     useNewUrlParser: true,
     useCreateIndex: true
   }
 );
-//
-// removed these 3rd and 4th parameters from const UserConnection...above.
-//  user: String(process.env.PORTAL_DB_USER),
-//     pass: String(process.env.PORTAL_DB_PASS)
-//
 
 const UserSchema = new Schema(
   {

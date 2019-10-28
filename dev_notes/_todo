@@ -1731,5 +1731,64 @@ What is needed for MVP?
 
   TODO TASKS:
   - mongodb on desktop? 
+    install:
+    windows: CMD: C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe
   - local does not have styling ? should. 
-  
+
+PROBLEM: seeing change results in files for 'adder-models' is not happening I think because they get 'installed' as npm modules. 
+
+
+UI: now the login background lingers on navigation to 3d tool.
+/////////////////////////////////
+
+ok weird shit: got the 'withRouter' should not appear 'outside' Router...error. 
+  : After successful login  and after commenting out some logs that should have been ok. 
+
+  to fix: rm -rf node_modules   npm install nodemon -g  cleared Application Cache  
+  // Why though? 
+
+  Then re-register b.forte@addermobile throws error: 
+    Unhandled Rejection (TypeError): this.registrationCreateClient is not a function
+    C:/Users/Bayon/projects/3d-tool-v2/src/authentication/login.jsx:197
+===================================================================
+    WINDOWS PROCESSS ON PORT 
+    CMD: 
+     netstat -aon | gawk ' $2~/:3000/ { print $5 } '
+    tasklist 
+    taskkill /F /PID pid_number
+
+        taskkill /F /PID 9084
+ =========================================================================
+ ATTEMPT TO CREATE A NEW USER: !!! 
+×
+Unhandled Rejection (TypeError): this.registrationCreateClient is not a function
+(anonymous function)
+C:/Users/Bayon/projects/3d-tool-v2/src/authentication/login.jsx:198
+  195 | if (data.success) {
+  196 |   localStorage.setItem("token", data.token);
+  197 |   // console.log("what is this:", this);
+> 198 |   this.registrationCreateClient(data.token);
+      | ^  199 | } else {
+  200 |   alert("It appears as though that email is already in use!");
+  201 | }
+
+  /////////////////////////
+  meta_server.310  promise rejection
+  trying: User.findOne
+meta_server: trying isCorrectClientPassword
+(node:9404) UnhandledPromiseRejectionWarning: Error: Require key
+    at Object.jwt_encode [as encode] (C:\Users\Bayon\projects\3d-tool-v2\node_modules\jwt-simple\lib\jwt.js:123:11)
+    at C:\Users\Bayon\projects\3d-tool-v2\meta_server.js:310:19
+(node:9404) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:9404) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+//////
+Login Bugs: 
+Forgot Password not working Yet:
+
+
+Successful Registration stays on login page. 
+
+DID not like my SMTP credentials for recover password forgot password. 
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials i62sm6708311ywi.102 - gsmtp
