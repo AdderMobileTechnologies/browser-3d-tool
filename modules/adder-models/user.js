@@ -9,8 +9,18 @@ const ImmutableTagLogger = require("node-common-utility").Logging.ImmutableTagLo
 console.log("modules:adder-models:user.js: ")
 console.log(process.env);
 console.log("///////////////////////////////////////////")
-
+/*
 const UserConnection = mongoose.createConnection(process.env.PORTAL_DB_HOST + '/UsersDB?authSource=admin', {
+    useNewUrlParser: true,
+    useCreateIndex: true
+    
+    
+});
+*/
+
+console.log("> > > > U S I N G ::: adder-models: user.js ? ")
+
+const UserConnection = mongoose.createConnection("http://mongodb:27017" + '/UsersDB?authSource=admin', {
     useNewUrlParser: true,
     useCreateIndex: true
     

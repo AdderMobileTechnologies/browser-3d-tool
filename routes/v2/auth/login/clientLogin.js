@@ -19,7 +19,7 @@
 
 const router = require('express').Router();
 const jwt = require("jwt-simple");
-
+console.log("U S I N G   clientLogin.js ??? in relation to findOne for User.??")
 const HTTPStatusCodes = require("node-common-utility").Constants.HTTPStatusCodes;
 const User = require("adder-models").User;
 const Client = require("adder-models").Client;

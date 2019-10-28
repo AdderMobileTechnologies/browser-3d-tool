@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+console.log("> > > > U S I N G ::: adder-models: apiKey.js ? ")
 const connection = mongoose.createConnection(process.env.PORTAL_DB_HOST + "/APIDB?authSource=admin", {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    user: String(process.env.PORTAL_DB_USER),
-    pass: String(process.env.PORTAL_DB_PASS)
+    useCreateIndex: true
+   
 });
 
 const APIKeySchema = new Schema({

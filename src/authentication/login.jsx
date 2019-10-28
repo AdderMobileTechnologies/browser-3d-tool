@@ -188,7 +188,7 @@ class Login extends React.Component {
     };
 
     //const endpoint = Config.API.HOST_NAME + "/auth/register";
-    const endpoint = "Config.API.HOST_NAME" + "/auth/register";
+    const endpoint = "http://localhost:8001" + "/auth/register";
     
     fetch(endpoint,{
         method: "POST",

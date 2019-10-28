@@ -1,12 +1,11 @@
 require("dotenv").config();
 const mongoose = require('mongoose');
 const Schema = require("mongoose").Schema;
-
+console.log("U S I N G   adder-model :: client.js ");
 const users = mongoose.createConnection(process.env.PORTAL_DB_HOST + '/UsersDB?authSource=admin', {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    user: String(process.env.PORTAL_DB_USER),
-    pass: String(process.env.PORTAL_DB_PASS)
+    useCreateIndex: true
+    
 });
 
 const PrimaryContact = new Schema({
