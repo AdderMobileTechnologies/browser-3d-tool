@@ -1,0 +1,579 @@
+Bayon@DESKTOP-Q40MQJN MINGW64 ~
+$ cd projects/3d-tool-v2/
+
+Bayon@DESKTOP-Q40MQJN MINGW64 ~/projects/3d-tool-v2 (dev-login)
+$ node meta_server.js
+SERVER:config.js
+Your env var is smtp.gmail.com
+U S I N G   adder-model :: client.js
+modules:adder-models:user.js:
+{
+  ACLOCAL_PATH: '/mingw64/share/aclocal:/usr/share/aclocal',
+  ALLUSERSPROFILE: 'C:\\ProgramData',
+  API_URL: 'http://dbdev.adder.io',
+  APPDATA: 'C:\\Users\\Bayon\\AppData\\Roaming',
+  ChocolateyInstall: 'C:\\ProgramData\\chocolatey',
+  ChocolateyLastPathUpdate: '132078115106106616',
+  COMMONPROGRAMFILES: 'C:\\Program Files\\Common Files',
+  'CommonProgramFiles(x86)': 'C:\\Program Files (x86)\\Common Files',
+  CommonProgramW6432: 'C:\\Program Files\\Common Files',
+  COMPUTERNAME: 'DESKTOP-Q40MQJN',
+  COMSPEC: 'C:\\Windows\\system32\\cmd.exe',
+  CONFIG_SITE: '/mingw64/etc/config.site',
+  DISPLAY: 'needs-to-be-defined',
+  DriverData: 'C:\\Windows\\System32\\Drivers\\DriverData',
+  EXEPATH: 'C:\\Program Files\\Git',
+  FPS_BROWSER_APP_PROFILE_STRING: 'Internet Explorer',
+  FPS_BROWSER_USER_PROFILE_STRING: 'Default',
+  HOME: 'C:\\Users\\Bayon',
+  HOMEDRIVE: 'C:',
+  HOMEPATH: '\\Users\\Bayon',
+  HOSTNAME: 'DESKTOP-Q40MQJN',
+  INFOPATH: '/usr/local/info:/usr/share/info:/usr/info:/share/info',
+  LANG: 'en_US.UTF-8',
+  LOCALAPPDATA: 'C:\\Users\\Bayon\\AppData\\Local',
+  LOGONSERVER: '\\\\DESKTOP-Q40MQJN',
+  MANPATH: '/mingw64/local/man:/mingw64/share/man:/usr/local/man:/usr/share/man:
+/usr/man:/share/man',
+  META_URL: '"http://localhost:8001",',
+  MINGW_CHOST: 'x86_64-w64-mingw32',
+  MINGW_PACKAGE_PREFIX: 'mingw-w64-x86_64',
+  MINGW_PREFIX: '/mingw64',
+  MSYSTEM: 'MINGW64',
+  MSYSTEM_CARCH: 'x86_64',
+  MSYSTEM_CHOST: 'x86_64-w64-mingw32',
+  MSYSTEM_PREFIX: '/mingw64',
+  NODEMAILER_PASS: 'Sharedacces$1#',
+  NODEMAILER_SMTP_HOST: 'smtp.gmail.com',
+  NODEMAILER_SMTP_PORT: '465',
+  NODEMAILER_USER: 'no-reply@addermobile.com',
+  NUMBER_OF_PROCESSORS: '6',
+  OLDPWD: '/c/Users/Bayon',
+  OneDrive: 'C:\\Users\\Bayon\\OneDrive',
+  ORIGINAL_PATH: 'C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\u
+sr\\bin;C:\\Users\\Bayon\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\Windows\\sy
+stem32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPow
+erShell\\v1.0;C:\\Windows\\System32\\OpenSSH;C:\\Program Files\\NVIDIA Corporati
+on\\NVIDIA NGX;C:\\Program Files\\nodejs;C:\\ProgramData\\chocolatey\\bin;C:\\Pr
+ogram Files (x86)\\Yarn\\bin;C:\\Program Files\\Git\\cmd;C:\\Users\\Bayon\\AppDa
+ta\\Local\\Microsoft\\WindowsApps;C:\\Users\\Bayon\\AppData\\Local\\Programs\\Mi
+crosoft VS Code\\bin;C:\\Users\\Bayon\\AppData\\Roaming\\npm;C:\\Users\\Bayon\\A
+ppData\\Local\\Yarn\\bin',
+  ORIGINAL_TEMP: '/tmp',
+  ORIGINAL_TMP: '/tmp',
+  OS: 'Windows_NT',
+  PATH: 'C:\\Users\\Bayon\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program
+Files\\Git\\usr\\local\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\
+Git\\usr\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\
+bin;C:\\Users\\Bayon\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\Windows\\system
+32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerSh
+ell\\v1.0;C:\\Windows\\System32\\OpenSSH;C:\\Program Files\\NVIDIA Corporation\\
+NVIDIA NGX;C:\\Program Files\\nodejs;C:\\ProgramData\\chocolatey\\bin;C:\\Progra
+m Files (x86)\\Yarn\\bin;C:\\Program Files\\Git\\cmd;C:\\Users\\Bayon\\AppData\\
+Local\\Microsoft\\WindowsApps;C:\\Users\\Bayon\\AppData\\Local\\Programs\\Micros
+oft VS Code\\bin;C:\\Users\\Bayon\\AppData\\Roaming\\npm;C:\\Users\\Bayon\\AppDa
+ta\\Local\\Yarn\\bin;C:\\Program Files\\Git\\usr\\bin\\vendor_perl;C:\\Program F
+iles\\Git\\usr\\bin\\core_perl',
+  PATHEXT: '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC',
+  PKG_CONFIG_PATH: '/mingw64/lib/pkgconfig:/mingw64/share/pkgconfig',
+  PLINK_PROTOCOL: 'ssh',
+  PROCESSOR_ARCHITECTURE: 'AMD64',
+  PROCESSOR_IDENTIFIER: 'Intel64 Family 6 Model 158 Stepping 10, GenuineIntel',
+  PROCESSOR_LEVEL: '6',
+  PROCESSOR_REVISION: '9e0a',
+  ProgramData: 'C:\\ProgramData',
+  PROGRAMFILES: 'C:\\Program Files',
+  'ProgramFiles(x86)': 'C:\\Program Files (x86)',
+  ProgramW6432: 'C:\\Program Files',
+  PS1: '\\[\\033]0;$TITLEPREFIX:$PWD\\007\\]\\n\\[\\033[32m\\]\\u@\\h \\[\\033[3
+5m\\]$MSYSTEM \\[\\033[33m\\]\\w\\[\\033[36m\\]`__git_ps1`\\[\\033[0m\\]\\n$ ',
+  PSModulePath: 'C:\\Program Files\\WindowsPowerShell\\Modules;C:\\Windows\\syst
+em32\\WindowsPowerShell\\v1.0\\Modules',
+  PUBLIC: 'C:\\Users\\Public',
+  PWD: '/c/Users/Bayon/projects/3d-tool-v2',
+  SESSIONNAME: 'Console',
+  SHELL: 'C:\\Program Files\\Git\\usr\\bin\\bash.exe',
+  SHLVL: '1',
+  SSH_ASKPASS: '/mingw64/libexec/git-core/git-gui--askpass',
+  SYSTEMDRIVE: 'C:',
+  SYSTEMROOT: 'C:\\Windows',
+  TEMP: 'C:\\Users\\Bayon\\AppData\\Local\\Temp',
+  TMP: 'C:\\Users\\Bayon\\AppData\\Local\\Temp',
+  TMPDIR: 'C:\\Users\\Bayon\\AppData\\Local\\Temp',
+  USERDOMAIN: 'DESKTOP-Q40MQJN',
+  USERDOMAIN_ROAMINGPROFILE: 'DESKTOP-Q40MQJN',
+  USERNAME: 'Bayon',
+  USERPROFILE: 'C:\\Users\\Bayon',
+  WINDIR: 'C:\\Windows',
+  _: '/usr/bin/winpty'
+}
+///////////////////////////////////////////
+> > > > U S I N G ::: adder-models: user.js ?
+> > > > U S I N G ::: adder-models: apiKey.js ?
+App running on port 8001
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\campaign.js:6:37)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 27)
+(node:7300) [DEP0018] DeprecationWarning: Unhandled promise rejections are depre
+cated. In the future, promise rejections that are not handled will terminate the
+ Node.js process with a non-zero exit code.
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\clientFixedPointGeofence.js:6:37)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 28)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\clientGeofence.js:6:37)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 29)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\geoset.js:6:35)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 30)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\route.js:5:35)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 31)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\client.js:5:24)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 32)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\user.js:23:33)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 33)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\driver.js:5:36)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 34)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\tempUser.js:29:24)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 35)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\apiKey.js:4:29)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 36)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\billboard.js:23:29)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 37)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\coupon.js:24:26)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 38)
+(node:7300) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connectio
+n string
+    at parseConnectionString (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mo
+ngodb\lib\core\uri_parser.js:507:21)
+    at connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb\lib\oper
+ations\connect.js:268:3)
+    at ConnectOperation.execute (C:\Users\Bayon\projects\3d-tool-v2\node_modules
+\mongodb\lib\operations\connect.js:191:5)
+    at executeOperation (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongodb
+\lib\operations\execute_operation.js:83:26)
+    at MongoClient.connect (C:\Users\Bayon\projects\3d-tool-v2\node_modules\mong
+odb\lib\mongo_client.js:216:10)
+    at C:\Users\Bayon\projects\3d-tool-v2\node_modules\mongoose\lib\connection.j
+s:632:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (C:\Users\Bayon\projects\3d-tool-v2\n
+ode_modules\mongoose\lib\connection.js:629:19)
+    at Mongoose.createConnection (C:\Users\Bayon\projects\3d-tool-v2\node_module
+s\mongoose\lib\index.js:274:17)
+    at Object.<anonymous> (C:\Users\Bayon\projects\3d-tool-v2\node_modules\adder
+-models\maftigerGeofence.js:24:26)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:643:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:556:12)
+    at Module.require (internal/modules/cjs/loader.js:683:19)
+    at require (internal/modules/cjs/helpers.js:16:16)
+(node:7300) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This
+error originated either by throwing inside of an async function without a catch
+block, or by rejecting a promise which was not handled with .catch(). (rejection
+ id: 39)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
