@@ -1,3 +1,13 @@
+Brief:
+    1) find the location of mongodb on the computer.
+    2) find the config 
+    3) start mongo with --port --authenticationDatabase --username  
+        Know the password.
+    
+* the config is a yaml file , all spaces and indentions are crucial. 
+
+
+
 LOCATION:
 C:\Program Files\MongoDB\Server\4.2\bin
 
