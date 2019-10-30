@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
-const BCrypt = require("bcrypt");..
+const BCrypt = require("bcrypt");
 
 
 const ImmutableTagLogger = require("node-common-utility").Logging

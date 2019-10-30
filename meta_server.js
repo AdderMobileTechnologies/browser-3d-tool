@@ -378,7 +378,7 @@ app.post("/auth/register", async function(req, res) {
   console.log("req.body.email:", req.body.email);
 
   try {
-    console.log("User model: User: Does Exist: yes");
+    console.log("User model: User: Does Exist: yes or no");
     console.log(
       "spot 1.2 not returning await User.findOne({email: req.body.email});"
     );
@@ -585,10 +585,14 @@ app.post("/auth/register", async function(req, res) {
             "A(n) " +
               err.constructor.name +
               " error occurred while attempting to send" +
-              " verification email. Rollback is required."
+              " verification email. Rollback (is/would normally be ) required."
           );
+          /*
+          COMMENTED OUT THESE LINES FOR DEV ONLY::: 
+          I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
           res.statusMessage = err.message;
-          return res.status(500).json({ msg: err.message });
+*/
+         //DEV ONLY: return res.status(500).json({ msg: err.message });
         }
 
         const token = jwt.encode(user, "key");
