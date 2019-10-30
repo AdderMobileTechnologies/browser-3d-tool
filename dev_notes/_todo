@@ -1792,3 +1792,7 @@ Successful Registration stays on login page.
 DID not like my SMTP credentials for recover password forgot password. 
 Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials i62sm6708311ywi.102 - gsmtp
+
+
+// Use Compass for mongo DB management. 
+// Learn what Brandon ran on Windows PowerShell to monitor MongoDB activity. 
