@@ -67,23 +67,23 @@ const logger = new ImmutableTagLogger("SYSTEM");
 ////////////////////////////////////////////////
 
 const FRONTEND_HOST = process.env.FRONTEND_HOST;
-/*
-const nodemailerOptions = {
-  host: process.env.NODEMAILER_SMTP_HOST,
-  port: Number(process.env.NODEMAILER_SMTP_PORT),
-  secure: true,
-  auth: {
-    user: process.env.NODEMAILER_USER,
-    pass: process.env.NODEMAILER_PASS
-  }
-};
-*/
-//const ImmutableTagLogger = require("node-common-utility").Logging
-// .ImmutableTagLogger;
-// const HTTPStatusCodes = require("node-common-utility").Constants
-//   .HTTPStatusCodes;
+// /*
+// const nodemailerOptions = {
+//   host: process.env.NODEMAILER_SMTP_HOST,
+//   port: Number(process.env.NODEMAILER_SMTP_PORT),
+//   secure: true,
+//   auth: {
+//     user: process.env.NODEMAILER_USER,
+//     pass: process.env.NODEMAILER_PASS
+//   }
+// };
+// */
+// //const ImmutableTagLogger = require("node-common-utility").Logging
+// // .ImmutableTagLogger;
+// // const HTTPStatusCodes = require("node-common-utility").Constants
+// //   .HTTPStatusCodes;
 
-//let transporter = nodemailer.createTransport(nodemailerOptions);
+// //let transporter = nodemailer.createTransport(nodemailerOptions);
 
 //////////////////////////////////////////////
 //region Configure Middleware
