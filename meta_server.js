@@ -585,14 +585,18 @@ app.post("/auth/register", async function(req, res) {
             "A(n) " +
               err.constructor.name +
               " error occurred while attempting to send" +
-              " verification email. Rollback (is/would normally be ) required."
+              " verification email. Rollback is required."
           );
           /*
-          COMMENTED OUT THESE LINES FOR DEV ONLY::: 
-          I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
-          res.statusMessage = err.message;
-*/
-         //DEV ONLY: return res.status(500).json({ msg: err.message });
+            //DEV ONLY:  COMMENTED OUT THESE LINES FOR DEV ONLY::: 
+            I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
+            res.statusMessage = err.message;
+            return res.status(500).json({ msg: err.message });
+          */
+         
+         res.statusMessage = err.message;
+         return res.status(500).json({ msg: err.message });
+
         }
 
         const token = jwt.encode(user, "key");
