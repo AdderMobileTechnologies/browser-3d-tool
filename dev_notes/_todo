@@ -1796,3 +1796,10 @@ Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more a
 
 // Use Compass for mongo DB management. 
 // Learn what Brandon ran on Windows PowerShell to monitor MongoDB activity. 
+
+Thur: 10-31-2019:
+The results from pull down dev-login-new branch:
+ meta_server.js               | 14 +++++++++++---
+ modules/adder-models/user.js |  2 +-
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
