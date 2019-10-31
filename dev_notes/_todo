@@ -1826,3 +1826,4 @@ create new branch off of dev-login-new for route-cleanup
     
 
   
+error in the User class when trying to save new client/user.
