@@ -311,7 +311,7 @@ app.post("/auth/register", async function(req, res) {
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );
-
+  console.log("meta_server:/auth/register/:email:", req.body.email);
   let userLookupResult = null;
 
   // First we want to check and see if the user is already registered as something else.
@@ -520,8 +520,14 @@ app.post("/auth/register", async function(req, res) {
             return res.status(500).json({ msg: err.message });
           */
 
-          res.statusMessage = err.message;
-          return res.status(500).json({ msg: err.message });
+          let DEV_WORK = true;
+          if (DEV_WORK) {
+            // res.statusMessage = err.message;
+            // return res.status(500).json({ msg: err.message });
+          } else {
+            res.statusMessage = err.message;
+            return res.status(500).json({ msg: err.message });
+          }
         }
 
         const token = jwt.encode(user, "key");
