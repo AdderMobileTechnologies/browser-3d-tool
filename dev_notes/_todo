@@ -1802,4 +1802,27 @@ The results from pull down dev-login-new branch:
  meta_server.js               | 14 +++++++++++---
  modules/adder-models/user.js |  2 +-
  2 files changed, 12 insertions(+), 4 deletions(-)
+----------------------------------------------------------------------------------------------------------------------
+ALL WORKING except for Google SMTP credentials. 
+Thur 10-31-2019 10:35am 
+commit 663b8071ffc22149725612e9034be8949e83a593 (HEAD -> dev-login-new, origin/dev-login-new)
+Author: B.Forte <b.forte@addermobile.com>
+Date:   Thu Oct 31 10:34:29 2019 -0400
 
+    everything appears to be working as far as the login authentication process is concerned except for the email access to google SMTP.
+
+-----------------------------------------------------------------------------------------------------------------------
+Questions: 
+  Does MongoDB need to be set up on dbdev.adder.io ? 
+  Is there other functionality we need?
+  What code cleanup do we want to do? 
+ 
+ * moved Notes about MVP to _mvp_notes under 'dev_notes' dir in repo.
+ mongo appears to be installed on dbdev.adder.io 
+ however I have not successfully accessed it yet. 
+
+      
+create new branch off of dev-login-new for route-cleanup
+    
+
+  

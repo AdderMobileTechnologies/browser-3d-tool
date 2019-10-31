@@ -1,0 +1,70 @@
+
+What is needed for MVP, part II ? 
+1) Login and Registration via meta_server.js as API.
+   
+    A) Can create new user 
+    B) Existing User can login 
+    C) The  'forgot password' feature should work but, needs to be checked again after google SMTP credentials/configurations are fixed.
+    D) It is currently styled exactly like the 'web portal'. That may be ok or we may want to alter it.
+
+  
+2) The Tool 
+  A) What user deliverables are produced? 
+    1) They can create a scene with their branding image applied to either vehicles or billboards.
+    2) They can then download an image of the current scene.
+    3) They can email the scene to someone. 
+
+  B) What features of the tool are there to create this scene? 
+    1) Can create a scene with any combination of 'Ad Types' such as 'billboard' or 'vehicles'.
+    2) Each individual surface of these 'ad type models' can be edited by adding an image.
+      i. The image can be edited in the 'Image Editor' by cropping, adding filters, etc. 
+      ii. The image can be scaled in size on the surface of the model. 
+      iii. The image can be positioned horizontally on the surface.
+      iv. The image can be positioned vertically on the surface.
+    3) The 'ad type models' can be positioned both along the X and Z axis, ie. back and forward, left to right.
+      They can also rotate on the Y axis. 
+
+    4) Tool behavior:
+      There are certain ways the tool behaves that a user would intuitively expect.
+      i. The selection panel for modifying the model automatically is bound to the currently selected model.
+        It can be hidden or shown by the user by toggling the gear icon. 
+      ii. The camera automatically focuses on the selected model and follows it as the user changes its position. 
+      iii. Once the user has everything positioned and graphically designed , they can move the view and focus of 
+      the camera to get the camera angle they want for the 'shot' or screen capture.
+      iv. When the user changes between 'ad types' ie. billboards and vehicles, the sidebar selection illustration and buttons change as well. 
+      v. The user can 'undo' and 'redo' most of their actions. ie. adding a model, adding an image.
+          However, there are some actions that have not yet been added to this 'redo/undo' functionality.
+          For example, any of the 'actions' in the selection panel ie. positioning, rotating the model, or editing the image on the model surface. 
+
+    5) Other features:
+      i. The user can download the current view on screen as a jpeg image. 
+      ii. The user can save their current settings for the design including a history of 'undo/redo' actions, images used, and any thumbnail screenshots that were taken.
+      iii. The user can email the current screen to someone via the share button. 
+
+
+    6) Features that will likely be desired in future versions or for this MVP. 
+        - larger selection of models for ad types. 
+        - greater tracking of user 'undo/redo' actions. 
+        - Ability to add,remove, position, 'non-ad-type' models.
+        - ability to animate 'ad-type scene and export as short movie clip. 
+        - greater control over environmental aspects. ie. light sources, light positioning, materials on 'non-ad-type' models. 
+        - the ability to import a previously created scene and continue working on it. 
+           As well as, the ability to scroll through a list of previously created designs,
+        - The ability to export higher quality versions of 'all' screenshots. 
+        - The ability to share on social media. 
+       
+
+
+Additional Existing Features: 
+  - The user can change between 'environment/scenes' 
+  - The user can add a 'Rain' particle emitter.
+
+
+Additional Future Improvements:
+  - a greater selection of 'environments' to choose from.
+  - more control over the particle emitter. 
+
+
+
+  
+      
