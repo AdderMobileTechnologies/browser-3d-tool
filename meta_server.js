@@ -67,23 +67,18 @@ const logger = new ImmutableTagLogger("SYSTEM");
 ////////////////////////////////////////////////
 
 const FRONTEND_HOST = process.env.FRONTEND_HOST;
-// /*
-// const nodemailerOptions = {
-//   host: process.env.NODEMAILER_SMTP_HOST,
-//   port: Number(process.env.NODEMAILER_SMTP_PORT),
-//   secure: true,
-//   auth: {
-//     user: process.env.NODEMAILER_USER,
-//     pass: process.env.NODEMAILER_PASS
-//   }
-// };
-// */
-// //const ImmutableTagLogger = require("node-common-utility").Logging
-// // .ImmutableTagLogger;
-// // const HTTPStatusCodes = require("node-common-utility").Constants
-// //   .HTTPStatusCodes;
+/*
+SET UP API ROUTING LIKE IN WEB_PORTAL:
+FROM HERE: 
+app.use('/',require('./routes'));
+  takes us to /routes/index.js 
+    notes are there.
 
-// //let transporter = nodemailer.createTransport(nodemailerOptions);
+  eventually,, move all our endpoints in that direction from this file.
+
+
+
+*/
 
 //////////////////////////////////////////////
 //region Configure Middleware
@@ -154,7 +149,6 @@ app.get("/", function(req, res) {
 });
 
 app.get("/meta", function(req, res) {
-  console.log("/meta/");
   fs.readFile("meta_data.meta", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
@@ -162,7 +156,6 @@ app.get("/meta", function(req, res) {
 });
 
 app.get("/meta/ad_types/", function(req, res) {
-  console.log("/meta/ad_types/");
   fs.readFile("meta_data/ad_types.meta", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
@@ -170,7 +163,6 @@ app.get("/meta/ad_types/", function(req, res) {
 });
 
 app.get("/meta/environment/", function(req, res) {
-  console.log("/meta/environment/");
   fs.readFile("meta_data/environment.meta", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
@@ -178,7 +170,6 @@ app.get("/meta/environment/", function(req, res) {
 });
 
 app.get("/meta/environment2/", function(req, res) {
-  console.log("/meta/environment2/");
   fs.readFile("meta_data/environment2.meta", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
@@ -186,7 +177,6 @@ app.get("/meta/environment2/", function(req, res) {
 });
 
 app.get("/meta/design/", function(req, res) {
-  console.log("/meta/design/");
   fs.readFile("meta_data/design.meta", "utf8", function(err, data) {
     if (err) throw err;
     res.send(JSON.parse(data));
@@ -221,7 +211,6 @@ app.post("/email/send/", function(req, res) {
   //------------------------------------
 });
 app.post("/design/save/", function(req, res) {
-  console.log("post: /design/save/");
   let dataString = JSON.stringify(req.body.saved_designs_array);
   fs.writeFile("SavedDesignActions.js", dataString, err => {
     // throws an error, you could also catch it here
@@ -232,11 +221,9 @@ app.post("/design/save/", function(req, res) {
   });
 });
 app.get("/design/get/", function(req, res) {
-  console.log("get: /design/get/");
   fs.readFile("SavedDesignActions.js", "utf8", function(err, data) {
     if (err) throw err;
-    console.log("data:", data);
-    console.log("type of data:", typeof data);
+
     if (data === "") {
       data = `{ foo: "bar" }`;
       res.send({ data: "empty" });
@@ -245,36 +232,8 @@ app.get("/design/get/", function(req, res) {
     }
   });
 });
-//authentication
-// post :: "/v2/auth/login/client";
 
-// TRIED TO USE THIS:
-// router.use("/client", require("./routes/v2/auth/login/clientLogin"));
-
-// app.post("/v2/auth/login/client", function(req, res) {
-//   console.log("post: /v2/auth/login/client");
-//   console.log("req.body",req.body);
-
-//    /* so far so good.
-//    req.body { email: 'bayon_forte@yahoo.com',
-//   password: 'password123',
-//   role: 'client' }
-//   ::now: what does it doe in the real api?
-
-//   */
-
-//   /*let dataString = JSON.stringify(req.body.saved_designs_array);
-//   fs.writeFile("SavedDesignActions.js", dataString, err => {
-//     // throws an error, you could also catch it here
-//     if (err) throw err;
-
-//     // success case, the file was saved
-//     console.log("data saved!");
-//   });*/
-// });
 app.post("/login/client", async function(req, res, next) {
-  console.log("meta_server.js login/client::");
-  console.log("req.body", req.body);
   let user = null;
   //let client = null;
   let { email, password } = req.body;
@@ -293,8 +252,6 @@ app.post("/login/client", async function(req, res, next) {
 
   //region Find User
   try {
-    console.log("trying: User.findOne");
-
     user = await User.findOne({ email: email }); //TypeError: User.findOne is not a function.
   } catch (err) {
     res.status(HTTPStatusCodes.INTERNAL_SERVER_ERROR).end();
@@ -305,7 +262,6 @@ app.post("/login/client", async function(req, res, next) {
     );
   }
   if (!user) {
-    console.log("meta_server: !user  ");
     res.status(HTTPStatusCodes.NOT_FOUND).end();
     return next();
   }
@@ -313,7 +269,6 @@ app.post("/login/client", async function(req, res, next) {
 
   //region Check if Users Password Is Correct
   try {
-    console.log("meta_server: trying isCorrectClientPassword");
     let isMatch = await user.isCorrectClientPassword(password);
     if (!isMatch) {
       res.status(HTTPStatusCodes.FORBIDDEN).end();
@@ -344,54 +299,34 @@ app.post("/login/client", async function(req, res, next) {
     clientid: user._id
   };
   //endregion
-  console.log("meta_server:: status code and return json");
   res.status(HTTPStatusCodes.OK).json(returnObject);
-  console.log("next middleware/ async await...");
   return next();
 });
 
 /////// /auth/register
 
 //. . . .
-/* THIS WORKED for create user .
-app.post("/auth/register", function(req,res) {
-  console.log("meta_server.js: .../auth/register:")
-  console.log("req:",req);
-})
-*/
+
 app.post("/auth/register", async function(req, res) {
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );
 
-  console.log("meta_server.js : app.post-> /auth/register  ");
-  console.log("spot 1");
   let userLookupResult = null;
-  // console.log("REGISTER BODY: ", req.body);
 
   // First we want to check and see if the user is already registered as something else.
   // If the user is registered as something else, we want to update the temp user verification and
   // update the existing user doc, rather than attempt to create new ones.
 
   logger.debug("Checking to see if user already exists in database.");
-  console.log("spot 1.1");
-  console.log("req.body.email:", req.body.email);
 
   try {
-    console.log("User model: User: Does Exist: yes or no");
-    console.log(
-      "spot 1.2 not returning await User.findOne({email: req.body.email});"
-    );
     try {
       userLookupResult = await User.findOne({ email: req.body.email });
     } catch (err) {
       console.log("try catch err for User.findOne: err:", err);
     }
-
-    console.log("spot 1.2.1");
-    console.log("userLookupResult:", userLookupResult);
   } catch (err) {
-    console.log("spot 1.3");
     logger.error(
       "A(n) " +
         err.constructor.name +
@@ -402,10 +337,8 @@ app.post("/auth/register", async function(req, res) {
     res.statusMessage = err.message;
     return res.status(500).json({ err: err });
   }
-  console.log("spot 2");
   if (userLookupResult) {
     logger.debug("Found existing user.");
-    console.log("spot 2.1");
     // A user was found. Update the docs here.
     if (
       req.body.role === "client" &&
@@ -419,7 +352,6 @@ app.post("/auth/register", async function(req, res) {
         .status(400)
         .json({ success: false, msg: "ALREADY_REGISTERED" });
     }
-    console.log("spot 2.2");
     if (
       req.body.role === "driver" &&
       typeof userLookupResult.driver_id !== "undefined" &&
@@ -435,7 +367,6 @@ app.post("/auth/register", async function(req, res) {
 
     const token = jwt.encode(userLookupResult, "key");
 
-    console.log("spot 2.3");
     if (
       req.body.role === "driver" &&
       (typeof userLookupResult.driver_id === "undefined" ||
@@ -471,7 +402,6 @@ app.post("/auth/register", async function(req, res) {
       (typeof userLookupResult.client_id === "undefined" ||
         !userLookupResult.client_id)
     ) {
-      console.log("spot 2.4");
       logger.debug("Attempting to register as client.");
       logger.debug("Assigning hash to user.");
       userLookupResult.hash = req.body.password;
@@ -497,7 +427,6 @@ app.post("/auth/register", async function(req, res) {
       }
     }
   }
-  console.log("spot 3");
   let vtoken = rand.generate(16);
 
   const tempUser = new TempUser({
@@ -510,7 +439,6 @@ app.post("/auth/register", async function(req, res) {
 
   let newUser = null;
   if (req.body.role === "client") {
-    console.log("spot 3.1");
     newUser = new User({
       email: req.body.email,
       hash: req.body.password,
@@ -530,7 +458,6 @@ app.post("/auth/register", async function(req, res) {
     });
   }
   logger.debug("Created User document");
-  console.log("spot 3.2");
   tempUser.save(function(err, tempUser) {
     if (err) {
       logger.error(
@@ -549,7 +476,6 @@ app.post("/auth/register", async function(req, res) {
     newUser.save(function(err, user) {
       if (err) {
         //TODO: ROLLBACK LOGIC
-        console.log("spot 4");
         logger.error(
           "A(n) " +
             err.constructor.name +
@@ -593,10 +519,9 @@ app.post("/auth/register", async function(req, res) {
             res.statusMessage = err.message;
             return res.status(500).json({ msg: err.message });
           */
-         
-         res.statusMessage = err.message;
-         return res.status(500).json({ msg: err.message });
 
+          res.statusMessage = err.message;
+          return res.status(500).json({ msg: err.message });
         }
 
         const token = jwt.encode(user, "key");
@@ -610,12 +535,7 @@ app.post("/auth/register", async function(req, res) {
       });
     });
   });
-  console.log("spot last");
 });
-
-//. . . .
-//-o-o-o-o-o-o-o-o
-// additional auth.js endpoints ::
 
 app.post("/exists", async function(req, res, next) {
   const email = String(req.body.email);
@@ -639,179 +559,7 @@ app.post("/exists", async function(req, res, next) {
     res.status(HTTPStatusCodes.NOT_FOUND).end();
   }
 });
-/* A DUPLICATE I THINK: 
-router.post("/register", async function (req, res) {
-  const logger = new ImmutableTagLogger("POST /auth/register<" + req.body.email + ">");
 
-
-  let userLookupResult = null;
-  // console.log("REGISTER BODY: ", req.body);
-
-  // First we want to check and see if the user is already registered as something else.
-  // If the user is registered as something else, we want to update the temp user verification and
-  // update the existing user doc, rather than attempt to create new ones.
-
-  logger.debug("Checking to see if user already exists in database.");
-  try {
-      userLookupResult = await User.findOne({email: req.body.email});
-  } catch (err) {
-      logger.error("A(n) " + err.constructor.name + " error occurred while attempting user lookup. No rollback is" +
-          " needed. Returning.");
-      logger.error(JSON.stringify(err, null, 4));
-      res.statusMessage = err.message;
-      return res.status(500).json({err: err});
-  }
-
-  if (userLookupResult) {
-      logger.debug("Found existing user.");
-
-      // A user was found. Update the docs here.
-      if (req.body.role === 'client' && typeof userLookupResult.client_id !== 'undefined' && userLookupResult.client_id) {
-          logger.debug("Attempting to create client account for email, but client account already exists!");
-          return res.status(400).json({success: false, msg: "ALREADY_REGISTERED"});
-      }
-
-      if (req.body.role === 'driver' && typeof userLookupResult.driver_id !== 'undefined' && userLookupResult.driver_id) {
-          logger.debug("Attempting to create driver account for email, but driver account already exists!");
-          return res.status(400).json({success: false, msg: "ALREADY_REGISTERED"});
-      }
-
-      const token = jwt.encode(userLookupResult, "key");
-
-
-      if (req.body.role === 'driver' && (typeof userLookupResult.driver_id === 'undefined' || !userLookupResult.driver_id)) {
-          logger.debug("Attempting to register as driver.");
-          logger.debug("Assigning driver hash to user.");
-          userLookupResult.driver_hash = req.body.password;
-          try {
-              await userLookupResult.save();
-              logger.debug("Successfully saved driver hash to user. Returning.");
-              return res.status(200).json({
-                  success: true,
-                  msg: "CONTINUE_REGISTER",
-                  token: token,
-                  clientId: userLookupResult._id,
-                  isVerified: userLookupResult.is_verified
-              });
-          } catch (err) {
-              logger.error("A(n) " + err.constructor.name + " occurred while attempting to update User document" +
-                  " with driver hash. No rollback is needed.");
-              res.statusMessage = err.message;
-              return res.status(500).json({err: err});
-          }
-      }
-
-      if (req.body.role === 'client' && (typeof userLookupResult.client_id === 'undefined' || !userLookupResult.client_id)) {
-          logger.debug("Attempting to register as client.");
-          logger.debug("Assigning hash to user.");
-          userLookupResult.hash = req.body.password;
-          try {
-              await userLookupResult.save();
-              logger.debug("Successfully saved hash to user. Returning.");
-              return res.json({
-                  success: true,
-                  msg: "CONTINUE_REGISTER",
-                  token: token,
-                  clientId: userLookupResult._id,
-                  isVerified: userLookupResult.is_verified
-              });
-          } catch (err) {
-              logger.error("A(n) " + err.constructor.name + " occurred while attempting to update User document" +
-                  " with hash. No rollback is needed.");
-              res.statusMessage = err.message;
-              return res.status(500).json({err: err});
-          }
-      }
-  }
-
-  let vtoken = rand.generate(16);
-
-  const tempUser = new TempUser({
-      email: req.body.email,
-      verification_token: vtoken,
-      role: req.body.role,
-      created_at: Date.now()
-  });
-  logger.debug("Created TempUser document.");
-
-  let newUser = null;
-  if (req.body.role === 'client') {
-      newUser = new User({
-          email: req.body.email,
-          hash: req.body.password,
-          role: req.body.role,
-          is_verified: false,
-          is_registered: false,
-          created_at: Date.now()
-      });
-  } else if (req.body.role === 'driver') {
-      newUser = new User({
-          email: req.body.email,
-          driver_hash: req.body.password,
-          role: req.body.role,
-          is_verified: false,
-          is_registered: false,
-          created_at: Date.now()
-      });
-  }
-  logger.debug("Created User document");
-
-  tempUser.save(function (err, tempUser) {
-      if (err) {
-          logger.error("A(n) " + err.constructor.name + " occurred while attempting to save new TempUser document." +
-              " No rollback is needed.");
-          logger.error(JSON.stringify(err, null, 4));
-          res.statusMessage = err.message;
-          return res.status(500).json({success: false, msg: err.message});
-      }
-
-      logger.debug("Successfully saved TempUser document " + tempUser._id);
-
-      newUser.save(function (err, user) {
-          if (err) {
-              //TODO: ROLLBACK LOGIC
-              logger.error("A(n) " + err.constructor.name + " occurred while attempting to save new User document." +
-                  " Rollback is needed.");
-              res.statusMessage = err.message;
-              return res.status(500).json({success: false, msg: err.message});
-          }
-
-          logger.debug("Successfully saved User document " + user._id);
-
-          logger.debug("Attempting to send verification email.");
-
-          let url = API_HOST + '/auth/email-verification/' + vtoken;
-
-          let mailOptions = {
-              from: 'Do Not Reply <no-reply@addermobile.com>',
-              to: req.body.email,
-              subject: 'Please confirm account',
-              html: 'Click the following link to confirm your account: </p><p>' + url + '</p>',
-              text: 'Please confirm your account by clicking the following link: ' + url
-          };
-
-          transporter.sendMail(mailOptions, (err, info) => {
-              if (err) {
-                  //TODO: ROLLBACK LOGIC
-                  logger.error("A(n) " + err.constructor.name + " error occurred while attempting to send" +
-                      " verification email. Rollback is required.");
-                  res.statusMessage = err.message;
-                  return res.status(500).json({msg: err.message});
-              }
-
-              const token = jwt.encode(user, "key");
-              return res.status(200).json({
-                  success: true,
-                  msg: 'Successfully created new user with email:' + user.email,
-                  token: token,
-                  clientId: user._id,
-                  isVerified: user.is_verified
-              });
-          });
-      });
-  });
-});
-*/
 app.get("/email-verification/:URL", function(req, res) {
   var token = req.params.URL;
 
@@ -1030,7 +778,6 @@ app.post("/login", function(req, res) {
 
 app.get("/forgot-password", async function(req, res, next) {
   let user;
-  console.log("meta_server.jsx:: /forgot-password:: ");
   if (typeof req.query.email === "undefined" || !req.query.email) {
     res.status(HTTPStatusCodes.BAD_REQUEST).end();
     return next(new Error(`Request was missing email in query.`));
@@ -1069,7 +816,6 @@ app.get("/forgot-password", async function(req, res, next) {
   }
 
   let url = API_HOST + "/auth/change-password/" + token;
-  console.log("using URL:", url);
   let mailOptions = {
     from: "Do Not Reply <no-reply@addermobile.com>",
     to: email,
@@ -1141,13 +887,8 @@ app.post("/change-password/:token", async function(req, res, next) {
     );
   }
 
-  console.log("Provided password", password);
-  console.log("Hash (Pre-Updated)", user.hash);
-
   user.password_token = undefined;
   user.hash = password;
-
-  console.log("Updated Hash (Pre-Save)", user.hash);
 
   try {
     user = await user.save();
@@ -1159,16 +900,13 @@ app.post("/change-password/:token", async function(req, res, next) {
       )
     );
   }
-  console.log("Updated Hash (Post-Save)", user.hash);
 
   res.status(HTTPStatusCodes.OK).end();
   return next();
 });
 
-//-o-o-o-o-o-o-o-o-o
-console.log("meta_server: spot 5");
 app.listen(8001, function() {
   console.log("App running on port 8001");
 });
-console.log("meta_server: spot 6");
+
 //module.exports = router;
