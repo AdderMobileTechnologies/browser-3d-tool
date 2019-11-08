@@ -1845,3 +1845,36 @@ C:\Program Files\MongoDB\Server\4.2\log\mongod.log
 clearing all users and temp users 
 then I can create the first user no problem...
 any subsequent users are rejected with error of same email already exists....
+
+
+Fri: 11-08-2019:
+What is the status of the MongoDB on the server? 
+  - I believe Brandon said we are going to have a completely separate instance for the 3d Tool. 
+    - What will need to be done to make sure one is installed that is separate from the existing DB? 
+    http://www.alphadevx.com/a/491-Running-two-MongoDB-instances-on-one-server
+    https://medium.com/@akshay2gud/creating-multiple-instances-of-mongodb-on-server-and-setting-replication-of-database-5ead59e1e4d4
+
+  - Next step would be to go look at how mongdb is currently set up on the droplet, however, because I do not 
+    know what critical services might already be using it, I'm not going to change anything for now. 
+
+Routing:
+  The routing still needs to be translated to the express router style. 
+
+MongoDB Bug:
+  There is still a bug in existing authorization process that blocks the creation of additional Users/Clients after the initial user. 
+  review the logic . 
+  login.jsx ->  const endpoint = "http://localhost:8001" + "/auth/register"; 
+    ->  I believe this is related to the FAIL of the email verification. 
+  *pretty sure that's what it is...I remember testing it by 'by-passing' the email portion.
+
+
+Testing: 
+  - could integrate some unit tests similar to the auth tests for web_api.
+
+Deployment: 
+  -https://www.digitalocean.com/community/questions/how-to-automatically-deploy-my-code-from-a-gitlab-repo-to-my-droplet 
+  GIT HOOKS: 
+  https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
+
+  https://medium.com/@francoisromain/vps-deploy-with-git-fea605f1303b
+  

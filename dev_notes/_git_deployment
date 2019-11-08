@@ -1,0 +1,69 @@
+https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
+
+Prerequisit
+    Know how to use GIT, Terminal etc.
+    Have a local working-working copy ready
+    Have SSH access to your server using private/public key
+Todos
+    Create a folder to deploy to on production server (i.e. your httpds folder)
+    Add a bare repository on the productions server
+    Add the post-receive hook script to the bare repository (and make it executable)
+    Add the remote-repository resided on the production server to your local repository
+    Push to the production server, relax.
+
+    Todos
+    Create a folder to deploy to on production server (i.e. your httpds folder)
+        $ ssh user@server.com
+        $ mkdir ~/deploy-folder
+
+    Add a bare repository on the productions server
+        $ git init --bare ~/project.git
+    Add the post-receive hook script to the bare repository (and make it executable)
+        chmod +x post-receive
+    Add the remote-repository resided on the production server to your local repository
+        $ cd ~/path/to/working-copy/
+        $ git remote add production demo@yourserver.com:project.git
+    Push to the production server, relax.
+        $ git push production master
+
+
+
+//---- post-receive script ------------------
+#!/bin/bash
+TARGET="/home/webuser/deploy-folder"
+GIT_DIR="/home/webuser/www.git"
+BRANCH="master"
+
+while read oldrev newrev ref
+do
+	# only checking out the master (or whatever branch you would like to deploy)
+	if [ "$ref" = "refs/heads/$BRANCH" ];
+	then
+		echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
+		git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH
+	else
+		echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
+	fi
+done
+
+//-------- other references:
+https://medium.com/@francoisromain/vps-deploy-with-git-fea605f1303b
+
+A post-receive script that allows for npm install ...and other pre-deploy testing,configuring....
+#!/bin/sh
+# The production directory
+TARGET="/srv/www/<your-app>"
+# A temporary directory for deployment
+TEMP="/srv/tmp/<your-app>"
+# The Git repo
+REPO="/srv/git/<your-app>.git"
+# Deploy the content to the temporary directory
+mkdir -p $TEMP
+git --work-tree=$TEMP --git-dir=$REPO checkout -f
+cd $TEMP
+# Do stuffs, like npm install…
+# Replace the production directory
+# with the temporary directory
+cd /
+rm -rf $TARGET
+mv $TEMP $TARGET
