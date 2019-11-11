@@ -439,6 +439,7 @@ app.post("/auth/register", async function(req, res) {
 
   let newUser = null;
   if (req.body.role === "client") {
+    console.log(" req.body.role == 'client' newUser:");
     newUser = new User({
       email: req.body.email,
       hash: req.body.password,
@@ -447,6 +448,7 @@ app.post("/auth/register", async function(req, res) {
       is_registered: false,
       created_at: Date.now()
     });
+    console.log("newUser:", newUser);
   } else if (req.body.role === "driver") {
     newUser = new User({
       email: req.body.email,
@@ -474,6 +476,8 @@ app.post("/auth/register", async function(req, res) {
     logger.debug("Successfully saved TempUser document " + tempUser._id);
 
     newUser.save(function(err, user) {
+      console.log("meta_server.js :: newUser.save(function(err, user)){}");
+      console.log("user:", user);
       if (err) {
         //TODO: ROLLBACK LOGIC
         logger.error(

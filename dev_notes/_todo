@@ -1866,6 +1866,41 @@ MongoDB Bug:
   login.jsx ->  const endpoint = "http://localhost:8001" + "/auth/register"; 
     ->  I believe this is related to the FAIL of the email verification. 
   *pretty sure that's what it is...I remember testing it by 'by-passing' the email portion.
+  ! STOP: not sure after all, it IS currently being by-passed and still NOT working properly.
+    meta_server.js MESSAGE:
+      App running on port 8001
+      meta_server:/auth/register/:email: bayon@forteworks.com
+      2019-11-08T12:31:55.148Z   <ERROR> [POST /auth/register<bayon@forteworks.com>] A(n) MongoError occurred while attempting 
+      to save new User document. Rollback is needed.
+    login.jsx
+    UIALERT: 'It appears as though that email is already in use!' 
+      steps: it DOES create the tempUser but then fails to create The User.
+      //new attempt:
+
+
+      //console error:
+      POST http://localhost:8001/auth/register 500 (E11000 duplicate key error collection: 
+      UsersDB.Users index: client_id_1 dup key: { client_id: null })
+
+      //server error: and logs:
+      App running on port 8001
+      meta_server:/auth/register/:email: jack@jackinc.com
+      req.body.role == 'client' newUser:
+      newUser: {
+        _id: 5dc5a9010db99f106c8c2056,
+        email: 'jack@jackinc.com',
+        hash: 'password123',
+        role: 'client',
+        is_verified: false,
+        is_registered: false,
+        created_at: 2019-11-08T17:42:25.620Z
+      }
+      meta_server.js :: newUser.save(function(err, user)){}
+      user: undefined
+    //so what does this mean:? 
+    a Problem in the User->save() method.
+
+    Need to look at 'presave' methods and the LOG for the immutablelog . 
 
 
 Testing: 
@@ -1877,4 +1912,3 @@ Deployment:
   https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
 
   https://medium.com/@francoisromain/vps-deploy-with-git-fea605f1303b
-  
