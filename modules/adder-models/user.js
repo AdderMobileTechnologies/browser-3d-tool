@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 const BCrypt = require("bcrypt");
 
-
 const ImmutableTagLogger = require("node-common-utility").Logging
   .ImmutableTagLogger;
 
@@ -89,15 +88,20 @@ const UserSchema = new Schema(
 
 //region General Usage Middleware
 const userPreSaveUpdatedAtMiddleware = async function(next) {
+  console.log("API: MODEL : user.js : 1");
+  console.log("this._id:", this._id);
   const logger = new ImmutableTagLogger(
     "UserSchema.pre('save')<" + this._id + ">"
   );
   this.updated_at = new Date().toISOString();
+  console.log("API: MODEL : user.js : 1.1");
   if (this.isNew) {
+    console.log("API: MODEL : user.js : 1.2");
     logger.debug("created_at field successfully generated.");
     this.created_at = new Date().toISOString();
   }
   logger.debug("updated_at field successfully generated.");
+  console.log("API: MODEL : user.js : 1.3");
   return next();
 };
 //endregion
@@ -107,6 +111,7 @@ UserSchema.methods.upgradeDriverAccount = async function(
   newPassword,
   hashedPassword
 ) {
+  console.log("API: MODEL : user.js : 2");
   if (!this.old_password) {
     return true;
   }
@@ -127,6 +132,7 @@ UserSchema.methods.upgradeDriverAccount = async function(
 };
 UserSchema.methods.isCorrectDriverPassword = async function(password) {
   try {
+    console.log("API: MODEL : user.js : 3");
     return await bcryptComparePassword(password, this.driver_hash);
   } catch (err) {
     throw err;
@@ -134,6 +140,7 @@ UserSchema.methods.isCorrectDriverPassword = async function(password) {
 };
 UserSchema.methods.isCorrectClientPassword = async function(password) {
   try {
+    console.log("API: MODEL : user.js : 4");
     return await bcryptComparePassword(password, this.hash);
   } catch (err) {
     throw err;
@@ -148,6 +155,7 @@ UserSchema.methods.comparePassword = async function(
   hashedPassword,
   callback
 ) {
+  console.log("API: MODEL : user.js : 5");
   const logger = new ImmutableTagLogger(
     "UserSchema.comparePassword()<" + uid + ">"
   );
@@ -181,6 +189,7 @@ UserSchema.methods.comparePassword = async function(
       }
     }
     try {
+      console.log("API: MODEL : user.js : 6");
       let isMatch = await bcryptComparePassword(password, this.driver_hash);
       return callback(null, isMatch);
     } catch (err) {
@@ -188,6 +197,7 @@ UserSchema.methods.comparePassword = async function(
     }
   } else if (role && role === "client") {
     if (hashedPassword) {
+      console.log("API: MODEL : user.js : 7");
       logger.debug("Passed hashedPassword, attempting account upgrade");
       // A hashed password was provided. Should we do a check?
       if (typeof this.old_password !== "undefined" && this.old_password) {
@@ -217,6 +227,7 @@ UserSchema.methods.comparePassword = async function(
       }
     }
     try {
+      console.log("API: MODEL : user.js : 8");
       logger.debug("Beginning password compare: " + password);
       let isMatch = await bcryptComparePassword(password, this.hash);
       return callback(null, isMatch);
@@ -229,12 +240,15 @@ UserSchema.methods.comparePassword = async function(
 
 //region Pre-Save Hook And Handler Middleware
 const driverPreSaveMiddleware = async function(next) {
+  console.log("API: MODEL : user.js : 9");
   const logger = new ImmutableTagLogger(
     "UserSchema.pre('save')<" + this._id + ">"
   );
 
   if (typeof this.driver_hash !== "undefined" && this.driver_hash) {
+    console.log("API: MODEL : user.js : 10");
     if (this.isModified("driver_hash") || this.isNew) {
+      console.log("API: MODEL : user.js : 11");
       logger.debug("Driver with updated or new driver_hash has been detected.");
       let salt;
       try {
@@ -250,6 +264,7 @@ const driverPreSaveMiddleware = async function(next) {
 
       let newHash;
       try {
+        console.log("API: MODEL : user.js : 12");
         newHash = await generateHash(this.driver_hash, salt);
       } catch (err) {
         return next({
@@ -267,14 +282,21 @@ const driverPreSaveMiddleware = async function(next) {
   return next();
 };
 const clientPreSaveMiddleware = async function(next) {
+  console.log("API: MODEL : user.js : 13");
+  console.log("API: MODEL: USER: clientPreSaveMiddleware.");
   const logger = new ImmutableTagLogger(
     "UserSchema.pre('save').clientPreSaveMiddleware()<" + this._id + ">"
   );
 
   if (typeof this.hash !== "undefined" && this.hash) {
+    console.log("API: MODEL : user.js : 14");
     logger.debug("User document already contains hash!");
+    console.log("API: MODEL: USER: User document already contains hash.");
     if (this.isModified("hash") || this.isNew) {
       logger.debug("Client with updated or new hash has been detected.");
+      console.log(
+        "API: MODEL: USER: Client with updated or new hash has been detected."
+      );
       let salt = null;
       try {
         salt = await generateSalt();
@@ -313,9 +335,11 @@ const clientPreSaveMiddleware = async function(next) {
 UserSchema.pre("save", driverPreSaveMiddleware);
 UserSchema.pre("save", clientPreSaveMiddleware);
 UserSchema.pre("save", userPreSaveUpdatedAtMiddleware);
+console.log("user.js MODEL AFTER UserSchema.pre(save,xxx)");
 //endregion
 
 function generateSalt() {
+  console.log("API: MODEL : user.js : 15");
   return new Promise((resolve, reject) => {
     BCrypt.genSalt(10, async function(err, salt) {
       if (err) {
@@ -327,6 +351,7 @@ function generateSalt() {
   });
 }
 function generateHash(origHash, salt) {
+  console.log("API: MODEL : user.js : 16");
   return new Promise((resolve, reject) => {
     BCrypt.hash(origHash, salt, async function(err, hash) {
       if (err) {
@@ -337,6 +362,7 @@ function generateHash(origHash, salt) {
   });
 }
 function bcryptComparePassword(password, hash) {
+  console.log("API: MODEL : user.js : 17");
   return new Promise((resolve, reject) => {
     BCrypt.compare(password, hash, function(err, isMatch) {
       if (err) {

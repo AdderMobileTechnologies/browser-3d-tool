@@ -1912,3 +1912,91 @@ Deployment:
   https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
 
   https://medium.com/@francoisromain/vps-deploy-with-git-fea605f1303b
+
+
+MON: 11-11-2019 
+Debuggin Mongo DB: 
+Start with the log:
+file:///C:/Program%20Files/MongoDB/Server/4.2/log/mongod.log
+The 'log' does NOT seem to be throwing any errors related to this bug. 
+FAILS HERE: 
+login.jsx registrationCreateUser(e) 
+DOING: 
+  - log out all data in that function 
+  - log out data at API endpoint
+//--- conclusions: -------------------------
+_____
+UI:
+______
+DATA 1: userData: {fullName: "mrbill", business_name: "mrbill inc", email: "mrbill@bill.com", password: "password", agreeToTerms: "on", …}
+login.jsx:182 DATA 2: dataPackage: {email: "mrbill@bill.com", password: "password", role: "client", is_verified: "false"}
+login.jsx:185 DATA 3: endpoint: http://localhost:8001/auth/register
+register:1 POST http://localhost:8001/auth/register 500 (E11000 duplicate key error collection: UsersDB.Users index: client_id_1 dup key: { client_id: null })
+login.jsx:195 DATA 4: response data: 
+_____
+API: 
+______
+App running on port 8001
+API: DATA 1 req.body: {
+  email: 'mrbill@bill.com',
+  password: 'password',
+  role: 'client',
+  is_verified: 'false'
+}
+API: TRY 1
+API: TRY 1.1
+ req.body.role == 'client' newUser:
+newUser: {
+  _id: 5dc97a9af86bb93bb85e8714,
+  email: 'mrbill@bill.com',
+  hash: 'password',
+  role: 'client',
+  is_verified: false,
+  is_registered: false,
+  created_at: 2019-11-11T15:13:30.122Z
+}
+meta_server.js :: newUser.save(function(err, user)){}
+user: undefined
+2019-11-11T10:13:30.192Z   <ERROR> [POST /auth/register<mrbill@bill.com>] A(n) MongoError occurred while attempting to save new User document. Rollback is needed.
+
+
+///////////////////////////////////////////////////////////
+CONCLUSION: 
+API diverts to create newUser 
+meta_server.js :: newUser.save(function(err, user)){}
+user: undefined
+2019-11-11T10:13:30.192Z   <ERROR> [POST /auth/register<mrbill@bill.com>] A(n) MongoError occurred while attempting to save new User document. Rollback is needed.
+
+THE UI gets this response: 
+register:1 POST http://localhost:8001/auth/register 500 (E11000 duplicate key error collection: UsersDB.Users index: client_id_1 dup key: { client_id: null })
+////////////////////////////////////////////////////////////
+
+//---------------------------------------
+  * find how this works: ImmutableTagLogger 
+
+UI BUG: 
+  - need a check on main.js for whether valid user or not.
+
+//-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o
+
+GIVEN THIS CONCLUSION: 
+///////////////////////////////////////////////////////////
+CONCLUSION: 
+API diverts to create newUser 
+meta_server.js :: newUser.save(function(err, user)){}
+user: undefined
+2019-11-11T10:13:30.192Z   <ERROR> [POST /auth/register<mrbill@bill.com>] A(n) MongoError occurred while attempting to save new User document. Rollback is needed.
+
+THE UI gets this response: 
+register:1 POST http://localhost:8001/auth/register 500 (E11000 duplicate key error collection: UsersDB.Users index: client_id_1 dup key: { client_id: null })
+////////////////////////////////////////////////////////////
+
+
+HYPOTHESIS: 
+find out why user is deemed a duplicate key of client_id == null .
+Assumption: client_id should get assigned the mongodb default _id value.
+User Model 'save' method must be experiencing the duplicate client_id key ? 
+*search for 'client_id'
+restart vscode becasue search is jacked. 
+
+BEST I CAN TELL: it is some kind of internal mongodb issue.

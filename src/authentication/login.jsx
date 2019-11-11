@@ -172,17 +172,17 @@ class Login extends React.Component {
     console.log("registrationCreateUser");
     e.preventDefault();
     let userData = this.state.registeringUser;
-
+    console.log("DATA 1: userData:", userData);
     const dataPackage = {
       email: userData.email,
       password: userData.password,
       role: "client",
       is_verified: "false"
     };
-
+    console.log("DATA 2: dataPackage:", dataPackage);
     //const endpoint = Config.API.HOST_NAME + "/auth/register";
     const endpoint = "http://localhost:8001" + "/auth/register";
-
+    console.log("DATA 3: endpoint:", endpoint);
     fetch(endpoint, {
       method: "POST",
       body: JSON.stringify(dataPackage),
@@ -192,6 +192,7 @@ class Login extends React.Component {
       }
     }).then(response => {
       response.json().then(data => {
+        console.log("DATA 4: response data:", data);
         if (data.success) {
           localStorage.setItem("token", data.token);
           // console.log("what is this:", this);

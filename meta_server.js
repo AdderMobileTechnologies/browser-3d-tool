@@ -308,10 +308,11 @@ app.post("/login/client", async function(req, res, next) {
 //. . . .
 
 app.post("/auth/register", async function(req, res) {
+  console.log("API: DATA 1 req.body:", req.body);
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );
-  console.log("meta_server:/auth/register/:email:", req.body.email);
+  //console.log("meta_server:/auth/register/:email:", req.body.email);
   let userLookupResult = null;
 
   // First we want to check and see if the user is already registered as something else.
@@ -321,12 +322,16 @@ app.post("/auth/register", async function(req, res) {
   logger.debug("Checking to see if user already exists in database.");
 
   try {
+    console.log("API: TRY 1");
     try {
+      console.log("API: TRY 1.1");
       userLookupResult = await User.findOne({ email: req.body.email });
     } catch (err) {
       console.log("try catch err for User.findOne: err:", err);
+      console.log("API: Catch 1.1");
     }
   } catch (err) {
+    console.log("API: Catch 1");
     logger.error(
       "A(n) " +
         err.constructor.name +
@@ -338,8 +343,10 @@ app.post("/auth/register", async function(req, res) {
     return res.status(500).json({ err: err });
   }
   if (userLookupResult) {
+    console.log("API: DATA 2 userLookupResult:", userLookupResult);
     logger.debug("Found existing user.");
     // A user was found. Update the docs here.
+    console.log("API: DATA 3 req.body.role:", req.body.role);
     if (
       req.body.role === "client" &&
       typeof userLookupResult.client_id !== "undefined" &&
@@ -402,10 +409,12 @@ app.post("/auth/register", async function(req, res) {
       (typeof userLookupResult.client_id === "undefined" ||
         !userLookupResult.client_id)
     ) {
+      console.log("API : DATA 4: role of client condition.");
       logger.debug("Attempting to register as client.");
       logger.debug("Assigning hash to user.");
       userLookupResult.hash = req.body.password;
       try {
+        console.log("API:  Try: await userLookupResult");
         await userLookupResult.save();
         logger.debug("Successfully saved hash to user. Returning.");
         return res.json({
@@ -416,6 +425,7 @@ app.post("/auth/register", async function(req, res) {
           isVerified: userLookupResult.is_verified
         });
       } catch (err) {
+        console.log("API:  Catch: await err", err);
         logger.error(
           "A(n) " +
             err.constructor.name +
@@ -439,7 +449,7 @@ app.post("/auth/register", async function(req, res) {
 
   let newUser = null;
   if (req.body.role === "client") {
-    console.log(" req.body.role == 'client' newUser:");
+    console.log(" req.body.role == 'client' newUser:"); //YES
     newUser = new User({
       email: req.body.email,
       hash: req.body.password,
@@ -448,7 +458,7 @@ app.post("/auth/register", async function(req, res) {
       is_registered: false,
       created_at: Date.now()
     });
-    console.log("newUser:", newUser);
+    console.log("API DATA: newUser:", newUser); //YES
   } else if (req.body.role === "driver") {
     newUser = new User({
       email: req.body.email,
@@ -460,7 +470,11 @@ app.post("/auth/register", async function(req, res) {
     });
   }
   logger.debug("Created User document");
+  console.log("API: tempUser.save(err, tempUser)");
   tempUser.save(function(err, tempUser) {
+    console.log("API: tempUser.save(err, tempUser)");
+    console.log("err:", err);
+    console.log("tempUser:", tempUser);
     if (err) {
       logger.error(
         "A(n) " +
@@ -474,14 +488,14 @@ app.post("/auth/register", async function(req, res) {
     }
 
     logger.debug("Successfully saved TempUser document " + tempUser._id);
-
+    //swapped out newUser for user in functiona params
     newUser.save(function(err, user) {
       console.log("meta_server.js :: newUser.save(function(err, user)){}");
-      console.log("user:", user);
+      console.log("user:", user); //undefined
       if (err) {
         //TODO: ROLLBACK LOGIC
         logger.error(
-          "A(n) " +
+          "A(n) (meta_server.js)" +
             err.constructor.name +
             " occurred while attempting to save new User document." +
             " Rollback is needed."
