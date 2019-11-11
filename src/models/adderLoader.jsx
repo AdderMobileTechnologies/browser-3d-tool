@@ -6,6 +6,8 @@
  */
 import BABYLON from "babylonjs";
 import * as K from "../constants";
+//.env fix
+
 //import { Scene } from "babylonjs";
 import AdderSceneWrapper from "./adderSceneWrapper";
 //models
@@ -48,6 +50,7 @@ class AdderLoader {
       //define SceneLoader.ImportMeshAsync parameters:
       let meshNames = "";
       let assets_URL = K.API_URL + "/assets/";
+      //.env fix
       let sceneFileName = adderModel.getModelFile();
       let onProgress = null;
       let pluginExtension = null;
@@ -211,10 +214,9 @@ class AdderLoader {
         //HERE we are including sliders/controls on a per 'mesh' basis . meta data mesh name.
         // let CURRENT_MESH = "vehicle_4door_stationwagon_leftside_medium";
         //let CURRENT_MESH = "billboard_2sides_angled_sign_2";
-        let CURRENT_MESH = "monkey"
+        let CURRENT_MESH = "monkey";
         //test :
         if (mesh.id === CURRENT_MESH) {
-
           scaleControl = adderGuiUtility.uv_ScaleControl(
             newAdderMeshWrapper,
             "scale",

@@ -15,13 +15,14 @@ const {
   NODEMAILER_SMTP_PORT,
   NODEMAILER_USER,
   NODEMAILER_PASS,
-  META_URL,
-  API_URL
+  META_URL
 } = require("./config");
+
+//console.log("=meta_server.js======== process.env:::");
+//console.log(process.env);
 
 const rand = require("rand-token");
 const jwt = require("jwt-simple");
-const API_HOST = "http://locahost:8001";
 //const FRONTEND_HOST = process.env.FRONTEND_HOST;
 const nodemailerOptions = {
   host: process.env.NODEMAILER_SMTP_HOST,
@@ -79,7 +80,8 @@ app.use('/',require('./routes'));
 
 
 */
-
+//BREAKING CHANGE:
+app.use("/", require("./routes"));
 //////////////////////////////////////////////
 //region Configure Middleware
 app.disable("etag");
@@ -308,7 +310,7 @@ app.post("/login/client", async function(req, res, next) {
 //. . . .
 
 app.post("/auth/register", async function(req, res) {
-  console.log("API: DATA 1 req.body:", req.body);
+  //console.log("API: DATA 1 req.body:", req.body);
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );
@@ -322,16 +324,16 @@ app.post("/auth/register", async function(req, res) {
   logger.debug("Checking to see if user already exists in database.");
 
   try {
-    console.log("API: TRY 1");
+    //console.log("API: TRY 1");
     try {
-      console.log("API: TRY 1.1");
+      //console.log("API: TRY 1.1");
       userLookupResult = await User.findOne({ email: req.body.email });
     } catch (err) {
       console.log("try catch err for User.findOne: err:", err);
-      console.log("API: Catch 1.1");
+      //console.log("API: Catch 1.1");
     }
   } catch (err) {
-    console.log("API: Catch 1");
+    //console.log("API: Catch 1");
     logger.error(
       "A(n) " +
         err.constructor.name +
@@ -343,10 +345,10 @@ app.post("/auth/register", async function(req, res) {
     return res.status(500).json({ err: err });
   }
   if (userLookupResult) {
-    console.log("API: DATA 2 userLookupResult:", userLookupResult);
+    //console.log("API: DATA 2 userLookupResult:", userLookupResult);
     logger.debug("Found existing user.");
     // A user was found. Update the docs here.
-    console.log("API: DATA 3 req.body.role:", req.body.role);
+    //console.log("API: DATA 3 req.body.role:", req.body.role);
     if (
       req.body.role === "client" &&
       typeof userLookupResult.client_id !== "undefined" &&
@@ -409,12 +411,12 @@ app.post("/auth/register", async function(req, res) {
       (typeof userLookupResult.client_id === "undefined" ||
         !userLookupResult.client_id)
     ) {
-      console.log("API : DATA 4: role of client condition.");
+      //console.log("API : DATA 4: role of client condition.");
       logger.debug("Attempting to register as client.");
       logger.debug("Assigning hash to user.");
       userLookupResult.hash = req.body.password;
       try {
-        console.log("API:  Try: await userLookupResult");
+        //console.log("API:  Try: await userLookupResult");
         await userLookupResult.save();
         logger.debug("Successfully saved hash to user. Returning.");
         return res.json({
@@ -425,7 +427,7 @@ app.post("/auth/register", async function(req, res) {
           isVerified: userLookupResult.is_verified
         });
       } catch (err) {
-        console.log("API:  Catch: await err", err);
+        //console.log("API:  Catch: await err", err);
         logger.error(
           "A(n) " +
             err.constructor.name +
@@ -470,9 +472,9 @@ app.post("/auth/register", async function(req, res) {
     });
   }
   logger.debug("Created User document");
-  console.log("API: tempUser.save(err, tempUser)");
+  //console.log("API: tempUser.save(err, tempUser)");
   tempUser.save(function(err, tempUser) {
-    console.log("API: tempUser.save(err, tempUser)");
+    //console.log("API: tempUser.save(err, tempUser)");
     console.log("err:", err);
     console.log("tempUser:", tempUser);
     if (err) {
@@ -488,14 +490,10 @@ app.post("/auth/register", async function(req, res) {
     }
 
     logger.debug("Successfully saved TempUser document " + tempUser._id);
-    ////////////////////////////////////////////////
-    // ROADBLOCKED:
-    //    Here, the 1st user to register is done successfully.
-    //     the 2nd is NOT.
-    //////////////////////////////////////////////
+
     newUser.save(function(err, user) {
-      console.log("meta_server.js :: newUser.save(function(err, user)){}");
-      console.log("user:", user); //undefined
+      //console.log("meta_server.js :: newUser.save(function(err, user)){}");
+      // console.log("user:", user); //undefined
       if (err) {
         //TODO: ROLLBACK LOGIC
         console.error(err);
@@ -513,7 +511,7 @@ app.post("/auth/register", async function(req, res) {
 
       logger.debug("Attempting to send verification email.");
 
-      let url = API_HOST + "/auth/email-verification/" + vtoken;
+      let url = META_URL + "/auth/email-verification/" + vtoken;
 
       let mailOptions = {
         from: "Do Not Reply <no-reply@addermobile.com>",
@@ -844,7 +842,7 @@ app.get("/forgot-password", async function(req, res, next) {
     return next(err);
   }
 
-  let url = API_HOST + "/auth/change-password/" + token;
+  let url = META_URL + "/auth/change-password/" + token;
   let mailOptions = {
     from: "Do Not Reply <no-reply@addermobile.com>",
     to: email,

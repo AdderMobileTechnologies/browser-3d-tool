@@ -7,10 +7,13 @@ import GridListTile from "@material-ui/core/GridListTile";
 //import IconButton from "@material-ui/core/IconButton";
 //import StarBorderIcon from "@material-ui/icons/StarBorder";
 import * as E from "./environment.js";
+//.env fix
 export const DefaultUserImage = UserImage;
 
 export const META_URL = E.META_URL;
+//.env fix
 export const API_URL = E.API_URL;
+//.env fix
 
 //all calls to server are redirected directly to the html/assets/ folder, so that is where the 'filenames' of a models meta data picks up.
 

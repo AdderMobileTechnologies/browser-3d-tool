@@ -1,5 +1,6 @@
+import * as K from "../constants";
+//.env fix
 import React from "react";
-import { LOGIN_URL } from "./../environment.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../assets/scss/style.css";
 import {
@@ -14,7 +15,7 @@ import {
 
 import axios from "axios";
 import { withRouter } from "react-router";
-import * as K from "../constants";
+
 /*
 TODO: 
 
@@ -181,7 +182,9 @@ class Login extends React.Component {
     };
     console.log("DATA 2: dataPackage:", dataPackage);
     //const endpoint = Config.API.HOST_NAME + "/auth/register";
-    const endpoint = "http://localhost:8001" + "/auth/register";
+    //const endpoint = `${K.META_URL}/auth/register`;
+    //route
+    const endpoint = `${K.META_URL}/v1/auth/register/`;
     console.log("DATA 3: endpoint:", endpoint);
     fetch(endpoint, {
       method: "POST",
@@ -266,7 +269,6 @@ class Login extends React.Component {
   }
   componentDidMount() {
     console.log("componentDidMount");
-    //console.log("Login_URL:",LOGIN_URL);
   }
   render() {
     return (

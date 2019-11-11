@@ -2029,5 +2029,29 @@ API:
     and from MongoDB via Robo3, the issue was solved. 
 
 Mon: 11-11-2019 (Afternoon): 
-1) main.js needs a redirect back to login if token not in localStorage or invalid... 
+# 1) main.js needs a redirect back to login if token not in localStorage or invalid... 
+
 2) re-route routes...
+  meta_server.js 
+
+  CALL: 
+   CURRENT: console.log(K.META_URL + "/forgot-password/?email=" + dataPackage.email);
+     META_URL=http://localhost:8001
+
+   NEW: 
+        META_URL=http://localhost:8001/v1/ + auth/forgot-password/?email=" + dataPackage.email);
+
+
+   RECEIVE: 
+    CURRENT: 
+    NEW: 
+
+
+    FIX: 
+    K.META_URL
+    http://localhost:8001 
+    SEARCH for //.env fix
+
+    correct basic structure of routes. 
+
+    

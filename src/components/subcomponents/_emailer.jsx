@@ -22,6 +22,7 @@ Call This EMailer Like This:
 */
 
 import * as K from "../../constants";
+//.env fix
 import axios from "axios";
 import { tsConstructorType } from "@babel/types";
 // https://nodemailer.com/message/attachments/

@@ -4,6 +4,7 @@ import React from "react";
 import { Input, FormGroup, Form, Row, Col, Button } from "reactstrap";
 import { withRouter } from "react-router";
 import * as K from "../constants";
+//.env fix
 
 class RecoverPassword extends React.Component {
   constructor(props) {

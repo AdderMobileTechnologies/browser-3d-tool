@@ -6,6 +6,7 @@
 import AdderLoader from "./adderLoader";
 //import AdderSceneWrapper from "./adderSceneWrapper";
 import * as K from "../constants";
+//.env fix
 import axios from "axios";
 //import { Scene } from "babylonjs";
 import AdderAsset from "./adderAsset";

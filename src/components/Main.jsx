@@ -2,6 +2,7 @@ import React from "react";
 import BABYLON from "babylonjs";
 import { withRouter } from "react-router";
 import * as K from "../constants"; // Required for GridList ( screenshots)
+//.env fix
 import axios from "axios";
 //models
 import AdderCamera from "../models/adderCamera";
@@ -1101,7 +1102,9 @@ Summary: all I really need is
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
-
+    console.log("===============process.env=======");
+    console.log(process.env);
+    console.log("===================================");
     // -- RXJS
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {

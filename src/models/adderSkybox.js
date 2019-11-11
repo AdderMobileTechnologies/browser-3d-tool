@@ -1,5 +1,6 @@
 import BABYLON from "babylonjs";
 import * as K from "../constants";
+//.env fix
 /*
 Purpose: The AdderSkyBox class uses the given input to create a skybox from 6 images inside of a directory that are appli3ed to the insiode faces of a cube.
 The 'scene' is the current scene to insert the skybox into.
@@ -62,6 +63,7 @@ class AdderSkyBox {
         K.API_URL + "/assets/" + dir + "/",
         this.getScene()
       );
+      //.env fix
       skyboxMaterial.reflectionTexture.coordinatesMode =
         BABYLON.Texture.SKYBOX_MODE;
     };
