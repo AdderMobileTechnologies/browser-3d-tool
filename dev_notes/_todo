@@ -1981,6 +1981,7 @@ UI BUG:
 
 GIVEN THIS CONCLUSION: 
 ///////////////////////////////////////////////////////////
+34 * 4
 CONCLUSION: 
 API diverts to create newUser 
 meta_server.js :: newUser.save(function(err, user)){}
@@ -2000,3 +2001,23 @@ User Model 'save' method must be experiencing the duplicate client_id key ?
 restart vscode becasue search is jacked. 
 
 BEST I CAN TELL: it is some kind of internal mongodb issue.
+
+
+ BECAUSE THIS error seemingly came from nowhere and has been a thorn in my side. 
+  1) npm reinstall 
+  SOLUTION: rm -rf node_modules && yarn 
+  ~ OR ~
+  2) git reset --hard  ae162f376062dbef6a4  
+Error: Invariant failed: You should not use <withRouter(Login) /> outside a <Router>
+
+NOTE: 
+when 1st user created. tempUser _id same as User _id . 
+? Should I be deleting the tempUser when finished ? 
+
+API:
+1st User
+2019-11-11T13:25:48.814Z   <ERROR> [POST /auth/register<b.forte@addermobile.com>] A(n) Error error occurred while attempting to send verification email. Rollback is required.
+
+2nd User Error:
+
+2019-11-11T13:31:20.455Z   <ERROR> [POST /auth/register<wtf@incorp.com>] A(n) (meta_server.js)MongoError occurred while attempting to save new User document. Rollback is needed.

@@ -38,29 +38,9 @@ const UserSchema = new Schema(
       unique: false,
       required: false
     },
-    driver_hash: {
-      type: String,
-      unique: false,
-      required: false
-    },
-    client_id: {
-      type: String,
-      unique: true,
-      required: false
-    },
-    driver_id: {
-      type: String,
-      unique: true,
-      required: false
-    },
-    device_id: {
-      type: String,
-      unique: true,
-      required: false
-    },
     password_token: {
       type: String,
-      unique: true,
+      unique: false,
       required: false
     },
     change_attempts: Number,
@@ -71,11 +51,6 @@ const UserSchema = new Schema(
     },
     created_at: {
       type: Date,
-      unique: false,
-      required: false
-    },
-    old_password: {
-      type: String,
       unique: false,
       required: false
     }

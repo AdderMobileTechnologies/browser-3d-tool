@@ -488,12 +488,17 @@ app.post("/auth/register", async function(req, res) {
     }
 
     logger.debug("Successfully saved TempUser document " + tempUser._id);
-    //swapped out newUser for user in functiona params
+    ////////////////////////////////////////////////
+    // ROADBLOCKED:
+    //    Here, the 1st user to register is done successfully.
+    //     the 2nd is NOT.
+    //////////////////////////////////////////////
     newUser.save(function(err, user) {
       console.log("meta_server.js :: newUser.save(function(err, user)){}");
       console.log("user:", user); //undefined
       if (err) {
         //TODO: ROLLBACK LOGIC
+        console.error(err);
         logger.error(
           "A(n) (meta_server.js)" +
             err.constructor.name +
