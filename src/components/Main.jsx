@@ -1,6 +1,6 @@
 import React from "react";
 import BABYLON from "babylonjs";
-
+import { withRouter } from "react-router";
 import * as K from "../constants"; // Required for GridList ( screenshots)
 import axios from "axios";
 //models
@@ -133,6 +133,10 @@ class Main extends React.Component {
       width: 500,
       height: 150
     };
+    //REDIRECT in constructor.
+    if (localStorage.getItem("token") === null) {
+      this.props.history.push("/");
+    }
     //methods
     this.setUp = this.setUp.bind(this);
     this.getAdderSceneWrapper = this.getAdderSceneWrapper.bind(this);
@@ -1097,6 +1101,7 @@ Summary: all I really need is
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
+
     // -- RXJS
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {

@@ -1,0 +1,7 @@
+
+react routing should not be outside ....xyz etc.. 
+
+    Sometimes node_modules get corrupted when refreshing the modules/adder-models.
+    solution :
+    rm -rf node_modules && yarn 
+    

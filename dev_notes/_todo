@@ -2021,3 +2021,13 @@ API:
 2nd User Error:
 
 2019-11-11T13:31:20.455Z   <ERROR> [POST /auth/register<wtf@incorp.com>] A(n) (meta_server.js)MongoError occurred while attempting to save new User document. Rollback is needed.
+
+
+ THE ROAD BLOCK ISSUE:
+    This issue was caused by having certain 'indexes' that were not being used AND getting set to 
+    NULL. Thus, clashing with the duplicate key error. Once these indexes were removed from the models, 
+    and from MongoDB via Robo3, the issue was solved. 
+
+Mon: 11-11-2019 (Afternoon): 
+1) main.js needs a redirect back to login if token not in localStorage or invalid... 
+2) re-route routes...
