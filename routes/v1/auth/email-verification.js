@@ -39,6 +39,7 @@ router.get("/email-verification/:URL", function(req, res) {
     function(err, user) {
       if (err) {
         res.statusMessage = err.message;
+        console.log("auth: email-verification: redirect");
         return res.redirect(FRONTEND_HOST);
       }
 
@@ -54,6 +55,9 @@ router.get("/email-verification/:URL", function(req, res) {
             actual_user.save(function(err, updatedUser) {
               if (err) {
                 res.statusMessage = err.message;
+                console.log(
+                  "email-verification:: return err in User.findOne..."
+                );
                 return res
                   .status(500)
                   .json({ success: false, msg: err.message });
@@ -80,11 +84,13 @@ router.get("/email-verification/:URL", function(req, res) {
               });
 
               //res.json({success: true, msg: 'User successfully verified: ' + actual_user.email});
+              console.log("redirect ....1");
               res.redirect(FRONTEND_HOST);
             });
           }
         );
       } else {
+        console.log("redirect ....2");
         return res.redirect(FRONTEND_HOST);
       }
     }

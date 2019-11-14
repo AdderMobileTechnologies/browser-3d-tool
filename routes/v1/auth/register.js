@@ -213,8 +213,8 @@ router.post("/", async function(req, res, next) {
     logger.debug("Successfully saved TempUser document " + tempUser._id);
 
     newUser.save(function(err, user) {
-      //console.log("meta_server.js :: newUser.save(function(err, user)){}");
-      // console.log("user:", user); //undefined
+      console.log("meta_server.js :: newUser.save(function(err, user)){}");
+      console.log("user:", user); //undefined
       if (err) {
         //TODO: ROLLBACK LOGIC
         console.error(err);
@@ -230,7 +230,7 @@ router.post("/", async function(req, res, next) {
 
       logger.debug("Successfully saved User document " + user._id);
 
-      logger.debug("Attempting to send verification email.");
+      logger.debug("1 Attempting to send verification email.");
 
       let url = META_URL + "/auth/email-verification/" + vtoken;
 
@@ -247,8 +247,10 @@ router.post("/", async function(req, res, next) {
       };
 
       transporter.sendMail(mailOptions, (err, info) => {
+        console.log("transporter: sendMail: ");
         if (err) {
           //TODO: ROLLBACK LOGIC
+          console.log("transporter spot 1");
           logger.error(
             "A(n) " +
               err.constructor.name +
@@ -261,18 +263,15 @@ router.post("/", async function(req, res, next) {
               res.statusMessage = err.message;
               return res.status(500).json({ msg: err.message });
             */
+          //bypassing this allowed a user to get created but it was hotwiring the code and causing the header to get set twice...
+          // crashing the app.
 
-          let DEV_WORK = true;
-          if (DEV_WORK) {
-            // res.statusMessage = err.message;
-            // return res.status(500).json({ msg: err.message });
-          } else {
-            res.statusMessage = err.message;
-            return res.status(500).json({ msg: err.message });
-          }
+          res.statusMessage = err.message;
+          return res.status(500).json({ msg: err.message });
         }
 
         const token = jwt.encode(user, "key");
+        console.log("transporter spot 4");
         return res.status(200).json({
           success: true,
           msg: "Successfully created new user with email:" + user.email,
@@ -283,6 +282,7 @@ router.post("/", async function(req, res, next) {
       });
     });
   });
+  console.log("transporter spot 5 -> next...");
   next();
 });
 
