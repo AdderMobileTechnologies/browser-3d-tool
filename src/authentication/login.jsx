@@ -174,23 +174,16 @@ class Login extends React.Component {
     console.log("registrationCreateUser");
     e.preventDefault();
     let userData = this.state.registeringUser;
-    console.log("DATA 1: userData:", userData);
+
     const dataPackage = {
       email: userData.email,
       password: userData.password,
       role: "client",
       is_verified: "false"
     };
-    //console.log("DATA 2: dataPackage:", dataPackage);
 
-    //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
     const endpoint = `${K.META_URL}/v1/auth/register/`;
-    /*
-  headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-*/
+
     const config = {
       method: "POST",
       url: endpoint,
@@ -200,7 +193,7 @@ class Login extends React.Component {
       },
       data: dataPackage
     };
-    console.log("login.jsx: submitLogin: config:", config);
+    //console.log("login.jsx: submitLogin: config:", config);
     axios(config)
       .then(response => {
         console.log("RESPONSE: positive");

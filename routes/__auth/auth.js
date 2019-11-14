@@ -230,7 +230,7 @@ router.post("/register", async function(req, res) {
 
       logger.debug("Successfully saved User document " + user._id);
 
-      logger.debug("Attempting to send verification email.");
+      logger.debug("2 Attempting to send verification email.");
 
       let url = API_HOST + "/auth/email-verification/" + vtoken;
 
@@ -446,13 +446,11 @@ router.post("/login", function(req, res) {
               logger.debug("Client " + client._id + " successfully retrieved.");
               let clientId = client._id;
               //TODO: AFTER REFACTOR, ADD IN PROFILING MIDDLEWARE TO LOG REQUEST STATUS
-              return res
-                .status(200)
-                .json({
-                  token: token,
-                  clientId: clientId,
-                  is_verified: user.is_verified
-                });
+              return res.status(200).json({
+                token: token,
+                clientId: clientId,
+                is_verified: user.is_verified
+              });
             });
           } else if (role === "driver") {
             if (typeof user.driver_id === "undefined" || !user.driver_id) {

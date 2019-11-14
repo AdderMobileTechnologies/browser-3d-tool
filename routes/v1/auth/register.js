@@ -262,9 +262,10 @@ router.post("/", async function(req, res, next) {
               I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
               res.statusMessage = err.message;
               return res.status(500).json({ msg: err.message });
-            */
-          //bypassing this allowed a user to get created but it was hotwiring the code and causing the header to get set twice...
-          // crashing the app.
+           
+              by-passing this allowed a user to get created but it was hotwiring the code and causing the header to get set twice...
+              crashing the app.
+           */
 
           res.statusMessage = err.message;
           return res.status(500).json({ msg: err.message });
