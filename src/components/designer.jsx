@@ -168,7 +168,7 @@ class Designer extends React.Component {
     });
     //perform call to meta server for 'ad type' data.
     let promise_designChoices2 = new Promise(function(resolve, reject) {
-      const url = `${K.META_URL}/meta/design`;
+      const url = `${K.META_URL}/v1/meta/design`;
       axios
         .get(url)
         .then(response => response.data)
@@ -419,7 +419,7 @@ class Designer extends React.Component {
     });
     //perform call to meta server for 'ad type' data.
     let promise_designChoices = new Promise(function(resolve, reject) {
-      const url = `${K.META_URL}/meta/design`;
+      const url = `${K.META_URL}/v1/meta/design`;
       axios
         .get(url)
         .then(response => response.data)

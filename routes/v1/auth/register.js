@@ -5,13 +5,24 @@ const User = require("adder-models").User;
 const TempUser = require("adder-models").TempUser;
 const rand = require("rand-token");
 const jwt = require("jwt-simple");
+var nodemailer = require("nodemailer");
+const { META_URL } = require("../../../config");
+const nodemailerOptions = {
+  host: process.env.NODEMAILER_SMTP_HOST,
+  port: Number(process.env.NODEMAILER_SMTP_PORT),
+  secure: true,
+  auth: {
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS
+  }
+};
 
-const META_URL = process.env.META_URL;
+//const META_URL = process.env.META_URL;
 const ImmutableTagLogger = require("node-common-utility").Logging
   .ImmutableTagLogger;
-//--- additional routes
-//router.use("/xyz", require("./xyz"));
-//----
+
+let transporter = nodemailer.createTransport(nodemailerOptions);
+
 router.get("/", function(req, res) {
   console.log("req.body:", req.body);
   console.log("req.query:", req.query);
@@ -22,7 +33,7 @@ router.post("/", async function(req, res, next) {
   console.log("req:", req);
 
   const logger = new ImmutableTagLogger(
-    "POST /auth/register<" + req.body.email + ">"
+    "POST /v1/auth/register<" + req.body.email + ">"
   );
   //console.log("meta_server:/auth/register/:email:", req.body.email);
   let userLookupResult = null;
@@ -275,18 +286,4 @@ router.post("/", async function(req, res, next) {
   next();
 });
 
-console.log("register.js ..................................");
 module.exports = router;
-
-/*
-////////////////////////////////////////////////
-// index setup:
-const express = require("express");
-const router = express.Router();
-//--- additional routes
-    router.use('/xyz', require('./xyz'));
-//----
-
-module.exports = router;
-///////////////////////////////////////////////////
-*/

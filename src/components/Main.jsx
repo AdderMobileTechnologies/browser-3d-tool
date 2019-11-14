@@ -1119,8 +1119,8 @@ Summary: all I really need is
     //---end rxjs
 
     //----------------------------------------------
-    const url = `${K.META_URL}/design/get`;
-    console.log(" const url = `${K.META_URL}/design/get`;", url);
+    const url = `${K.META_URL}/v1/design/get`;
+    console.log(" const url = `${K.META_URL}/v1/design/get`;", url);
     //====>
     this.downloadSavedDesign();
     // in componentDidMount
@@ -1546,7 +1546,7 @@ Summary: all I really need is
 
   uploadSavedDesign() {
     let options = new Promise(function(resolve, reject) {
-      const url = `${K.META_URL}/design/save`;
+      const url = `${K.META_URL}/v1/design/save`;
       let SAVED_DESIGNS_ARRAY = util.store("get", K.SAVED_DESIGNS_ARRAY);
       let params = {
         saved_designs_array: SAVED_DESIGNS_ARRAY
@@ -1566,7 +1566,7 @@ Summary: all I really need is
 
   downloadSavedDesign() {
     let options = new Promise(function(resolve, reject) {
-      const url = `${K.META_URL}/design/get`;
+      const url = `${K.META_URL}/v1/design/get`;
       axios
         .get(url)
         .then(response => response.data)

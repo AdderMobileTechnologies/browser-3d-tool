@@ -2086,7 +2086,26 @@ Mon: 11-11-2019 (Afternoon):
 
 
 
+////////////////////////////////
+uploadSavedDesign() {
+    let options = new Promise(function(resolve, reject) {
+      const url = `${K.META_URL}/design/save`;
+      let SAVED_DESIGNS_ARRAY = util.store("get", K.SAVED_DESIGNS_ARRAY);
+      let params = {
+        saved_designs_array: SAVED_DESIGNS_ARRAY
+      };
 
+      axios
+        .post(url, params)
+        .then(response => response.data)
+        .then(data => {
+          resolve(data);
+        });
+    });
+    options.then(function(value) {
+      console.log("value in promise response:", value);
+    });
+  }
 
 
 

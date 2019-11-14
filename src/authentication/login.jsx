@@ -181,39 +181,8 @@ class Login extends React.Component {
       role: "client",
       is_verified: "false"
     };
-    console.log("DATA 2: dataPackage:", dataPackage);
-    //const endpoint = Config.API.HOST_NAME + "/auth/register";
+    //console.log("DATA 2: dataPackage:", dataPackage);
 
-    // meta_server.js route
-    //const endpoint = `${K.META_URL}/auth/register`;
-    //'route' route
-    //const endpoint = `${K.META_URL}/v1/auth/register/`;
-    // :: POST http://localhost:8001/v1/auth/register/ 404 (Not Found)
-
-    //console.log("DATA 3: endpoint:", endpoint);
-    /*
-    fetch(endpoint, {
-      method: "POST",
-      body: JSON.stringify(dataPackage),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("DATA 4: response data:", data);
-        if (data.success) {
-          localStorage.setItem("token", data.token);
-          // console.log("what is this:", this);
-          // this.registrationCreateClient(data.token);
-          //SUCCESSFUL REGISTRATION: continue to app. push
-          this.props.history.push("/main");
-        } else {
-          alert("It appears as though that email is already in use!");
-        }
-      });
-    });
-    */
     //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
     const endpoint = `${K.META_URL}/v1/auth/register/`;
     /*
@@ -225,7 +194,10 @@ class Login extends React.Component {
     const config = {
       method: "POST",
       url: endpoint,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
       data: dataPackage
     };
     console.log("login.jsx: submitLogin: config:", config);
@@ -258,8 +230,7 @@ class Login extends React.Component {
     console.log("submitLogin");
     e.preventDefault();
 
-    //const endpoint = Config.API.HOST_NAME + "/v2/auth/login/client";
-    const endpoint = `${K.META_URL}` + "/login/client";
+    const endpoint = `${K.META_URL}` + "/v1/auth/login/client";
     const dataPackage = {
       email: this.state.existingUser.email,
       password: this.state.existingUser.password,

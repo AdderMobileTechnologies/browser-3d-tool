@@ -51,9 +51,11 @@ class RecoverPassword extends React.Component {
       // "http://localhost:8001/auth/forgot-password/?email=b.forte@addermobile.com"
       // http: console.log("recover-password.jsx::handleFormSubmit() ");
       // const endpoint = `${K.META_URL}`
-      console.log(K.META_URL + "/forgot-password/?email=" + dataPackage.email);
+      console.log(
+        K.META_URL + "/v1/auth/forgot-password/?email=" + dataPackage.email
+      );
       response = await fetch(
-        K.META_URL + "/forgot-password/?email=" + dataPackage.email
+        K.META_URL + "/v1/auth/forgot-password/?email=" + dataPackage.email
       );
     } catch (err) {
       console.error(err);

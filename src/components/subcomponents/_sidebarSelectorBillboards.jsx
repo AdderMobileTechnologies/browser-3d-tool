@@ -36,7 +36,7 @@ export default function SidebarSelectorBillboards(props) {
         <Grid item xs></Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs>
+        <Grid item xs style={{ textAlign: "center" }}>
           <button
             className="buttonSidebar  "
             id="buttonLeft"
@@ -47,7 +47,7 @@ export default function SidebarSelectorBillboards(props) {
           </button>
         </Grid>
         <Grid item xs></Grid>
-        <Grid item xs>
+        <Grid item xs style={{ textAlign: "center" }}>
           <button
             className="buttonSidebar  "
             id="buttonRight"

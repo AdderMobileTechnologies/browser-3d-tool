@@ -35,7 +35,7 @@ class AdderMeta {
       switch (environment) {
         case "CITY":
           this.promise_environments = new Promise(function(resolve, reject) {
-            const url = `${K.META_URL}/meta/environment`;
+            const url = `${K.META_URL}/v1/meta/environment`;
             axios
               .get(url)
               .then(response => response.data)
@@ -51,7 +51,7 @@ class AdderMeta {
         case "COUNTRY":
           console.log("AdderMeta: getEnvironment: COUNTRY");
           this.promise_environments = new Promise(function(resolve, reject) {
-            const url = `${K.META_URL}/meta/environment2`;
+            const url = `${K.META_URL}/v1/meta/environment2`;
             axios
               .get(url)
               .then(response => response.data)
@@ -65,7 +65,7 @@ class AdderMeta {
           break;
         default:
           this.promise_environments = new Promise(function(resolve, reject) {
-            const url = `${K.META_URL}/meta/environment`;
+            const url = `${K.META_URL}/v1/meta/environment`;
             axios
               .get(url)
               .then(response => response.data)
@@ -85,7 +85,7 @@ class AdderMeta {
       let thisClass = this;
 
       this.promise_designOptions = new Promise(function(resolve, reject) {
-        const url = `${K.META_URL}/meta/design`;
+        const url = `${K.META_URL}/v1/meta/design`;
         axios
           .get(url)
           .then(response => response.data)

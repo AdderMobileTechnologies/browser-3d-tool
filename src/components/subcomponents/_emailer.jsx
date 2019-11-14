@@ -31,7 +31,7 @@ export default function EMailer(props) {
 
   const sendEmail = data => {
     let promise_designOptions = new Promise(function(resolve, reject) {
-      const url = `${K.META_URL}/email/send`;
+      const url = `${K.META_URL}/v1/email/send`;
       console.log("_emailer.jsx:sendEmail():data:", data);
       localStorage.setItem("email data:", JSON.stringify(data));
       let params = {

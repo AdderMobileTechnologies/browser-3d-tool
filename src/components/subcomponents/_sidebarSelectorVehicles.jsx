@@ -29,7 +29,7 @@ export default function SidebarSelectorVehicles(props) {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs></Grid>
-        <Grid item xs>
+        <Grid item xs style={{ textAlign: "center" }}>
           <button
             className="buttonSidebar xbuttonHood"
             id="buttonHood"
@@ -57,7 +57,7 @@ export default function SidebarSelectorVehicles(props) {
             LEFT
           </button>
         </Grid>
-        <Grid item xs>
+        <Grid item xs style={{ textAlign: "center" }}>
           <button
             className="buttonSidebar xbuttonRoof"
             id="buttonRoof"
@@ -80,7 +80,7 @@ export default function SidebarSelectorVehicles(props) {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs></Grid>
-        <Grid item xs>
+        <Grid item xs style={{ textAlign: "center" }}>
           <button
             className="buttonSidebar xbuttonTrunk"
             id="buttonTrunk"
