@@ -11,7 +11,7 @@ const HTTPStatusCodes = require("node-common-utility").Constants
   .HTTPStatusCodes;
 
 router.post("/client", async function(req, res, next) {
-  console.log("routes/v1/auth/login .... req.body:", req.body);
+  console.log("api: route:  login.js : post /client: req.body: ", req.body);
 
   let user = null;
   //let client = null;
@@ -83,6 +83,7 @@ router.post("/client", async function(req, res, next) {
 });
 
 router.post("/login", function(req, res) {
+  console.log("api: route:  login.js : post /login: req.body: ", req.body);
   const logger = new ImmutableTagLogger(
     `POST /v1/auth/login<${req.body.email}`
   );
