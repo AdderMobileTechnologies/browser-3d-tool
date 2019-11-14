@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 
 import axios from "axios";
+
 import { withRouter } from "react-router";
 
 /*
@@ -184,11 +185,13 @@ class Login extends React.Component {
     //const endpoint = Config.API.HOST_NAME + "/auth/register";
 
     // meta_server.js route
-    const endpoint = `${K.META_URL}/auth/register`;
+    //const endpoint = `${K.META_URL}/auth/register`;
     //'route' route
-    // const endpoint = `${K.META_URL}/v1/auth/register/`;
+    //const endpoint = `${K.META_URL}/v1/auth/register/`;
+    // :: POST http://localhost:8001/v1/auth/register/ 404 (Not Found)
 
-    console.log("DATA 3: endpoint:", endpoint);
+    //console.log("DATA 3: endpoint:", endpoint);
+    /*
     fetch(endpoint, {
       method: "POST",
       body: JSON.stringify(dataPackage),
@@ -210,6 +213,36 @@ class Login extends React.Component {
         }
       });
     });
+    */
+    //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
+    const endpoint = `${K.META_URL}/v1/auth/register/`;
+    /*
+  headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+*/
+    const config = {
+      method: "POST",
+      url: endpoint,
+      headers: { "Content-Type": "application/json" },
+      data: dataPackage
+    };
+    console.log("login.jsx: submitLogin: config:", config);
+    axios(config)
+      .then(response => {
+        console.log("RESPONSE: positive");
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("version", "Config.Frontend.VERSION");
+        this.props.history.push("/main");
+      })
+      .catch(error => {
+        //localStorage.clear();
+        console.log("REPSPONSE: negative.");
+        // alert("We're sorry, but that is the wrong password for this account.");
+        alert("It appears as though that email is already in use!");
+      });
+    //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
   }
   handleForgotPassword() {
     console.log("handleForgotPassword");

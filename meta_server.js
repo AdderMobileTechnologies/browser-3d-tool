@@ -9,13 +9,14 @@ var nodemailer = require("nodemailer");
 app.use(cors());
 
 var bodyParser = require("body-parser");
-//const router = require('express').Router();
+const router = require("express").Router();
 /////////////////////////////////////////////////
 //include file to handle endpoint routes
 //const router = require("./routes");
 //tell express app to use it.
-//app.use(router);
-/////////////////////////////////////////////////
+app.use(router);
+//* When using 'router' you have to change the endpoin
+////////////////////////////////////////////////////
 
 const {
   NODEMAILER_SMTP_HOST,
@@ -25,12 +26,8 @@ const {
   META_URL
 } = require("./config");
 
-//console.log("=meta_server.js======== process.env:::");
-//console.log(process.env);
-
 const rand = require("rand-token");
 const jwt = require("jwt-simple");
-//const FRONTEND_HOST = process.env.FRONTEND_HOST;
 const nodemailerOptions = {
   host: process.env.NODEMAILER_SMTP_HOST,
   port: Number(process.env.NODEMAILER_SMTP_PORT),
@@ -41,19 +38,15 @@ const nodemailerOptions = {
   }
 };
 
-//const ImmutableTagLogger = require("node-common-utility").Logging.ImmutableTagLogger;
 const HTTPStatusCodes = require("node-common-utility").Constants
   .HTTPStatusCodes;
 
 let transporter = nodemailer.createTransport(nodemailerOptions);
 
-//ok
-// noT OK: const User = require("adder-models").User;
 const APIKey = require("adder-models").APIKey;
 const User = require("adder-models").User;
 const Client = require("adder-models").Client;
 const TempUser = require("adder-models").TempUser;
-//const jwt = require("jwt-simple");
 
 const compression = require("compression");
 const passport = require("passport");
@@ -72,30 +65,27 @@ const Regex = require("node-common-utility").Regex;
 const logger = new ImmutableTagLogger("SYSTEM");
 //endregion
 
-////////////////////////////////////////////////
-
 const FRONTEND_HOST = process.env.FRONTEND_HOST;
-/*
-SET UP API ROUTING LIKE IN WEB_PORTAL:
-FROM HERE: 
-app.use('/',require('./routes'));
-  takes us to /routes/index.js 
-    notes are there.
 
-  eventually,, move all our endpoints in that direction from this file.
+app.use(bodyParser.json({ limit: "50mb", extended: true })); // to support JSON-encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+    limit: "50mb"
+  })
+);
 
-
-
-*/
 //BREAKING CHANGE:
-//app.use("/", require("./routes"));
+app.use("/", require("./routes"));
+
 //////////////////////////////////////////////
 //region Configure Middleware
 app.disable("etag");
 app.use(compression());
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: "100mb" }));
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json({ limit: "100mb" }));
 //endregion
 
 //region Global Endpoint Initializer
@@ -144,19 +134,14 @@ passport.use(
 app.use(passport.initialize({ userProperty: "user" }));
 //endregion
 
-app.use(bodyParser.json({ limit: "50mb", extended: true })); // to support JSON-encoded bodies
-app.use(
-  bodyParser.urlencoded({
-    // to support URL-encoded bodies
-    extended: true,
-    limit: "50mb"
-  })
-);
-
+////////////////////////////////////////////////////////
+/*
 app.get("/", function(req, res) {
   res.send("meta server reached.");
 });
-
+app.get("/test/", function(req, res) {
+  res.send("meta server test reached.");
+});
 app.get("/meta", function(req, res) {
   fs.readFile("meta_data.meta", "utf8", function(err, data) {
     if (err) throw err;
@@ -541,12 +526,12 @@ app.post("/auth/register", async function(req, res) {
               " error occurred while attempting to send" +
               " verification email. Rollback is required."
           );
-          /*
-            //DEV ONLY:  COMMENTED OUT THESE LINES FOR DEV ONLY::: 
-            I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
-            res.statusMessage = err.message;
-            return res.status(500).json({ msg: err.message });
-          */
+          
+            // //DEV ONLY:  COMMENTED OUT THESE LINES FOR DEV ONLY::: 
+            // I THINK the IP address has to be registered with GOOGLE in order to use SMTP.
+            // res.statusMessage = err.message;
+            // return res.status(500).json({ msg: err.message });
+          
 
           let DEV_WORK = true;
           if (DEV_WORK) {
@@ -938,9 +923,9 @@ app.post("/change-password/:token", async function(req, res, next) {
   res.status(HTTPStatusCodes.OK).end();
   return next();
 });
-
+*/
 app.listen(8001, function() {
   console.log("App running on port 8001");
 });
 
-//module.exports = router;
+module.exports = router;

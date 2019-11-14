@@ -1,13 +1,26 @@
 const express = require("express");
 const router = express.Router();
+
+const User = require("adder-models").User;
+const TempUser = require("adder-models").TempUser;
+const rand = require("rand-token");
+const jwt = require("jwt-simple");
+
+const META_URL = process.env.META_URL;
 const ImmutableTagLogger = require("node-common-utility").Logging
   .ImmutableTagLogger;
 //--- additional routes
 //router.use("/xyz", require("./xyz"));
 //----
-
+router.get("/", function(req, res) {
+  console.log("req.body:", req.body);
+  console.log("req.query:", req.query);
+  res.send("test get");
+});
 router.post("/", async function(req, res, next) {
   console.log("API: DATA 1 req.body:", req.body);
+  console.log("req:", req);
+
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );
