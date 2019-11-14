@@ -10,6 +10,13 @@ app.use(cors());
 
 var bodyParser = require("body-parser");
 //const router = require('express').Router();
+/////////////////////////////////////////////////
+//include file to handle endpoint routes
+//const router = require("./routes");
+//tell express app to use it.
+//app.use(router);
+/////////////////////////////////////////////////
+
 const {
   NODEMAILER_SMTP_HOST,
   NODEMAILER_SMTP_PORT,
@@ -81,7 +88,7 @@ app.use('/',require('./routes'));
 
 */
 //BREAKING CHANGE:
-app.use("/", require("./routes"));
+//app.use("/", require("./routes"));
 //////////////////////////////////////////////
 //region Configure Middleware
 app.disable("etag");
@@ -307,10 +314,10 @@ app.post("/login/client", async function(req, res, next) {
 
 /////// /auth/register
 
-//. . . .
+//. . . . . . . . . . .
 
 app.post("/auth/register", async function(req, res) {
-  //console.log("API: DATA 1 req.body:", req.body);
+  console.log("-> -> API: DATA 1 req.body:", req.body);
   const logger = new ImmutableTagLogger(
     "POST /auth/register<" + req.body.email + ">"
   );

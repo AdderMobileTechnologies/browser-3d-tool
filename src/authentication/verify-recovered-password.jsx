@@ -217,7 +217,7 @@ class VerifyRecoveredPassword extends React.Component {
                     </div>
                   ) : (
                     <div>
-                      {/**  route changes */}
+                      {/**  route changes  */}
                       <Form
                         onSubmit={this.handleRegisterFormSubmit}
                         ref={c => {

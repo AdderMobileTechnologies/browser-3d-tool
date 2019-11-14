@@ -2054,4 +2054,39 @@ Mon: 11-11-2019 (Afternoon):
 
     correct basic structure of routes. 
 
-    
+    Thur: 11-14-2019 
+    Preparing for separation of API and 3D Tool AND sorting out the 'routing' 
+    examine routing differences between meta_server.js and mern api app.js server.
+    mern vs meta 
+    mern: 
+      - app.js 
+        //include file to handle endpoint routes
+        - const userRouter = require('./routers/user')
+        //tell express app to use it.
+        - app.use(userRouter)
+    meta:(equivalent) 
+      - meta_server.js 
+        //
+        - const router = require('express').Router();
+        //
+        - app.use("/", require("./routes"));
+
+    TRY THIS: 
+        apply this to meta_server ...
+            //include file to handle endpoint routes
+        - const router = require('./routes')
+        //tell express app to use it.
+        - app.use(router)
+    RESULTS: 
+      It directs it correctly but does not send the req.body data along with it. 
+
+
+      NOTE: meta_server is using FETCH , I think mern is using axios. 
+      
+
+
+
+
+
+
+

@@ -182,9 +182,12 @@ class Login extends React.Component {
     };
     console.log("DATA 2: dataPackage:", dataPackage);
     //const endpoint = Config.API.HOST_NAME + "/auth/register";
-    //const endpoint = `${K.META_URL}/auth/register`;
-    //route
-    const endpoint = `${K.META_URL}/v1/auth/register/`;
+
+    // meta_server.js route
+    const endpoint = `${K.META_URL}/auth/register`;
+    //'route' route
+    // const endpoint = `${K.META_URL}/v1/auth/register/`;
+
     console.log("DATA 3: endpoint:", endpoint);
     fetch(endpoint, {
       method: "POST",
