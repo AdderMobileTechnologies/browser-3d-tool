@@ -1,2 +1,0 @@
-{"type" : "Feature", "properties" : {   "geo_name" : null,   "imp_db_ref" : null }, "geometry" : {   "type" : "LineString",   "coordinates" :[[    -85.6844850429982,    38.2035435064496  ],  [    -85.6770729533693,    38.1990090397677  ],  [    -85.6857758393694,    38.2121361955214  ],  [    -85.6844850429982,    38.2035435064496]]}, "__v" : 0}
-{"type" : "Feature", "properties" : {   "radius" : 100,   "cone_id" : "5d4468c05a65fa2d741403b9" }, "geometry" : {   "type" : "Point",   "coordinates" : [  -85.6844850429982,  38.2035435064496] }, "__v" : 0}
