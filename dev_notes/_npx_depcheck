@@ -1,0 +1,38 @@
+Bayon@DESKTOP-Q40MQJN MINGW64 ~/projects/3d-tool-v2 (removing-embedded-api)
+$ npx depcheck
+npx: installed 72 in 5.756s
+Unused dependencies
+* adder-models
+* babel-loader
+* bcrypt
+* body-parser
+* cannon
+* compression
+* cors
+* earcut
+* fabric
+* jwt-simple
+* mongodb
+* mongoose
+* node-common-utility
+* nodemailer
+* oimo
+* passport
+* passport-jwt
+* passport-local
+* passport-local-mongoose
+* rand-token
+* react-babylonjs
+* typescript
+* util
+* winston
+Missing dependencies
+* eslint-config-react-app: .\.eslintrc
+* babel-eslint: .\.eslintrc
+* eslint-plugin-import: .\.eslintrc
+* eslint-plugin-flowtype: .\.eslintrc
+* eslint-plugin-jsx-a11y: .\.eslintrc
+* eslint-plugin-react: .\.eslintrc
+* eslint-plugin-react-hooks: .\.eslintrc
+* @babel/types: .\src\components\subcomponents\_emailer.jsx
+* @material-ui/styles: .\src\index.js
