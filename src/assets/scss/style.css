@@ -12383,6 +12383,10 @@ a.auth-text-info {
   background-size: cover;
 }
 
+#ParentContainer {
+  padding: 3%;
+}
+
 @media (max-width: 767.98px) {
   .auth-wrapper .auth-sidebar {
     position: relative;
