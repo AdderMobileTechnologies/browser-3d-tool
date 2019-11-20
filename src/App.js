@@ -13,7 +13,7 @@ import Login from "./authentication/login.jsx";
 function App() {
   return (
     <div className="App">
-      <Container maxWidth={"xl"} children="none"></Container>
+      <Container maxWidth={"xl"} children=""></Container>
     </div>
   );
 }

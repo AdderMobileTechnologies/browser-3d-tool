@@ -49,6 +49,11 @@
          padding-left: 15px;
          padding-right: 15px;
      }
+     .AdderLogoAndName {
+         height: 50px;
+         max-height: 50px;
+         max-width: 107px;
+     }
  }
 
  @media (min-width: 769px) and (max-width: 1000px) {

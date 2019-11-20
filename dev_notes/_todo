@@ -2114,3 +2114,25 @@ Failed prop type:
 The prop `children` is marked as required in `ForwardRef(Container)`, but its value is `undefined`.
     in ForwardRef(Container) (created by WithStyles(ForwardRef(Container)))
     in WithStyles(ForwardRef(Container)) (at App.js:16)
+
+    grep "/CITY"  \"
+
+    BG13w1.jpg
+
+    porsche2.2.1.clip.babylon.manifest
+
+    STYLE ISSUES: RWD 
+    <div 
+    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-2" 
+    id="LogoContainer">
+
+    <img 
+    src="/static/media/adder-logos_angled_work.013d0238.png" 
+    class="AdderLogoAndName" 
+    id="AdderLogo" 
+    alt="Adder Logo" 
+    style="height: auto; width: 100%;"></div>
+brief:
+    #LogoContainer
+    .AdderLogoAndName
+    #AdderLogo
