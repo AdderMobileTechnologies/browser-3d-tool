@@ -2136,3 +2136,79 @@ brief:
     #LogoContainer
     .AdderLogoAndName
     #AdderLogo
+
+  Wed: 11-20-2019
+  Improvements: 
+    Hit Test for buildings and camera to prevent seeing behind the 3d curtain. 
+    detect mesh intersection 
+    https://www.babylonjs-playground.com/#KQV9SA 
+
+1) Build 2 basic meshes with materials 
+     var plan1 = BABYLON.Mesh.CreatePlane("plane1", 20, scene);
+    plan1.position = new BABYLON.Vector3(13, 0, 0);
+    plan1.rotation.x = -Math.PI / 4;
+    plan1.material = matPlan;
+
+    var balloon1 = BABYLON.Mesh.CreateSphere("balloon1", 10, 2.0, scene);
+
+2) the loop
+ scene.registerBeforeRender(function () {
+     //Balloon 1 intersection -- Precise = false
+     
+     3) check if intersection
+        if (balloon1.intersectsMesh(plan1, false)) {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 0, 0);
+        } else {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        }
+ }
+
+ the trick would be to convert this code to work for a mesh and a camera. 
+ Can the camera be detected in intersection? If not, wrap it in invisible cube and check the cube for intersections. 
+
+https://doc.babylonjs.com/babylon101/cameras,_mesh_collisions_and_gravity
+
+
+1) Define and apply Gravity 
+2) Define an ellipsoid( or wrapper mesh) 
+3) Apply Collision 
+
+1) Define ANd APply Gravity: 
+  scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+  camera.applyGravity = true;
+
+2) Define an Ellipsoid.
+  //Set the ellipsoid around the camera (e.g. your player's size)
+camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+
+3) Apply collision. 
+  // Enable Collisions
+scene.collisionsEnabled = true;
+camera.checkCollisions = true;
+And declare which meshes could be in collision with our camera:
+
+ground.checkCollisions = true;
+box.checkCollisions = true;
+
+HOW would you apply these principle ideas to our system? 
+Also, what callback is used when a collision is detected ? 
+https://www.babylonjs-playground.com/#KQ54LE#30
+  // observer stuff
+
+    scene.onReadyObservable.add( function() {
+        camera.setTarget(sensorBeam);
+
+        scene.onBeforeRenderObservable.add(function () {
+
+            if (box.intersectsMesh(sensorBeam, true)){
+                console.log("intersect");
+                direction = "x";
+            };
+
+            // scene.onBeforeRenderObservable.remove(observer);
+
+        });
+    });
+
+
+
