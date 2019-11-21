@@ -309,7 +309,7 @@ class Login extends React.Component {
                             </Button>
                           </Col>
                           <Col className="sm-12" />
-                          <Col className="sm-12">
+                          <Col className="sm-12" style={{ display: "none" }}>
                             <Button
                               onClick={this.handleForgotPassword}
                               color=""

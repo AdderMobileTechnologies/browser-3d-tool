@@ -88,7 +88,7 @@ class RecoverPassword extends React.Component {
 
   render() {
     return (
-      <div className="">
+      <div className="login_body">
         <div className="auth-wrapper d-flex no-block justify-content-center align-items-center">
           {" "}
           {/**style={sidebarBackground} */}
