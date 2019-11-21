@@ -243,7 +243,7 @@ class AdderMeshWrapper {
     }
     //
     //When the original texture is applied, we set some of the additional parameters for UV needs.
-    console.log("AdderMeshWrapper: applyTextureFromDataURL() : this:", this);
+    //console.log("AdderMeshWrapper: applyTextureFromDataURL() : this:", this);
     this.setImgFileName(imgFileName);
     this.setDataURL(dataURL);
     this.setScene(scene);

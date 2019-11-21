@@ -22,12 +22,12 @@ class UITextInput extends Component {
   };
   */
   handleChange = e => {
-    console.log("UITextInput:handleChange() e.target:", e.target);
+    //console.log("UITextInput:handleChange() e.target:", e.target);
     this.setState({ value: e.target.value });
   };
 
   onBlur = e => {
-    console.log("UITextInput:onBlur() e.target:", e.target);
+    //console.log("UITextInput:onBlur() e.target:", e.target);
     var data = {};
     data.id = this.state.id;
     data.value = this.state.value;

@@ -75,7 +75,7 @@ class Login extends React.Component {
   }
 
   loginFormInputOnChange(e) {
-    console.log("loginFormInputOnChange");
+    //console.log("loginFormInputOnChange");
     let value = e.target.value;
     let name = e.target.name;
 
@@ -85,7 +85,7 @@ class Login extends React.Component {
   }
 
   toggleForm(e) {
-    console.log("toggleForm");
+    //console.log("toggleForm");
     e.preventDefault();
     this.setState(state => ({
       isLoginForm: !state.isLoginForm
@@ -93,7 +93,7 @@ class Login extends React.Component {
   }
 
   handleInputRegister(e) {
-    console.log("handleInputRegister");
+    //console.log("handleInputRegister");
     let value = e.target.value;
     let name = e.target.name;
     this.setState(prevState => ({
@@ -143,7 +143,7 @@ class Login extends React.Component {
   }
 
   registrationCreateUser(e) {
-    console.log("registrationCreateUser");
+    //console.log("registrationCreateUser");
     e.preventDefault();
     let userData = this.state.registeringUser;
 
@@ -165,10 +165,10 @@ class Login extends React.Component {
       },
       data: dataPackage
     };
-    //console.log("login.jsx: submitLogin: config:", config);
+    ////console.log("login.jsx: submitLogin: config:", config);
     axios(config)
       .then(response => {
-        console.log("RESPONSE: positive");
+        //console.log("RESPONSE: positive");
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("version", VERSION);
         this.props.history.push("/main");
@@ -188,18 +188,15 @@ class Login extends React.Component {
       });
     //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
   }
+
   handleForgotPassword() {
-    console.log("handleForgotPassword");
-    this.props.history.push("/recover-password"); // for react-router@3 it would be this.props.router.push('/some/location');
-  }
-  handleForgotPassword() {
-    console.log("handleForgotPassword");
-    console.log("this.props.history", this.props.history);
+    //console.log("handleForgotPassword");
+    //console.log("this.props.history", this.props.history);
     this.props.history.push("/recover-password");
   }
 
   submitLogin(e) {
-    console.log("submitLogin");
+    //console.log("submitLogin");
     e.preventDefault();
 
     const endpoint = `${K.META_URL}` + "/v1/auth/login/client";
@@ -218,7 +215,7 @@ class Login extends React.Component {
       },
       data: dataPackage
     };
-    console.log("login.jsx: submitLogin: config:", config);
+    //console.log("login.jsx: submitLogin: config:", config);
     axios(config)
       .then(response => {
         localStorage.setItem("token", response.data.token);
@@ -247,7 +244,7 @@ class Login extends React.Component {
     );
   }
   componentDidMount() {
-    console.log("componentDidMount");
+    //console.log("componentDidMount");
   }
   render() {
     return (

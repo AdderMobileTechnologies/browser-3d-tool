@@ -158,7 +158,7 @@ class Main extends React.Component {
     this.callback_selectionPanel = this.callback_selectionPanel.bind(this);
   }
   callback_selectionPanel(data) {
-    console.log("Main.jsx: callback_selectionPanel(data) data:", data);
+    ////console.log("Main.jsx: callback_selectionPanel(data) data:", data);
 
     let asw = this.state.adderSceneWrapper;
     let adderCam = asw.getCamera();
@@ -171,14 +171,14 @@ class Main extends React.Component {
 
     let parentModel = model.getParentMesh();
   //CAMERA: setTarget: get coords from parentModel:
-  console.log("WHAT IS THE PARENT MODEL:",parentModel);
+  //console.log("WHAT IS THE PARENT MODEL:",parentModel);
   let coords = parentModel.getPositionExpressedInLocalSpace();
   let absolute_position = parentModel.absolutePosition;
-  console.log("coords:",coords);
-  console.log("absolute_position:",absolute_position);
-  console.log("check asw:",asw);
+  //console.log("coords:",coords);
+  //console.log("absolute_position:",absolute_position);
+  //console.log("check asw:",asw);
   let adderCam = asw.getCamera();
-  console.log("test getting the camera from asw adderCam:",adderCam);
+  //console.log("test getting the camera from asw adderCam:",adderCam);
   //===>>> 
   adderCam.setTarget(absolute_position)
     //////////////////////
@@ -194,12 +194,12 @@ class Main extends React.Component {
   }
 
   register(triggerChange) {
-    console.log("Main(): register(triggerChange):");
+    //console.log("Main(): register(triggerChange):");
     this.triggerChange = triggerChange;
   }
   revertChild(data) {
     //method : ad_type, sub_type, detail
-    console.log("revertChild....data:", data);
+    //console.log("revertChild....data:", data);
     // 10-03-2019:
     //====>>>> LEFT OFF HERE: this triggers the code to reload the UI settings for the selects ... this.triggerChange(data);
   }
@@ -213,20 +213,20 @@ class Main extends React.Component {
     var environment_type = null;
     switch (args.selectedOption) {
       case "location_city":
-        console.log("changeEnvironment = (args) CITY:", args);
+        //console.log("changeEnvironment = (args) CITY:", args);
         environment_type = "CITY";
 
         break;
       case "landscape":
-        console.log("changeEnvironment = (args) COUNTRY:", args);
+        //console.log("changeEnvironment = (args) COUNTRY:", args);
         environment_type = "COUNTRY";
         break;
       default:
         break;
     }
-    console.log("environment type:", environment_type);
-    console.log("STATE:", scope.state.environment_type);
-    console.log("LOCAL:", environment_type);
+    //console.log("environment type:", environment_type);
+    //console.log("STATE:", scope.state.environment_type);
+    //console.log("LOCAL:", environment_type);
     if (scope.state.environment_type !== environment_type) {
       //NEED TO REMOVE PREVIOUS ENVIRONMENT...
       scope.resetForEnvironmentSceneChange();
@@ -304,11 +304,11 @@ class Main extends React.Component {
           scope.undo_asset(lastAction);
           break;
         default:
-          console.log("no match for action: ", lastAction.action);
+          //console.log("no match for action: ", lastAction.action);
           break;
       }
     } else {
-      console.log("welp...? something not defined.");
+      //console.log("welp...? something not defined.");
     }
   }
 
@@ -330,12 +330,12 @@ class Main extends React.Component {
           scope.redo_asset(lastRedoAction);
           break;
         default:
-          console.log("no match for action: ", lastRedoAction.action);
+          //console.log("no match for action: ", lastRedoAction.action);
           break;
       }
       util.store("set", K.REDOS_ARRAY, redo_actions_array); //1 replaces 4
     } else {
-      console.log("there  are no more actions to be undone.");
+      //console.log("there  are no more actions to be undone.");
     }
   }
   undo_screenshot(args) {
@@ -352,7 +352,7 @@ class Main extends React.Component {
   }
 
   getDataURLFromImgId = imgId => {
-    console.log("Main: getDataURLFromImgId() imgId:", imgId);
+    //console.log("Main: getDataURLFromImgId() imgId:", imgId);
     let arr = scope.state._images;
     let dataURL = null;
     for (let img of arr) {
@@ -364,11 +364,11 @@ class Main extends React.Component {
   };
 
   undo_ApplyTextureToMesh(args) {
-    console.log("Main: undo_ApplyTextureToMesh(): args:", args);
+    //console.log("Main: undo_ApplyTextureToMesh(): args:", args);
     let old_actions = util.store("get", K.ACTIONS_ARRAY);
     if (old_actions.length > 0) {
       let poppedAction = scope.popActionsPushRedos(); //check out popActionsPushRedos
-      console.log("compare args to poppedAction:", poppedAction);
+      //console.log("compare args to poppedAction:", poppedAction);
       //HERE, convert poppedAction.from FROM image id to image URL
       let newDataURL = scope.getDataURLFromImgId(poppedAction.from);
 
@@ -393,7 +393,7 @@ class Main extends React.Component {
   }
 
   undo_asset(args) {
-    console.log("undo_Asset args:", args);
+    //console.log("undo_Asset args:", args);
     let poppedAction = scope.popActionsPushRedos();
     let asw = scope.state.adderSceneWrapper;
     asw.disposeOfMeshesForModel(args.id);
@@ -401,7 +401,7 @@ class Main extends React.Component {
   }
 
   redo_asset(args) {
-    console.log("... redo_Asset args:", args);
+    //console.log("... redo_Asset args:", args);
     //pop off redo, push to actions
     let poppedRedo = scope.popRedosPushActions();
     let asw = scope.getAdderSceneWrapper();
@@ -443,20 +443,20 @@ class Main extends React.Component {
   totalRedo() {
     let redo_actions_array = util.store("get", "temp"); // 1 replace 2
     for (let i of redo_actions_array) {
-      // console.log("i:", i);
-      // console.log("i.actions:", i.actions);
+      // //console.log("i:", i);
+      // //console.log("i.actions:", i.actions);
 
       // if (redo_actions_array.length > 0) {
       let lastRedoAction = i.actions.shift(); // redo_actions_array.pop();
-      // console.log("lastRedoAction:", lastRedoAction);
+      // //console.log("lastRedoAction:", lastRedoAction);
       for (let act of i.actions) {
-        console.log("act:", act);
+        //console.log("act:", act);
         switch (act.action) {
           case "change_name":
             scope.redo_UITextInput(act.action);
             break;
           case "applyTextureToMesh":
-            console.log("applyTextToMesh ...... ");
+            //console.log("applyTextToMesh ...... ");
             scope.redo_ApplyTextureToMesh(act.action);
             break;
           case "screenshot":
@@ -471,7 +471,7 @@ class Main extends React.Component {
             */
             break;
           default:
-            console.log("no match for act.action: ", act.action);
+            //console.log("no match for act.action: ", act.action);
             break;
         }
       }
@@ -481,7 +481,7 @@ class Main extends React.Component {
           scope.redo_UITextInput(lastRedoAction);
           break;
         case "applyTextureToMesh":
-          console.log("applyTextToMesh ...... ");
+          //console.log("applyTextToMesh ...... ");
           scope.redo_ApplyTextureToMesh(lastRedoAction);
           break;
         case "screenshot":
@@ -491,7 +491,7 @@ class Main extends React.Component {
           scope.redo_asset(lastRedoAction);
           break;
         default:
-          console.log("no match for action: ", lastRedoAction.action);
+          //console.log("no match for action: ", lastRedoAction.action);
           break;
       }
       */
@@ -513,12 +513,12 @@ class Main extends React.Component {
           scope.redo_asset(lastRedoAction);
           break;
         default:
-          console.log("no match for action: ", lastRedoAction.action);
+          //console.log("no match for action: ", lastRedoAction.action);
           break;
       }
      
     } else {
-      console.log("there  are no more actions to be undone.");
+      //console.log("there  are no more actions to be undone.");
     }
     */
   }
@@ -545,7 +545,7 @@ class Main extends React.Component {
     );
   };
   callback_setState(args) {
-    console.log("callback_setState:args:", args);
+    //console.log("callback_setState:args:", args);
   }
   ///////////////////////////////////////////////////////////////////////////
 
@@ -563,12 +563,12 @@ class Main extends React.Component {
     // scope.setState({
     //   currentDataURL: dataURL
     // });
-    // console.log("update the image RIGHT? ");
+    // //console.log("update the image RIGHT? ");
     // //----------
   }
 
   subCallback(args) {
-    console.log("subCallback with args:", args);
+    //console.log("subCallback with args:", args);
   }
 
   getAdderSceneWrapper() {
@@ -585,7 +585,7 @@ class Main extends React.Component {
     adderSkybox.getSkybox();
 
     // let arrayOfModels = this.state.adderSceneWrapper.getModels();
-    // console.log("An array of Models...look for environment related models.");
+    // //console.log("An array of Models...look for environment related models.");
     // console.log(arrayOfModels);
     // for (var i = 0; i < 5; i++) {
     //   console.log(arrayOfModels[i]);
@@ -627,7 +627,7 @@ class Main extends React.Component {
     });
   };
   imageEditorCallback = dataURL => {
-    console.log("image editor callback ...with dataURL:", dataURL);
+    //console.log("image editor callback ...with dataURL:", dataURL);
     //maybe will hide when back to main DOM?
 
     this.setState(
@@ -705,7 +705,7 @@ class Main extends React.Component {
   };
 
   callback_WindowPickable(mesh_id, caller) {
-    console.log("WINDOW CALLBACK PICKABLE: console.log(mesh_id): ", mesh_id);
+    //console.log("WINDOW CALLBACK PICKABLE: console.log(mesh_id): ", mesh_id);
     // A DIFFERENCE in MESH_ID styles ? NO: billboard_2sides_angled_sign_2 via sidebar.
     //                                 billboard_2sides_angled_sign_2
     // FOLLOW the 'sign one' button forward.
@@ -721,22 +721,22 @@ class Main extends React.Component {
 
     let parentModel = model.getParentMesh();
     //CAMERA: setTarget: get coords from parentModel:
-    console.log("can I get height of mesh from parentModel?");
+    //console.log("can I get height of mesh from parentModel?");
 
-    console.log("WHAT IS THE PARENT MODEL:", parentModel);
-    console.log("can I get bounding box info?");
+    //console.log("WHAT IS THE PARENT MODEL:", parentModel);
+    //console.log("can I get bounding box info?");
     let boundingInfo = parentModel._boundingInfo;
-    console.log("boundingInfo:", boundingInfo);
+    //console.log("boundingInfo:", boundingInfo);
     let boundingBoxMax = parentModel._boundingInfo.boundingBox.maximum;
     let coords = parentModel.getPositionExpressedInLocalSpace();
 
     let absolute_position = parentModel.absolutePosition;
     //absolute_position.y = absolute_position.y  ;
-    console.log("coords:", coords);
-    console.log("absolute_position:", absolute_position);
-    console.log("check asw:", asw);
+    //console.log("coords:", coords);
+    //console.log("absolute_position:", absolute_position);
+    //console.log("check asw:", asw);
     let adderCam = asw.getCamera();
-    console.log("test getting the camera from asw adderCam:", adderCam);
+    //console.log("test getting the camera from asw adderCam:", adderCam);
     //===>>>
     adderCam.setTarget(absolute_position);
     /*
@@ -767,7 +767,7 @@ Summary: all I really need is
           currentMeshWrapper: currentMeshWrapper
         },
         () => {
-          console.log("editing mesh id:", mesh_id);
+          //console.log("editing mesh id:", mesh_id);
           //ie.  billboard_2sides_angled_sign_2
           //ie. vehicle_4door_stationwagon_leftside_medium
           //so, split on "_" get first
@@ -796,16 +796,16 @@ Summary: all I really need is
         }
       );
     } else {
-      //console.log("already editing ...");
-      console.log("ALREADY EDITING DO I NEED TO CREATE A PANEL ");
+      ////console.log("already editing ...");
+      //console.log("ALREADY EDITING DO I NEED TO CREATE A PANEL ");
     }
     //did not good tacking on the show hide code here.
   }
   // To hide or show the appropriate sidebar image and controls
   callback_Designer(args = null, adderAsset = null, adderAssetObject = null) {
-    console.log("Main:callback_Designer():args:", args);
-    console.log("adderAsset:", adderAsset);
-    console.log("adderAssetObject:", adderAssetObject);
+    //console.log("Main:callback_Designer():args:", args);
+    //console.log("adderAsset:", adderAsset);
+    //console.log("adderAssetObject:", adderAssetObject);
 
     if (args === "-1") {
       scope.setState({ selected_ad_type: "-1" }); // reset ad type
@@ -817,7 +817,7 @@ Summary: all I really need is
       scope.setState({ selected_ad_type: "1" }); //billboard
     }
     if (!(adderAsset instanceof AdderAsset)) {
-      // console.log("NOT AN ADDER ASSET yet....");
+      // //console.log("NOT AN ADDER ASSET yet....");
     } else {
       // save_UIAction(_id, _action, _to, _from)
       //save each asset into an array:
@@ -838,7 +838,7 @@ Summary: all I really need is
         last_adderAssetObject: adderAssetObject
       });
       scope.loadScene(adderAsset);
-      console.log("callback_Designer:adderAsset:", adderAsset);
+      //console.log("callback_Designer:adderAsset:", adderAsset);
       scope.defineSelectableMeshesForAdderAsset(adderAsset);
       //clean up previous model: selection panel.iconGear
       //This was supposed to remove the previous models selection Panel, but it was causing a one click delay on the gear.
@@ -851,13 +851,13 @@ Summary: all I really need is
     }
   }
   loadScene = adderAsset => {
-    console.log(
-      "loadScene :: LOAD SCENE: how many times ? Once per new model."
-    );
+    // console.log(
+    //   "loadScene :: LOAD SCENE: how many times ? Once per new model."
+    // );
     this.state.adderSceneWrapper.getUUID();
     let adderLoader = new AdderLoader(this.state.adderSceneWrapper);
     let modelParent = adderLoader.addSingleModel(adderAsset);
-    console.log("WHAT DOES THIS ADDER ASSET LOOKI LIKE ? ", adderAsset);
+    //console.log("WHAT DOES THIS ADDER ASSET LOOKI LIKE ? ", adderAsset);
     let that = this;
     this.setState(
       {
@@ -887,20 +887,20 @@ Summary: all I really need is
           callback_selectionPanel: this.callback_selectionPanel
         });
       } else {
-        console.log(
-          "this.state.gLiteScope is NOT defined yet. on the FIRST MODEL insertion. so How can I call the manage models function.  "
-        );
+        // console.log(
+        //   "this.state.gLiteScope is NOT defined yet. on the FIRST MODEL insertion. so How can I call the manage models function.  "
+        // );
       }
     }
   }
 
   defineSelectableMeshesForAdderAsset(adderAsset) {
-    console.log(
-      "defineSelectableMeshesForAdderAsset(adderAsset):adderAsset",
-      adderAsset
-    );
+    // console.log(
+    //   "defineSelectableMeshesForAdderAsset(adderAsset):adderAsset",
+    //   adderAsset
+    // );
     let assetData = adderAsset.getBehavior();
-    console.log("assetData:", assetData);
+    //console.log("assetData:", assetData);
     //strategy:SELECT:parameters:pickableMeshes
     //PROBLEM: HERE the index 2 is hard codeded. Previously it was one which meant strategy select, but after adding another strategy, the index got moved.
     //THis could be very problematic.
@@ -920,7 +920,7 @@ Summary: all I really need is
 
         let sign1MeshId = null,
           sign2MeshId = null;
-        //console.log("PICKABLE MESHES: ", pickableMeshes);
+        ////console.log("PICKABLE MESHES: ", pickableMeshes);
         for (let i in pickableMeshes) {
           let pickableMesh = pickableMeshes[i];
           let splitData = pickableMesh.split("_");
@@ -955,7 +955,7 @@ Summary: all I really need is
             if (splitData[1] === "2sides") {
               if (splitData[2] === "angled") {
                 if (splitData[3] === "sign") {
-                  //console.log("switch(splitData):pickableMesh:", pickableMesh);
+                  ////console.log("switch(splitData):pickableMesh:", pickableMesh);
                   switch (splitData[4]) {
                     case "1":
                       sign1MeshId = pickableMesh;
@@ -1000,7 +1000,7 @@ Summary: all I really need is
   }
 
   screenshotButtonPress(evt) {
-    console.log("- - - - screenshotButtonPress :evt:", evt);
+    //console.log("- - - - screenshotButtonPress :evt:", evt);
 
     /* THIS DID NOT WORK:
     // call to close the selection panel like in iconGear()
@@ -1018,7 +1018,7 @@ Summary: all I really need is
     let that = this;
 
     function addScreenshot(src) {
-      // console.log("addScreenShot(src) src:", src);
+      // //console.log("addScreenShot(src) src:", src);
       //TODO: left off here : reconsider how screen shots are getting saved
       let image_uid = "img_" + Date.now();
 
@@ -1040,7 +1040,7 @@ Summary: all I really need is
         }),
         () => {
           const obj = { image_id: image_uid, src: "" };
-          //console.log("");
+          ////console.log("");
           const array_image_models = that.state.userSession.designModel.screenShots.slice(); // Create a copy
           array_image_models.push(obj);
 
@@ -1079,7 +1079,7 @@ Summary: all I really need is
               ...prevState,
               tileData: newTileDataArray
             }),
-            () => {}
+            () => { }
           );
         }
       );
@@ -1089,7 +1089,7 @@ Summary: all I really need is
       engine,
       camera,
       { width: 400, height: 300 },
-      function(data) {
+      function (data) {
         let img = document.createElement("img");
         img.src = data;
 
@@ -1098,13 +1098,13 @@ Summary: all I really need is
     );
   } //
 
-  completeScreenshot() {}
+  completeScreenshot() { }
   componentDidMount() {
     util.store("remove", K.ACTIONS_ARRAY);
     util.store("remove", K.REDOS_ARRAY);
-    console.log("===============process.env=======");
-    console.log(process.env);
-    console.log("===================================");
+    //console.log("===============process.env=======");
+    //console.log(process.env);
+    //console.log("===================================");
     // -- RXJS
     // subscribe to home component messages
     this.subscription = messageService.getMessage().subscribe(message => {
@@ -1120,7 +1120,7 @@ Summary: all I really need is
 
     //----------------------------------------------
     const url = `${K.META_URL}/v1/design/get`;
-    console.log(" const url = `${K.META_URL}/v1/design/get`;", url);
+    //console.log(" const url = `${K.META_URL}/v1/design/get`;", url);
     //====>
     this.downloadSavedDesign();
     // in componentDidMount
@@ -1144,7 +1144,7 @@ Summary: all I really need is
     });
     this.setState({ engine: engine });
 
-    let createScene = function(scope) {
+    let createScene = function (scope) {
       let scene = new BABYLON.Scene(engine);
       //manifest flag for babylon.manifest files.
       BABYLON.Database.IDBStorageEnabled = true;
@@ -1190,10 +1190,10 @@ Summary: all I really need is
       // BABYLON.Vector3.Zero(),
       let camera = adderCam_arcRotate.createCamera();
       //works: adderCam_arcRotate.setTarget("coords here")
-      console.log("scope in createScene: ", scope);
-      console.log("type of adderCam_arcRotate:");
-      console.log(typeof adderCam_arcRotate);
-      console.log(adderCam_arcRotate);
+      //console.log("scope in createScene: ", scope);
+      //console.log("type of adderCam_arcRotate:");
+      // console.log(typeof adderCam_arcRotate);
+      // console.log(adderCam_arcRotate);
 
       // scope.setState({ adderCamera: adderCam_arcRotate });
 
@@ -1239,7 +1239,7 @@ Summary: all I really need is
     let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
     let adderGuiUtility = new AdderGuiUtility(advancedTexture);
     let grid = adderGuiUtility.gui_create_grid2(advancedTexture);
-    console.log("created grid: ", grid);
+    //console.log("created grid: ", grid);
     //might need to add the advanced texture to the adderSceneWrapper 
     //create a control:  let control = adderGuiUtility.controlGroupSlider(mesh)
 */
@@ -1258,7 +1258,7 @@ Summary: all I really need is
     );
     scene.autoClear = true;
 
-    engine.runRenderLoop(function() {
+    engine.runRenderLoop(function () {
       if (typeof scene === "undefined") {
         return;
       } else {
@@ -1272,12 +1272,12 @@ Summary: all I really need is
       //use canvas click to compensate for babylonjs scene.pick persisting incorrect x and y positions when clicked outside of scene.
       canvasClick = true;
     });
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", function () {
       engine.resize();
       ///canvas dimensions need to be recalculated on window resize
     });
 
-    window.addEventListener("click", function(e) {
+    window.addEventListener("click", function (e) {
       if (canvasClick) {
         //ROOT PROBLEM: all clicks outside of the canvas, were registering as the 'last click' made inside the canvas.
         //That's why this condition was created.
@@ -1368,7 +1368,7 @@ Summary: all I really need is
   }
 
   resetForEnvironmentSceneChange() {
-    console.log("Main: resetForEnvironmentSceneChange():");
+    //console.log("Main: resetForEnvironmentSceneChange():");
     //use asw
     let asw = scope.state.adderSceneWrapper;
     //get all models(*except for user models*)
@@ -1414,7 +1414,7 @@ Summary: all I really need is
   environment_Rain(action) {
     let scene = scope.state.scene;
     ///
-    console.log("action:", action);
+    //console.log("action:", action);
 
     ///
     if (action === "start") {
@@ -1435,7 +1435,7 @@ Summary: all I really need is
   }
   //iconDownload or iconSave_Alt
   iconSave_Alt() {
-    console.log("iconSave_Alt");
+    //console.log("iconSave_Alt");
     // here , was downloading the main canvas snapshot I think.
     // now wondering if it should be all of the saved designs.
     // how should we handle all the saved designs, should we only allow one at a time for simplicities sake.
@@ -1478,17 +1478,17 @@ Summary: all I really need is
     }
   }
   iconShare() {
-    console.log("iconShare");
+    //console.log("iconShare");
     //let util = new AdderUtil();
     util.localStorageSpace();
     let _uuid = util.getUUID();
-    console.log(_uuid);
+    // console.log(_uuid);
     let type = "remove";
     let item = "util_array";
     let json = { sam: "hill" };
 
     let result = util.store(type, item, json);
-    console.log("result:", result);
+    //console.log("result:", result);
     // if (scope.state.isRaining) {
     //  // scope.environment_Rain("stop");
     //   //scope.setState({
@@ -1508,7 +1508,7 @@ Summary: all I really need is
       isReadyToEmail: true,
       currentDataURL: dataURL
     });
-    console.log("update the image RIGHT? ");
+    //console.log("update the image RIGHT? ");
     //----------
 
     // scope.environment_Rain();
@@ -1535,7 +1535,7 @@ Summary: all I really need is
         let actions = util.store("get", K.ACTIONS_ARRAY);
         newDesign.actions = actions;
         newDesign.images = thatscope.state._images;
-        console.log("need the images:", thatscope.state._images);
+        //console.log("need the images:", thatscope.state._images);
 
         util.store("append", K.SAVED_DESIGNS_ARRAY, newDesign); //2 lines replace about 10
         //====>
@@ -1545,7 +1545,7 @@ Summary: all I really need is
   }
 
   uploadSavedDesign() {
-    let options = new Promise(function(resolve, reject) {
+    let options = new Promise(function (resolve, reject) {
       const url = `${K.META_URL}/v1/design/save`;
       let SAVED_DESIGNS_ARRAY = util.store("get", K.SAVED_DESIGNS_ARRAY);
       let params = {
@@ -1559,13 +1559,13 @@ Summary: all I really need is
           resolve(data);
         });
     });
-    options.then(function(value) {
-      console.log("value in promise response:", value);
+    options.then(function (value) {
+      //console.log("value in promise response:", value);
     });
   }
 
   downloadSavedDesign() {
-    let options = new Promise(function(resolve, reject) {
+    let options = new Promise(function (resolve, reject) {
       const url = `${K.META_URL}/v1/design/get`;
       axios
         .get(url)
@@ -1574,14 +1574,14 @@ Summary: all I really need is
           resolve(data);
         });
     });
-    options.then(function(value) {
-      console.log("value in promise response:", value);
+    options.then(function (value) {
+      //console.log("value in promise response:", value);
       util.store("set", "temp", value);
       //=====>>>> LEFT OFF HERE 10-02-2019 trying to load Saved Design....===> scope.totalRedo();
       if (value.data !== "empty") {
         scope.massageDesign();
       } else {
-        console.log("design is currently empty.");
+        //console.log("design is currently empty.");
       }
     });
   }
@@ -1594,11 +1594,11 @@ Summary: all I really need is
 
     */
     let temp_design = util.store("get", "temp");
-    console.log("massageDesign(): temp_design:", temp_design);
+    //console.log("massageDesign(): temp_design:", temp_design);
     // console.log(temp_design[0].designName);
     let actions = temp_design[0].actions;
     let images = temp_design[0].images;
-    console.log(actions);
+    //console.log(actions);
     for (let action of actions) {
       //switch based on action.action -> apply appropriate method to re-install the design.
       switch (action.action) {
@@ -1617,11 +1617,11 @@ Summary: all I really need is
     }
   }
   _changeName(data) {
-    console.log("_changeName():data", data);
+    //console.log("_changeName():data", data);
     //TODO: take this value and apply it to the DOM element and check the blur method related to it...
   }
   _changeAsset(data) {
-    console.log("_changeAsset():data", data);
+    //console.log("_changeAsset():data", data);
     //TODO: here we need to pull down the asset via meta data ... or something....
     //should mirror functionality of this: callback_Designer(args = null, adderAsset = null, adderAssetObject = null)
     // in the Desiger file in the componentDidMount the code calls the meta server for all the design meta , saves it to state,
@@ -1629,7 +1629,7 @@ Summary: all I really need is
     //(?) could I automate the dom steps instead?
 
     let arrFromStr = data.split("/");
-    console.log("arrFromStr:", arrFromStr);
+    //console.log("arrFromStr:", arrFromStr);
     /*
     ad_type 
      0 = vehicle, 
@@ -1655,10 +1655,10 @@ Summary: all I really need is
     resetData.detail = arrFromStr[5];
     resetData.filename = arrFromStr[6];
 
-    console.log("resetData:", resetData);
+    //console.log("resetData:", resetData);
     this.revertChild(resetData);
     /*
-    console.log("Designer.props:");
+    //console.log("Designer.props:");
     //"ad_type", 1
     // HERE we have to use the model Id to define which ad_type we have....which is messy.
     var selectedOption = null;
@@ -1684,20 +1684,20 @@ Summary: all I really need is
 
   _applyTextureToMesh(data, images) {
     //'id' of the model, and 'to' to use as the uuid to get the dataURL from 'design.images'
-    // console.log("_applyTextureToMesh():data", data);
-    var newArray = images.filter(function(el) {
+    // //console.log("_applyTextureToMesh():data", data);
+    var newArray = images.filter(function (el) {
       return el.uuid === data.to;
     });
     let imageToReApply = newArray[0].dataURL;
-    //console.log("apply this image to that id.");
-    //console.log("dataURL:", imageToReApply);
-    //console.log("model id:", data.id);
+    ////console.log("apply this image to that id.");
+    ////console.log("dataURL:", imageToReApply);
+    ////console.log("model id:", data.id);
   }
 
   /*
   camera target change in state does not appear to effect the existing scene?
   cameraTargetY_up() {
-    console.log("up");
+    //console.log("up");
     let current = this.state.camera_target_y;
     current = current + 2;
     scope.setState({
@@ -1706,7 +1706,7 @@ Summary: all I really need is
     });
   }
   cameraTargetY_down() {
-    console.log("down...");
+    //console.log("down...");
   }
 */
   //rxjs

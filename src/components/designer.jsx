@@ -61,12 +61,12 @@ class Designer extends React.Component {
     );
   }
   rxjsCallback() {
-    console.log("rxjsCallback");
+    //console.log("rxjsCallback");
   }
   selectElement(id, valueToSelect) {
-    console.log("selectElement(id, valueToSelect)");
-    console.log("id:", id);
-    console.log("valueToSelect", valueToSelect);
+    // console.log("selectElement(id, valueToSelect)");
+    // console.log("id:", id);
+    // console.log("valueToSelect", valueToSelect);
     let element = document.getElementById(id);
     element.value = valueToSelect;
   }
@@ -95,10 +95,10 @@ class Designer extends React.Component {
                     1 = angled
 
     */
-    console.log("designer.jsx-> triggerChange() args:", data);
+    // console.log("designer.jsx-> triggerChange() args:", data);
     //this.selectElement("ad_type", 1);
     // this.selectElement(data.id, data.value);
-    console.log("___data:", data);
+    //console.log("___data:", data);
 
     /*
     id = 'ad_type', 'sub_type', or 'detail' 
@@ -129,8 +129,8 @@ class Designer extends React.Component {
     //this fires before the second select has been created .....
     //force delay for async reasons
     let that = this;
-    setTimeout(function() {
-      console.log("subActionData:: ", subActionData);
+    setTimeout(function () {
+      // console.log("subActionData:: ", subActionData);
       that.selectElement(subActionData.id, subActionData.selectedOption);
       that.setState({
         isOnDetailType: true
@@ -151,23 +151,23 @@ class Designer extends React.Component {
     //this fires before the second select has been created .....
     //force delay for async reasons
     let that2 = this;
-    setTimeout(function() {
-      console.log("detailActionData:: ", detailActionData);
+    setTimeout(function () {
+      //console.log("detailActionData:: ", detailActionData);
       that2.selectElement(detailActionData.id, detailActionData.selectedOption);
     }, 5000);
 
     //error: Cannot read property 'children' of undefined  designer.jsx 223
   }
   reloadDesignChoiceMeta(data) {
-    console.log(
-      "reloadDesginChoiceMeta............................................."
-    );
+    // console.log(
+    //   "reloadDesginChoiceMeta............................................."
+    // );
     let scope = this;
     this.setState({
       adderSceneWrapper: this.getAdderSceneWrapper()
     });
     //perform call to meta server for 'ad type' data.
-    let promise_designChoices2 = new Promise(function(resolve, reject) {
+    let promise_designChoices2 = new Promise(function (resolve, reject) {
       const url = `${K.META_URL}/v1/meta/design`;
       axios
         .get(url)
@@ -176,7 +176,7 @@ class Designer extends React.Component {
           resolve(data);
         });
     });
-    promise_designChoices2.then(function(value) {
+    promise_designChoices2.then(function (value) {
       promise_designChoices_callback2(value);
       //save meta data for later referencing
       scope.setState(
@@ -191,10 +191,10 @@ class Designer extends React.Component {
     });
     function promise_designChoices_callback2(value) {
       //create the top level choices for the design process. ie. 'ad_type' Vehicle,Billboard, etc.
-      console.log(
-        "create the options for the select in promise_designChoices_callback2:value:",
-        value
-      );
+      // console.log(
+      //   "create the options for the select in promise_designChoices_callback2:value:",
+      //   value
+      // );
       let array = [];
       let element = {};
 
@@ -225,8 +225,8 @@ class Designer extends React.Component {
 
   continue_adType_callback = data => {
     //console.log("async await callback ....");
-    console.log("(B)continue_adType_callback: data:", data);
-    console.log("this.state:", this.state);
+    //console.log("(B)continue_adType_callback: data:", data);
+    //console.log("this.state:", this.state);
 
     if (data.selectedOption !== "-1") {
       let array = [];
@@ -242,25 +242,25 @@ class Designer extends React.Component {
       }
       adTypeSelectedOption = data.selectedOption;*/
 
-      console.log("this:", this);
-      console.log("scope:", scope);
-      console.log("scope.state:", scope.state);
-      console.log("adTypeSelectedOption:", adTypeSelectedOption);
-      console.log(
-        "scope.state.designChoiceMeta:",
-        scope.state.designChoiceMeta
-      );
-      console.log(
-        "scope.state.designChoiceMeta.children:",
-        scope.state.designChoiceMeta.children
-      );
-      console.log("adTypeSelectedOption:", adTypeSelectedOption);
-      console.log(
-        "scope.state.designChoiceMeta.children[adTypeSelectedOption]:",
-        scope.state.designChoiceMeta.children[adTypeSelectedOption]
-      );
+      // console.log("this:", this);
+      // console.log("scope:", scope);
+      // console.log("scope.state:", scope.state);
+      // console.log("adTypeSelectedOption:", adTypeSelectedOption);
+      // console.log(
+      //   "scope.state.designChoiceMeta:",
+      //   scope.state.designChoiceMeta
+      // );
+      // console.log(
+      //   "scope.state.designChoiceMeta.children:",
+      //   scope.state.designChoiceMeta.children
+      // );
+      // console.log("adTypeSelectedOption:", adTypeSelectedOption);
+      // console.log(
+      //   "scope.state.designChoiceMeta.children[adTypeSelectedOption]:",
+      //   scope.state.designChoiceMeta.children[adTypeSelectedOption]
+      // );
 
-      console.log("-------------------------");
+      // console.log("-------------------------");
       let subTypeData =
         scope.state.designChoiceMeta.children[adTypeSelectedOption].children;
       for (let i in subTypeData) {
@@ -279,7 +279,7 @@ class Designer extends React.Component {
   adType_callback = data => {
     // console.log("adType_callback data:", data);
     this.props.callback("-1");
-    console.log("designer: adType_callback(): data:", data);
+    //console.log("designer: adType_callback(): data:", data);
     this.reset_adType(data);
   };
   //-----------------------------------------------
@@ -296,8 +296,8 @@ class Designer extends React.Component {
     );
   }
   continue_subType_callback = data => {
-    console.log("is this gettting called: continue_subType_callback ");
-    console.log("async await callback ....");
+    // console.log("is this gettting called: continue_subType_callback ");
+    // console.log("async await callback ....");
     if (data.selectedOption !== "-1") {
       let array = [];
       let element = {};
@@ -322,7 +322,7 @@ class Designer extends React.Component {
     }
   };
   subType_callback = data => {
-    console.log("subType_callback data:", data);
+    //console.log("subType_callback data:", data);
     //try resetSubType(data)
     this.reset_subType(data);
   };
@@ -331,8 +331,8 @@ class Designer extends React.Component {
     if (data.selectedOption !== "-1") {
       //could just return the data here
       //console.log("==>> designer:jsx: detail_callback() : data:", data);
-      console.log("designer.jsx : detail_callback()");
-      console.log("this.state.designChoiceMeta:", this.state.designChoiceMeta);
+      //console.log("designer.jsx : detail_callback()");
+      //console.log("this.state.designChoiceMeta:", this.state.designChoiceMeta);
 
       let assetSelected = data.selectedOption;
       //creating the assetData with the selections made by pulling them from the designChoiceMeta
@@ -343,16 +343,16 @@ class Designer extends React.Component {
       //console.log("assetSelected:", assetSelected);
       //send data to parent to name the 'model' after it's filepath property in the assetData.
 
-      console.log(
-        "==>> designer:jsx: detail_callback() : assetData:",
-        assetData
-      );
+      // console.log(
+      //   "==>> designer:jsx: detail_callback() : assetData:",
+      //   assetData
+      // );
 
       this.props.callback_withModelInfo(assetData);
       let adderSceneWrapper = this.props.adderSceneWrapper;
       adderSceneWrapper.getUUID();
 
-      console.log("assetData.name:", assetData.name);
+      // console.log("assetData.name:", assetData.name);
       let adderAsset = new AdderAsset(
         assetData.dir,
         assetData.name,
@@ -418,7 +418,7 @@ class Designer extends React.Component {
       adderSceneWrapper: this.getAdderSceneWrapper()
     });
     //perform call to meta server for 'ad type' data.
-    let promise_designChoices = new Promise(function(resolve, reject) {
+    let promise_designChoices = new Promise(function (resolve, reject) {
       const url = `${K.META_URL}/v1/meta/design`;
       axios
         .get(url)
@@ -427,7 +427,7 @@ class Designer extends React.Component {
           resolve(data);
         });
     });
-    promise_designChoices.then(function(value) {
+    promise_designChoices.then(function (value) {
       promise_designChoices_callback(value);
       //save meta data for later referencing
       scope.setState({
@@ -550,7 +550,7 @@ class Designer extends React.Component {
           {/** rxjs map function requires some kind of html  */}
           {
             (messages.map((message, index) => <div></div>),
-            scope.rxjsCallback())
+              scope.rxjsCallback())
           }
         </Grid>
       </div>

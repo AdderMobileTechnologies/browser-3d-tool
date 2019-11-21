@@ -49,11 +49,11 @@ class RecoverPassword extends React.Component {
     let response;
     try {
       // "http://localhost:8001/auth/forgot-password/?email=b.forte@addermobile.com"
-      // http: console.log("recover-password.jsx::handleFormSubmit() ");
+      // http:  //console.log("recover-password.jsx::handleFormSubmit() ");
       // const endpoint = `${K.META_URL}`
-      console.log(
-        K.META_URL + "/v1/auth/forgot-password/?email=" + dataPackage.email
-      );
+      //console.log(
+      // K.META_URL + "/v1/auth/forgot-password/?email=" + dataPackage.email
+      // );
       response = await fetch(
         K.META_URL + "/v1/auth/forgot-password/?email=" + dataPackage.email
       );
@@ -62,7 +62,7 @@ class RecoverPassword extends React.Component {
       alert("We're sorry, but we could not process your request at this time.");
     }
 
-    console.log("GOOD", response);
+    //console.log("GOOD", response);
 
     if (response.status === 200 || response.status === 404) {
       alert(

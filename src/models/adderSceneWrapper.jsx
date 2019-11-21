@@ -27,7 +27,7 @@ class AdderSceneWrapper {
         "AdderSceneWrapper: Constructor: Expects a Gui.AdvancedDynamicTexture as an arguement."
       );
     }
-    if( camera === null ){
+    if (camera === null) {
       throw new Error("AdderSceneWrapper:constructor(): the camera parameter ca not be null.")
     }
 
@@ -57,9 +57,9 @@ class AdderSceneWrapper {
       return _advancedTexture;
     };
     this.getCamera = () => {
-      console.log("typeof camera:");
-      console.log(typeof _camera)
-console.log("the camera object is",_camera);
+      // console.log("typeof camera:");
+      // console.log(typeof _camera)
+      // console.log("the camera object is", _camera);
       return _camera;
       //return this._camera;
     }
@@ -109,7 +109,7 @@ console.log("the camera object is",_camera);
     };
 
     this.getModelForMeshId = mesh_id => {
-      console.log("adderSceneWrapper:getModelForMeshId()");
+      //console.log("adderSceneWrapper:getModelForMeshId()");
       /*
       example in new format:
       vehicle_2door_sportscar_rightside_small
@@ -133,7 +133,7 @@ console.log("the camera object is",_camera);
     };
 
     this.applyTextureToMesh = (mesh_id, dataURL) => {
-      console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
+      //console.log("AdderSceneWrapper:this.applyTextureToMesh:  ");
       if (dataURL !== "empty dataURL") {
         let ModelsArray = this.getModels();
         for (let mIndex in ModelsArray) {
@@ -157,7 +157,7 @@ console.log("the camera object is",_camera);
 
     //get mesh wrapper for mesh_id 
     this.getMeshWrapperForMeshId = mesh_id => {
-      console.log("adderSceneWrapper:getMeshWrapperForMeshId()");
+      // console.log("adderSceneWrapper:getMeshWrapperForMeshId()");
       /*
       example in new format:
       vehicle_2door_sportscar_rightside_small
@@ -218,7 +218,7 @@ console.log("the camera object is",_camera);
     let droppedModels = [];
 
     // IF userModels.length > 0 OTHERWISE remove all models
-    console.log("userModels.length:", userModels.length);
+    //console.log("userModels.length:", userModels.length);
 
     if (userModels.length > 0) {
       for (let x in AllModels) {
@@ -248,7 +248,7 @@ console.log("the camera object is",_camera);
         }
       }
     } else {
-      console.log("remove previous environmenty models here.");
+      //console.log("remove previous environmenty models here.");
       for (let x in AllModels) {
         let modelX = AllModels[x];
         let modelFileName = modelX.getModelFile();

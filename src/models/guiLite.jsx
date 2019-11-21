@@ -18,7 +18,7 @@ let childScope;
 class GuiLite extends React.Component {
   constructor(props) {
     super(props);
-    console.log("guiLite-> PROPS:", this.props);
+    //console.log("guiLite-> PROPS:", this.props);
     //2
     this.state = {
       messages: [],
@@ -29,7 +29,7 @@ class GuiLite extends React.Component {
       scene: this.props.scene,
       advancedTexture: this.props.advancedTexture,
       currentModelParentName: this.props.currentModelParentName,
-      callback_selectionPanel : this.props.callback_selectionPanel,
+      callback_selectionPanel: this.props.callback_selectionPanel,
       y_previous: 0,
       z_previous: 0,
       x_previous: 0,
@@ -102,10 +102,10 @@ class GuiLite extends React.Component {
 
   //3
   componentDidMount() {
-    console.log(
-      "gLite: does GuiLite Mount ? in its present form? props:",
-      this.props
-    );
+    // console.log(
+    //   "gLite: does GuiLite Mount ? in its present form? props:",
+    //   this.props
+    // );
     this.props.get_gLiteScope(childScope);
     let scope = this;
 
@@ -119,7 +119,7 @@ class GuiLite extends React.Component {
         this.state.messages = [];
       }
     });
-    console.log("PROPS CHECK BEFORE PANEL:", this.props);
+    //console.log("PROPS CHECK BEFORE PANEL:", this.props);
     //JUST THE INITIAL PANEL:
     let a_selection_panel = this.easy_selection_panel(
       this.state.scene,
@@ -174,10 +174,10 @@ class GuiLite extends React.Component {
     currentMeshWrapper,
     callback_selectionPanel
   ) => {
-    console.log(
-      "guiLite:easy_selection_panel(): currentMeshWrapper:",
-      currentMeshWrapper
-    );
+    // console.log(
+    //   "guiLite:easy_selection_panel(): currentMeshWrapper:",
+    //   currentMeshWrapper
+    // );
     let data = {
       method: "manageModels",
       currentModelParent: modelParent,
@@ -204,7 +204,7 @@ class GuiLite extends React.Component {
       /// - end didmount code.
       var scope = this.state;
       scope.modelParent = modelParent;
-      var toSize = function(isChecked) {
+      var toSize = function (isChecked) {
         if (isChecked) {
           modelParent.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
         } else {
@@ -212,7 +212,7 @@ class GuiLite extends React.Component {
         }
       };
 
-      var orientateY = function(angle) {
+      var orientateY = function (angle) {
         let val = displayValueN(angle);
         if (scope.y_previous > val) {
           modelParent.rotation.y = angle / 2;
@@ -221,14 +221,14 @@ class GuiLite extends React.Component {
         }
         scope.y_previous = val;
       };
-      var orientateX = function(angle) {
+      var orientateX = function (angle) {
         modelParent.rotation.x = angle;
       };
 
-      var displayValue = function(value) {
+      var displayValue = function (value) {
         return BABYLON.Tools.ToDegrees(value) | 0;
       };
-      var onValueChange = function(value) {
+      var onValueChange = function (value) {
         return " ";
       };
 
@@ -236,10 +236,10 @@ class GuiLite extends React.Component {
       transformGroup.addCheckbox("Small", toSize);
 
       var positionGroup = new BABYLON.GUI.SliderGroup(group_name, "S");
-      console.log(
-        "What is inside the positionGroup: ie. sliderGroup?",
-        positionGroup
-      );
+      // console.log(
+      //   "What is inside the positionGroup: ie. sliderGroup?",
+      //   positionGroup
+      // );
 
       var selectionPanel = new BABYLON.GUI.SelectionPanel(group_name, [
         positionGroup
@@ -276,18 +276,18 @@ class GuiLite extends React.Component {
       this.state.selectionPanel = selectionPanel;
 
       advancedTexture.addControl(this.state.selectionPanel);
-      console.log("advancedTexture:", advancedTexture);
+      //console.log("advancedTexture:", advancedTexture);
 
-      var moveY = function(val) {
+      var moveY = function (val) {
         modelParent.position.y = modelParent.position.y + val;
-       
+
       };
-      var displayValueN = function(value) {
-        console.log("value:", value);
+      var displayValueN = function (value) {
+        // console.log("value:", value);
         return BABYLON.Tools.ToDegrees(value) | 0;
       };
 
-      var moveX = function(val) {
+      var moveX = function (val) {
         let x_max = 30;
         let x_min = -30;
 
@@ -315,7 +315,7 @@ class GuiLite extends React.Component {
         scope.callback_selectionPanel(modelParent.absolutePosition)
       };
 
-      var moveZ = function(val) {
+      var moveZ = function (val) {
         let z_max = 30;
         let z_min = -30;
 
@@ -339,13 +339,13 @@ class GuiLite extends React.Component {
           }
         }
         let callbackData = {
-          id:modelParent.id,
-          absolutePosition:modelParent.absolutePosition
+          id: modelParent.id,
+          absolutePosition: modelParent.absolutePosition
         }
         scope.callback_selectionPanel(modelParent.absolutePosition)
       };
 
-      var scaleUV = function(val) {
+      var scaleUV = function (val) {
         let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(scope.u_offset);
@@ -357,7 +357,7 @@ class GuiLite extends React.Component {
           meshWrapper.reapplyTexture();
         }
       };
-      var offsetU = function(val) {
+      var offsetU = function (val) {
         let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(val);
@@ -368,7 +368,7 @@ class GuiLite extends React.Component {
           meshWrapper.reapplyTexture();
         }
       };
-      var offsetV = function(val) {
+      var offsetV = function (val) {
         let meshWrapper = currentMeshWrapper;
         if (meshWrapper) {
           meshWrapper.setUOffset(scope.u_offset);
@@ -379,7 +379,7 @@ class GuiLite extends React.Component {
           meshWrapper.reapplyTexture();
         }
       };
-      var toDispose = function(isChecked) {
+      var toDispose = function (isChecked) {
         if (isChecked) {
           selectionPanel.dispose();
         } else {
@@ -423,7 +423,7 @@ class GuiLite extends React.Component {
       positionGroup._groupHeader.color = "White";
 
       let selectors = positionGroup.selectors;
-      console.log("the selectors:", selectors);
+      //console.log("the selectors:", selectors);
       //X
       let selectorX = selectors[0];
       styleSelector(selectorX);

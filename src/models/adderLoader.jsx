@@ -54,7 +54,7 @@ class AdderLoader {
       let sceneFileName = adderModel.getModelFile();
       let onProgress = null;
       let pluginExtension = null;
-      console.log("sceneFileName:", sceneFileName);
+      //console.log("sceneFileName:", sceneFileName);
       if (sceneFileName === "" || sceneFileName === "undefined") {
         console.log(" ------   NULL scene File ---------------");
       }
@@ -92,14 +92,14 @@ class AdderLoader {
       //===>>>const grid = asw.getGrid();
       //const grid = asw.getGrid();
       //--------------------------------------------------
-      result.meshes.forEach(function(mesh) {
+      result.meshes.forEach(function (mesh) {
         //get Behaviors via models meta data.
         mesh.parent = adderModel.getParentMesh();
         let behavior = adderModel.getBehavior();
         mesh.isPickable = false; // set all meshes to Not Clickable by default
 
         if (mesh.id === "KC9BG19_Untitled.071") {
-          console.log("adderLoader.jsx:: FOUND: KC9BG19_Untitled.071");
+          // console.log("adderLoader.jsx:: FOUND: KC9BG19_Untitled.071");
           //can I apply texture to mesh id x ? // apply texture BG13w1
           const asw = adderModel.getAdderSceneWrapper();
           let mesh_id = mesh.id;
@@ -239,7 +239,7 @@ class AdderLoader {
       adderModel.setMeshWrappers(adderMeshWrappers);
     }
 
-    this.addSingleModel = function(adderAsset) {
+    this.addSingleModel = function (adderAsset) {
       let adderSceneWrapper = this.getAdderSceneWrapper();
       //let asw = adderSceneWrapper;
       let scene = adderSceneWrapper.getScene();
@@ -353,7 +353,7 @@ class AdderLoader {
             adderModelParent.id
           );
               */
-      console.log("before return adderModelParent:", adderModelParent);
+      // console.log("before return adderModelParent:", adderModelParent);
       return adderModelParent;
     };
   }

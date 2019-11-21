@@ -34,7 +34,7 @@ class AdderMeta {
       let thisClass = this;
       switch (environment) {
         case "CITY":
-          this.promise_environments = new Promise(function(resolve, reject) {
+          this.promise_environments = new Promise(function (resolve, reject) {
             const url = `${K.META_URL}/v1/meta/environment`;
             axios
               .get(url)
@@ -43,14 +43,14 @@ class AdderMeta {
                 resolve(data);
               });
           });
-          this.promise_environments.then(function(value) {
+          this.promise_environments.then(function (value) {
             thisClass.looper(value);
           });
 
           break;
         case "COUNTRY":
-          console.log("AdderMeta: getEnvironment: COUNTRY");
-          this.promise_environments = new Promise(function(resolve, reject) {
+          // console.log("AdderMeta: getEnvironment: COUNTRY");
+          this.promise_environments = new Promise(function (resolve, reject) {
             const url = `${K.META_URL}/v1/meta/environment2`;
             axios
               .get(url)
@@ -59,12 +59,12 @@ class AdderMeta {
                 resolve(data);
               });
           });
-          this.promise_environments.then(function(value) {
+          this.promise_environments.then(function (value) {
             thisClass.looper(value);
           });
           break;
         default:
-          this.promise_environments = new Promise(function(resolve, reject) {
+          this.promise_environments = new Promise(function (resolve, reject) {
             const url = `${K.META_URL}/v1/meta/environment`;
             axios
               .get(url)
@@ -73,7 +73,7 @@ class AdderMeta {
                 resolve(data);
               });
           });
-          this.promise_environments.then(function(value) {
+          this.promise_environments.then(function (value) {
             thisClass.looper(value);
           });
           break;
@@ -84,7 +84,7 @@ class AdderMeta {
       // let scene = this.getScene();
       let thisClass = this;
 
-      this.promise_designOptions = new Promise(function(resolve, reject) {
+      this.promise_designOptions = new Promise(function (resolve, reject) {
         const url = `${K.META_URL}/v1/meta/design`;
         axios
           .get(url)
@@ -93,7 +93,7 @@ class AdderMeta {
             resolve(data);
           });
       });
-      this.promise_designOptions.then(function(value) {
+      this.promise_designOptions.then(function (value) {
         thisClass.looper(value);
       });
     };

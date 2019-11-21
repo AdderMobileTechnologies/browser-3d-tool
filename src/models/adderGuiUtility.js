@@ -25,7 +25,7 @@ class AdderGuiUtility extends React.Component {
   }
   //3
   componentDidMount() {
-    console.log("does adderGuiUtility Mount ? in its present form?");
+    //console.log("does adderGuiUtility Mount ? in its present form?");
     //DOES NOT actually mount because not called like a regular react comp
     //what if I moved this to inside the function that gets called.
     let scope = this;
@@ -136,7 +136,7 @@ class AdderGuiUtility extends React.Component {
     slider.height = "16px";
     slider.width = "100px";
     slider.metadata = 0;
-    slider.onValueChangedObservable.add(function(value) {
+    slider.onValueChangedObservable.add(function (value) {
       // console.log("value:", value);
       // console.log("slider.metadata:", slider.metadata);
       if (mesh) {
@@ -205,9 +205,9 @@ class AdderGuiUtility extends React.Component {
     slider.height = "16px";
     slider.width = "100px";
     slider.metadata = 0;
-    slider.onValueChangedObservable.add(function(value) {
-      console.log("UV changes:");
-      console.log("value:", value);
+    slider.onValueChangedObservable.add(function (value) {
+      //console.log("UV changes:");
+      //console.log("value:", value);
       if (meshWrapper) {
         //==============================================
         //get the values that are NOT being changed to avoid 'undefined'.
@@ -302,9 +302,9 @@ class AdderGuiUtility extends React.Component {
   //////////////////////////////////////////
   // GUI SELECTION PANEL
   easy_selection_panel = (scene, advancedTexture, mesh) => {
-    console.log("easy selection panel:");
-    console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
-    console.log("this.state:", this.state);
+    // console.log("easy selection panel:");
+    // console.log("adderGuiUtility.js:easy_selection_panel():mesh:", mesh);
+    // console.log("this.state:", this.state);
     ///--- insert the didmount code here instead
     // let scope = this;
     // RXJS: subscribe to home component messages
@@ -321,7 +321,7 @@ class AdderGuiUtility extends React.Component {
     /// - end didmount code.
     var scope = this.state;
     scope.mesh = mesh;
-    var toSize = function(isChecked) {
+    var toSize = function (isChecked) {
       if (isChecked) {
         mesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
       } else {
@@ -329,7 +329,7 @@ class AdderGuiUtility extends React.Component {
       }
     };
 
-    var orientateY = function(angle) {
+    var orientateY = function (angle) {
       let val = displayValueN(angle);
       if (scope.y_previous > val) {
         // mesh.position.x = mesh.position.x + val;
@@ -340,14 +340,14 @@ class AdderGuiUtility extends React.Component {
       }
       scope.y_previous = val;
     };
-    var orientateX = function(angle) {
+    var orientateX = function (angle) {
       mesh.rotation.x = angle;
     };
 
-    var displayValue = function(value) {
+    var displayValue = function (value) {
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
-    var onValueChange = function(value) {
+    var onValueChange = function (value) {
       //console.log("onValueChange value:", value);
       //console.log("scope:", scope);
 
@@ -369,10 +369,10 @@ class AdderGuiUtility extends React.Component {
     transformGroup.addCheckbox("Small", toSize);
 
     var positionGroup = new BABYLON.GUI.SliderGroup("Rotation", "S");
-    console.log(
-      "What is inside the positionGroup: ie. sliderGroup?",
-      positionGroup
-    );
+    // console.log(
+    //   "What is inside the positionGroup: ie. sliderGroup?",
+    //   positionGroup
+    // );
 
     var selectionPanel = new BABYLON.GUI.SelectionPanel("sp", [positionGroup]);
     // scope.selectionPanel = selectionPanel;
@@ -407,17 +407,17 @@ class AdderGuiUtility extends React.Component {
     this.state.selectionPanel = selectionPanel;
 
     advancedTexture.addControl(selectionPanel);
-    console.log("advancedTexture:", advancedTexture);
+    //console.log("advancedTexture:", advancedTexture);
 
-    var moveY = function(val) {
+    var moveY = function (val) {
       mesh.position.y = mesh.position.y + val;
     };
-    var displayValueN = function(value) {
-      console.log("value:", value);
+    var displayValueN = function (value) {
+      //console.log("value:", value);
       return BABYLON.Tools.ToDegrees(value) | 0;
     };
 
-    var moveX = function(val) {
+    var moveX = function (val) {
       let x_max = 10;
       let x_min = -10;
       /* max and min must be in sync with :
@@ -448,7 +448,7 @@ class AdderGuiUtility extends React.Component {
       }
     };
 
-    var moveZ = function(val) {
+    var moveZ = function (val) {
       let z_max = 10;
       let z_min = -10;
       /* max and min must be in sync with :
@@ -570,30 +570,30 @@ class AdderGuiUtility extends React.Component {
     selectorY_slider.borderColor = "#000";
   };
   rxjsCallback(msg) {
-    console.log(
-      "rxjsCallback: adderGuiUtility..YES...but need a flag.:msg:",
-      msg
-    );
+    // console.log(
+    //   "rxjsCallback: adderGuiUtility..YES...but need a flag.:msg:",
+    //   msg
+    // );
     //can I show hide the selectionPanel from HERE ?
     //this.state.selectionPanel.isVisible = false; or true
     // console.log("props:",this.props)
-    console.log("this.state look for selectionPanel...:", this.state);
+    //console.log("this.state look for selectionPanel...:", this.state);
     //THEN I NEED A FLAG ...
     if (msg.text === "true") {
       // this.state.selectionPanel.isVisible = true;
       //this is NOT re-showing the selectionPanel ?
-      console.log("msg is true");
+      //console.log("msg is true");
       this.state.selectionPanel.isVisible = true;
     } else {
       // this.state.selectionPanel.isVisible = false;
-      console.log("msg is false...");
+      //console.log("msg is false...");
       this.state.selectionPanel.isVisible = false;
     }
   }
   render() {
     const { messages } = this.state;
-    console.log("render() this.state", this.state);
-    console.log("render() this.scope:", this.scope);
+    //console.log("render() this.state", this.state);
+    // console.log("render() this.scope:", this.scope);
 
     return (
       <Grid>

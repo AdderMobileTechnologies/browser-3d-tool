@@ -134,7 +134,7 @@ class AdderImageEditor extends Component {
     this.state = {
       footerStyle: footerStyleNoHover
     };
-    console.log("AdderImageEditor:props:", props);
+    //console.log("AdderImageEditor:props:", props);
     this.imageEditor = null;
     this.onApplyCallback = props.onApplyCallback.bind(this);
     this.onApplyClick = this.onApplyClick.bind(this);
@@ -187,7 +187,7 @@ export default AdderImageEditor;
 
 /*
 
-For some reason switching to material UI Grid casued the styling around the tools to go light. 
+For some reason switching to material UI Grid casued the styling around the tools to go light.
 
 import Grid from "@material-ui/core/Grid"; //
 

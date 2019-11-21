@@ -24,7 +24,7 @@ function PaperComponent(props) {
 }
 /* TODO: see console error warning in comments at bottom of page. */
 export default function DraggableDialog(props) {
-  console.log("props on Draggable Dialog ...", props);
+  // console.log("props on Draggable Dialog ...", props);
   ///////////////////////////////////////////////////////
   const [open, setOpen] = React.useState(true);
   /*
@@ -108,8 +108,8 @@ export default function DraggableDialog(props) {
   );
 }
 
-/* 
-Example of Warnings in the console related to MUIDraggableDialog 
+/*
+Example of Warnings in the console related to MUIDraggableDialog
 index.js:1375 Warning: Failed prop type: The prop `children` is marked as required in `ForwardRef(DialogTitle)`, but its value is `undefined`.
     in ForwardRef(DialogTitle) (created by WithStyles(ForwardRef(DialogTitle)))
     in WithStyles(ForwardRef(DialogTitle)) (at MUI_DraggableDialog.jsx:88)
