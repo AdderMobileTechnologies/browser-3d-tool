@@ -2212,3 +2212,48 @@ https://www.babylonjs-playground.com/#KQ54LE#30
 
 
 
+Today , I fixed all the errors that were getting thrown in the js console in regards to missing images and manifest files.
+As well as some responsive design fixes and some study of detecting mesh intersections, which will come in handy 
+when creating constraints for camera intersecting with environment objects.
+
+-=-=-=-=-=-=-=-=-=-=--=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Wed: 11-21-2019 : by-pass code from login registration that requires 'email verification'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

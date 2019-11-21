@@ -17,44 +17,16 @@ import axios from "axios";
 
 import { withRouter } from "react-router";
 
+import { VERSION } from "./../environment.js";
+
 /*
 TODO: 
 
-3d Tool Authentication
-list the endpoints: 
-1)
-.../auth/register
-    With this data:
-    const dataPackage = {
-        email: userData.email,
-        password: userData.password,
-        role: "client",
-        is_verified: "false"
-    };
-2)
-.../v2/auth/login/client
-    With this data:
-    const dataPackage = {
-        email: this.state.existingUser.email,
-        password: this.state.existingUser.password,
-        role: "client"
-    };
-3) 
-.../auth/forgot-password/?email=" + dataPackage.email
-4)
- ... "/auth/change-password/" + this.state.pwdRecoverURL;
-    With this data:
-    const dataPackage = {
-            password: this.state.existingUser.password
-        };
+by-pass email verification requirement. 
+and clean up to merge
+PATH: 
+  llogin.js:: renderCreateAccountButton->registrationCreateUser-> /v1/auth/register/ -> 
 
-TODO: 
-map out the environment.js variables used. 
-These will now be in with the meta_server configs...
-1)
-"Config.API.HOST_NAME"
-2)
-"Config.Frontend.VERSION"
 
 */
 
@@ -198,14 +170,21 @@ class Login extends React.Component {
       .then(response => {
         console.log("RESPONSE: positive");
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("version", "Config.Frontend.VERSION");
+        localStorage.setItem("version", VERSION);
         this.props.history.push("/main");
       })
-      .catch(error => {
-        //localStorage.clear();
-        console.log("REPSPONSE: negative.");
-        // alert("We're sorry, but that is the wrong password for this account.");
-        alert("It appears as though that email is already in use!");
+      .catch(err => {
+        localStorage.clear();
+        if (err.response) {
+          if (err.response.status === 400) {
+            if (err.response.data.err === "ALREADY_REGISTERED") {
+              return alert("It appears an account with that email already exists!");
+            }
+          }
+        }
+
+        return alert("We apologize, but an internal error has occurred. Please try again.");
+
       });
     //-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=-
   }
@@ -344,67 +323,67 @@ class Login extends React.Component {
                       </Form>
                     </div>
                   ) : (
-                    <div>
-                      <Form
-                        onSubmit={this.registrationCreateUser}
-                        className="mt-3"
-                      >
-                        <FormGroup className="mb-3">
-                          <Input
-                            type="text"
-                            name="fullName"
-                            id="fullName"
-                            placeholder="Your Full Name"
-                            bsSize="lg"
-                            required
+                      <div>
+                        <Form
+                          onSubmit={this.registrationCreateUser}
+                          className="mt-3"
+                        >
+                          <FormGroup className="mb-3">
+                            <Input
+                              type="text"
+                              name="fullName"
+                              id="fullName"
+                              placeholder="Your Full Name"
+                              bsSize="lg"
+                              required
+                              onChange={this.handleInputRegister}
+                            />
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Input
+                              type="text"
+                              name="business_name"
+                              id="business_name"
+                              placeholder="Your Company Name"
+                              bsSize="lg"
+                              required
+                              onChange={this.handleInputRegister}
+                            />
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Input
+                              type="email"
+                              name="email"
+                              id="email"
+                              placeholder="Email"
+                              bsSize="lg"
+                              required
+                              onChange={this.handleInputRegister}
+                            />
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Input
+                              type="password"
+                              name="password"
+                              id="password"
+                              placeholder="Password"
+                              bsSize="lg"
+                              required
+                              onChange={this.handleInputRegister}
+                            />
+                          </FormGroup>
+                          <CustomInput
+                            type="checkbox"
+                            id="agreeToTerms"
+                            name="agreeToTerms"
+                            label="I agree to the terms."
                             onChange={this.handleInputRegister}
                           />
-                        </FormGroup>
-                        <FormGroup className="mb-3">
-                          <Input
-                            type="text"
-                            name="business_name"
-                            id="business_name"
-                            placeholder="Your Company Name"
-                            bsSize="lg"
-                            required
-                            onChange={this.handleInputRegister}
-                          />
-                        </FormGroup>
-                        <FormGroup className="mb-3">
-                          <Input
-                            type="email"
-                            name="email"
-                            id="email"
-                            placeholder="Email"
-                            bsSize="lg"
-                            required
-                            onChange={this.handleInputRegister}
-                          />
-                        </FormGroup>
-                        <FormGroup className="mb-3">
-                          <Input
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="Password"
-                            bsSize="lg"
-                            required
-                            onChange={this.handleInputRegister}
-                          />
-                        </FormGroup>
-                        <CustomInput
-                          type="checkbox"
-                          id="agreeToTerms"
-                          name="agreeToTerms"
-                          label="I agree to the terms."
-                          onChange={this.handleInputRegister}
-                        />
-                        {this.state.registeringUser.agreeToTerms === "on" &&
-                          this.renderCreateAccountButton()}
-                      </Form>
-                    </div>
-                  )}
+                          {this.state.registeringUser.agreeToTerms === "on" &&
+                            this.renderCreateAccountButton()}
+                        </Form>
+                      </div>
+                    )}
                 </Col>
               </Row>
             </div>
