@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+The Browser 3D Tool was built to make applying custom 3d skins onto vehicles easy, and now, we want to expand the concept further to include more models!
+
 ## Available Scripts
 
 In the project directory, you can run:
